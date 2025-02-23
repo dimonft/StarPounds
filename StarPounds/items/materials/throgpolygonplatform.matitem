@@ -1,0 +1,13 @@
+{
+  "itemName" : "throgpolygonplatform",
+  "price" : 0,
+  "category" : "platform",
+  "rarity" : "Common",
+  "inventoryIcon" : "throgpolygonplatform.png",
+  "description" : "A smooth platform made from \"Hard Light\".",
+  "shortdescription" : "Throg Polygon Platform",
+  "glitchdescription" : "Interested. A platform made from \"Hard Light\".",
+  "florandescription" : "Thisss platform humsss with energy.",
+  
+  "materialId" : 51442
+}

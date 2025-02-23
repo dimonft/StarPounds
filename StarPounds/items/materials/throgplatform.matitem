@@ -1,0 +1,14 @@
+{
+  "itemName" : "throgplatform",
+  "price" : 0,
+  "category" : "platform",
+  "rarity" : "Common",
+  "inventoryIcon" : "throgplatform.png",
+  "shortdescription" : "Throg Platform",
+  "description" : "A well-constructed metal platform.",
+  "glitchDescription" : "Confident. This metal platform can support great weight.",
+  "floranDescription" : "Floran disslike cold metal platformss.",
+  "novakidDescription" : "A shiny lookin' platform.",
+
+  "materialId" : 51440
+}

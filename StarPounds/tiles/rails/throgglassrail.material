@@ -1,0 +1,25 @@
+{
+  "materialId" : 51443,
+  "materialName" : "throgglassrail",
+  "collisionKind" : "none",
+  "foregroundOnly" : true,
+  "itemDrop" : "compositerail",
+  "shortdescription" : "Throg Rail",
+  "description" : "A strong glass rail.",
+  "footstepSound" : "/sfx/blocks/footstep_girder.ogg",
+  "category": "supports",
+  "health" : 4,
+  "glitchDescription" : "Pleased. The material this rail is made from makes it very strong.",
+  "floranDescription" : "Shiny metal rails.",
+  "novakidDescription" : "Some sturdy lookin' rails, gettin' the itch to ride 'em.",
+
+  "renderTemplate" : "/tiles/starpounds_railtemplate.config",
+  "renderParameters" : {
+    "texture" : "throgglassrail.png",
+    "variants" : 1,
+    "multiColored" : true,
+    "lightTransparent" : true,
+    "occludesBelow" : false,
+    "zLevel" : 0
+  }
+}

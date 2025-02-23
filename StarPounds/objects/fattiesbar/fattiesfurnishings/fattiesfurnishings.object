@@ -133,7 +133,11 @@
       {"input": [["money", 10]], "output": "throgmetal"},
       {"input": [["money", 10]], "output": "throgpanel"},
       {"input": [["money", 10]], "output": "throgpolygon"},
-      {"input": [["money", 10]], "output": "throgtech"}
+      {"input": [["money", 10]], "output": "throgtech"},
+      {"input": [["money", 10]], "output": "throgplatform"},
+      {"input": [["money", 10]], "output": "throgstairs"},
+      {"input": [["money", 10]], "output": "throgpolygonplatform"},
+      {"input": [["money", 10]], "output": "throgglassrail"}
     ]
   }
 }

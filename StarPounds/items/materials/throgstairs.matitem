@@ -1,0 +1,14 @@
+{
+  "itemName" : "throgstairs",
+  "price" : 0,
+  "category" : "platform",
+  "rarity" : "Common",
+  "inventoryIcon" : "throgstairs.png",
+  "shortdescription" : "Throg Stairs",
+  "description" : "A well-constructed metal platform.",
+  "glitchDescription" : "Confident. This metal platform can support great weight.",
+  "floranDescription" : "Floran disslike cold metal platformss.",
+  "novakidDescription" : "A shiny lookin' platform.",
+
+  "materialId" : 51441
+}
