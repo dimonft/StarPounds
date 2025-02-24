@@ -1,0 +1,256 @@
+[
+  // starpounds monsters
+
+  // GARDEN BIOME
+
+  {
+    "name" : "mootant",
+
+    "spawnParameters" : {
+      "area" : "surface",
+      "region" : "all",
+      "time" : "day"
+    },
+
+    "spawnChance" : 0.04,
+    "monsterType" : "mootant",
+    "monsterParameters" : {
+      "aggressive" : true
+    }
+  },
+  
+  // FOREST BIOME
+
+  {
+    "name" : "floranmootant",
+
+    "spawnParameters" : {
+      "area" : "surface",
+      "region" : "all",
+      "time" : "night"
+    },
+
+    "spawnChance" : 0.04,
+    "monsterType" : "floranmootant",
+    "monsterParameters" : {
+      "aggressive" : true
+    }
+  },
+  
+// OCEAN
+
+  {
+    "name" : "fathylotlghost",
+
+    "spawnParameters" : {
+      "area" : "air",
+      "region" : "all",
+      "time" : "night"
+    },
+    "spawnChance" : 0.001,
+    "monsterType" : "fathylotlghost",
+    "monsterParameters" : {
+      "aggressive" : true
+    }
+  },
+  
+// GIANT FLOWER BIOME
+
+  {
+    "name" : "starpoundsbeedrone",
+
+    "spawnParameters" : {
+      "area" : "surface",
+      "region" : "all",
+      "time" : "day"
+    },
+    "groupSize" : [1, 3],
+    "spawnChance" : 0.15,
+    "monsterType" : "starpoundsbeedrone",
+    "monsterParameters" : {
+      "aggressive" : true
+    }
+  },
+
+// ALPINE
+
+  {
+    "name" : "starpoundsharpy",
+
+    "spawnParameters" : {
+      "area" : "air",
+      "region" : "all",
+      "time" : "all"
+    },
+    "groupSize" : [1, 2],
+    "spawnChance" : 0.003,
+    "monsterType" : [
+      [0.083, "starpoundsharpy"],
+      [0.083, "starpoundsharpyred"],
+      [0.083, "starpoundsharpyblue"],
+      [0.083, "starpoundsharpygreen"],
+      [0.083, "starpoundsharpyyellow"],
+      [0.083, "starpoundsharpypurple"],
+      [0.083, "starpoundsharpyturquoise"],
+      [0.083, "starpoundsharpypink"],
+      [0.083, "starpoundsharpyorange"],
+      [0.083, "starpoundsharpygrey"]
+    ],
+    "monsterParameters" : {
+      "aggressive" : true
+    }
+  },
+
+// EYEPATCH
+
+  {
+    "name" : "starpoundsjelly",
+
+    "spawnParameters" : {
+      "area" : "surface",
+      "region" : "all",
+      "time" : "all"
+    },
+    "groupSize" : [1, 3],
+    "spawnChance" : 0.15,
+    "monsterType" : [
+      [0.99, "starpoundsjelly"],
+      [0.01, "starpoundspinky"]
+    ],
+    "monsterParameters" : {
+      "aggressive" : true
+    }
+  },
+
+  {
+    "name" : "starpoundsskeyejelly",
+
+    "spawnParameters" : {
+      "area" : "air",
+      "region" : "all",
+      "time" : "all"
+    },
+    "groupSize" : [1, 1],
+    "spawnChance" : 0.02,
+    "monsterType" : "starpoundsskeyejelly",
+    "monsterParameters" : {
+      "aggressive" : true
+    }
+  },
+  
+// SLIME
+
+  {
+    "name" : "starpoundsslime",
+
+    "spawnParameters" : {
+      "area" : "surface",
+      "region" : "all",
+      "time" : "all"
+    },
+    "groupSize" : [1, 3],
+    "spawnChance" : 0.15,
+    "monsterType" : [
+      [0.99, "starpoundsslime"],
+      [0.01, "starpoundspinky"]
+    ],
+    "monsterParameters" : {
+      "aggressive" : true
+    }
+  },
+
+  {
+    "name" : "starpoundsskeyeslime",
+
+    "spawnParameters" : {
+      "area" : "air",
+      "region" : "all",
+      "time" : "all"
+    },
+    "groupSize" : [1, 1],
+    "spawnChance" : 0.02,
+    "monsterType" : "starpoundsskeyeslime",
+    "monsterParameters" : {
+      "aggressive" : true
+    }
+  },
+  
+// HONEY HIVE
+
+  {
+    "name" : "starpoundshoney",
+
+    "spawnParameters" : {
+      "area" : "surface",
+      "region" : "all",
+      "time" : "all"
+    },
+    "groupSize" : [1, 3],
+    "spawnChance" : 0.15,
+    "monsterType" : [
+      [0.99, "starpoundshoney"],
+      [0.01, "starpoundspinky"]
+    ],
+    "monsterParameters" : {
+      "aggressive" : true
+    }
+  },
+
+  {
+    "name" : "starpoundsskeyehoney",
+
+    "spawnParameters" : {
+      "area" : "air",
+      "region" : "all",
+      "time" : "all"
+    },
+    "groupSize" : [1, 1],
+    "spawnChance" : 0.02,
+    "monsterType" : "starpoundsskeyehoney",
+    "monsterParameters" : {
+      "aggressive" : true
+    }
+  },
+
+// MINI VILLAGE
+
+  {
+    "name" : "starpoundsgnomecritter",
+
+    "spawnParameters" : {
+      "area" : "surface",
+      "region" : "all",
+      "time" : "all"
+    },
+    "groupSize" : [1, 2],
+    "spawnChance" : 0.85,
+    "monsterType" : "starpoundsgnomecritter",
+    "monsterParameters" : {
+      "aggressive" : false
+    }
+  },
+  
+// PONDEROUS
+
+  {
+    "name" : "starpoundswisps",
+
+    "spawnParameters" : {
+      "area" : "air",
+      "region" : "all",
+      "time" : "all"
+    },
+    "groupSize" : [1, 2],
+    "spawnChance" : 0.003,
+    "monsterType" : [
+      [0.25, "starpoundsmagewisp"],
+      [0.25, "starpoundsclericwisp"],
+      [0.25, "starpoundsknightwisp"],
+      [0.25, "starpoundsroguewisp"]
+    ],
+    "monsterParameters" : {
+      "aggressive" : true
+    }
+  }
+
+]
