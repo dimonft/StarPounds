@@ -1,0 +1,9 @@
+{
+  "name" : "starpoundspinky",
+  "category" : "starpoundspinky",
+  "type" : "body",
+
+  "frames" : {
+    "body" : "starpoundspinky.png"
+  }
+}
