@@ -15,12 +15,12 @@ function init()
     function activate()
       activate_old()
       status.setPersistentEffects("movementAbility", {{stat = "activeMovementAbilities", amount = 2}})
-      if starPounds then starPounds.updateStats(true) end
+      if starPounds then starPounds.events:fire("main:statChange") end
     end
 
     function deactivate()
       deactivate_old()
-      if starPounds then starPounds.updateStats(true) end
+      if starPounds then starPounds.events:fire("main:statChange") end
     end
     -- Already in the throg sphere.
     if config.getParameter("name") ~= "starpoundsthrogsphere" then

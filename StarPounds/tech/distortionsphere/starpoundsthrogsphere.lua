@@ -18,6 +18,17 @@ function init()
       self.projectilePositions[#self.projectilePositions + 1] = {width, height}
     end
   end
+
+  self.statListener = function()
+    if self.active then
+      self.lastScale = nil
+      self.force = (starPounds and starPounds.getStat("throgSphereForce") or 0)
+      local scalingSize = starPounds.settings.scalingSize - 1
+      local sizeIndex = starPounds.currentSizeIndex - 1
+      local protection = self.shrunk and 0 or math.min(starPounds.getStat("throgSphereArmor") * (sizeIndex/scalingSize), starPounds.getStat("throgSphereArmor"))
+      status.setPersistentEffects("starpoundsthrogsphere", {{stat = "grit", amount = 1}, {stat = "physicalResistance", amount = protection}})
+    end
+  end
 end
 
 function update(args)
@@ -69,15 +80,6 @@ function update(args)
         end
       end
     end
-  end
-
-  if starPounds.optionChanged and self.active then
-    self.lastScale = nil
-    self.force = (starPounds and starPounds.getStat("throgSphereForce") or 0)
-    local scalingSize = starPounds.settings.scalingSize - 1
-    local sizeIndex = starPounds.currentSizeIndex - 1
-    local protection = self.shrunk and 0 or math.min(starPounds.getStat("throgSphereArmor") * (sizeIndex/scalingSize), starPounds.getStat("throgSphereArmor"))
-    status.setPersistentEffects("starpoundsthrogsphere", {{stat = "grit", amount = 1}, {stat = "physicalResistance", amount = protection}})
   end
 
   if self.active and (not self.shrunk) and mcontroller.groundMovement() then
@@ -215,7 +217,10 @@ function activate()
   animator.playSound("loop", -1)
   animator.setSoundVolume("loop", 0)
   activate_old()
-  starPounds.updateStats(true)
+
+  starPounds.events:fire("main:statChange")
+  starPounds.events:on("main:statChange", self.statListener)
+
   status.setPersistentEffects("starpoundsthrogsphere", {{stat = "grit", amount = 1}, {stat = "physicalResistance", amount = math.min(starPounds.getStat("throgSphereArmor") * (starPounds.currentSizeIndex - 1)/3, starPounds.getStat("throgSphereArmor"))}})
 end
 
@@ -227,7 +232,10 @@ function deactivate()
   animator.resetTransformationGroup("ballScale")
   animator.stopAllSounds("loop")
   deactivate_old()
-  starPounds.updateStats(true)
+
+  starPounds.events:off("main:statChange", self.statListener)
+  starPounds.events:fire("main:statChange")
+
   for _, projectile in pairs(self.projectiles) do
     if world.entityExists(projectile) then
       world.callScriptedEntity(projectile, "projectile.die")

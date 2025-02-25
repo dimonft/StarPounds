@@ -7,7 +7,7 @@ function init()
   activeItem.setHoldingItem(false)
   activeItem.setCursor("/cursors/starpoundsvore.cursor:prey")
   script.setUpdateDelta(world.getProperty("nonCombat") and 0 or 5)
-  settings = root.assetJson("/scripts/starpounds/starpounds.config:settings")
+  monsterBehaviors = root.assetJson("/scripts/starpounds/modules/pred.config:monsterBehaviors")
 end
 
 function update(dt)
@@ -55,7 +55,7 @@ function isTargetValid(target)
   if world.entityType(target) == "monster" then
     local scriptCheck = contains(root.monsterParameters(targetType).scripts or jarray(), "/scripts/starpounds/starpounds_monster.lua")
     local parameters = root.monsterParameters(targetType)
-    local behaviorCheck = parameters.behavior and contains(settings.monsterBehaviors, parameters.behavior) or false
+    local behaviorCheck = parameters.behavior and contains(monsterBehaviors, parameters.behavior) or false
     if parameters.starPounds_options and parameters.starPounds_options.disablePred then return false end
     if not (scriptCheck or behaviorCheck) then
       return false

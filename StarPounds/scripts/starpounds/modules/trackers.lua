@@ -1,7 +1,6 @@
 local trackers = starPounds.module:new("trackers")
 
 function trackers:init()
-  local currentSize, currentSizeIndex = starPounds.getSize(storage.starPounds.weight)
   self.thresholds = starPounds.settings.thresholds.strain
 end
 

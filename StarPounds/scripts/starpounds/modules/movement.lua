@@ -51,6 +51,7 @@ function movement:getController()
     velocity = mcontroller.velocity(),
     xVelocity = mcontroller.xVelocity(),
     yVelocity = mcontroller.yVelocity(),
+    anchorState = mcontroller.anchorState()
   }
   -- Needs some of the above values to calculate properly.
   self.mcontroller.mouthPosition = self:mouthPosition()

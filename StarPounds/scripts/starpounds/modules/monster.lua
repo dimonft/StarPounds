@@ -53,12 +53,8 @@ function _monster:setup()
   entity.setDamageSources = monster.setDamageSources
   entity.setDamageTeam = monster.setDamageTeam
   -- Disable stuff monsters don't use
-  starPounds.getChestVariant = function() return "" end
   starPounds.getDirectives = function() return "" end
   starPounds.getSpecies = function() return "" end
-  starPounds.equipSize = nullFunction
-  starPounds.equipCheck = nullFunction
-  starPounds.updateStats = nullFunction
   starPounds.gainWeight = nullFunction
   starPounds.loseWeight = nullFunction
   starPounds.setWeight = nullFunction

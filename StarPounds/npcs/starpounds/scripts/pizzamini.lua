@@ -54,9 +54,6 @@ function update(dt)
     storage.removedChest = true
 
     npc.setItemSlot("chestCosmetic")
-    -- Fast way to force a size reequip.
-    starPounds.optionChanged = true
-    starPounds.equipCheck(starPounds.currentSize)
     if self.ateEntity or self.ateOrder then
       starPounds.moduleFunc("sound", "play", "clothingrip", 0.75)
     end

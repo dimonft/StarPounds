@@ -2,6 +2,14 @@ local experience = starPounds.module:new("experience")
 
 function experience:init()
   message.setHandler("starPounds.addExperience", function(_, _, ...) return self:add(...) end)
+
+  starPounds.level = storage.starPounds.level
+  starPounds.experience = storage.starPounds.experience
+end
+
+function experience:update(dt)
+  starPounds.level = storage.starPounds.level
+  starPounds.experience = storage.starPounds.experience
 end
 
 function experience:add(amount, multiplier, isLevel)

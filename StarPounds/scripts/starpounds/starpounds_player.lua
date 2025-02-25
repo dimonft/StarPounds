@@ -15,6 +15,7 @@ function init()
   if loadBackup then
     storage.starPounds = sb.jsonMerge(storage.starPounds, player.getProperty("starPoundsBackup", {}))
   end
+  starPounds.moduleInit("base")
   -- Setup message handlers
   starPounds.messageHandlers()
   -- Setup species traits.
@@ -28,9 +29,13 @@ function init()
   starPounds.parseSkills()
   starPounds.parseStats()
   starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
-  starPounds.moduleInit({"humanoid", "player", "vore"})
+  starPounds.moduleInit({"entity", "humanoid", "player", "vore"})
   starPounds.effectInit()
   starPounds.setWeight(storage.starPounds.weight)
+
+  starPounds.events:on("main:statChange", function()
+    starPounds.updateStats(true)
+  end)
 end
 
 function update(dt)
@@ -42,39 +47,11 @@ function update(dt)
     starPounds.statCache = {}
     starPounds.statCacheTimer = starPounds.settings.statCacheTimer
   end
-  -- Check if the entity has gone up a size.
-  starPounds.currentSize, starPounds.currentSizeIndex = starPounds.getSize(storage.starPounds.weight)
-  starPounds.currentVariant = starPounds.getChestVariant(modifierSize or starPounds.currentSize)
-  starPounds.weight = storage.starPounds.weight
-  starPounds.level = storage.starPounds.level
-  starPounds.experience = storage.starPounds.experience
-  starPounds.weightMultiplier = storage.starPounds.enabled and math.round(1 + (storage.starPounds.weight/entity.weight), 1) or 1
-
-  if starPounds.currentSize.size ~= (oldSize and oldSize.size or nil) then
-    -- Force stat update.
-    starPounds.updateStats(true)
-    -- Don't play the sound on the first load.
-    if oldSize then
-      -- Play sound to indicate size change.
-      starPounds.moduleFunc("sound", "play", "digest", 0.75, math.random(10,15) * 0.1 - storage.starPounds.weight/(starPounds.settings.maxWeight * 2))
-    end
-    -- Update status effect tracker.
-    starPounds.moduleFunc("trackers", "clearStatuses")
-    starPounds.moduleFunc("trackers", "createStatuses")
-  end
-  -- Checks
-  starPounds.equipCheck(starPounds.currentSize)
-  -- Stat/status updating stuff.
-  starPounds.updateEffects(dt)
-  starPounds.updateStats(starPounds.optionChanged, dt)
   -- Modules.
   starPounds.moduleUpdate(dt)
-  -- Save for comparison later.
-  oldSize = starPounds.currentSize
-  oldVariant = starPounds.currentVariant
-  oldWeightMultiplier = starPounds.weightMultiplier
-
-  starPounds.optionChanged = false
+  -- Stat/status updating stuff.
+  starPounds.updateStats(nil, dt)
+  starPounds.updateEffects(dt)
 end
 
 function uninit()

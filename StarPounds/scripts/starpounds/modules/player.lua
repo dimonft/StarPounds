@@ -57,14 +57,10 @@ function _player:setup()
   setmetatable(entity, mt)
   if not speciesData.weightGain then
     message.setHandler("starPounds.feed", simpleHandler(function(amount) status.giveResource("food", amount) end))
-    starPounds.getChestVariant = function() return "" end
     starPounds.getDirectives = function() return "" end
-    starPounds.equipSize = nullFunction
-    starPounds.equipCheck = nullFunction
     starPounds.gainWeight = nullFunction
     starPounds.loseWeight = nullFunction
     starPounds.setWeight = nullFunction
-    starPounds.getSize = function() return starPounds.sizes[1], 1 end
   end
 end
 

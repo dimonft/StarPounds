@@ -58,7 +58,7 @@ function debug:log()
     return first and s or "none"
   end)()
 
-  local size = starPounds.getSize(storage.starPounds.weight)
+  local size = starPounds.moduleFunc("size", "get", storage.starPounds.weight)
   size = size.size == "" and "none" or size.size
 
   sb.logInfo(header)

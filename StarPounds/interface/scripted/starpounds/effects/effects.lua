@@ -27,6 +27,12 @@ function init()
   glyphIndex = 1
   glyphs = {"pendant", "ring", "trinket"}
   buildAccessoryFunctions()
+
+  statListener = function()
+    accessory:setItem(starPounds.getAccessory())
+    accessoryChanged()
+  end
+  starPounds.events:on("main:statChange", statListener)
 end
 
 function update()
@@ -83,6 +89,10 @@ function update()
   end
 
   promises:update()
+end
+
+function uninit()
+  starPounds.events:off("main:statChange", statListener)
 end
 
 function buildTabs()

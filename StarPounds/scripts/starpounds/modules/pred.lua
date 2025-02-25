@@ -139,7 +139,7 @@ function pred:eat(preyId, options, check)
   -- Ask the entity to be eaten, add to stomach if the promise is successful.
   promises:add(world.sendEntityMessage(preyId, "starPounds.getEaten", entity.id(), preyOptions), function(prey)
     if not (prey and (prey.base or prey.weight)) then return end
-    table.insert(storage.starPounds.stomachEntities, {
+    local preyConfig = {
       id = preyId,
       base = prey.base or 0,
       weight = prey.weight or 0,
@@ -151,7 +151,9 @@ function pred:eat(preyId, options, check)
       noBelch = prey.noBelch or options.noBelch,
       type = world.entityType(preyId):gsub(".+", {player = "humanoid", npc = "humanoid", monster = "creature"}),
       typeName = world.entityTypeName(preyId)
-    })
+    }
+    table.insert(storage.starPounds.stomachEntities, preyConfig)
+    -- Eating energy cost.
     local energyMult = options.energyMultiplier or 1
     if energyMult > 0 then
       local preyHealth = world.entityHealth(preyId)
@@ -171,6 +173,8 @@ function pred:eat(preyId, options, check)
     if not (options.noSound or options.noDigestSound) then
       starPounds.moduleFunc("sound", "play", "digest", 1, 0.75)
     end
+
+    starPounds.events:fire("pred:eatEntity", preyConfig)
   end)
   return true
 end
@@ -304,6 +308,7 @@ function pred:preyDigested(preyId, items, preyStomach)
 
   starPounds.feed(digestedEntity.base, digestedEntity.foodType)
   starPounds.feed(digestedEntity.weight, "preyWeight")
+  starPounds.events:fire("pred:digestEntity", digestedEntity)
   return true
 end
 
@@ -325,6 +330,7 @@ function pred:struggle(preyId, struggleStrength, escape)
       if escape and (math.random() < escapeChance) then
         if world.entityType(preyId) == "player" or (not prey.noEscape and status.resourceLocked("energy") and preyHealthPercent > self.data.inescapableHealth) then
           released = self:release(preyId)
+          starPounds.events:fire("pred:entityEscape", released)
         end
       end
 
@@ -394,6 +400,7 @@ function pred:release(preyId, releaseAll)
       local belchMultiplier = 1 - math.round((releasedEntity.weight - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
       starPounds.belch(0.75, starPounds.belchPitch(belchMultiplier))
       world.sendEntityMessage(releasedEntity.id, "starPounds.getReleased", entity.id(), statusEffect)
+      starPounds.events:fire("pred:releaseEntity", releasedEntity)
     end
   end
   -- Callback.

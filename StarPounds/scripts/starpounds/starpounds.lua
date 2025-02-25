@@ -198,7 +198,7 @@ starPounds.updateStats = function(force, dt)
   local size = starPounds.currentSize
   starPounds.statRefreshTimer = math.max((starPounds.statRefreshTimer or 0) - (dt or 0), 0)
   local timer = starPounds.statRefreshTimer
-  if timer == 0 or oldWeightMultiplier ~= starPounds.weightMultiplier or force then
+  if timer == 0 or force then
     -- Shouldn't activate at base size, so both indexes are reduced by one.
     local sizeIndex = starPounds.currentSizeIndex - 1
     local scalingSize = starPounds.settings.scalingSize - 1
@@ -243,7 +243,7 @@ starPounds.updateStats = function(force, dt)
   if not baseParameters then baseParameters = mcontroller.baseParameters() end
   local parameters = baseParameters
 
-  if timer == 0 or not (starPounds.controlModifiers and starPounds.controlParameters) or oldWeightMultiplier ~= starPounds.weightMultiplier or force then
+  if timer == 0 or not (starPounds.controlModifiers and starPounds.controlParameters) or force then
     -- Movement stat starts at 0.
     -- Every +1 halves the penalty, every -1 doubles it (muliplicatively).
     local movement = starPounds.getStat("movement")
@@ -353,7 +353,7 @@ starPounds.setOption = function(option, enable)
   -- Argument sanitisation.
   option = tostring(option)
   storage.starPounds.options[option] = enable and true or nil
-  starPounds.optionChanged = true
+  starPounds.events:fire("main:statChange")
   -- This is stupid, but prevents 'null' data being saved.
   if getmetatable(storage.starPounds.options) then
     getmetatable(storage.starPounds.options).__nils = {}
@@ -431,8 +431,7 @@ starPounds.upgradeSkill = function(skill, cost)
   starPounds.moduleFunc("experience", "add")
   starPounds.parseSkills()
   starPounds.parseStats()
-  starPounds.updateStats(true)
-  starPounds.optionChanged = true
+  starPounds.events:fire("main:statChange")
 end
 
 starPounds.forceUnlockSkill = function(skill, level)
@@ -451,8 +450,7 @@ starPounds.forceUnlockSkill = function(skill, level)
   starPounds.parseStats()
   -- Update stats if we're already up and running.
   if starPounds.currentSize then
-     starPounds.updateStats(true)
-    starPounds.optionChanged = true
+    starPounds.events:fire("main:statChange")
   end
 end
 
@@ -469,8 +467,7 @@ starPounds.setSkill = function(skill, level)
   end
   starPounds.parseSkills()
   starPounds.parseStats()
-  starPounds.updateStats(true)
-  starPounds.optionChanged = true
+  starPounds.events:fire("main:statChange")
 end
 
 starPounds.parseStats = function()
@@ -487,7 +484,6 @@ starPounds.parseStats = function()
       storage.starPounds.stats[skill.stat] = nil
     end
   end
-
   -- Trait Stats
   starPounds.traitStats = {}
   local selectedTrait = starPounds.traits[starPounds.getTrait() or "default"]
@@ -504,7 +500,6 @@ starPounds.parseStats = function()
       end
     end
   end
-
   -- Effect stats
   starPounds.effectStats = {}
   for effectName, effectData in pairs(storage.starPounds.effects) do
@@ -523,7 +518,7 @@ starPounds.parseStats = function()
     end
   end
 
-  starPounds.optionChanged = true
+  starPounds.events:fire("main:statChange")
   starPounds.backup()
 end
 
@@ -817,87 +812,8 @@ starPounds.setAccessory = function(item)
   storage.starPounds.accessory = item and root.createItem(item) or nil
   starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
   starPounds.statCacheTimer = 0 -- Force a cache update to immediately apply the bonuses.
-  starPounds.optionChanged = true
+  starPounds.events:fire("main:statChange")
   starPounds.backup()
-end
-
-starPounds.getSize = function(weight)
-  -- Default to base size if the mod is off.
-  if not storage.starPounds.enabled then
-    return starPounds.sizes[1], 1
-  end
-  -- Argument sanitisation.
-  weight = math.max(tonumber(weight) or 0, 0)
-
-  local sizeIndex = 0
-  -- Go through all starPounds.sizes (smallest to largest) to find which size.
-  for i in ipairs(starPounds.sizes) do
-    local isBlob = starPounds.sizes[i].isBlob
-    local blobDisabled = starPounds.hasOption("disableBlob") or starPounds.blobDisabled
-    local skipSize = isBlob and blobDisabled
-    if weight >= starPounds.sizes[i].weight and not skipSize then
-      sizeIndex = i
-    end
-  end
-
-  -- If we have the anti-immobile skill, use the regular blob clothing and an increased movement penalty.
-  local isImmobile = starPounds.sizes[sizeIndex].movementPenalty == 1
-  local immobileDisabled = blobDisabled or starPounds.hasSkill("preventImmobile")
-  if isImmobile and immobileDisabled then
-    local oldMovementPenalty = starPounds.sizes[sizeIndex - 1].movementPenalty
-    local newMovementPenalty = oldMovementPenalty + 0.5 * (1 - oldMovementPenalty)
-    local newSize = sb.jsonMerge(starPounds.sizes[sizeIndex], {
-      movementPenalty = newMovementPenalty
-    })
-    return newSize, sizeIndex
-  end
-
-  return starPounds.sizes[sizeIndex], sizeIndex
-end
-
-starPounds.getChestVariant = function(size)
-  -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return end
-  -- Argument sanitisation.
-  local size = type(size) == "table" and size or {}
-  local variants = size.variants or jarray()
-  local variant = nil
-  local thresholdMultiplier = starPounds.currentSize.thresholdMultiplier
-  local breastThresholds = starPounds.settings.thresholds.breasts
-  local stomachThresholds = starPounds.settings.thresholds.stomach
-
-  local breastSize = (starPounds.hasOption("disableBreastGrowth") and 0 or (starPounds.moduleFunc("breasts", "get").contents or 0)) + (
-    starPounds.hasOption("busty") and breastThresholds[1].amount * thresholdMultiplier or (
-    starPounds.hasOption("milky") and breastThresholds[2].amount * thresholdMultiplier or 0)
-  )
-
-  local stomachSize = (starPounds.hasOption("disableStomachGrowth") and 0 or (starPounds.moduleFunc("stomach", "get").interpolatedContents or 0)) + (
-    starPounds.hasOption("stuffed") and stomachThresholds[2].amount * thresholdMultiplier or (
-    starPounds.hasOption("filled") and stomachThresholds[4].amount * thresholdMultiplier or (
-    starPounds.hasOption("gorged") and stomachThresholds[6].amount * thresholdMultiplier or 0))
-  )
-
-  for _, v in ipairs(breastThresholds) do
-    if contains(variants, v.name) then
-      if breastSize >= (v.amount * thresholdMultiplier) then
-        variant = v.name
-      end
-    end
-  end
-
-  for _, v in ipairs(stomachThresholds) do
-    if contains(variants, v.name) then
-      if stomachSize >= (v.amount * thresholdMultiplier) then
-        variant = v.name
-      end
-    end
-  end
-
-  if starPounds.hasOption("hyper") then
-    variant = "hyper"
-  end
-
-  return variant
 end
 
 -- world.entitySpecies can be unreliable on the first tick.
@@ -964,186 +880,6 @@ starPounds.getDirectives = function(target)
     directives = string.format("%s;%s", speciesData.prependDirectives, directives):gsub(";;", ";")
   end
   return directives
-end
-
-starPounds.equipSize = function(size, modifiers)
-  -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return end
-  -- Get entity species.
-  local species = starPounds.getVisualSpecies()
-  -- Get entity directives
-  local directives = starPounds.getDirectives()
-  -- Setup base parameters for item.
-  local visualSize = size.size
-  if starPounds.hasSkill("preventImmobile") and visualSize == "immobile" then
-    visualSize = "blob"
-  end
-  local items = {
-    legs = {name = (modifiers.legsSize or visualSize)..species:lower().."legs", count=1},
-    chest = {name = (modifiers.chestSize or visualSize)..(modifiers.chestVariant or "")..species:lower().."chest", count=1}
-  }
-
-  -- Give the items parameters to track/prevent dupes.
-  items.legs.parameters = {directives = directives, price = 0, size = (modifiers.legsSize or size.size), rarity = "essential"}
-  items.chest.parameters = {directives = directives, price = 0, size = (modifiers.chestSize or size.size), variant = modifiers.chestVariant, rarity = "essential"}
-  -- Base size doesn't have any items.
-  if (modifiers.legsSize or size.size) == "" then items.legs = nil end
-  if (modifiers.chestSize or size.size) == "" and (modifiers.chestVariant or "") == "" then items.chest = nil end
-  -- Grab current worn clothing.
-  local currentItems = {
-    legs = player.equippedItem("legsCosmetic"),
-    chest = player.equippedItem("chestCosmetic")
-  }
-  -- Shorthand instead of 2 blocks.
-  for _, itemType in ipairs({"legs", "chest"}) do
-    currentItem = currentItems[itemType]
-    -- If the item isn't a generated item, give it back.
-    if currentItems[itemType] and not currentItems[itemType].parameters.size and not currentItems[itemType].parameters.tempSize == size.size then
-      player.giveItem(currentItems[itemType])
-    end
-    -- Replace the item if it isn't generated.
-    if not (currentItem and currentItems[itemType].parameters.tempSize) then
-      player.setEquippedItem(itemType.."Cosmetic", items[itemType])
-    end
-  end
-end
-
-starPounds.equipCheck = function(size)
-  -- Cap size in certain vehicles to prevent clipping.
-  local leftCappedVehicle = false
-  local modifiers = {}
-  if mcontroller.anchorState() then
-    local anchorEntity = world.entityName(mcontroller.anchorState())
-    if anchorEntity and starPounds.settings.vehicleSizeCap[anchorEntity] then
-      if starPounds.currentSizeIndex > starPounds.settings.vehicleSizeCap[anchorEntity] then
-        modifiers.chestVariant = "busty"
-        modifiers.legsSize = nil
-        modifiers.chestSize = nil
-        modifiers.override = true
-        size = starPounds.sizes[starPounds.settings.vehicleSizeCap[anchorEntity]]
-        inCappedVehicle = true
-      end
-    end
-  else
-    if inCappedVehicle then
-      leftCappedVehicle = true
-      inCappedVehicle = false
-    end
-  end
-  -- Skip if no changes.
-  if
-    size.size == (oldSize and oldSize.size or nil) and
-    starPounds.currentVariant == oldVariant and
-    not leftCappedVehicle and
-    not (starPounds.swapSlotItem ~= nil and starPounds.swapSlotItem.parameters ~= nil and (starPounds.swapSlotItem.parameters.size ~= nil or starPounds.swapSlotItem.parameters.tempSize ~= nil)) and
-    not starPounds.optionChanged
-  then return end
-  -- Setup modifiers.
-  if not modifiers.override then
-    modifiers = {
-      chestVariant = starPounds.currentVariant,
-      chestSize = storage.starPounds.enabled and (starPounds.hasOption("extraTopHeavy") and 2 or (starPounds.hasOption("topHeavy") and 1 or nil) or nil),
-      legsSize = storage.starPounds.enabled and (starPounds.hasOption("extraBottomHeavy") and 2 or (starPounds.hasOption("bottomHeavy") and 1 or nil) or nil)
-    }
-  end
-  -- Check the item the player is holding.
-  if starPounds.swapSlotItem and starPounds.swapSlotItem.parameters then
-    local item = starPounds.swapSlotItem
-    -- If it's a base one then bye bye item.
-    if starPounds.swapSlotItem.parameters.size then
-      player.setSwapSlotItem(nil)
-    -- If it's a clothing one then reset it to the normal item in their cursor.
-    elseif item.parameters.tempSize and item.parameters.baseName then
-      -- Restore the original item
-      item = {
-        name = item.parameters.baseName,
-        parameters = item.parameters,
-        count = item.count
-      }
-      item.parameters.tempSize = nil
-      item.parameters.baseName = nil
-      player.setSwapSlotItem(item)
-    end
-  end
-
-  modifierSize = nil
-  -- Get the entity size, and what index it is in the config.
-  sizeIndex = starPounds.currentSizeIndex
-  -- Check if there's a leg size modifier, and if it exists.
-  if modifiers.legsSize then
-    for i = 1, modifiers.legsSize do
-      if starPounds.sizes[sizeIndex + i] and not starPounds.sizes[sizeIndex + i].isBlob then
-         modifiers.legsSize = starPounds.sizes[sizeIndex + i].size
-      end
-    end
-    if type(modifiers.legsSize) == "number" then modifiers.legsSize = nil end
-  end
-  -- Check if there's a chest size modifier, and if it exists.
-  if modifiers.chestSize then
-    for i = 1, modifiers.chestSize do
-      if starPounds.sizes[sizeIndex + i] and not starPounds.sizes[sizeIndex + i].isBlob then
-         modifiers.chestSize = starPounds.sizes[sizeIndex + i].size
-         modifierSize = starPounds.sizes[sizeIndex + i]
-      end
-    end
-    if type(modifiers.chestSize) == "number" then modifiers.chestSize = nil end
-  end
-  -- Check if there's a chest variant, and if it exists.
-  if modifiers.chestVariant then
-    modifiers.chestVariant = contains(starPounds.sizes[sizeIndex].variants, modifiers.chestVariant) and modifiers.chestVariant or nil
-  end
-
-  -- Iterate over worn clothing.
-  local doEquip = false
-  local returnedItems = false
-  for _, itemType in ipairs({"legs", "chest"}) do
-    local currentItem = player.equippedItem(itemType.."Cosmetic")
-    local currentSize = modifiers[itemType.."Size"] or size.size
-    -- Check if the entity is wearing something, if it's not a base item, and if it's generated but the size is wrong.
-    if currentItem and not currentItem.parameters.size and currentItem.parameters.tempSize ~= currentSize then
-      -- Attempt to find the item for the current size.
-      if pcall(root.itemType, currentSize..(currentItem.parameters.baseName or currentItem.name)) then
-        -- If found, give the new item some parameters for easier checking.
-        currentItem.parameters.baseName = (currentItem.parameters.baseName or currentItem.name)
-        currentItem.parameters.tempSize = currentSize
-        currentItem.name = currentSize..(currentItem.parameters.baseName or currentItem.name)
-        player.setEquippedItem(itemType.."Cosmetic", currentItem)
-      else
-        -- Reset and give the item back/remove it from the slot if an updated one couldn't be found.
-        currentItem.name = currentItem.parameters.baseName or currentItem.name
-        currentItem.parameters.tempSize = nil
-        currentItem.parameters.baseName = nil
-        player.giveItem(currentItem)
-        player.setEquippedItem(itemType.."Cosmetic", nil)
-        currentItem = nil
-
-        if not returnedItems then
-          starPounds.moduleFunc("sound", "play", "clothingrip", 0.75)
-          returnedItems = true
-        end
-      end
-    end
-    -- If the entity isn't wearing an item, or the item they are wearing has the wrong size/variant.
-    if currentSize ~= "" or (
-      not currentItem or
-      currentItem.parameters.size == currentSize and currentItem.parameters.variant == modifiers[itemType.."Variant"] or
-      currentItem.parameters.tempSize == currentSize or
-      starPounds.currentSizeIndex == 1 and not currentItem.parameters.size
-    )
-    then
-      player.consumeItemWithParameter("size", currentSize, 2)
-      doEquip = true
-    end
-    for _, removedSize in ipairs(starPounds.sizes) do
-      if removedSize ~= size then
-        -- Delete all base items.
-        player.consumeItemWithParameter("size", removedSize.size, 2)
-      end
-    end
-  end
-  if doEquip then
-    starPounds.equipSize(size, modifiers)
-  end
 end
 
 starPounds.feed = function(amount, foodType)
@@ -1230,8 +966,6 @@ starPounds.messageHandlers = function()
   -- Handler for grabbing data.
   message.setHandler("starPounds.getData", simpleHandler(starPounds.getData))
   message.setHandler("starPounds.isEnabled", simpleHandler(starPounds.isEnabled))
-  message.setHandler("starPounds.getSize", simpleHandler(starPounds.getSize))
-  message.setHandler("starPounds.getChestVariant", simpleHandler(starPounds.getChestVariant))
   message.setHandler("starPounds.getDirectives", simpleHandler(starPounds.getDirectives))
   message.setHandler("starPounds.getVisualSpecies", simpleHandler(starPounds.getVisualSpecies))
   -- Handlers for skills/stats/options
@@ -1278,15 +1012,12 @@ starPounds.toggleEnable = function()
   -- Do a barrel roll (just flip the boolean).
   storage.starPounds.enabled = not storage.starPounds.enabled
   -- Make sure the movement penalty stuff gets reset as well.
-  starPounds.currentSize, starPounds.currentSizeIndex = starPounds.getSize(storage.starPounds.weight)
   starPounds.parseSkills()
-  starPounds.updateStats(true)
-  starPounds.optionChanged = true
+  starPounds.events:fire("main:statChange")
   if not storage.starPounds.enabled then
     starPounds.moduleUninit()
     starPounds.movementModifier = 1
     starPounds.jumpModifier = 1
-    starPounds.equipCheck(starPounds.getSize(0))
     world.sendEntityMessage(entity.id(), "starPounds.expire")
     status.clearPersistentEffects("starpounds")
     status.clearPersistentEffects("starpoundseaten")
@@ -1343,12 +1074,7 @@ starPounds.resetConfirm = function()
 end
 
 starPounds.resetWeight = function()
-  -- Set weight.
   storage.starPounds.weight = starPounds.sizes[(starPounds.getSkillLevel("minimumSize") + 1)].weight
-  starPounds.currentSize, starPounds.currentSizeIndex = starPounds.getSize(storage.starPounds.weight)
-  -- Reset the fat items.
-  starPounds.equipCheck(starPounds.getSize(storage.starPounds.weight))
-
   return true
 end
 

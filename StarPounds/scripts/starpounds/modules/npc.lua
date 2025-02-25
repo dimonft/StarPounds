@@ -42,11 +42,9 @@ function _npc:init()
   self.setNpcItemSlotCC_old = setNpcItemSlotCC or nullFunction
   setNpcItemSlot = function(...)
     self.setNpcItemSlot_old(...)
-    starPounds.optionChanged = true
   end
   setNpcItemSlotCC = function(...)
     self.setNpcItemSlotCC_old(...)
-    starPounds.optionChanged = true
   end
 end
 
@@ -111,14 +109,9 @@ function _npc:setup()
   end
   -- Disable anything that uses visuals if the species doesn't have a patch.
   if not speciesData.weightGain then
-    starPounds.getChestVariant = function() return "" end
-    starPounds.getDirectives = function() return "" end
-    starPounds.equipSize = nullFunction
-    starPounds.equipCheck = nullFunction
     starPounds.gainWeight = nullFunction
     starPounds.loseWeight = nullFunction
     starPounds.setWeight = nullFunction
-    starPounds.getSize = function() return starPounds.sizes[1], 1 end
   end
   -- No XP if disabled.
   if config.getParameter("starPounds_options.disableExperience") then

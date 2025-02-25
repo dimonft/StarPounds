@@ -13,6 +13,7 @@ function starPoundsInit()
   getmetatable(storage.starPounds).__nils = {}
   -- Used in functions for detection.
   starPounds.type = "monster"
+  starPounds.moduleInit("base")
   -- Setup message handlers
   starPounds.messageHandlers()
   -- Reload whenever the entity loads in/beams/etc.
@@ -21,14 +22,13 @@ function starPoundsInit()
   starPounds.parseSkills()
   starPounds.parseStats()
   starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
-  starPounds.level = storage.starPounds.level
-  starPounds.experience = storage.starPounds.experience
-  starPounds.moduleInit({"monster", "vore"})
+  starPounds.moduleInit({"entity", "monster", "vore"})
   starPounds.effectInit()
-  if not starPounds.getTrait() then
-    starPounds.setTrait(config.getParameter("starPounds_trait"))
-  end
-  starPounds.weightMultiplier = math.round(1 + (storage.starPounds.weight/entity.weight), 1)
+  starPounds.setWeight(storage.starPounds.weight)
+
+  starPounds.events:on("main:statChange", function()
+    starPounds.updateStats(true)
+  end)
 end
 
 function init()
@@ -52,11 +52,8 @@ function update(dt)
     starPounds.statCache = {}
     starPounds.statCacheTimer = starPounds.settings.statCacheTimer
   end
-  -- Stat/status updating stuff.
-  starPounds.updateEffects(dt)
   -- Modules.
   starPounds.moduleUpdate(dt)
-  starPounds.optionChanged = false
 end
 
 function uninit()
