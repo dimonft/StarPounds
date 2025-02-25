@@ -27,6 +27,8 @@ function stomach:init()
   }
 
   starPounds.stomach = self:get()
+  -- Delete json metadata so we don't store nils.
+  setmetatable(storage.starPounds.stomachContents, nil)
 
   message.setHandler("starPounds.getStomach", function(_, _, ...) return self:get(...) end)
   message.setHandler("starPounds.digest", function(_, _, ...) return self:digest(...) end)
@@ -66,7 +68,6 @@ function stomach:get()
       end
     else
       storage.starPounds.stomachContents[foodType] = nil
-      getmetatable(storage.starPounds.stomachContents).__nils = {}
     end
   end
 
