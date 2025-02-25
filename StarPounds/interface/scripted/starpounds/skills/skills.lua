@@ -79,22 +79,18 @@ function update()
     barPadding:setVisible(not isAdmin)
 
     checkSkills()
-    refreshTimer = 0
+    if selectedSkill then
+      _ENV[string.format("%sSkill", selectedSkill.name)].onClick()
+    end
   end
 
   if experience ~= starPounds.experience or level ~= starPounds.level then
     setProgress(starPounds.experience, starPounds.level)
-    
-    checkSkills()
-    refreshTimer = 0
-  end
 
-  refreshTimer = math.max((refreshTimer or 0.25) - script.updateDt(), 0)
-  if refreshTimer == 0 then
+    checkSkills()
     if selectedSkill then
       _ENV[string.format("%sSkill", selectedSkill.name)].onClick()
     end
-    refreshTimer = 0.25
   end
 
   -- Check promises.
