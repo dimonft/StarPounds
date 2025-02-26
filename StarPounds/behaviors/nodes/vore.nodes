@@ -21,10 +21,10 @@
     "script": "/scripts/actions/vore.lua",
     "output": {}
   },
-  "movementPenalty": {
+  "movementMultiplier": {
     "type": "action",
-    "name": "movementPenalty",
-    "title": "movementPenalty",
+    "name": "movementMultiplier",
+    "title": "movementMultiplier",
     "category": "vore",
     "script": "/scripts/actions/vore.lua",
     "output": {

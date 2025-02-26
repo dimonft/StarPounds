@@ -38,13 +38,13 @@ function update(args)
       and not status.statPositive("activeMovementAbilities")
       and status.overConsumeResource("energy", self.energyCostPerSecond * args.dt * (0.5 + math.min(0.5 * math.max(velocity, 0)/self.boostSpeed, 0.5)))
     then
-      if starPounds.movementModifier == 0 then
+      if starPounds.movementMultiplier == 0 then
         starPounds.controlModifiers.speedModifier = 0.1
       end
       -- -40 is the velocity at which the player can take damage from falling.
       local minimumVel = -5
       local forceBoost = 1 + math.max(0, velocity/minimumVel) * 3
-      local movementModifier = math.max(starPounds.movementModifier or 1, 0.25)
+      local movementModifier = math.max(starPounds.movementMultiplier or 1, 0.25)
       local weightBonusSpeed = 1/movementModifier
       local weightBonusForce = 1 + ((starPounds.weightMultiplier or 1) - 1) * 0.25
       mcontroller.controlParameters({gravityMultiplier = 1/world.gravity(mcontroller.position())})

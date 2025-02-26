@@ -50,7 +50,7 @@ end
 
 function _npc:update(dt)
   if storage.starPounds.enabled then
-    if starPounds.currentSize.movementPenalty == 1 then
+    if starPounds.currentSize.movementMultiplier == 0 then
       mcontroller.controlModifiers({
         movementSuppressed = true
       })

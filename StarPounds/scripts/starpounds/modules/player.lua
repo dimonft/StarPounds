@@ -71,8 +71,8 @@ _player.damageListener = damageListener("damageTaken", function(notifications)
     if notification.sourceEntityId == entity.id() and notification.targetEntityId == entity.id() then
       if notification.damageSourceKind == "falling" and starPounds.currentSizeIndex > 1 then
         -- "explosive" damage (ignores tilemods) to blocks is reduced by 80%, for a total of 5% damage applied to blocks. (Isn't reduced by the fall damage skill)
-        local baseDamage = (notification.damageDealt)/(1 + starPounds.currentSize.healthBonus * (1 - starPounds.getStat("fallDamageResistance")))
-        local tileDamage = baseDamage * (1 + starPounds.currentSize.healthBonus) * 0.25
+        local baseDamage = (notification.damageDealt)/(starPounds.currentSize.healthMultiplier * (1 - starPounds.getStat("fallDamageResistance")))
+        local tileDamage = baseDamage * starPounds.currentSize.healthMultiplier * 0.25
         self:damageHitboxTiles(tileDamage)
         break
       end
@@ -193,7 +193,7 @@ function _player:footstep(dt)
     local sloshVolume = math.round(math.min(weightMult + stomachMult, self.data.maximumSloshVolume), 2)
 
     -- No step sound if we can't move (i.e. Immobile without the skill), but boost the slosh volume.
-    if starPounds.currentSize.movementPenalty == 1 then
+    if starPounds.currentSize.movementMultiplier == 0 then
       stepVolume = 0
       sloshVolume = sloshVolume ^ 0.8
     end
@@ -237,7 +237,7 @@ function _player:soundMult()
   -- Dumb but the immobile skill edits the movement penalty.
   local size = starPounds.sizes[starPounds.currentSizeIndex]
   if not self.sizeMultipliers[size.size] then
-    local mult = math.round(math.min(size.movementPenalty ^ 0.4, self.data.maximumStepVolume), 2)
+    local mult = math.round(math.min((1 - size.movementMultiplier) ^ 0.4, self.data.maximumStepVolume), 2)
     self.sizeMultipliers[size.size] = mult
   end
 

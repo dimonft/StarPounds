@@ -19,8 +19,8 @@ function hasEatenEntity(args, board)
   return eatenEntity
 end
 
-function movementPenalty(args, board)
-  return true, {number = (starPounds.currentSize and (1 - starPounds.currentSize.movementPenalty) or 1)}
+function movementMultiplier(args, board)
+  return true, {number = (starPounds.currentSize and starPounds.currentSize.movementMultiplier or 1)}
 end
 
 function fullStomach(args, board)

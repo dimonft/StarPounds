@@ -92,12 +92,12 @@
             }
           },
           {
-            "title": "movementPenalty",
+            "title": "movementMultiplier",
             "type": "action",
-            "name": "movementPenalty",
+            "name": "movementMultiplier",
             "parameters": {},
             "output": {
-              "number": "movementPenalty"
+              "number": "movementMultiplier"
             }
           },
           {
@@ -106,7 +106,7 @@
             "name": "multiply",
             "parameters": {
               "factor": {"key": "leapSpeed"},
-              "number": {"key": "movementPenalty"}
+              "number": {"key": "movementMultiplier"}
             },
             "output": {
               "result": "leapSpeed"

@@ -47,7 +47,7 @@ function init()
     function startDash(direction)
       starPounds = getmetatable ''.starPounds
       self.dashControlForce = self.baseDashControlForce * starPounds.weightMultiplier
-      self.dashSpeed = self.baseDashSpeed * (starPounds.movementModifier or 1)
+      self.dashSpeed = self.baseDashSpeed * (starPounds.movementMultiplier or 1)
       startDash_old(direction)
     end
 

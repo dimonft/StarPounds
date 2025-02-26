@@ -206,12 +206,12 @@ starPounds.updateStats = function(force, dt)
     local bonusEffectiveness = math.min(1, sizeIndex/scalingSize)
     local gritReduction = status.stat("activeMovementAbilities") <= 1 and -((starPounds.weightMultiplier - 1) * math.max(0, 1 - starPounds.getStat("knockbackResistance"))) or 0
     local persistentEffects = {
-      {stat = "maxHealth", baseMultiplier = math.round(1 + size.healthBonus * starPounds.getStat("health"), 2)},
+      {stat = "maxHealth", baseMultiplier = math.round(size.healthMultiplier * starPounds.getStat("health"), 2)},
       {stat = "foodDelta", effectiveMultiplier = ((starPounds.stomach.food > 0) or starPounds.hasOption("disableHunger")) and 0 or math.round(starPounds.getStat("hunger"), 2)},
       {stat = "grit", amount = gritReduction},
       {stat = "shieldHealth", effectiveMultiplier = 1 + starPounds.getStat("shieldHealth") * bonusEffectiveness},
       {stat = "knockbackThreshold", effectiveMultiplier = 1 - gritReduction},
-      {stat = "fallDamageMultiplier", effectiveMultiplier = 1 + size.healthBonus * (1 - starPounds.getStat("fallDamageResistance"))},
+      {stat = "fallDamageMultiplier", effectiveMultiplier = size.healthMultiplier * (1 - starPounds.getStat("fallDamageResistance"))},
       {stat = "iceStatusImmunity", amount = applyImmunity and starPounds.getSkillLevel("iceImmunity") or 0},
       {stat = "poisonStatusImmunity", amount = applyImmunity and starPounds.getSkillLevel("poisonImmunity") or 0},
       {stat = "iceResistance", amount = starPounds.getStat("iceResistance") * bonusEffectiveness},
@@ -237,9 +237,6 @@ starPounds.updateStats = function(force, dt)
   -- Check if the entity is using a morphball (Tech patch bumps this number for the morphball).
   if status.stat("activeMovementAbilities") > 1 then return end
 
-  -- Disable blob on the tech missions so you can actually complete them.
-  starPounds.blobDisabled = status.uniqueStatusEffectActive("starpoundstechmissionmobility") or starPounds.hasOption("disableBlob")
-
   if not baseParameters then baseParameters = mcontroller.baseParameters() end
   local parameters = baseParameters
 
@@ -248,32 +245,32 @@ starPounds.updateStats = function(force, dt)
     -- Every +1 halves the penalty, every -1 doubles it (muliplicatively).
     local movement = starPounds.getStat("movement")
     if movement <= 0 then
-      starPounds.movementModifier = (1 - size.movementPenalty) ^ (1 - starPounds.getStat("movement"))
+      starPounds.movementMultiplier = size.movementMultiplier ^ (1 - movement)
     else
-      starPounds.movementModifier = 1 - (size.movementPenalty / (2 ^ starPounds.getStat("movement")))
+      starPounds.movementMultiplier = 1 - ((1 - size.movementMultiplier) / (2 ^ movement))
     end
 
-    if size.movementPenalty >= 1 then
-      starPounds.movementModifier = 0
+    if size.movementMultiplier >= 1 then
+      starPounds.movementMultiplier = 0
       starPounds.jumpModifier = starPounds.settings.minimumJumpMultiplier
       starPounds.swimModifier = starPounds.settings.minimumSwimMultiplier
     else
-      starPounds.jumpModifier = math.max(starPounds.settings.minimumJumpMultiplier, 1 - ((1 - starPounds.movementModifier) * starPounds.getStat("jumpPenalty")))
-      starPounds.swimModifier = math.max(starPounds.settings.minimumSwimMultiplier, 1 - ((1 - starPounds.movementModifier) * starPounds.getStat("swimPenalty")))
+      starPounds.jumpModifier = math.max(starPounds.settings.minimumJumpMultiplier, 1 - ((1 - starPounds.movementMultiplier) * starPounds.getStat("jumpPenalty")))
+      starPounds.swimModifier = math.max(starPounds.settings.minimumSwimMultiplier, 1 - ((1 - starPounds.movementMultiplier) * starPounds.getStat("swimPenalty")))
     end
 
-    local movementModifier = starPounds.movementModifier
+    local movementMultiplier = starPounds.movementMultiplier
     local weightMultiplier = starPounds.weightMultiplier
 
     starPounds.controlModifiers = weightMultiplier == 1 and {} or {
-      groundMovementModifier = movementModifier,
+      groundMovementModifier = movementMultiplier,
       liquidMovementModifier = starPounds.swimModifier,
-      speedModifier = movementModifier,
+      speedModifier = movementMultiplier,
       airJumpModifier = starPounds.jumpModifier,
       liquidJumpModifier = starPounds.swimModifier
     }
     -- Silly, but better than updating modifiers every tick.
-    starPounds.controlModifiersAlt = (movementModifier < starPounds.settings.minimumAltSpeedMultiplier) and sb.jsonMerge(starPounds.controlModifiers, {
+    starPounds.controlModifiersAlt = (movementMultiplier < starPounds.settings.minimumAltSpeedMultiplier) and sb.jsonMerge(starPounds.controlModifiers, {
       speedModifier = starPounds.settings.minimumAltSpeedMultiplier
     }) or nil
     starPounds.controlParameters = weightMultiplier == 1 and {} or {
@@ -1016,7 +1013,7 @@ starPounds.toggleEnable = function()
   starPounds.events:fire("main:statChange")
   if not storage.starPounds.enabled then
     starPounds.moduleUninit()
-    starPounds.movementModifier = 1
+    starPounds.movementMultiplier = 1
     starPounds.jumpModifier = 1
     world.sendEntityMessage(entity.id(), "starPounds.expire")
     status.clearPersistentEffects("starpounds")

@@ -2,7 +2,7 @@ require "/scripts/vec2.lua"
 local startDash_old = (startDash_old or startDash) or function() end
 function startDash(direction)
   starPounds = getmetatable ''.starPounds
-  local movementModifier = math.max(starPounds.movementModifier or 1, 0.25)
+  local movementModifier = math.max(starPounds.movementMultiplier or 1, 0.25)
   self.dashControlForce = self.baseDashControlForce * starPounds.weightMultiplier
   self.dashSpeed = self.baseDashSpeed * (movementModifier + (1 - movementModifier) * starPounds.getStat("stomachSmashRange"))
   startDash_old(direction)
