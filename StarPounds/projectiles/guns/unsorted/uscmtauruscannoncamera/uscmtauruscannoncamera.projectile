@@ -1,0 +1,16 @@
+{
+  "projectileName" : "uscmtauruscannoncamera",
+  "image" : "/projectiles/invisibleprojectile/invisibleprojectile.png",
+  "frameNumber" : 1,
+  "speed" : 0,
+  "timeToLive" : 1,
+  "onlyHitTerrain" : true,
+  "movementSettings" : { "collisionEnabled" : false },
+  "animationLoops" : false,
+  "damageType" : "NoDamage",
+  "damageKind" : "default",
+
+  "shakeAmplitude": 0.25,
+  "scripts" : ["uscmtauruscannoncamera.lua"],
+  "scriptDelta" : 1
+}

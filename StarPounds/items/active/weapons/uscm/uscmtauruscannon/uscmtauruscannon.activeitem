@@ -1,0 +1,103 @@
+{
+  "itemName" : "uscmtauruscannon",
+  "price" : 2500,
+  "inventoryIcon" : "uscmtauruscannon.png:inactive",
+  "maxStack" : 1,
+  "rarity" : "Legendary",
+  "description" : "A sinister weapon of war. Designed for mounting on vehicles, not your shoulder.",
+  "shortdescription" : "Taurus Cannon",
+  "level" : 7,
+  "category" : "uniqueWeapon",
+  "itemTags" : ["weapon","ranged","rocketlauncher"],
+  "twoHanded" : true,
+
+  "animation" : "uscmtauruscannon.animation",
+  "animationParts" : {
+    "middle" : "uscmtauruscannon.png",
+    "middleFullbright" : "uscmtauruscannonfullbright.png",
+    "middleHeat" : "uscmtauruscannonheat.png",
+    "muzzleFlash" : ""
+  },
+  "animationCustom" : {
+    "sounds" : {
+      "fireStart" : [ "/sfx/tools/energypickaxe_start.ogg" ],
+      "fireLoop" : [ "/sfx/gun/mech_beamdrill_loop.ogg" ],
+      "fireEnd" : ["/sfx/gun/mech_beamdrill_winddown.ogg"],
+      "fireEndHeat" : ["/sfx/projectiles/flame_burn.ogg"],
+      "beamImpact" : []
+    }
+  },
+  "animationScripts" : ["/items/active/effects/chain.lua"],
+
+  "baseOffset" : [0.0, 0.5],
+  "muzzleOffset" : [2.375, 0.125],
+
+  "scripts" : ["/items/active/weapons/uscm/uscmtauruscannon/uscmtauruscannon.lua"],
+
+  "elementalType" : "physical",
+
+  "primaryAbility" : {
+    "scripts" : ["/items/active/weapons/uscm/uscmtauruscannon/beamfire.lua"],
+    "class" : "BeamFire",
+
+    "fireTime" : 0.2,
+    "baseDps" : 12,
+    "energyUsage" : 75,
+
+    "damageConfig" : {
+      "statusEffects" : [ ],
+      "damageSourceKind" : "plasma",
+      "knockback" : 2
+    },
+
+    "beamLength" : 50,
+
+    "chain" : {
+      "startOffset" : [0, 0],
+      "segmentImage" : "/items/active/weapons/uscm/uscmtauruscannon/beam.png",
+      "endSegmentImage" : "/items/active/weapons/uscm/uscmtauruscannon/beamEnd.png",
+      "segmentSize" : 0.5,
+      "overdrawLength" : 0.0,
+      "taper" : 0.0,
+      "jitter" : 0.125,
+      "waveform" : {
+        "frequency" : 0.5,
+        "amplitude" : 0.125,
+        "movement" : 0.0
+      },
+      "fullbright" : true,
+      "light" : [164, 81, 196]
+    },
+
+    "stances" : {
+      "idle" : {
+        "armRotation" : 0,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+
+        "allowRotate" : true,
+        "allowFlip" : true
+      },
+      "fire" : {
+        "duration" : 0,
+        "armRotation" : 0,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+
+        "allowRotate" : true,
+        "allowFlip" : true
+      },
+      "cooldown" : {
+        "duration" : 0.1,
+        "armRotation" : 0,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+
+        "allowRotate" : true,
+        "allowFlip" : true
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildunrandweapon.lua"
+}
