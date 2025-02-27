@@ -5,7 +5,7 @@
   "category" : "preparedFood",
   "inventoryIcon" : "enormouscake.png",
   "description" : "A cake so large, eating this whole thing will leave you stuffed and sluggish.",
-  "shortdescription" : "Enourmous Cake",
+  "shortdescription" : "Enormous Cake",
   "effects" : [ [
     {
         "effect" : "maxenergyscalingboostfood",
