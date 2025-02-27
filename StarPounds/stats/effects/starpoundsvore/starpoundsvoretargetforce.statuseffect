@@ -4,7 +4,7 @@
     "options" : {
       "ignoreSkills" : true,
       "ignoreCapacity" : true,
-      "ignoreEnergyRequirment" : true,
+      "ignoreEnergyRequirement" : true,
       "energyMultiplier" : 0
     }
   },

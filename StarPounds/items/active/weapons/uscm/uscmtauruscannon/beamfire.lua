@@ -76,8 +76,6 @@ function BeamFire:fire()
       animator.setParticleEmitterActive("beamCollision", false)
     end
 
-    world.debugText(sb.print(math.floor((self.energyUsage or 0) * self.dt * (0.2 + 0.8 * self.weapon.heatLerp ^ 3) + 0.5)).." energy/sec", vec2.add(activeItem.ownerAimPosition(), {1, 0}), "green")
-
     local knockbackFactor = (1 - status.stat("grit"))
     local knockbackForce = 100
     local knockback = 10 * knockbackFactor
