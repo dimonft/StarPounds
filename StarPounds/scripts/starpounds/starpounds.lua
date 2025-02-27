@@ -3,9 +3,6 @@ require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/status.lua"
 
-local function nullFunction()
-end
-
 starPounds = {
   version = root.assetJson("/scripts/starpounds/starpounds.config:version"),
   settings = root.assetJson("/scripts/starpounds/starpounds.config:settings"),

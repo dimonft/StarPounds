@@ -1,9 +1,6 @@
--- Dummy empty function so we save memory.
-local function nullFunction()
-end
 -- Old functions. (we call these in functons we replace)
-local update_old = update or nullFunction
-local uninit_old = uninit or nullFunction
+local update_old = update or function(dt) end
+local uninit_old = uninit or function() end
 -- Monsters load this from a behaviour script, so we can't just hook into init since it's already run.
 require "/scripts/starpounds/starpounds.lua"
 storage.starPounds = sb.jsonMerge(starPounds.baseData, storage.starPounds)

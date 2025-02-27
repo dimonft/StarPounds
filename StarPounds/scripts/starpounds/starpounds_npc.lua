@@ -1,10 +1,7 @@
--- Dummy empty function so we save memory.
-local function nullFunction()
-end
 -- Old functions. (we call these in functons we replace)
-local init_old = init or nullFunction
-local update_old = update or nullFunction
-local uninit_old = uninit or nullFunction
+local init_old = init or function() end
+local update_old = update or function(dt) end
+local uninit_old = uninit or function() end
 -- Run on load.
 function init()
   -- Run old NPC/Monster stuff.

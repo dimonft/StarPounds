@@ -10,12 +10,20 @@ function pred:init()
   message.setHandler("starPounds.releaseEntity", function(_, _, ...) return self:release(...) end)
 
   self.voreCooldown = 0
+
+  self.struggleCooldown = 0
+  self.storedStruggleStrength = 0
+  self.storedStruggleVolume = 0
+  self.struggleVolumeLerp = 0
+
   self.preyCheckTimer = self.data.preyCheckTimer
 end
 
 function pred:update(dt)
   -- Tick down tool/hotkey cooldown.
   self.voreCooldown = math.max(self.voreCooldown - (dt / starPounds.getStat("voreCooldown")), 0)
+  self.struggleCooldown = math.max(self.struggleCooldown - dt, 0)
+  self.struggleVolumeLerp = math.max(0, math.round(util.lerp(dt, self.struggleVolumeLerp, self.storedStruggleVolume - 0.05), 4))
   self:preyCheck(dt)
 end
 
@@ -324,6 +332,7 @@ function pred:struggle(preyId, struggleStrength, escape)
     if prey.id == preyId then
       local preyHealth = world.entityHealth(prey.id)
       local preyHealthPercent = preyHealth[1]/preyHealth[2]
+      local preyWeight = (prey.base or 0) + (prey.weight or 0)
       local struggleStrength = root.evalFunction2("protection", struggleStrength, status.stat("protection"))
       local escapeChance = math.max(world.entityType(preyId) == "player" and self.data.playerEscape or 0, 0.5 * struggleStrength)
       local released = false
@@ -333,6 +342,14 @@ function pred:struggle(preyId, struggleStrength, escape)
           starPounds.events:fire("pred:entityEscape", released)
         end
       end
+      -- If struggles are on cooldown, store the 'strength' and weight and apply it to the next valid one.
+      if self.struggleCooldown > 0 then
+        self.storedStruggleStrength = self.storedStruggleStrength + struggleStrength
+        self.storedStruggleVolume = math.min(self.storedStruggleVolume + 0.25 + preyHealthPercent * (preyWeight/(starPounds.species.default.weight * 2)), 1)
+        break
+      end
+
+      struggleStrength = struggleStrength + self.storedStruggleStrength
 
       if status.isResource("energy") then
         local struggleMultiplier = math.max(0, 1 - starPounds.getStat("struggleResistance"))
@@ -354,10 +371,14 @@ function pred:struggle(preyId, struggleStrength, escape)
       end
 
       if not starPounds.hasOption("disableStruggleSounds") then
-        local totalPreyWeight = (prey.base or 0) + (prey.weight or 0)
-        local soundVolume = math.min(1, 0.25 + preyHealthPercent * (totalPreyWeight/(starPounds.species.default.weight * 2)))
-        starPounds.moduleFunc("sound", "play", "struggle", soundVolume)
+        local soundVolume = math.min(1, 0.25 + preyHealthPercent * (preyWeight/(starPounds.species.default.weight * 2)) + self.struggleVolumeLerp)
+        local soundPitch = 1 + 0.1 * (math.random() - 0.5)
+        starPounds.moduleFunc("sound", "play", "struggle", soundVolume, soundPitch)
       end
+
+      self.storedStruggleVolume = 0
+      self.storedStruggleStrength = 0
+      self.struggleCooldown = util.randomInRange({self.data.minimumStruggleCooldownTime, (self.data.struggleCooldownTime * 2) - self.data.minimumStruggleCooldownTime})
       break
     end
   end

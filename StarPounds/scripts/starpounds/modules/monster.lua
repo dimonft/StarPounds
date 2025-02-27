@@ -115,8 +115,8 @@ function _monster:setup()
   end
 end
 
-local die_old = die or nullFunction
-local setDying = setDying or nullFunction
+local die_old = die or function() end
+local setDying = setDying or function() end
 function die()
   if storage.starPounds.pred then
     storage.starPounds.pred = nil

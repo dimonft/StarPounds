@@ -18,7 +18,10 @@ function sound:update(dt)
 end
 
 function sound:play(soundPool, volume, pitch, loops)
-  world.sendEntityMessage(entity.id(), "starPounds.playSound", soundPool, volume, pitch, loops)
+  self:setVolume(soundPool, volume or 1)
+  self:setPitch(soundPool, pitch or 1)
+
+  world.sendEntityMessage(entity.id(), "starPounds.playSound", soundPool, loops)
 end
 
 function sound:stop(soundPool)
