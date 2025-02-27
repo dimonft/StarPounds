@@ -52,6 +52,11 @@ function stomach:get()
 
   local capacity = self.data.stomachCapacity * starPounds.getStat("capacity")
 
+  -- Multiply based on size.
+  if starPounds.currentSize then
+    capacity = capacity * starPounds.currentSize.stomachMultiplier
+  end
+
   local totalAmount = 0
   local contents = 0
   local food = 0
