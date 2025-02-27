@@ -2,7 +2,7 @@ local supersize = starPounds.module:new("supersize")
 
 function supersize:init()
   self.firstUpdate = false
-  self.isSuperSize = false
+  self.isSupersize = false
   self.projectileActive = false
   self.size = ""
   self.bounds = rect.pad(mcontroller.boundBox(), {0, -1})
@@ -13,9 +13,9 @@ function supersize:init()
   self.sizeUpdate = function()
     self:killProjectile()
     self.size = starPounds.currentSize.size
-    self.isSuperSize = starPounds.currentSize.yOffset
+    self.isSupersize = starPounds.currentSize.yOffset
     self.projectileType = starPounds.currentSize.projectile
-    if self.isSuperSize then
+    if self.isSupersize then
       self.bounds = rect.translate(rect.pad(mcontroller.boundBox(), {0, self.data.boundsPadding}), self.data.boundsOffset)
       self.width = math.abs(self.bounds[3] - self.bounds[1]) * 0.5
     end
@@ -39,7 +39,7 @@ function supersize:update(dt)
     return
   end
   -- Don't run anything after this if we're not a large size.
-  if not self.isSuperSize then return end
+  if not self.isSupersize then return end
   -- Automatically open doors in front/close doors behind since large sizes cant reach to interact.
   if not starPounds.hasOption("disableAutomaticDoors") then
     self:automaticDoors(dt)
@@ -61,7 +61,7 @@ function supersize:killProjectile()
 end
 
 function supersize:doProjectile()
-  if not self.isSuperSize then return false end
+  if not self.isSupersize then return false end
   if not self.projectileType then return false end
   if starPounds.hasOption("disableCollision") then return false end
   if status.stat("activeMovementAbilities") >= 1 then return false end
