@@ -191,19 +191,19 @@ starPounds.spawnMouthProjectile = function(actions, count)
   })
 end
 
-starPounds.updateStats = function(force, dt)
+starPounds.updateStats = function(updateStats, dt)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
+  -- Update stats based on the timer.
+  starPounds.statRefreshTimer = math.max((starPounds.statRefreshTimer or 0) - (dt or 0), 0)
+  updateStats = updateStats or starPounds.statRefreshTimer == 0
   -- Give the entity hitbox, bonus stats, and effects based on fatness.
   local size = starPounds.currentSize
-  starPounds.statRefreshTimer = math.max((starPounds.statRefreshTimer or 0) - (dt or 0), 0)
-  local timer = starPounds.statRefreshTimer
-  if timer == 0 or force then
-    -- Shouldn't activate at base size, so both indexes are reduced by one.
-    local sizeIndex = starPounds.currentSizeIndex - 1
-    local scalingSize = starPounds.settings.scalingSize - 1
+  local sizeIndex = starPounds.currentSizeIndex
+  if updateStats then
+    -- Shouldn't activate at base size, so indexes are reduced by one.
+    local bonusEffectiveness = math.min(1, (sizeIndex - 1) / (starPounds.settings.scalingSize - 1))
     local applyImmunity = starPounds.currentSizeIndex >= starPounds.settings.activationSize
-    local bonusEffectiveness = math.min(1, sizeIndex/scalingSize)
     local gritReduction = status.stat("activeMovementAbilities") <= 1 and -((starPounds.weightMultiplier - 1) * math.max(0, 1 - starPounds.getStat("knockbackResistance"))) or 0
     local persistentEffects = {
       {stat = "maxHealth", baseMultiplier = 1 + math.round((size.healthMultiplier - 1) * starPounds.getStat("health"), 2)},
@@ -229,7 +229,7 @@ starPounds.updateStats = function(force, dt)
     end
     status.setPersistentEffects("starpounds", filteredPersistentEffects)
     -- Only the timer resets itself.
-    if (timer == 0) and dt then
+    if dt then
       starPounds.statRefreshTimer = starPounds.settings.statRefreshTimer
     end
   end
@@ -240,17 +240,25 @@ starPounds.updateStats = function(force, dt)
   if not baseParameters then baseParameters = mcontroller.baseParameters() end
   local parameters = baseParameters
 
-  if timer == 0 or not (starPounds.controlModifiers and starPounds.controlParameters) or force then
+  if updateStats or not (starPounds.controlModifiers and starPounds.controlParameters) then
+    local movement = starPounds.getStat("movement")
+    starPounds.movementMultiplier = size.movementMultiplier
+    -- If we have the anti-immobile skill, use double the movement penalty of blob instead.
+    local isImmobile = starPounds.movementMultiplier == 0
+    if isImmobile and starPounds.hasSkill("preventImmobile") then
+      starPounds.movementMultiplier = starPounds.sizes[sizeIndex - 1].movementMultiplier ^ 2
+    end
     -- Movement stat starts at 0.
     -- Every +1 halves the penalty, every -1 doubles it (muliplicatively).
-    local movement = starPounds.getStat("movement")
-    if movement <= 0 then
-      starPounds.movementMultiplier = size.movementMultiplier ^ (1 - movement)
-    else
-      starPounds.movementMultiplier = 1 - ((1 - size.movementMultiplier) / (2 ^ movement))
+    if starPounds.movementMultiplier > 0 then
+      if movement <= 0 then
+        starPounds.movementMultiplier = starPounds.movementMultiplier ^ (1 - movement)
+      else
+        starPounds.movementMultiplier = 1 - ((1 - starPounds.movementMultiplier) / (2 ^ movement))
+      end
     end
-
-    if size.movementMultiplier >= 1 then
+    -- Jump/Swim math applies after the movement stat calcuation.
+    if starPounds.movementMultiplier <= 0 then
       starPounds.movementMultiplier = 0
       starPounds.jumpModifier = starPounds.settings.minimumJumpMultiplier
       starPounds.swimModifier = starPounds.settings.minimumSwimMultiplier
@@ -808,7 +816,6 @@ starPounds.setAccessory = function(item)
   end
   storage.starPounds.accessory = item and root.createItem(item) or nil
   starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
-  starPounds.statCacheTimer = 0 -- Force a cache update to immediately apply the bonuses.
   starPounds.events:fire("main:statChange")
   starPounds.backup()
 end

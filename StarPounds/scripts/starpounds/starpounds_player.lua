@@ -34,6 +34,9 @@ function init()
   starPounds.setWeight(storage.starPounds.weight)
 
   starPounds.events:on("main:statChange", function()
+    -- Kill the cache, and force an update to stats.
+    starPounds.statCacheTimer = 0
+    starPounds.statCache = {}
     starPounds.updateStats(true)
   end)
 end

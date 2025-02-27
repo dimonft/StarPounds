@@ -22,11 +22,11 @@ function size:init()
 
   self.canGain = speciesData.weightGain
 
-  -- Fetch the first blob size index for future use.
-  self.blobIndex = math.huge
+  -- Fetch the first supersize index for future use.
+  self.supersizeIndex = math.huge
   for i, size in ipairs(starPounds.sizes) do
-    if size.isBlob then
-      self.blobIndex = math.min(self.blobIndex, i)
+    if size.yOffset then
+      self.supersizeIndex = math.min(self.supersizeIndex, i)
     end
   end
 
@@ -41,6 +41,7 @@ function size:update(dt)
   starPounds.weightMultiplier = storage.starPounds.enabled and math.round(1 + (storage.starPounds.weight/entity.weight), 1) or 1
 
   if starPounds.currentSizeIndex ~= self.oldSizeIndex then
+    starPounds.events:fire("sizes:changed", starPounds.currentSizeIndex - (self.oldSizeIndex or 0))
     -- Force stat update.
     starPounds.events:fire("main:statChange")
     -- Don't play the sound on the first load.
@@ -74,24 +75,12 @@ function size:get(weight)
   local sizeIndex = 0
   -- Go through all starPounds.sizes (smallest to largest) to find which size.
   for i in ipairs(starPounds.sizes) do
-    local isBlob = starPounds.sizes[i].isBlob
-    local blobDisabled = starPounds.hasOption("disableBlob") or starPounds.blobDisabled
-    local skipSize = isBlob and blobDisabled
+    -- Disable supersized stages with options, or on the tech missions so you can actually complete them.
+    local supersizeDisabled = starPounds.hasOption("disableSupersize") or status.uniqueStatusEffectActive("starpoundstechmissionmobility")
+    local skipSize = starPounds.sizes[i].yOffset and supersizeDisabled
     if weight >= starPounds.sizes[i].weight and not skipSize then
       sizeIndex = i
     end
-  end
-
-  -- If we have the anti-immobile skill, use the regular blob clothing and an increased movement penalty.
-  local isImmobile = starPounds.sizes[sizeIndex].movementPenalty == 1
-  local immobileDisabled = blobDisabled or starPounds.hasSkill("preventImmobile")
-  if isImmobile and immobileDisabled then
-    local oldMovementPenalty = starPounds.sizes[sizeIndex - 1].movementPenalty
-    local newMovementPenalty = oldMovementPenalty + 0.5 * (1 - oldMovementPenalty)
-    local newSize = sb.jsonMerge(starPounds.sizes[sizeIndex], {
-      movementPenalty = newMovementPenalty
-    })
-    return newSize, sizeIndex
   end
 
   return starPounds.sizes[sizeIndex], sizeIndex
@@ -157,18 +146,18 @@ function size:equipmentConfig(sizeIndex)
   local chestIndex = math.min(sizeIndex, vehicleCap)
   local legsIndex = math.min(sizeIndex, vehicleCap)
 
-  -- Don't do this for blob sizes.
-  if not starPounds.sizes[sizeIndex].isBlob then
+  -- Don't do this for supersized stages.
+  if not starPounds.sizes[sizeIndex].yOffset then
     -- Calculate the 'target' size based on options and vehicle caps.
     for option, amount in pairs(self.data.sizeOptions.chest) do
       if starPounds.hasOption(option) then
-        chestIndex = math.min(math.max(sizeIndex + amount), self.blobIndex - 1, vehicleCap)
+        chestIndex = math.min(math.max(sizeIndex + amount), self.supersizeIndex - 1, vehicleCap)
       end
     end
     -- Same for legs.
     for option, amount in pairs(self.data.sizeOptions.legs) do
       if starPounds.hasOption(option) then
-        legsIndex = math.min(math.max(sizeIndex + amount), self.blobIndex - 1, vehicleCap)
+        legsIndex = math.min(math.max(sizeIndex + amount), self.supersizeIndex - 1, vehicleCap)
       end
     end
   end
