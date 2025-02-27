@@ -47,10 +47,10 @@
     "script": "/scripts/actions/vore.lua",
     "output": {}
   },
-  "blobOffset": {
+  "supersizeOffset": {
     "type": "action",
-    "name": "blobOffset",
-    "title": "blobOffset",
+    "name": "supersizeOffset",
+    "title": "supersizeOffset",
     "properties": {
       "position": {"type": "position", "key": "self"}
     },

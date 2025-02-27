@@ -12,7 +12,7 @@
     // change, or otherwise alter these settings.
     // ======================== PLEASE READ ========================
     "starPounds_options": {
-      "disableBlob" : true,
+      "disableSupersize" : true,
       "disableBreastGrowth" : true,
       "disableGain" : true,
       "disableGurgles" : true,

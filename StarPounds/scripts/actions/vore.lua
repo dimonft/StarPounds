@@ -31,7 +31,7 @@ function isEaten(args, board)
   return (storage.starPounds.pred ~= nil) or status.uniqueStatusEffectActive("starpoundsvore")
 end
 
-function blobOffset(args, board)
+function supersizeOffset(args, board)
   return offsetPosition({
     position = args.position,
     offset = {0, -(starPounds.currentSize and starPounds.currentSize.yOffset or 0)}

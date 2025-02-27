@@ -27,7 +27,7 @@ function _player:update(dt)
   self:landing()
   local currentSizeWeight = starPounds.currentSize.weight
   local nextSizeWeight = starPounds.sizes[starPounds.currentSizeIndex + 1] and starPounds.sizes[starPounds.currentSizeIndex + 1].weight or starPounds.settings.maxWeight
-  if nextSizeWeight ~= starPounds.settings.maxWeight and starPounds.sizes[starPounds.currentSizeIndex + 1].isBlob and starPounds.hasOption("disableBlob") then
+  if nextSizeWeight ~= starPounds.settings.maxWeight and starPounds.sizes[starPounds.currentSizeIndex + 1].yOffset and starPounds.hasOption("disableSupersize") then
     nextSizeWeight = starPounds.settings.maxWeight
   end
   -- Cross script voodoo witch magic.

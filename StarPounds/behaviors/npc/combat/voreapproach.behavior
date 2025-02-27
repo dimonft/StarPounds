@@ -43,9 +43,9 @@
             }
           },
           {
-            "title": "blobOffset",
+            "title": "supersizeOffset",
             "type": "action",
-            "name": "blobOffset",
+            "name": "supersizeOffset",
             "parameters": {
               "position": {"key": "targetPosition"}
             },

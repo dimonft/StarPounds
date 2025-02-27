@@ -286,8 +286,8 @@ starPounds.updateStats = function(force, dt)
       airJumpProfile = {jumpControlForce = parameters.airJumpProfile.jumpControlForce * weightMultiplier},
       liquidJumpProfile = {jumpControlForce = parameters.liquidJumpProfile.jumpControlForce * weightMultiplier}
     }
-    -- Apply hitbox if we don't have the disable option checked, or we're a blob.
-    if size.isBlob or not starPounds.hasOption("disableHitbox") then
+    -- Apply hitbox if we don't have the disable option checked, or we're a size that modifies our height.
+    if size.yOffset or not starPounds.hasOption("disableHitbox") then
       starPounds.controlParameters = sb.jsonMerge(starPounds.controlParameters, (size.controlParameters[starPounds.getVisualSpecies()] or size.controlParameters.default))
     end
   end

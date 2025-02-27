@@ -1,51 +1,74 @@
-local blob = starPounds.module:new("blob")
+local supersize = starPounds.module:new("supersize")
 
-function blob:init()
+function supersize:init()
   self.firstUpdate = false
-  self.isBlob = false
-  self.blobProjectileActive = false
+  self.isSuperSize = false
+  self.projectileActive = false
   self.size = ""
   self.bounds = rect.pad(mcontroller.boundBox(), {0, -1})
   self.playerWidth = math.abs(self.bounds[3] - self.bounds[1]) * 0.5
   self.doorDeltaTime = self.data.doorDelta * self.data.scriptDelta
   self.doorTimer = 0
-end
 
-function blob:update(dt)
-  self.isBlob = starPounds.currentSize.isBlob
-  -- Projectile spawner for the hitbox/magnet.
-  self.blobProjectileActive = self.blobProjectile and world.entityExists(self.blobProjectile)
-  if not self.blobProjectileActive and self:doProjectile() then
-    self.blobProjectile = world.spawnProjectile("starpoundsblobhitbox", starPounds.mcontroller.position, entity.id(), {0, 0}, true)
-  elseif self.blobProjectileActive and not self:doProjectile() then
-    world.callScriptedEntity(self.blobProjectile, "projectile.die")
-  end
-  -- Delay first update loop by 1 tick.
-  if not self.firstUpdate then self.firstUpdate = true return end
-  -- Don't run anything after this if we're not blob size.
-  if not self.isBlob then return end
-  -- Bounds updater for blob door interaction.
-  if self.size ~= starPounds.currentSize.size then
+  self.sizeUpdate = function()
+    self:killProjectile()
     self.size = starPounds.currentSize.size
-    if self.isBlob then
+    self.isSuperSize = starPounds.currentSize.yOffset
+    self.projectileType = starPounds.currentSize.projectile
+    if self.isSuperSize then
       self.bounds = rect.translate(rect.pad(mcontroller.boundBox(), {0, self.data.boundsPadding}), self.data.boundsOffset)
       self.width = math.abs(self.bounds[3] - self.bounds[1]) * 0.5
     end
   end
-  -- Automatically open doors in front/close doors behind since blob's cant reach to interact.
-  if not starPounds.hasOption("disableBlobDoors") then
+
+  starPounds.events:on("sizes:changed", self.sizeUpdate)
+end
+
+function supersize:update(dt)
+  -- Projectile spawner for the hitbox/magnet.
+  self.projectileActive = self.projectile and world.entityExists(self.projectile)
+  if not self.projectileActive and self:doProjectile() then
+    self.projectile = world.spawnProjectile(self.projectileType, starPounds.mcontroller.position, entity.id(), {0, 0}, true)
+  elseif self.projectileActive and not self:doProjectile() then
+    self:killProjectile()
+  end
+  -- Delay door update loop by 1 tick, and setup size data.
+  if not self.firstUpdate then
+    self.sizeUpdate()
+    self.firstUpdate = true
+    return
+  end
+  -- Don't run anything after this if we're not a large size.
+  if not self.isSuperSize then return end
+  -- Automatically open doors in front/close doors behind since large sizes cant reach to interact.
+  if not starPounds.hasOption("disableAutomaticDoors") then
     self:automaticDoors(dt)
   end
 end
 
-function blob:doProjectile()
-  if not self.isBlob then return false end
-  if starPounds.hasOption("disableBlobCollision") then return false end
+function supersize:uninit()
+  self:killProjectile()
+  starPounds.events:off("sizes:changed", self.sizeUpdate)
+end
+
+function supersize:killProjectile()
+  self.projectileActive = self.projectile and world.entityExists(self.projectile)
+  if self.projectileActive then
+    world.callScriptedEntity(self.projectile, "projectile.die")
+    self.projectile = nil
+    self.projectileActive = false
+  end
+end
+
+function supersize:doProjectile()
+  if not self.isSuperSize then return false end
+  if not self.projectileType then return false end
+  if starPounds.hasOption("disableCollision") then return false end
   if status.stat("activeMovementAbilities") >= 1 then return false end
   return true
 end
 
-function blob:automaticDoors(dt)
+function supersize:automaticDoors(dt)
   -- Run this less often.
   self.doorTimer = math.max(self.doorTimer - dt, 0)
   if self.doorTimer > 0 then return end
@@ -74,7 +97,7 @@ function blob:automaticDoors(dt)
   self:queryDoors(closeBounds, 1, "closeDoor")
 end
 
-function blob:queryDoors(bounds, minimumDistance, message)
+function supersize:queryDoors(bounds, minimumDistance, message)
   local doorIds = world.objectQuery(rect.ll(bounds), rect.ur(bounds))
   for _, doorId in ipairs(doorIds) do
     local valid = false
@@ -103,4 +126,4 @@ function blob:queryDoors(bounds, minimumDistance, message)
   end
 end
 
-starPounds.modules.blob = blob
+starPounds.modules.supersize = supersize
