@@ -15,11 +15,13 @@
             "cycle" : 0.4,
             "mode" : "loop"
           },
-      
-      "chargewindup" : {
+
+          "chargewindup" : {
             "frames" : 5,
             "cycle" : 0.4,
             "properties" : {
+              "persistentSound" : "/sfx/melee/charge_traildash1.ogg",
+              "persistentSoundStopTime" : 0.3
             }
           },
           "charge" : {
@@ -27,34 +29,34 @@
             "cycle" : 0.3,
             "properties" : {
               "immediateSound" : "/sfx/melee/swing_hammer.ogg"
-            
-        }
+            }
           },
-      "chargewinddown" : {
+          "chargewinddown" : {
             "frames" : 2,
             "cycle" : 0.4,
             "properties" : {
             }
-          },      
-      
+          },
           "shieldwindup" : {
             "frames" : 2,
             "cycle" : 0.25,
             "properties" : {
+              "persistentSound" : "/sfx/melee/sword_guard.ogg",
+              "persistentSoundStopTime" : 0.3
             }
           },
           "shield" : {
             "frames" : 1,
             "cycle" : 1.0,
             "properties" : {
-        }
+            }
           },
           "shieldwinddown" : {
             "frames" : 2,
             "cycle" : 0.25,
             "properties" : {
             }
-          }      
+          }
         }
       },
       "damage" : {
@@ -97,7 +99,7 @@
           "transformationGroups" : [ "body" ],
           "offset" : [0.0, 0.125],
           "zLevel" : 1
-      
+
         },
         "partStates" : {
           "body" : {
@@ -125,7 +127,7 @@
               "properties" : {
                 "image" : "<partImage>:chargewinddown.<frame>"
               }
-            },      
+            },
             "shieldwindup" : {
               "properties" : {
                 "image" : "<partImage>:shieldwindup.<frame>"
@@ -185,7 +187,7 @@
               "properties" : {
                 "image" : "<partImage>:chargewinddown.<frame>"
               }
-            },      
+            },
             "shieldwindup" : {
               "properties" : {
                 "image" : "<partImage>:shieldwindup.<frame>"
@@ -217,7 +219,7 @@
   "transformationGroups" : {
     "body" : { "interpolated" : true }
   },
-  
+
   "lights" : {
     "glow" : {
       "active" : true,
@@ -244,7 +246,7 @@
         { "particle" : "wispflame" }
       ]
     },
-   
+
     "deathPoof" : {
       "particles" : [
         { "particle" : "deathfizz1left" },
@@ -258,7 +260,7 @@
         { "particle" : "wispflame" },
         { "particle" : "wispflame" },
         { "particle" : "wispflame" },
-        { "particle" : "wispflame" }    
+        { "particle" : "wispflame" }
       ]
     },
     "captureParticles" : {
@@ -290,6 +292,7 @@
 
   "sounds" : {
     "aggroHop" : [ "/sfx/npc/monsters/monster_surprise.ogg" ],
-    "deathPuff" : [ "/sfx/npc/enemydeathpuff.ogg" ]
+    "deathPuff" : [ "/sfx/npc/enemydeathpuff.ogg" ],
+    "wallCrash" : [ "/sfx/npc/monsters/peblit_drop1.ogg" ]
   }
 }

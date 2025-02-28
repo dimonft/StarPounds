@@ -35,29 +35,29 @@
       "fleeActions" : [ ],
 
       "hostileActions" : [
-
         {
           "name" : "action-charge",
-          "cooldown" : 2.5,
+          "cooldown" : 5,
           "parameters" : {
             "maximumRange" : 30,
             "windupStopForce" : 50,
             "windupTime" : 0.3,
 
             "onGround" : false,
-            "wallCollide" : false,
+            "wallCollide" : true,
             "aimAtTarget" : true,
-            "chargeTime" : 0.35,
-            "chargeSpeed" : 55,
-            "chargeControlForce" : 180,
+            "chargeTime" : 0.5,
+            "chargeSpeed" : 80,
+            "chargeControlForce" : 300,
+            "wallKnockback" : true,
+            "wallCrashSound" : "wallCrash",
+            "wallCrashEmitter" : "",
 
+            "winddownStopForce": 1000,
             "winddownState" : "chargewinddown"
           }
         }
-    
       ],
-
-
       "damageTakenActions" : [
         {
           "name" : "action-invulnerable",
@@ -72,16 +72,10 @@
 
             "winddownTime" : 0.25,
             "winddownState" : "shieldwinddown"
-
           }
         }
       ],
-
-
-      "periodicActions" : [
-
-    ],
-
+      "periodicActions" : [ ],
       "approachActions" : [
         {
           "name" : "approach-fly",
@@ -105,7 +99,6 @@
           }
         }
       ],
-
       "wanderActions" : [
         {
           "name" : "emerge-fly"
@@ -118,20 +111,17 @@
             "ceilingDistance" : 6,
             "xVelocity" : 8,
             "yVelocity" : 12
+          }
         }
-    }
       ],
-
       "concurrentActions" : [ ],
-
       "concurrentHostileActions" : [
-
-    ]
+      ]
     },
 
     "touchDamage" : {
       "poly" : [ [0.625, 1.25], [1.25, 0.875], [1.25, -0.675], [0.625, -1.05], [-0.625, -1.05], [-1.25, -0.675], [-1.25, 0.875], [-0.625, 1.25] ],
-      "damage" : 12,
+      "damage" : 15,
 
       "teamType" : "enemy",
       "damageSourceKind" : "slash",
@@ -153,7 +143,7 @@
 
       "airFriction" : 2.0,
       "airForce" : 25,
-      "flySpeed" : 8
+      "flySpeed" : 6
     },
 
     "bodyMaterialKind" : "organic",
