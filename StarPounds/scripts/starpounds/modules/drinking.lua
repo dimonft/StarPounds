@@ -3,6 +3,9 @@ local drinking = starPounds.module:new("drinking")
 function drinking:init()
   self.drinkTimer = 0
   self.drinkCounter = 0
+  self.splashConfig = root.assetJson("/player.config:splashConfig")
+
+  message.setHandler("starPounds.spawnDrinkingParticles", function(_, _, ...) return self:spawnParticles(...) end)
 end
 
 function drinking:update(dt)
@@ -14,8 +17,10 @@ function drinking:update(dt)
   if status.stat("activeMovementAbilities") > 1 then return end
   -- Can only drink if you're below capacity.
   if starPounds.stomach.fullness >= 1 and not starPounds.hasSkill("wellfedProtection") then
+    self.drinkCounter = 0
     return
   elseif starPounds.stomach.fullness >= starPounds.settings.thresholds.strain.starpoundsstomach3 then
+    self.drinkCounter = 0
     return
   end
   local mouthPosition = starPounds.mcontroller.mouthPosition
@@ -29,14 +34,16 @@ function drinking:update(dt)
     -- Remove liquid at the entities's mouth, and store how much liquid was removed.
     local consumedLiquid = world.destroyLiquid(mouthPosition) or world.destroyLiquid(vec2.add(mouthPosition, {0, 0.25}))
     if consumedLiquid and consumedLiquid[1] and consumedLiquid[2] then
-      -- Increment counter up to 2 (20 times).
-      self.drinkCounter = math.min(self.drinkCounter + 0.1, 2)
+      -- Increment counter up to 1 (10 times).
+      self.drinkCounter = math.min(self.drinkCounter + 0.1, 1)
       -- Reset the drink cooldown, shorter based on how high drinkCounter is.
       self.drinkTimer = 1/(1 + self.drinkCounter)
       -- Add to entities's stomach based on liquid consumed.
       for foodType, foodAmount in pairs(starPounds.moduleFunc("liquid", "get", root.liquidName(consumedLiquid[1]))) do
         starPounds.feed(foodAmount * consumedLiquid[2], foodType)
       end
+      -- Spawn drink particles.
+      self:spawnParticles(consumedLiquid)
       -- Play drinking sound. Volume increased by amount of liquid consumed.
       starPounds.moduleFunc("sound", "play", "drink", 0.5 + 0.5 * consumedLiquid[2], math.random(8, 12)/10)
       status.addEphemeralEffect("starpoundsdrinking")
@@ -52,5 +59,22 @@ function drinking:update(dt)
   end
 end
 
+function drinking:spawnParticles(consumedLiquid)
+  local liquidConfig = root.liquidConfig(consumedLiquid[1])
+  if not liquidConfig.config.color then return end
+
+  local velocity = vec2.mul(self.splashConfig.splashParticleVariance.velocity, 0.1)
+  local variance = sb.jsonMerge(self.splashConfig.splashParticleVariance, {
+    velocity = velocity
+  })
+
+  local particle = sb.jsonMerge(self.splashConfig.splashParticle, {
+    position = {0, 0},
+    initialVelocity = vec2.add(vec2.mul(velocity, starPounds.mcontroller.facingDirection), {0, 3}),
+    color = liquidConfig.config.color,
+    variance = variance
+  })
+  starPounds.spawnMouthProjectile({{action = "particle", specification = particle}}, self.splashConfig.numSplashParticles / 2)
+end
 -- Add the module.
 starPounds.modules.drinking = drinking

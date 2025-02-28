@@ -63,6 +63,7 @@ function update(dt)
           storage.amount = math.max(0, storage.amount - 1)
           for foodType, foodAmount in pairs(self.liquids[storage.liquid.name] or self.liquids.default) do
             world.sendEntityMessage(feedTarget, "starPounds.feed", foodAmount, foodType)
+            world.sendEntityMessage(feedTarget, "starPounds.spawnDrinkingParticles", {storage.liquid.name, 1})
           end
           for _, statusEffect in pairs(storage.liquid.statusEffects) do
             if not contains(self.statusBlacklist, statusEffect) then
