@@ -8,7 +8,7 @@
 
   "animation" : "starpoundsclericwisp.animation",
 
-  "dropPools" : [ { "default" : "noMeatMonsterTreasure"} ],
+  "dropPools" : [ { "default" : "wispclericTreasure"} ],
 
   "baseParameters" : {
     "scripts" : [

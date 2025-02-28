@@ -23,7 +23,7 @@
   "orientations" : [
     {
       "image" : "starpoundsponderouscouch.png:<color>",
-      "sitCoverImage" : "/objects/generic/starpoundsponderouscouch/starpoundsponderouscouchcover.png",
+      "sitCoverImage" : "/objects/fattydungeons/glitchponderouskeep/ponderouscouch/starpoundsponderouscouchcover.png",
       "imagePosition" : [-16, 0],
       "direction" : "left",
       "flipImages" : true,

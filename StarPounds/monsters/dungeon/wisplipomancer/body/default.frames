@@ -1,19 +1,19 @@
 {
   "frameGrid" : {
-    "size" : [48, 48],
-    "dimensions" : [6, 3],
+    "size" : [112, 112],
+    "dimensions" : [11, 6],
 
     "names" : [
-      [ null, "fly.1", "fly.2", "fly.3", null, "hurt.1"],
-      [ null, "windup.1", "windup.2", "windup.3", "windup.4", "windup.5"],
-      [ "windup.6", "windup.7", "fire.1", "fire.2", "fire.3", "fire.4" ]
+      [ null, "fly.1", "fly.2", "fly.3", "fly.4", null, "taunt.1", "taunt.2", "taunt.3", "taunt.4", null],
+      [ null, "swingwindup.1", "swingwindup.2", "swingwindup.3", "swingwindup.4", "swingwindup.5", "swing.1", "swing.2", "swing.3", "swing.4", null],
+      [ null, "flamewindup.1", "flamewindup.2", "flamewindup.3", "flamewindup.4", "flamewindup.5", null, "flameloop.1", "flameloop.2", "flameloop.3", "flameloop.4" ],
+	  [ null, "flamewinddown.1", "flamewinddown.2", "flamewinddown.3", null, "death.1", "death.2", null, null, null, null ],
+	  [ null, "bigcastwindup.1", "bigcastwindup.2", "bigcastwindup.3", "bigcastwindup.4", "bigcastwindup.5", "bigcastwindup.6", "bigcastwindup.7", "bigcastwindup.8", "bigcastwindup.9", "bigcastwindup.10" ],
+	  [ null, "bigcastwindup.11", null, "bigcast.1", "bigcast.2", "bigcast.3", "bigcast.4", null, "bigcastwinddown.1", "bigcastwinddown.2", "bigcastwinddown.3"]
     ]
   },
+
 "aliases" : {
-  "fly.4" : "fly.2",
-  "windup.8" : "windup.6",
-  "windup.9" : "windup.7",
-  "windup.10" : "windup.6",
-  "windup.11" : "windup.7"
+  "hurt.1" : "fly.3"
   }  
 }

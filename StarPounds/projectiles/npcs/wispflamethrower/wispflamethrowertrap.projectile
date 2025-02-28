@@ -1,0 +1,25 @@
+{
+  "projectileName" : "wispflamethrowertrap",
+  "image" : "wispflamethrower.png",
+  "physics" : "flame",
+  "animationCycle" : 1,
+  "animationLoops" : false,
+  "frameNumber" : 12,
+  "winddownFrames" : 4,
+  "intangibleWinddown" : true,
+  "power" : 50,
+  "speed" : 25,
+  "timeToLive" : 1.0,
+  "bounces" : -1,
+  "piercing" : true,
+  "damagePoly" : [ [-9, 0], [-6, -6], [0, -9], [6, -6], [9, 0], [6, 6], [0, 9], [-6, 6] ],
+  "lightColor" : [145, 75, 0],
+  "damageType" : "ignoresdef",
+    "fullbright" : true,  
+  "damageKind" : "caloric",
+  "emitters" : [ "wispflame", "wispflame", "wispflame"  ],
+  "statusEffects" : [
+    {"effect": "starpoundsratebloatslow", "duration": 8},
+    {"effect": "starpoundsrategainrapid", "duration": 8}
+	]
+}

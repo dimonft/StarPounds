@@ -7,7 +7,7 @@
   "damageKindImage" : "icon.png",
   "power" : 5,
   "speed" : 40,
-  "timeToLive" : 0.95,
+  "timeToLive" : 5.0,
 
   "lightColor" : [145, 75, 0],
   

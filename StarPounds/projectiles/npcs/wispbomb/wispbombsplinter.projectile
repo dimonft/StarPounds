@@ -1,0 +1,80 @@
+{
+  "projectileName" : "wispbombsplinter",
+  "image" : "wispbomb.png",
+  "animationCycle" : 0.25,
+  "frameNumber" : 4,
+  "damageKindImage" : "icon.png",
+  "pointLight" : true,
+  "fullbright" : true,  
+  "lightColor" : [145, 75, 0],
+  "movementSettings" : {
+    "collisionPoly" : [ [-1, 0], [-2, -2], [0, -1], [2, -2], [1, 0], [2, 2], [0, 1], [-2, 2] ]
+  },  
+  "damagePoly" : [ [-9, 0], [-6, -6], [0, -9], [6, -6], [9, 0], [6, 6], [0, 9], [-6, 6] ],
+  
+  "piercing" : true,
+
+    "renderLayer" : "Monster+10",
+
+  "actionOnReap" : [
+    {
+      "action" : "sound",
+      "options" : [ "/sfx/gun/grenadeblast_poison1.ogg", "/sfx/gun/grenadeblast_poison2.ogg", "/sfx/gun/grenadeblast_poison3.ogg" ]
+    },
+
+    {
+      "action" : "projectile",
+      "type" : "wispflameprojectile",
+      "fuzzAngle" : 0,
+      "angleAdjust" : -90,	  
+      "inheritSpeedFactor" : 0.5,
+      "inheritDamageFactor" : 0.5
+    },
+    {
+      "action" : "projectile",
+      "type" : "wispflameprojectile",
+      "fuzzAngle" : 0,
+      "angleAdjust" : -82,	  
+      "inheritSpeedFactor" : 0.5,
+      "inheritDamageFactor" : 0.5
+    },
+    {
+      "action" : "projectile",
+      "type" : "wispflameprojectile",
+      "fuzzAngle" : 0,
+      "angleAdjust" : -72,	  
+      "inheritSpeedFactor" : 0.5,
+      "inheritDamageFactor" : 0.5
+    },
+
+    {
+      "action" : "projectile",
+      "type" : "wispflameprojectile",
+      "fuzzAngle" : 0,
+      "angleAdjust" : 72,	  
+      "inheritSpeedFactor" : 0.5,
+      "inheritDamageFactor" : 0.5
+    },
+	    {
+      "action" : "projectile",
+      "type" : "wispflameprojectile",
+      "fuzzAngle" : 0,
+      "angleAdjust" : 82,	  
+      "inheritSpeedFactor" : 0.5,
+      "inheritDamageFactor" : 0.5
+    },
+    {
+      "action" : "projectile",
+      "type" : "wispflameprojectile",
+      "fuzzAngle" : 0,
+      "angleAdjust" : 90,	  
+      "inheritSpeedFactor" : 0.5,
+      "inheritDamageFactor" : 0.5
+    }
+  ],
+  "emitters" : [ "wispflame", "wispflame", "wispflame"  ],
+  "power" : 15.0,
+   "speed" : 65, 
+  "damageKind" : "caloric",
+  "physics" : "laser"
+}

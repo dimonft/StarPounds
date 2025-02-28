@@ -145,9 +145,9 @@
   "inactiveLightColor" : [0, 0, 0], // light color to emit when the object is 'off'
   "activeLightColor" : [0, 0, 0], // light color to emit when the object is 'on'
 
-  "fireTime" : 0.5, // rate of fire
+  "fireTime" : 0.25, // rate of fire
   "fireTimeVariance" : 0.015, // variation in rate of fire
-  "projectile" : "wispbombclouddamage", // name of projectile (required)
+  "projectile" : "wispflamethrowertrap", // name of projectile (required)
   "projectileConfig" : { // extra configuration overrides for projectile
     "damageTeam" : { "type" : "environment" },
     "power" : 20,

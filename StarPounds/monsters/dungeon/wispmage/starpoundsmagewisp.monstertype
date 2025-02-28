@@ -8,7 +8,7 @@
 
   "animation" : "starpoundsmagewisp.animation",
 
-  "dropPools" : [ { "default" : "noMeatMonsterTreasure"} ],
+  "dropPools" : [ { "default" : "wispmageTreasure"} ],
 
   "baseParameters" : {
     "scripts" : [

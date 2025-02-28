@@ -2462,6 +2462,29 @@
                  "width":8,
                  "x":384,
                  "y":80
+                }, 
+                {
+                 "height":8,
+                 "id":864,
+                 "name":"",
+                 "properties":
+                    {
+                     "back":"castlewalls1",
+                     "colorVariant":"5",
+                     "front":"castlewalls1"
+                    },
+                 "propertytypes":
+                    {
+                     "back":"string",
+                     "colorVariant":"string",
+                     "front":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":688,
+                 "y":40
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -3238,7 +3261,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":864,
+ "nextobjectid":865,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.6",

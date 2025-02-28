@@ -8,7 +8,7 @@
 
   "animation" : "starpoundsknightwisp.animation",
 
-  "dropPools" : [ { "default" : "noMeatMonsterTreasure"} ],
+  "dropPools" : [ { "default" : "wispknightTreasure"} ],
 
   "baseParameters" : {
     "scripts" : [
