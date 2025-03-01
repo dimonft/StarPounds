@@ -152,7 +152,7 @@
         {"weight" : 0.25, "item" : [ "starpoundsponderouschest", 1]},
         {"weight" : 0.25, "item" : [ "starpoundsponderouslegs", 1]},
         {"weight" : 0.25, "item" : [ "starpoundsponderousback", 1]}
-		]
+		],
       "poolRounds" : 1,
       "allowDuplication" : false
     }]
