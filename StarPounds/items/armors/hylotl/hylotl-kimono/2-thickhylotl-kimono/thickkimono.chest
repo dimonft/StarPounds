@@ -1,20 +1,29 @@
 {
-  "itemName" : "chubsterkimonolegs",
-  "price" : 35,
-  "inventoryIcon" : "icons.png:pants",
+  "itemName" : "thickkimonochest",
+  "price" : 75,
+  "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "Common",
-  "category" : "legwear",
-  "description" : "A sleek traditional kimono. This ones on the large size for plus sized individuals.",
-  "shortdescription" : "Kimono XL Skirt",
+  "category" : "chestwear",
+  "description" : "A sleek traditional kimono shirt. This one's on the larger side for plus-sized individuals.",
+  "shortdescription" : "Kimono L Shirt",
   "tooltipKind" : "armor",
 
-  "maleFrames" : "pantsm.png",
-  "femaleFrames" : "pantsf.png",
+  "maleFrames" : {
+    "body" : "chestm.png",
+    "backSleeve" : "bsleeve.png",
+    "frontSleeve" : "fsleeve.png"
+  },
+
+  "femaleFrames" : {
+    "body" : "chestf.png",
+    "backSleeve" : "bsleeve.png",
+    "frontSleeve" : "fsleeve.png"
+  },
 
   "colorOptions" : [
-    // BLUE
-    { "ffca8a" : "96cbe7", "e0975c" : "5588d4", "a85636" : "344495", "6f2919" : "1a1c51" },
+    // DEFAULT
+    { "ffca8a" : "55c0dc", "e0975c" : "3195a4", "a85636" : "1b585e", "6f2919" : "0f3232" },
     // BLACK
     { "ffca8a" : "838383", "e0975c" : "555555", "a85636" : "383838", "6f2919" : "151515" },
     // GREY

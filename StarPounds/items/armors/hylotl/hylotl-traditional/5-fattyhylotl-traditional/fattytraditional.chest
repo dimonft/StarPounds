@@ -10,20 +10,20 @@
   "tooltipKind" : "armor",
 
   "maleFrames" : {
-    "body" : "chestm.png",
+    "body" : "fatty_chestm.png",
     "backSleeve" : "bsleeve.png",
     "frontSleeve" : "fsleeve.png"
   },
 
   "femaleFrames" : {
-    "body" : "chestf.png",
+    "body" : "fatty_chestf.png",
     "backSleeve" : "bsleeve.png",
-    "frontSleeve" : "fsleeve.png"
+    "frontSleeve" : "fsleevef.png"
   },
 
   "colorOptions" : [
-    // BLUE
-    { "ffca8a" : "96cbe7", "e0975c" : "5588d4", "a85636" : "344495", "6f2919" : "1a1c51" },
+    // DEFAULT
+    { "ffca8a" : "55c0dc", "e0975c" : "3195a4", "a85636" : "1b585e", "6f2919" : "0f3232" },
     // BLACK
     { "ffca8a" : "838383", "e0975c" : "555555", "a85636" : "383838", "6f2919" : "151515" },
     // GREY

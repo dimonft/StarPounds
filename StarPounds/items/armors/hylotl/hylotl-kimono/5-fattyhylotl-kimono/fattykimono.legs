@@ -1,29 +1,20 @@
 {
-  "itemName" : "softkimonochest",
-  "price" : 75,
-  "inventoryIcon" : "icons.png:chest",
+  "itemName" : "fattykimonolegs",
+  "price" : 35,
+  "inventoryIcon" : "icons.png:pants",
   "maxStack" : 1,
   "rarity" : "Common",
-  "category" : "chestwear",
-  "description" : "A sleek traditional kimono shirt.",
-  "shortdescription" : "Kimono M Shirt",
+  "category" : "legwear",
+  "description" : "A sleek traditional kimono. This one's on the larger side for plus-sized individuals.",
+  "shortdescription" : "Kimono XXXL Skirt",
   "tooltipKind" : "armor",
 
-  "maleFrames" : {
-    "body" : "chestm.png",
-    "backSleeve" : "bsleeve.png",
-    "frontSleeve" : "fsleeve.png"
-  },
-
-  "femaleFrames" : {
-    "body" : "chestf.png",
-    "backSleeve" : "bsleeve.png",
-    "frontSleeve" : "fsleeve.png"
-  },
+  "maleFrames" : "pantsm.png",
+  "femaleFrames" : "pantsf.png",
 
   "colorOptions" : [
-    // BLUE
-    { "ffca8a" : "96cbe7", "e0975c" : "5588d4", "a85636" : "344495", "6f2919" : "1a1c51" },
+    // DEFAULT
+    { "ffca8a" : "55c0dc", "e0975c" : "3195a4", "a85636" : "1b585e", "6f2919" : "0f3232" },
     // BLACK
     { "ffca8a" : "838383", "e0975c" : "555555", "a85636" : "383838", "6f2919" : "151515" },
     // GREY
