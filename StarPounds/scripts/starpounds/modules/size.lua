@@ -124,8 +124,11 @@ function size:getVariant(size)
     end
   end
 
+
   if starPounds.hasOption("hyper") then
-    variant = "hyper"
+    if contains(variants, "hyper") then
+      variant = "hyper"
+    end
   end
 
   return variant
