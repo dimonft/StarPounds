@@ -21,7 +21,7 @@
             "cycle" : 0.4,
             "mode" : "loop",
             "properties" : { 
-              "immediateSound" : "/sfx/starpounds/npc/starpoundslipomancer_laugh.ogg",
+              "immediateSound" : [ "/sfx/starpounds/npc/starpoundslipomancer_laugh.ogg", "/sfx/starpounds/npc/starpoundslipomancer_laugh2.ogg" ],
               "immediateSoundRangeMultiplier" : 0.75
 			  }
           },
