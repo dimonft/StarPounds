@@ -40,7 +40,7 @@
           "parameters" : {
             "stateType" : "body",
             "state" : "taunt",
-            "animationTime" : 0.60
+            "animationTime" : 1.40
           }
         }
 	  ],
@@ -141,7 +141,7 @@
             "fireSound" : "bigcast",
 
             "winddownState" : "bigcastwinddownalt",
-            "winddownTime" : 1.5
+            "winddownTime" : 1.8
           }
         },
 
