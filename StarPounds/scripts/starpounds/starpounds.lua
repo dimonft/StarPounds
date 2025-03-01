@@ -150,18 +150,27 @@ starPounds.belch = function(volume, pitch, loops, addMomentum)
   end
   -- Skip if we're not doing particles.
   if particleCount == 0 then return end
-  starPounds.spawnMouthProjectile({{action = "particle", specification = starPounds.makeBelchParticle()}}, particleCount)
+    -- Create a belch particle with gravity.
+    local particle = {}
+    local gravity = world.gravity(starPounds.mcontroller.mouthPosition)
+    local friction = world.breathable(starPounds.mcontroller.mouthPosition) or world.liquidAt(starPounds.mcontroller.mouthPosition)
+    particle.initialVelocity = {0, gravity/62.5}
+    particle.finalVelocity = {0, -gravity}
+    particle.approach = {friction and 5 or 0, gravity}
+
+    starPounds.spawnMouthProjectile({{
+      action = "particle", specification = starPounds.makeBelchParticle(particle)
+    }}, particleCount)
 end
 
 function starPounds.makeBelchParticle(override)
-  local mouthPosition = starPounds.mcontroller.mouthPosition
-  local gravity = world.gravity(mouthPosition)
-  local friction = world.breathable(mouthPosition) or world.liquidAt(mouthPosition)
   local facing = starPounds.mcontroller.facingDirection
+  local velocity = vec2.add(starPounds.mcontroller.velocity, {7 * facing, 0})
   local particle = sb.jsonMerge(starPounds.settings.particleTemplates.belch, override or {})
-  particle.initialVelocity = vec2.add({7 * facing, 0}, vec2.add(starPounds.mcontroller.velocity, particle.initialVelocity and vec2.mul(particle.initialVelocity, {facing, 0}) or {0, gravity/62.5})) -- Weird math but it works I guess.
-  particle.finalVelocity = vec2.mul(particle.finalVelocity, {facing, 0}) or {0, -gravity}
-  particle.approach = particle.approach or {friction and 5 or 0, gravity}
+  -- Flip particles and add extra velocity based on direction.
+  particle.initialVelocity = vec2.add(vec2.mul(particle.initialVelocity or {0, 0}, {facing, 1}), velocity)
+  particle.finalVelocity = vec2.mul(particle.finalVelocity or {0, 0}, {facing, 1})
+
   return particle
 end
 
