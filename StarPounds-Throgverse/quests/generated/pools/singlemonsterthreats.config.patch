@@ -18,5 +18,15 @@
     "typeName" : "fathylotlghost"
     }
   ]
+  },
+  { "op" : "add",
+  "path" : "/0/1/-",
+  "value" : [
+    [ "generic", "largespace" ],
+    {
+    "name" : "Pinky",
+    "typeName" : "starpoundspinky"
+    }
+  ]
   }
 ]
