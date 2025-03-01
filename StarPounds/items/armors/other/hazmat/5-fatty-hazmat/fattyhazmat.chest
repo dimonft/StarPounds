@@ -10,15 +10,15 @@
   "tooltipKind" : "armor",
 
   "maleFrames" : {
-    "body" : "chest.png",
+    "body" : "fatty_chestm.png",
     "backSleeve" : "bsleeve.png",
     "frontSleeve" : "fsleeve.png"
   },
 
   "femaleFrames" : {
-    "body" : "chest.png",
+    "body" : "fatty_chestf.png",
     "backSleeve" : "bsleeve.png",
-    "frontSleeve" : "fsleeve.png"
+    "frontSleeve" : "fsleevef.png"
   },
 
   "colorOptions" : [
