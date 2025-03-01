@@ -109,7 +109,7 @@
             "fireSound" : "bigcast",
 
             "winddownState" : "bigcastwinddown",
-            "winddownTime" : 0.5
+            "winddownTime" : 1.8
           }
         },
 		

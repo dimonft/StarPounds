@@ -21,7 +21,16 @@
             "cycle" : 0.4,
             "mode" : "loop",
             "properties" : { 
-              "immediateSound" : [ "/sfx/starpounds/npc/starpoundslipomancer_laugh.ogg", "/sfx/starpounds/npc/starpoundslipomancer_laugh2.ogg" ],
+              "immediateSound" : "/sfx/starpounds/npc/starpoundslipomancer_laugh.ogg",
+              "immediateSoundRangeMultiplier" : 0.75
+			  }
+          },
+          "tauntalt" : {
+            "frames" : 4,
+            "cycle" : 0.4,
+            "mode" : "loop",
+            "properties" : { 
+              "immediateSound" : "/sfx/starpounds/npc/starpoundslipomancer_laugh2.ogg",
               "immediateSoundRangeMultiplier" : 0.75
 			  }
           },
@@ -99,13 +108,13 @@
             "frames" : 3,
             "cycle" : 0.5,
             "mode" : "transition",
-            "transition" : "idle"
+            "transition" : "taunt"
           },			  
           "bigcastwinddownalt" : {
             "frames" : 3,
             "cycle" : 0.5,
             "mode" : "transition",
-            "transition" : "taunt"
+            "transition" : "tauntalt"
           }
         }
       },
@@ -164,6 +173,11 @@
               }
             },
             "taunt" : {
+              "properties" : {
+                "image" : "<partImage>:taunt.<frame>"
+              }
+            },
+            "tauntalt" : {
               "properties" : {
                 "image" : "<partImage>:taunt.<frame>"
               }
@@ -253,6 +267,11 @@
               }
             },
             "taunt" : {
+              "properties" : {
+                "image" : "<partImage>:taunt.<frame>"
+              }
+            },
+            "tauntalt" : {
               "properties" : {
                 "image" : "<partImage>:taunt.<frame>"
               }
