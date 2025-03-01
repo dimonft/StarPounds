@@ -22,7 +22,7 @@
             "mode" : "loop",
             "properties" : { 
               "immediateSound" : "/sfx/starpounds/npc/starpoundslipomancer_laugh.ogg",
-              "immediateSoundRangeMultiplier" : 5
+              "immediateSoundRangeMultiplier" : 0.75
 			  }
           },
           "death" : {
