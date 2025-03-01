@@ -39,21 +39,43 @@
 
       "hostileActions" : [
         {
+          "name" : "action-charge",
+          "cooldown" : 1.0,
+          "parameters" : {
+            "maximumRange" : 15,
+            "windupStopForce" : 50,
+            "windupTime" : 0.3,
+
+            "onGround" : false,
+            "aimAtTarget" : true,
+            "chargeTime" : 0.2,
+            "chargeSpeed" : 80,
+            "chargeControlForce" : 500,
+            "wallKnockback" : true,
+            "wallCrashSound" : "wallCrash",
+            "wallCrashEmitter" : "",
+            "wallCrashVelocity": [0, 5],
+
+            "winddownStopForce": 1000,
+            "winddownState" : ""
+          }
+        },
+        {
           "name" : "action-fire",
-          "cooldown" : 2.5,
+          "cooldown" : 5,
           "parameters" : {
             "requireLineOfSight" : true,
             "maximumRange" : 40,
-            "minimumRange" : 1,
+            "minimumRange" : 5,
             "onGround" : false,
             "windupStopForce" : 50,
             "windupTime" : 0.4,
-      "windupState" : "firewindup",
+            "windupState" : "firewindup",
 
-            "projectileType" : "wispknife",      
+            "projectileType" : "wispknife",
             "projectileCount" : 1,
-            "projectileInterval" : 0.0,  
-      
+            "projectileInterval" : 0.0,
+
             "fireOffset" : [1.0, 0.0],
             "aimAtTarget" : true,
             "fireState" : "fire",
@@ -62,25 +84,7 @@
             "winddownState" : "firewinddown",
             "winddownTime" : 0.1
           }
-        },
-        {
-          "name" : "action-charge",
-          "cooldown" : 1.0,
-          "parameters" : {
-            "maximumRange" : 30,
-            "windupStopForce" : 50,
-            "windupTime" : 0.3,
-
-            "onGround" : false,
-            "wallCollide" : false,
-            "aimAtTarget" : true,
-            "chargeTime" : 0.35,
-            "chargeSpeed" : 55,
-            "chargeControlForce" : 180,
-
-            "winddownState" : ""
-          }
-        }    
+        }
       ],
 
       "periodicActions" : [ ],
@@ -132,7 +136,7 @@
 
     "touchDamage" : {
       "poly" : [ [0.625, 1.25], [1.25, 0.875], [1.25, -0.675], [0.625, -1.05], [-0.625, -1.05], [-1.25, -0.675], [-1.25, 0.875], [-0.625, 1.25] ],
-      "damage" : 12,
+      "damage" : 10,
 
       "teamType" : "enemy",
       "damageSourceKind" : "slash",
@@ -188,7 +192,7 @@
           "baseValue" : 9
         },
         "maxHealth" : {
-          "baseValue" : 125
+          "baseValue" : 100
         },
         "protection" : {
           "baseValue" : 0.0

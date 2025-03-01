@@ -219,6 +219,9 @@ function stomach:digest(dt, isGurgle, isBelch)
         if isBelch and foodConfig.multipliers.belch > 0 then
           digestionRate = digestionRate + digestionRate * foodConfig.multipliers.belch
         end
+        if isBelch and foodConfig.belchParticles and not starPounds.hasOption("disableBelchParticles") then
+          self:spawnBelchParticles(foodConfig.belchParticles, foodConfig.belchParticleCount)
+        end
         local digestAmount = math.min(amount, math.round(digestionRate * ratio * seconds * (foodConfig.digestionRate + amount * foodConfig.percentDigestionRate), 4))
         self.digestionExperience = self.digestionExperience + digestAmount * foodConfig.multipliers.experience
         storage.starPounds.stomachContents[foodType] = math.round(math.max(amount - digestAmount, 0), 3)
@@ -347,6 +350,14 @@ function stomach:stepTimer(timer, dt)
   if timer == "gurgle" and self.gurgleTimer then
     self.gurgleTimer = math.max(self.gurgleTimer - dt, 0)
   end
+end
+
+function stomach:spawnBelchParticles(particles, count)
+  local actions = {}
+  for _, particle in pairs(particles) do
+    actions[#actions + 1] = {action = "particle", specification = starPounds.makeBelchParticle(particle)}
+  end
+  starPounds.spawnMouthProjectile(actions, count)
 end
 
 starPounds.modules.stomach = stomach

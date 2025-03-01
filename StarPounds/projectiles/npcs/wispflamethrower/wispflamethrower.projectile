@@ -15,10 +15,9 @@
   "damagePoly" : [ [-9, 0], [-6, -6], [0, -9], [6, -6], [9, 0], [6, 6], [0, 9], [-6, 6] ],
   "lightColor" : [145, 75, 0],
   "damageKind" : "caloric",
-      "fullbright" : true,  
+  "fullbright" : true,
   "emitters" : [ "wispflame", "wispflame", "wispflame"  ],
   "statusEffects" : [
-    {"effect": "starpoundsratebloatslow", "duration": 8},
-    {"effect": "starpoundsrategainrapid", "duration": 8}
+    {"effect": "starpoundsfood_wispflame", "duration": 25}
 	]
 }

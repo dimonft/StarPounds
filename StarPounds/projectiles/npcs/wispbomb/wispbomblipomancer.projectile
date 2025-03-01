@@ -5,9 +5,9 @@
   "frameNumber" : 4,
   "damageKindImage" : "icon.png",
   "pointLight" : true,
-  "fullbright" : true,  
+  "fullbright" : true,
   "lightColor" : [145, 75, 0],
-    "renderLayer" : "Monster+10",
+  "renderLayer" : "Monster+10",
 
   "actionOnReap" : [
     {
@@ -26,7 +26,7 @@
       "type" : "wispbombcloud",
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0 
+      "inheritDamageFactor" : 0.0
     },
     {
       "action" : "projectile",
@@ -38,7 +38,7 @@
   ],
   "emitters" : [ "wispflame", "wispflame", "wispflame"  ],
   "power" : 15.0,
-   "speed" : 65, 
+  "speed" : 65,
   "damageKind" : "caloric",
   "physics" : "laser"
 }

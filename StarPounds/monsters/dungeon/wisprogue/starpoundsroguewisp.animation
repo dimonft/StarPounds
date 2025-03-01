@@ -15,11 +15,13 @@
             "cycle" : 0.4,
             "mode" : "loop"
           },
-      
-      "chargewindup" : {
+
+          "chargewindup" : {
             "frames" : 4,
             "cycle" : 0.3,
             "properties" : {
+              "persistentSound" : "/sfx/melee/spear_twirl_loop.ogg",
+              "persistentSoundStopTime" : 0.3
             }
           },
           "charge" : {
@@ -27,28 +29,28 @@
             "cycle" : 0.3,
             "properties" : {
               "immediateSound" : "/sfx/melee/swing_dagger.ogg"
-                    
-        
-        }
+            }
           },
           "firewindup" : {
             "frames" : 8,
             "cycle" : 0.5,
             "properties" : {
+              "persistentSound" : "/sfx/melee/spear_twirl_loop.ogg",
+              "persistentSoundStopTime" : 0.3
             }
           },
           "fire" : {
             "frames" : 2,
             "cycle" : 0.2,
             "properties" : {
-        }
+            }
           },
           "firewinddown" : {
             "frames" : 6,
             "cycle" : 0.25,
             "properties" : {
             }
-          }      
+          }
         }
       },
       "damage" : {
@@ -91,7 +93,7 @@
           "transformationGroups" : [ "body" ],
           "offset" : [0.0, 0.125],
           "zLevel" : 1
-      
+
         },
         "partStates" : {
           "body" : {
@@ -200,7 +202,7 @@
   "transformationGroups" : {
     "body" : { "interpolated" : true }
   },
-  
+
   "lights" : {
     "glow" : {
       "active" : true,
@@ -227,7 +229,7 @@
         { "particle" : "wispflame" }
       ]
     },
-   
+
     "deathPoof" : {
       "particles" : [
         { "particle" : "deathfizz1left" },
@@ -241,7 +243,7 @@
         { "particle" : "wispflame" },
         { "particle" : "wispflame" },
         { "particle" : "wispflame" },
-        { "particle" : "wispflame" }    
+        { "particle" : "wispflame" }
       ]
     },
     "captureParticles" : {
@@ -274,6 +276,7 @@
   "sounds" : {
     "aggroHop" : [ "/sfx/npc/monsters/monster_surprise.ogg" ],
     "fire" : [ "/sfx/melee/swing_dagger.ogg" ],
-    "deathPuff" : [ "/sfx/npc/enemydeathpuff.ogg" ]
+    "deathPuff" : [ "/sfx/npc/enemydeathpuff.ogg" ],
+    "wallCrash" : [ ]
   }
 }
