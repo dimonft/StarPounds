@@ -5,27 +5,54 @@
   "printable" : false,
   "category" : "decorative",
   "price" : 50,
-  "description" : "A cute Wisp plush, mage class.",
+  "description" : "A plush of the Wisp Mage, the spellweaver of the Wisps of Light.",
   "shortdescription" : "Wisp Mage Plush",
   "race" : "glitch",
 
-  "apexDescription" : "It's a plush of a Wisp.",
-  "avianDescription" : "A plush of a magical Wisp.",
-  "floranDescription" : "Floran wantsss to eat Wisssp.",
-  "glitchDescription" : "Interested. It's a plush of a wisp.",
-  "humanDescription" : "Cool, I want one of these!",
-  "hylotlDescription" : "Squee! I need this plushie for my collection!",
-  "novakidDescription" : "I think the real thing is supposed to glow like me.",
+  "apexDescription" : "A plush of a Wisp wizard. I wonder what spells he knows.",
+  "avianDescription" : "An adorable little magician.",
+  "floranDescription" : "Why isss Wisssp hat sso big?",
+  "glitchDescription" : "Enamored. I love his hat!",
+  "humanDescription" : "Wonder if he knows Fira or Blizzara...",
+  "hylotlDescription" : "Such a well studied looking wisp!",
+  "novakidDescription" : "A shiny lil bookworm. Wonder what he'd read about...",
 
   "inventoryIcon" : "wispmageplushicon.png",
+  "lightColor" : [109, 37, 0],
   "orientations" : [
     {
-      "dualImage" : "wispmageplush.png",
-      "imagePosition" : [-8, -0],
+      "image" : "wispmageplush.png:<color>.<frame>",
+      "imagePosition" : [-8, 0],
       "frames" : 1,
-      "animationCycle" : 0.5,
+      "animationCycle" : 0.3,
+      "flipImages" : true,
+      "direction" : "left",
+      "lightPosition" : [0, 1],
+      "animationPosition" : [-8, 0],
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "image" : "wispmageplush.png:<color>.<frame>",
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 0.3,
+      "direction" : "right",
+      "lightPosition" : [0, 1],
+      "animationPosition" : [-8, 0],
       "spaceScan" : 0.1,
       "anchors" : [ "bottom" ]
     }
-  ]
+  ],
+
+  "animation" : "/objects/wired/light/lighttogglebgfullbright.animation",
+  "animationParts" : {
+    "bg" : "wispmageplush.png",
+    "fg" : "wispmageplushlit.png"
+					},
+  
+  "scripts" : [ "/objects/wired/light/light.lua" ],
+  "scriptDelta" : 60,
+
+  "inputNodes" : [ [0, 0] ]
 }

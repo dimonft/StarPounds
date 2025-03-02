@@ -1,0 +1,58 @@
+{
+  "objectName" : "wispcarlplush",
+  "colonyTags" : ["glitch","ponderousorder","pretty","starpounds"],
+  "rarity" : "Uncommon",
+  "printable" : false,
+  "category" : "decorative",
+  "price" : 125,
+  "description" : "A plush of a bookish wisp. It was said he stood in for the Lipomancer when she was busy.",
+  "shortdescription" : "Carl the Intern Plush",
+  "race" : "glitch",
+
+  "apexDescription" : "A Wisp Intern? What is he interning for?",
+  "avianDescription" : "I wonder what he was studying for...",
+  "floranDescription" : "Floran wonderss what glasssess Wisssp iss supposed to do.",
+  "glitchDescription" : "Amused. This Wisp looks like a total nerd.",
+  "humanDescription" : "So the other Wisps are fancy fantasy classes, and this guy's an unpaid intern?",
+  "hylotlDescription" : "Such big glasses!",
+  "novakidDescription" : "Now that's the second shiniest dork I've ever seen.",
+
+  "inventoryIcon" : "wispcarlplushicon.png",
+  "lightColor" : [109, 37, 0],
+  "orientations" : [
+    {
+      "image" : "wispcarlplush.png:<color>.<frame>",
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 0.3,
+      "flipImages" : true,
+      "direction" : "left",
+      "lightPosition" : [0, 1],
+      "animationPosition" : [-8, 0],
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "image" : "wispcarlplush.png:<color>.<frame>",
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 0.3,
+      "direction" : "right",
+      "lightPosition" : [0, 1],
+      "animationPosition" : [-8, 0],
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+
+  "animation" : "/objects/wired/light/lighttogglebgfullbright.animation",
+  "animationParts" : {
+    "bg" : "wispcarlplush.png",
+    "fg" : "wispcarlplushlit.png"
+					},
+  
+  "scripts" : [ "/objects/wired/light/light.lua" ],
+  "scriptDelta" : 60,
+
+  "inputNodes" : [ [0, 0] ]
+}

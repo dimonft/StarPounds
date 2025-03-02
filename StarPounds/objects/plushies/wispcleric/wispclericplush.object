@@ -5,27 +5,54 @@
   "printable" : false,
   "category" : "decorative",
   "price" : 50,
-  "description" : "A cute Wisp plush, cleric class.",
+  "description" : "A plush of the Wisp Cleric, the shy healer of the Wisps of Light.",
   "shortdescription" : "Wisp Cleric Plush",
   "race" : "glitch",
 
-  "apexDescription" : "It's a plush of a Wisp.",
-  "avianDescription" : "A plush of a magical Wisp.",
+  "apexDescription" : "A remarkably bookish looking plush of a Wisp.",
+  "avianDescription" : "One of the cutest priests I've seen.",
   "floranDescription" : "Floran wantsss to eat Wisssp.",
-  "glitchDescription" : "Interested. It's a plush of a wisp.",
-  "humanDescription" : "Cool, I want one of these!",
-  "hylotlDescription" : "Squee! I need this plushie for my collection!",
-  "novakidDescription" : "I think the real thing is supposed to glow like me.",
+  "glitchDescription" : "Joyous. I'm fond of the robe, simple but pretty!",
+  "humanDescription" : "Do you know Cura? Esuna? How about Dia?",
+  "hylotlDescription" : "I always liked playing the healer in games.",
+  "novakidDescription" : "He looks like a good study partner.",
 
   "inventoryIcon" : "wispclericplushicon.png",
+  "lightColor" : [109, 37, 0],
   "orientations" : [
     {
-      "dualImage" : "wispclericplush.png",
-      "imagePosition" : [-8, -0],
+      "image" : "wispclericplush.png:<color>.<frame>",
+      "imagePosition" : [-8, 0],
       "frames" : 1,
-      "animationCycle" : 0.5,
+      "animationCycle" : 0.3,
+      "flipImages" : true,
+      "direction" : "left",
+      "lightPosition" : [0, 1],
+      "animationPosition" : [-8, 0],
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "image" : "wispclericplush.png:<color>.<frame>",
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 0.3,
+      "direction" : "right",
+      "lightPosition" : [0, 1],
+      "animationPosition" : [-8, 0],
       "spaceScan" : 0.1,
       "anchors" : [ "bottom" ]
     }
-  ]
+  ],
+
+  "animation" : "/objects/wired/light/lighttogglebgfullbright.animation",
+  "animationParts" : {
+    "bg" : "wispclericplush.png",
+    "fg" : "wispclericplushlit.png"
+					},
+  
+  "scripts" : [ "/objects/wired/light/light.lua" ],
+  "scriptDelta" : 60,
+
+  "inputNodes" : [ [0, 0] ]
 }
