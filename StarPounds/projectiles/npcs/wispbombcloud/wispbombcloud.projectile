@@ -4,6 +4,7 @@
   "physics" : "gas",
   "animationCycle" : 1.05,
   "animationLoops" : false,
+  "fullbright" : true,
   "frameNumber" : 8,
   "power" : 0,
   "speed" : 10,
