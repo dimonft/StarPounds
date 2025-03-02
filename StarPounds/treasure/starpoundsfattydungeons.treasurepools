@@ -1,8 +1,6 @@
 {
-
-	//FEAST HALL
-
-    "starpoundsfloranfeasthallTreasure" : [
+	 //FEAST HALL
+  "starpoundsfloranfeasthallTreasure" : [
     [1, {
       "pool" : [
         {"weight" : 0.85, "pool" : "basicTreasure"},
@@ -11,7 +9,7 @@
         {"weight" : 0.05, "item" : [ "starpoundshoneymoomilk", 1]},
         {"weight" : 0.03, "item" : [ "starpoundshoneymoomilkdeluxe", 1]},
         {"weight" : 0.05, "item" : [ "starpoundsmeatwich", 1]},
-        {"weight" : 0.05, "item" : [ "florandrum4", 1]}, 
+        {"weight" : 0.05, "item" : [ "florandrum4", 1]},
         {"weight" : 0.05, "item" : [ "floranarmchair", 1]},
         {"weight" : 0.05, "item" : [ "huntingtrophy1", 1]},
         {"weight" : 0.05, "item" : [ "huntingtrophy2", 1]},
@@ -34,7 +32,7 @@
         {"weight" : 0.30, "pool" : "starpoundsfloranfeasthallTreasure"},
         {"weight" : 0.05, "item" : [ "floranring", 1]},
         {"weight" : 0.01, "item" : [ "gluttonisthead", 1]},
-        {"weight" : 0.01, "item" : [ "meatdresserhead", 1]} 
+        {"weight" : 0.01, "item" : [ "meatdresserhead", 1]}
       ],
       "poolRounds" : [
         [0.55, 1],
@@ -55,13 +53,13 @@
         {"weight" : 0.05, "item" : [ "floranring", 1]}
       ],
       "poolRounds" : [
-      [0.80, 2],
+        [0.80, 2],
         [0.40, 3]
-    ],
+      ],
       "allowDuplication" : false
     }]
   ],
-  
+
   "starpoundsfloranfeasthallSecretTreasure" : [
     [0, {
       "fill" : [
@@ -70,9 +68,7 @@
       ],
       "pool" : [
         {"weight" : 1.0, "pool" : "starpoundsfloranfeasthallRareTreasure"}
-      ],
-      "poolRounds" : 1,
-      "allowDuplication" : false
+      ]
     }]
   ],
 
@@ -84,10 +80,8 @@
         {"weight" : 0.17, "item" : "gluttonistlore2-codex"},
         {"weight" : 0.17, "item" : "howfloransgetfat-codex"},
         {"weight" : 0.16, "item" : "florfeast-codex"},
-        {"weight" : 0.16, "item" : "chika1feasthall-codex"}    
-      ],
-      "poolRounds" : 1,
-      "allowDuplication" : false
+        {"weight" : 0.16, "item" : "chika1feasthall-codex"}
+      ]
     }]
   ],
 
@@ -97,12 +91,10 @@
         {"weight" : 0.25, "item" : [ "blossomring", 1]},
         {"weight" : 0.25, "item" : [ "starpoundsblossomplushiecursed", 1]},
         {"weight" : 0.25, "item" : [ "cherryshygalhead", 1]}
-      ],
-      "poolRounds" : 1,
-      "allowDuplication" : false
+      ]
     }]
   ],
-  
+
   "starpoundsmeatberrypool" : [
     [1, {
       "fill" : [
@@ -110,105 +102,117 @@
       ]
     }]
   ],
-  
+
   // KEEP
-  
-    "starpoundsglitchponderoussmallchest" : [
+  "starpoundsglitchponderoussmallchest" : [
+
     [1, {
+      "fill" : [
+        {"pool" : "valuableTreasure"},
+        {"pool" : "maybeWeaponTreasure"}
+      ],
       "pool" : [
-        {"weight" : 0.80, "pool" : "basicTreasure"},
-        {"weight" : 0.05, "pool" : "maybeAccessory"},		
-        {"weight" : 0.20, "item" : [ "wispflamebottle", 15]}
+        {"weight" : 0.75, "pool" : "basicTreasure"},
+        {"weight" : 0.025, "item" : [ "wispflamebottle", 9]},
+        {"weight" : 0.025, "item" : [ "wispflamebottle", 5]},
+        {"weight" : 0.025, "item" : [ "wispflamebrazier", 1]},
+        {"weight" : 0.025, "item" : [ "wispflametorch", 1]},
+        {"weight" : 0.025, "item" : [ "wispflamelamp", 1]},
+        {"weight" : 0.025, "item" : [ "ponderoustankard", 1]},
+        {"weight" : 0.025, "item" : [ "wisplightlarge", 1]},
+        {"weight" : 0.025, "item" : [ "wisplightmed", 1]},
+        {"weight" : 0.025, "item" : [ "wisplightsmall", 1]},
+        {"weight" : 0.025, "item" : [ "wisplighttall", 1]}
       ],
       "poolRounds" : [
-        [0.30, 2],
-        [0.50, 3],
-        [0.20, 4]
+        [0.10, 2],
+        [0.40, 3],
+        [0.35, 4],
+        [0.10, 5],
+        [0.05, 6]
       ],
       "allowDuplication" : false
     }]
-  ], 
-  
-    "starpoundsglitchponderousbigchest" : [
+  ],
+  "starpoundsglitchponderousbigchest" : [
     [1, {
+      "fill" : [
+        {"pool" : "starpoundsglitchponderoussmallchest"},
+        {"pool" : "starpoundsMaybeGlitchPonderousArmor"}
+      ],
       "pool" : [
         {"weight" : 0.70, "pool" : "valuableTreasure"},
-        {"weight" : 0.10, "pool" : "maybeAccessory"},
-        {"weight" : 0.20, "pool" : "starpoundsglitchponderousArmor"},
-        {"weight" : 0.10, "pool" : "goodWeapon"}
+        {"weight" : 0.15, "pool" : "goodWeapon"}
       ],
       "poolRounds" : [
-        [0.60, 5],
-        [0.40, 6]
-      ],
-      "allowDuplication" : false
+        [0.55, 1],
+        [0.40, 2],
+        [0.05, 3]
+      ]
     }]
-  ],  
+  ],
 
-  "starpoundsglitchponderousArmor" : [
+  "starpoundsGlitchPonderousArmor" : [
     [1, {
       "pool" : [
         {"weight" : 0.25, "item" : [ "starpoundsponderoushead", 1]},
         {"weight" : 0.25, "item" : [ "starpoundsponderouschest", 1]},
         {"weight" : 0.25, "item" : [ "starpoundsponderouslegs", 1]},
         {"weight" : 0.25, "item" : [ "starpoundsponderousback", 1]}
-		],
-      "poolRounds" : 1,
-      "allowDuplication" : false
+		  ]
     }]
-  ],    
+  ],
+
+  "starpoundsMaybeGlitchPonderousArmor" : [
+    [1, {
+      "pool" : [{"weight" : 1, "pool" : "starpoundsGlitchPonderousArmor"}],
+      "poolRounds" : [
+        [0.7, 0],
+        [0.3, 1]
+      ]
+    }]
+  ],
 
   "starpoundsglitchponderousbosschest" : [
     [0, {
       "fill" : [
         {"pool" : "LargeDungeonReward"},
-        {"pool" : "starpoundsglitchponderousbigchest"}		
-      ],
-      "poolRounds" : [
-      [0.80, 4],
-        [0.40, 5]
-    ],
-      "allowDuplication" : false
+        {"pool" : "starpoundsMaybeGlitchPonderousArmor"}
+      ]
     }]
   ],
-  
+
 
   "starpoundsglitchponderoussecretchest" : [
     [0, {
       "fill" : [
         {"pool" : "LargeDungeonReward"},
-        {"pool" : "starpoundsglitchponderousbigchest"},		
-        {"pool" : "starpoundsBlossompool"}		
-      ],
-      "poolRounds" : [
-      [0.80, 4],
-        [0.40, 5]
-    ],
-      "allowDuplication" : false
+        {"pool" : "starpoundsMaybeGlitchPonderousArmor"},
+        {"pool" : "starpoundsBlossompool"}
+      ]
     }]
   ],
-  
-  
-    "starpoundsglitchponderousbookshelf" : [
+
+
+  "starpoundsglitchponderousbookshelf" : [
     [1, {
+      "fill" : [
+        {"pool" : "starpoundsglitchponderousLore"},
+        {"pool" : "bookTreasure"}
+      ],
       "pool" : [
-        {"weight" : 0.7, "pool" : "starpoundsglitchponderousLore"},
-        {"weight" : 0.5, "item" : [ "bookpiles", 9]},
-        {"weight" : 0.5, "item" : [ "bookpiles", 13]},
-        {"weight" : 0.5, "item" : [ "bookpiles", 15]},
-        {"weight" : 0.5, "item" : [ "paper", 4]},
-        {"weight" : 0.5, "item" : [ "paper", 7]}
+        {"weight" : 0.4, "item" : [ "paper", 2]},
+        {"weight" : 0.3, "item" : [ "paper", 4]},
+        {"weight" : 0.3, "item" : [ "paper", 7]}
       ],
       "poolRounds" : [
         [0.40, 1],
         [0.50, 2],
         [0.10, 3]
-      ],
-      "allowDuplication" : false
+      ]
     }]
-  ],  
+  ],
 
-  
   "starpoundsglitchponderousLore" : [
     [1, {
       "pool" : [
@@ -223,15 +227,13 @@
         {"weight" : 0.8, "item" : "ponderous_ironjournal2-codex"},
         {"weight" : 0.8, "item" : "ponderous_indictment-codex"},
         {"weight" : 0.8, "item" : "ponderous_warningtotheorder-codex"},
-        {"weight" : 0.8, "item" : "chika2ponderouskeep-codex"}    
-      ],
-      "poolRounds" : 1,
-      "allowDuplication" : false
+        {"weight" : 0.8, "item" : "chika2ponderouskeep-codex"}
+      ]
     }]
-  ],    
-  
+  ],
+
   //Recipe Blueprints will be added later
-    "starpoundsglitchponderouscounter" : [
+  "starpoundsglitchponderouscounter" : [
     [1, {
       "pool" : [
         {"weight" : 0.01, "item" : [ "starpoundsgoblet", 1]},
@@ -248,10 +250,10 @@
       ],
       "allowDuplication" : false
     }]
-  ],  
-  
+  ],
+
   //Add Glitch fatty foodstuffs later
-    "starpoundsglitchponderousbarrel" : [
+  "starpoundsglitchponderousbarrel" : [
     [1, {
       "pool" : [
         {"weight" : 0.11, "item" : [ "redapple", 1]},
@@ -273,33 +275,34 @@
       ],
       "allowDuplication" : true
     }]
-  ],  
+  ],
 
-    "starpoundsglitchponderousdesk" : [
+  "starpoundsglitchponderousdesk" : [
     [1, {
+      "fill" : [
+        {"pool" : "starpoundsglitchponderousLore"}
+      ],
       "pool" : [
-        {"weight" : 0.6, "pool" : "starpoundsglitchponderousLore"},
-        {"weight" : 0.6, "item" : [ "bottle", 3]},
-        {"weight" : 0.6, "item" : [ "paper", 4]},
-        {"weight" : 0.6, "item" : [ "paper", 7]}
+        {"weight" : 0.5, "item" : [ "bottle", 3]},
+        {"weight" : 0.25, "item" : [ "paper", 4]},
+        {"weight" : 0.25, "item" : [ "paper", 7]}
       ],
       "poolRounds" : [
         [0.40, 1],
         [0.50, 2],
         [0.10, 3]
-      ],
-      "allowDuplication" : false
+      ]
     }]
-  ],  
+  ],
 
   "starpoundsglitchponderoussecretdesk" : [
     [1, {
       "fill" : [
         {"item" : [ "ponderous_hiddenletter-codex", 1]}
-      ]	  
+      ]
     }]
-  ],  
-  
+  ],
+
   "starpoundsponderouscorepool" : [
     [1, {
       "fill" : [
@@ -307,6 +310,6 @@
       ]
     }]
   ]
-  
+
 
 }
