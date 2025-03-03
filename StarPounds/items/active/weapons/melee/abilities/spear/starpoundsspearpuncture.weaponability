@@ -1,0 +1,89 @@
+{
+  "animationParts" : { },
+  "animationCustom" : {
+    "sounds" : {
+      "flurry" : [ "/sfx/melee/spear_flurry.ogg" ]
+    }
+  },
+
+  "ability" : {
+    "name" : "Puncture",
+    "type" : "starpoundsspearpuncture",
+    "scripts" : ["/items/active/weapons/melee/abilities/spear/starpoundsspearpuncture.lua"],
+    "class" : "StarPoundsSpearPuncture",
+
+    "fireTime" : 1.0,
+    "baseDps" : 9.5,
+    "damageConfig" : {
+      "damageSourceKind" : "spear",
+      "statusEffects" : [ ],
+      "knockbackMode" : "aim",
+      "knockback" : 30,
+      "timeoutGroup" : "primary"
+    },
+
+    "punctureWindupTime": 0.25,
+    "maxCooldownTime" : 0.4,
+    "minCooldownTime" : 0.2,
+    "cooldownSwingReduction" : 0.05,
+
+    "punctureDamageConfig" : {
+      "knockback" : 15,
+      "knockbackCycle" : 5, // Knockback every fifth hit. Prevents stunlocking enemies since it doesn't use energy.
+      "timeout" : 0.15,
+      "timeoutGroup" : "puncture"
+    },
+
+    "cycleRotationOffsets" : [0, 7.5, -7.5],
+    "stances" : {
+      "idle" : {
+        "armRotation" : -90,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+        "weaponOffset" : [0, 0.5],
+
+        "allowRotate" : true,
+        "allowFlip" : true
+      },
+      "windup" : {
+        "duration" : 0.1,
+        "armRotation" : -110,
+        "weaponRotation" : 20,
+        "twoHanded" : true,
+        "weaponOffset" : [0, 0.5],
+
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "fire" : {
+        "duration" : 0.3,
+        "armRotation" : -20,
+        "weaponRotation" : -70,
+        "twoHanded" : true,
+        "weaponOffset" : [0, 2.5],
+
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "swingWindup" : {
+        "armRotation" : -90,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+        "weaponOffset" : [0, 0.5],
+
+        "allowRotate" : true,
+        "allowFlip" : true
+      },
+      "swing" : {
+        "duration" : 0.1,
+        "armRotation" : -15,
+        "weaponRotation" : -75,
+        "twoHanded" : true,
+        "weaponOffset" : [0.0, 0.0],
+
+        "allowRotate" : false,
+        "allowFlip" : false
+      }
+    }
+  }
+}

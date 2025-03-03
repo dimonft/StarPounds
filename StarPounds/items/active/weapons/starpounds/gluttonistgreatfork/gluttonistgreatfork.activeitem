@@ -32,7 +32,7 @@
 
   "aimOffset" : -1.0,
 
-  "primaryAbilityType" : "spearstab",
+  "primaryAbilityType" : "starpoundsspearpuncture",
   "primaryAbility" : {
     "fireTime" : 0.95,
     "baseDps" : 11
