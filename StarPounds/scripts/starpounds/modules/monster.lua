@@ -109,6 +109,8 @@ function _monster:setup()
   if status.statusProperty("targetMaterialKind") == "robotic" then
     entity.foodType = "preyMonsterInedible"
   end
+  -- Use the preset type if it exists.
+  entity.foodType = config.getParameter("starPounds_foodType", entity.foodType)
   -- No XP if the monster is a pet (prevents infinite XP). Using configParameter instead of hasOption because default options aren't merged yet when this runs.
   if config.getParameter("starPounds_options.disableExperience") or (capturable and (capturable.tetherUniqueId() or capturable.ownerUuid())) then
     entity.foodType = entity.foodType.."_noExperience"
