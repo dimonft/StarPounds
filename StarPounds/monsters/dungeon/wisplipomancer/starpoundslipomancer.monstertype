@@ -1,7 +1,7 @@
 {
   "type" : "starpoundslipomancer",
-  "shortdescription" : "Wispqueen Lipomancer",
-  "description" : "A powerful mage who commands the lesser wisps. She is sworn to protect the secrets of lipomancy.",
+  "shortdescription" : "Lipomancer",
+  "description" : "The matriarch of the Wisps. She is sworn to protect the secrets of lipomancy.",
 
   "categories" : [ "starpoundslipomancer" ],
   "parts" : [ "body" ],
