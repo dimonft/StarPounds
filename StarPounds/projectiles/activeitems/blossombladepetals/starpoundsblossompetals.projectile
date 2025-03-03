@@ -34,7 +34,7 @@
   "emitters" : [ "blossomswordswoosh" ],
 
   "statusEffects" : [
-    {"effect": "starpoundsratebloatslow", "duration": 10},
+    {"effect": "starpoundsfood_bloat", "duration": 25},
     {"effect": "starpoundsfood_fat", "duration": 25}
   ],
   "damageKind" : "caloric"

@@ -40,9 +40,8 @@
     }
   ],
   "statusEffects" : [
-    {"effect": "starpoundsfood_bloat", "duration": 2.5},
-    {"effect": "starpoundsfood", "duration": 2.5},
-    {"effect": "starpoundsratebloat", "duration": 1}
+    {"effect": "starpoundsfood_liquidfood_noexperience", "duration": 5},
+    {"effect": "starpoundsfood_liquid", "duration": 5}
   ],
   "power" : 1,
   "speed" : 20,

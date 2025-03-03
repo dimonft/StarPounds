@@ -36,9 +36,9 @@
     "baseDps" : 1.0,
     "damageConfig" : {
       "statusEffects" : [ 
-    {"effect": "starpoundsrategain", "duration": 1},
-    {"effect": "starpoundsratebloat", "duration": 1}	  
-	  ],
+        {"effect": "starpoundsfood_bloat", "duration": 5},
+        {"effect": "starpoundsfood_fat", "duration" : 5}
+	     ],
       "knockback" : 50
     }
   },

@@ -13,9 +13,7 @@
   "damageKind" : "caloricplasma",
   "knockback" : 10,
   "statusEffects" : [
-    {"effect": "starpoundsfood", "duration": 25},
-    {"effect": "starpoundsfood_bloat", "duration": 25},
-    {"effect": "starpoundsratebloat", "duration": 5},
-    {"effect": "starpoundsrategain", "duration": 5}
+    {"effect": "starpoundsfood_liquidfood_noexperience", "duration": 25},
+    {"effect": "starpoundsfood_liquid", "duration": 25}
   ]
 }
