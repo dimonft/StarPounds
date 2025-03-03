@@ -1,0 +1,39 @@
+{
+  "name": "action-starpoundsboss",
+  "description": "",
+  "scripts": ["/scripts/actions/monster.lua"],
+  "parameters": {
+    "barType": "Special"
+  },
+  "root": {
+    "title": "sequence",
+    "type": "composite",
+    "name": "sequence",
+    "parameters": {},
+    "children": [
+      {
+        "title": "setResourcePercentage",
+        "type": "action",
+        "name": "setResourcePercentage",
+        "parameters": {
+          "amount": {"value": 1},
+          "resource": {"value": "health"}
+        }
+      },
+      {
+        "title": "failer",
+        "type": "decorator",
+        "name": "failer",
+        "parameters": {},
+        "child": {
+          "title": "setDamageBar",
+          "type": "action",
+          "name": "setDamageBar",
+          "parameters": {
+            "type": {"value": "<barType>"}
+          }
+        }
+      }
+    ]
+  }
+}
