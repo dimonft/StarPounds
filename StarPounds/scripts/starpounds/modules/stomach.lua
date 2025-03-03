@@ -233,6 +233,8 @@ function stomach:digest(dt, isGurgle, isBelch)
           status.giveResource("food", foodAmount * foodValue * foodConfig.multipliers.food + foodDeltaDiff)
         end
 
+        if isGurgle and foodConfig.ignoreGurgles then digestAmount = 0 end
+
         local milkProduced, milkCost = starPounds.moduleFunc("breasts", "milkProduction", digestAmount * absorption * foodConfig.multipliers.food)
         starPounds.moduleFunc("breasts", "gainMilk", milkProduced)
         -- Gain weight based on amount digested, milk production, and digestion efficiency.
