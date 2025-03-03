@@ -38,5 +38,9 @@
   { "op": "add",
   "path": "/throgbolt",
   "value": "/items/active/weapons/melee/abilities/spear/throgbolt/throgbolt.weaponability"
+  },
+  { "op": "add",
+  "path": "/starpoundsgaleslash",
+  "value": "/items/active/weapons/melee/abilities/broadsword/kunaiblast/starpoundsgaleslash.weaponability"
   }  
 ]  

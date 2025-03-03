@@ -79,6 +79,7 @@
     {"input": [["durasteelbar", 6], ["copperbar", 4], ["depletedgaincrystal", 1]], "output": "gaincrystal"},
     {"input": [["durasteelbar", 6], ["copperbar", 4], ["erchiusbloatcatalyzer", 1]], "output": "erchipudgesprayer"},
     {"input": [["durasteelbar", 6], ["climbingrope", 4], ["meatberries", 1]], "output": "gluttonistgreatfork"},
+    {"input": [["durasteelbar", 6], ["petalred", 6], ["meatberries", 1]], "output": "starpoundsblossomsword"},
     {"input": [["durasteelbar", 6], ["climbingrope", 4], ["onikillersake", 1]], "output": "ogresmoonshiner"},
     {"input": [["durasteelbar", 6], ["copperbar", 4], ["ponderouscore", 1]], "output": "ponderousstaff"},
     {"input": [["durasteelbar", 6], ["copperbar", 4], ["stardustrootpop", 1]], "output": "scatterpopper"}

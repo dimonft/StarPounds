@@ -1,0 +1,19 @@
+{
+  "kind" : "starpoundscherryblossompetals",
+  "definition" : {
+    "type" : "animated",
+    "looping" : true,
+    "animation" : "/animations/cherryblossompetals/starpoundscherryblossom.animation",
+    "position" : [0, 0],
+    "initialVelocity" : [0, 0],
+    "finalVelocity" : [0, 0],
+    "approach" : [0.35, 0.35],
+    "timeToLive" : 0.7,
+    "size" : 0.50,
+    "variance" : {
+      "position" : [2, 2],
+      "initialVelocity" : [2, 2],
+      "rotation" : 180
+	  }
+}
+}

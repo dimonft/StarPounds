@@ -1,0 +1,29 @@
+{
+  "kind" : "blossomswordswoosh",
+  "definition" : {
+    "duration" : 0.3,
+    "loops" : true,
+    "start" : {
+      "particles" : [
+        [ "starpoundscherryblossompetals", "starpoundscherryblossompetals" ]
+      ],
+      "sounds" : [
+        [ ]
+      ]
+    },
+    "particles" : [
+      [ "starpoundscherryblossompetals", "starpoundscherryblossompetals", "starpoundscherryblossompetals" ]
+    ],
+    "sounds" : [
+      [ ]
+    ],
+    "stop" : {
+      "particles" : [
+        [ "starpoundscherryblossompetals", "starpoundscherryblossompetals" ]
+      ],
+      "sounds" : [
+        [ ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "animationParts" : { },
+  "animationCustom" : {
+    "sounds" : {
+      "fireKunai" : [ "/sfx/gun/bow_loose_perfect.ogg" ]
+    }
+  },
+
+  "ability" : {
+    "name" : "Gale Slash",
+    "type" : "starpoundsgaleslash",
+    "scripts" : ["/items/active/weapons/melee/abilities/broadsword/kunaiblast/kunaiblast.lua"],
+    "class" : "KunaiBlast",
+
+    // timing and angle adjust to launch projectiles during fire stance
+    "projectileTimesAndAngles" : [
+      [0.02, 8],
+      [0.02, 0],
+      [0.02, -8]
+    ],
+    "projectileOffset" : [1.75, 0.0],
+    "projectileType" : "starpoundsblossompetals",
+    "projectileParameters" : {
+      "baseDamage" : 2
+    },
+
+    "baseDamage" : 2,
+    "energyUsage" : 60,
+    "cooldownTime" : 1.5,
+
+    "stances" : {
+      "windup" : {
+        "duration" : 0.2,
+        "armRotation" : 70,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "fire" : {
+        "duration" : 0.25,
+        "armRotation" : -45,
+        "weaponRotation" : -55,
+        "twoHanded" : true,
+
+        "allowRotate" : false,
+        "allowFlip" : false
+      }
+    }
+  }
+}
