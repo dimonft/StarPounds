@@ -177,7 +177,7 @@
     [0, {
       "fill" : [
         {"pool" : "LargeDungeonReward"},
-        {"pool" : "starpoundsMaybeGlitchPonderousArmor"}
+        {"pool" : "starpoundsGlitchPonderousArmor"}
       ]
     }]
   ],
