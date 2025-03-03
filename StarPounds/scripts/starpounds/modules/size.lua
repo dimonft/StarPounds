@@ -86,6 +86,11 @@ function size:get(weight)
   return starPounds.sizes[sizeIndex], sizeIndex
 end
 
+function size:offset()
+  -- Shorthand for other scripts to use.
+  return starPounds.currentSize and {0, (starPounds.currentSize.yOffset or 0)} or {0, 0}
+end
+
 function size:getVariant(size)
   -- Don't do anything if the mod is disabled.
   if not (storage.starPounds.enabled and self.canGain) then return "" end

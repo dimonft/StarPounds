@@ -1,6 +1,7 @@
 require "/scripts/vec2.lua"
 require "/scripts/util.lua"
 require "/scripts/rect.lua"
+require "/scripts/poly.lua"
 
 --Tactical planner script for NPC Combat
 function npcCombat(dt)
@@ -12,17 +13,9 @@ function npcCombat(dt)
   self.groupResources:set("targetPosition", entityPosition)
 
   if not self.npcBounds or not self.npcPoly then
-    for _, memberId in ipairs(self.group.members) do
-      local starPoundsWeight = world.callScriptedEntity(memberId, "starPounds.getData", "weight") or 0
-      local starPoundsSize = (world.callScriptedEntity(memberId, "starPounds.getSize", starPoundsWeight) or {size = ""}).size
-      if starPoundsSize == "" then
-        self.npcBounds = world.callScriptedEntity(memberId, "mcontroller.boundBox")
-        self.npcPoly = world.callScriptedEntity(memberId, "mcontroller.collisionPoly")
-      end
-    end
-    if not self.npcBounds or not self.npcPoly then
-      self.npcPoly = {{-0.75, -2.0}, {-0.35, -2.5}, {0.35, -2.5}, {0.75, -2.0}, {0.75, 0.65}, {0.35, 1.22}, {-0.35, 1.22}, {-0.75, 0.65}}
-      self.npcBounds = {-0.75, -2.5, 0.75, 1.22}
+    if self.group.members[1] then
+      self.npcPoly = world.callScriptedEntity(self.group.members[1], "mcontroller.baseParameters").standingPoly
+      self.npcBounds = poly.boundBox(self.npcPoly)
     end
   end
 
