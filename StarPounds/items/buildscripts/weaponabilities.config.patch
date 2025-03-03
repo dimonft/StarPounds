@@ -53,5 +53,10 @@
     "op": "add",
     "path": "/starpoundsspearpuncture",
     "value": "/items/active/weapons/melee/abilities/spear/starpoundsspearpuncture.weaponability"
-  }
+  },
+  {
+    "op": "add",
+    "path": "/starpoundsgaleslash",
+    "value": "/items/active/weapons/melee/abilities/broadsword/kunaiblast/starpoundsgaleslash.weaponability"
+  }  
 ]
