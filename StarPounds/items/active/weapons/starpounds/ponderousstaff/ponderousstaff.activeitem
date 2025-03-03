@@ -58,7 +58,7 @@
       "allowFlip" : true
     },
     "charge" : {
-      "duration" : 1.4,
+      "duration" : 1.0,
       "armRotation" : 20,
       "weaponRotation" : -20,
       "twoHanded" : true,
@@ -100,12 +100,15 @@
   "primaryAbility" : {
     "name" : "Wisp Barrage",  
     "projectileType" : "ponderousbolt",
-    "projectileCount" : 6,
+    "projectileCount" : 8,
     "maxCastRange" : 30,
 
     "projectileParameters" : {
-      "baseDamage" : 24
+      "baseDamage" : 40
     },
+   
+    "projectileDelayFirst" : 0.75,
+    "projectileDelayEach" : 0.15,
 
     "stances" : {
       "idle" : {
