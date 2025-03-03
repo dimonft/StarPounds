@@ -1,0 +1,10 @@
+{
+  "name": "starpoundsfood_fat",
+  "defaultDuration": 1,
+  "effectConfig" : {
+    "type" : "fat"
+  },
+  "scripts": [
+    "starpoundsfood.lua"
+  ]
+}

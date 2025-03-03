@@ -10,37 +10,29 @@
   "piercing" : true,
 
   "actionOnReap" : [
-
     {
       "action" : "loop",
       "count" : 3,
-      "body" : [
-        {
-          "action" : "option",
-          "options" : [
-            {
-              "action" : "particle",
-              "specification" : {
-                "type" : "animated",
-                "animation" : "/animations/cherryblossompetals/starpoundscherryblossom.animation",
-                "approach" : [0.5, 0.5],
-                "timeToLive" : 0.4,
-                "variance" : {
-                  "timeToLive" : 0.15,
-                  "position" : [0.5, 0.5],
-                  "initialVelocity" : [2, 2],
-                  "rotation" : 180
-                }
-              }
-            }
-          ]
+      "body" : [{
+        "action" : "particle",
+        "specification" : {
+          "type" : "animated",
+          "animation" : "/animations/cherryblossompetals/starpoundscherryblossom.animation",
+          "approach" : [0.5, 0.5],
+          "timeToLive" : 0.4,
+          "variance" : {
+            "timeToLive" : 0.15,
+            "position" : [0.5, 0.5],
+            "initialVelocity" : [2, 2],
+            "rotation" : 180
+          }
         }
-      ]
+      }]
     }
 	],
-  
-  "emitters" : [ "blossomswordswoosh"  ],
-  
-  "statusEffects" : [{"effect": "starpoundsratebloatslow", "duration": 10}, {"effect": "starpoundsrategainrapid", "duration": 1}],  
+
+  "emitters" : [ "blossomswordswoosh" ],
+
+  "statusEffects" : [{"effect": "starpoundsratebloatslow", "duration": 10}, {"effect": "starpoundsrategainrapid", "duration": 1}],
   "damageKind" : "caloric"
 }
