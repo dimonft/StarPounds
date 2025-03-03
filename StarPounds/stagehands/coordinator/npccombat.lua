@@ -52,14 +52,13 @@ function setMeleeAttackerPositions()
     table.sort(memberRanges, function(a,b) return a[2].minRange < b[2].minRange end)
     local minRange = memberRanges[1][2].minRange
 
-    local validPositions = attackPositionsAlongGround(minRange, maxRange, targetPosition)
+    local validPositionsList = {}
+    validPositionsList["0"] = attackPositionsAlongGround(minRange, maxRange, targetPosition)
     for _,pair in pairs(memberRanges) do
-      local starPoundsWeight = world.callScriptedEntity(pair[1], "starPounds.getData", "weight") or 0
-      local starPoundsSize = (world.callScriptedEntity(pair[1], "starPounds.getSize", starPoundsWeight) or {size = ""}).size
-      local validPositions = validPositions
-      if starPoundsSize ~= "" then
-        validPositions = attackPositionsAlongGround(minRange, maxRange, targetPosition, world.callScriptedEntity(pair[1], "mcontroller.boundBox"))
-      end
+      local index = tostring((world.callScriptedEntity(pair[1], "starPounds.moduleFunc", "size", "offset") or {0, 0})[2])
+      usedPositions[index] = usedPositions[index] or {}
+      validPositionsList[index] = validPositionsList[index] or attackPositionsAlongGround(minRange, maxRange, targetPosition, world.callScriptedEntity(pair[1], "mcontroller.boundBox"))
+      local validPositions = validPositionsList[index]
       local npcPosition = world.entityPosition(pair[1])
       table.sort(validPositions, function(a,b)
         local aToTarget = world.magnitude(targetPosition, a)
@@ -78,10 +77,10 @@ function setMeleeAttackerPositions()
         local distance = math.abs(world.distance(position, targetPosition)[1])
         if distance > pair[2].maxRange or distance < pair[2].minRange then return false end
 
-        return util.find(usedPositions, function(usedPosition) return world.magnitude(position, usedPosition) < 1 end) == nil
+        return util.find(usedPositions[index], function(usedPosition) return world.magnitude(position, usedPosition) < 1 end) == nil
       end)
 
-      table.insert(usedPositions, movePosition)
+      table.insert(usedPositions[index], movePosition)
       self.memberResources[pair[1]]:set("meleePosition", movePosition)
     end
   end
@@ -108,6 +107,8 @@ function setRangedAttackerPositions()
 
     -- Filter out npcs that are already in a good ranged position
     local needPosition = util.filter(memberRanges, function(pair)
+      local index = tostring((world.callScriptedEntity(pair[1], "starPounds.moduleFunc", "size", "offset") or {0, 0})[2])
+      usedPositions[index] = usedPositions[index] or {}
       local positions = {
         self.memberResources[pair[1]]:get("movePosition"),
         world.entityPosition(pair[1])
@@ -115,7 +116,7 @@ function setRangedAttackerPositions()
       for _,position in pairs(positions) do
         local targetDistance = world.magnitude(targetPosition, position)
         if targetDistance < pair[2].forceMoveRange and targetDistance > pair[2].minRange and not world.lineTileCollision(position, targetPosition) then
-          table.insert(usedPositions, position)
+          table.insert(usedPositions[index], position)
           self.memberResources[pair[1]]:set("movePosition", position)
           return false
         end
@@ -131,15 +132,15 @@ function setRangedAttackerPositions()
       local minRange = needPosition[1][2].minRange
 
       local rangedPositions = attackPositionsInRange(maxRange, minRange, targetPosition)
-
+      local rangedPositionsList = {}
+      rangedPositionsList["0"] = attackPositionsInRange(maxRange, minRange, targetPosition)
       -- Find a good position for npcs that need one
       for _,pair in pairs(needPosition) do
-        local starPoundsWeight = world.callScriptedEntity(pair[1], "starPounds.getData", "weight") or 0
-        local starPoundsSize = (world.callScriptedEntity(pair[1], "starPounds.getSize", starPoundsWeight) or {size = ""}).size
-        local rangedPositions = rangedPositions
-        if starPoundsSize ~= "" then
-          rangedPositions = attackPositionsInRange(maxRange, minRange, targetPosition, world.callScriptedEntity(pair[1], "mcontroller.boundBox"))
-        end
+        local index = tostring((world.callScriptedEntity(pair[1], "starPounds.moduleFunc", "size", "offset") or {0, 0})[2])
+        usedPositions[index] = usedPositions[index] or {}
+        rangedPositionsList[index] = rangedPositionsList[index] or attackPositionsInRange(maxRange, minRange, targetPosition, world.callScriptedEntity(pair[1], "mcontroller.boundBox"))
+        local rangedPositions = rangedPositionsList[index]
+
         local npcPosition = world.entityPosition(pair[1])
         table.sort(rangedPositions, function(a,b)
           return world.magnitude(a, npcPosition) < world.magnitude(b, npcPosition)
@@ -152,9 +153,9 @@ function setRangedAttackerPositions()
           if magnitude < pair[2].minRange or magnitude > pair[2].maxRange then return false end
 
           -- If we can't find a close position in the already used positions, it's available
-          return util.find(usedPositions, function(used) return world.magnitude(position, used) < 2 end) == nil
+          return util.find(usedPositions[index], function(used) return world.magnitude(position, used) < 2 end) == nil
         end)
-        table.insert(usedPositions, movePosition)
+        table.insert(usedPositions[index], movePosition)
         self.memberResources[pair[1]]:set("movePosition", movePosition)
       end
     end
