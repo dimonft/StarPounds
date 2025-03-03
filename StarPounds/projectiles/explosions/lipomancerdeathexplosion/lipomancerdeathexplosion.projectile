@@ -4,7 +4,7 @@
   "animationCycle" : 0.25,
   "frameNumber" : 6,
   "speed" : 0,
-  "lightColor" : [255, 188, 71],
+  "lightColor" : [145, 75, 0],
   "pointLight" : true,
   "statusEffects" : [ ],
   "damagePoly" : [  ],
@@ -99,6 +99,9 @@
           "options" : [ "/sfx/gun/grenadeblast_fire1.ogg", "/sfx/gun/grenadeblast_fire2.ogg", "/sfx/gun/grenadeblast_fire3.ogg" ]
         }
       ]
+	  
+	  
+	  
     }
   ]
 }

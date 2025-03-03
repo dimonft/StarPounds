@@ -82,6 +82,7 @@
     {"input": [["durasteelbar", 6], ["petalred", 6], ["meatberries", 1]], "output": "starpoundsblossomsword"},
     {"input": [["durasteelbar", 6], ["climbingrope", 4], ["onikillersake", 1]], "output": "ogresmoonshiner"},
     {"input": [["durasteelbar", 6], ["phasematter", 4], ["ponderouscore", 1]], "output": "ponderousstaff"},
+    {"input": [["durasteelbar", 6], ["copperbar", 6], ["ponderouscore", 1]], "output": "starpoundsponderoushammer"},
     {"input": [["durasteelbar", 6], ["copperbar", 4], ["stardustrootpop", 1]], "output": "scatterpopper"}
     ],
     "utilities" : [

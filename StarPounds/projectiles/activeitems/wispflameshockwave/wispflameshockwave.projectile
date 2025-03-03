@@ -1,0 +1,51 @@
+{
+  "projectileName" : "wispflameshockwave",
+  "physics" : "bullet",
+  "image" : "wispflameshockwave.png",
+  "damageKindImage" : "icon.png",
+  "speed" : 25,
+  "animationCycle" : 0.5,
+  "frameNumber" : 4,
+  "power" : 25,
+  "piercing" : true,
+  "knockback" : 35,
+  "timeToLive" : 1.0,
+
+  "statusEffects" : [
+    {"effect": "starpoundsfood_wispflame", "duration": 20}
+  ],
+  
+  "actionOnReap" : [
+    {
+      "action" : "sound",
+      "options" : [ "/sfx/gun/grenadeblast_poison1.ogg", "/sfx/gun/grenadeblast_poison2.ogg", "/sfx/gun/grenadeblast_poison3.ogg" ]
+    },
+    {
+      "action" : "projectile",
+      "type" : "wispbombcloud",
+      "fuzzAngle" : 180,
+      "inheritSpeedFactor" : 0.1,
+      "inheritDamageFactor" : 0.0
+    },
+    {
+      "action" : "projectile",
+      "type" : "wispbombcloud",
+      "fuzzAngle" : 180,
+      "inheritSpeedFactor" : 0.1,
+      "inheritDamageFactor" : 0.0 
+    },
+    {
+      "action" : "projectile",
+      "type" : "wispbombcloud",
+      "fuzzAngle" : 180,
+      "inheritSpeedFactor" : 0.1,
+      "inheritDamageFactor" : 0.0
+    }
+],	
+  
+  "damagePoly" : [ [0, 24], [8, 8], [8, -8], [0, -24], [-8, -8], [-8, 8] ],  
+  
+  "emitters" : [ "wispflame", "wispflame" ],
+  "fullbright" : true,
+  "damageKind" : "caloric"
+}

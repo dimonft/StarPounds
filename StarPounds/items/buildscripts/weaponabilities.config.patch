@@ -58,5 +58,10 @@
     "op": "add",
     "path": "/starpoundsgaleslash",
     "value": "/items/active/weapons/melee/abilities/broadsword/kunaiblast/starpoundsgaleslash.weaponability"
+  }  ,
+  {
+    "op": "add",
+    "path": "/starpoundsponderouspound",
+    "value": "/items/active/weapons/melee/abilities/hammer/groundslam/starpoundsponderouspound.weaponability"
   }  
 ]

@@ -4,7 +4,7 @@
   "level" : 4,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "Based on a ravenous insect that once terrorized the Gluttonist tribe.",
+  "description" : "^gray;Based on a ravenous insect that once terrorized the Gluttonist tribe.",
   "shortdescription" : "Blossoming Blade",
   "tooltipKind" : "starpoundssword",
   "category" : "broadsword",

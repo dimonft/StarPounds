@@ -1,0 +1,77 @@
+{
+  "projectileName" : "wispflameexplosion",
+  "image" : "wispflameexplosion.png",
+  "animationCycle" : 0.2,
+  "frameNumber" : 6,
+  "speed" : 0,
+  "lightColor" : [255, 188, 71],
+  "pointLight" : true,
+  "damagePoly" : [ [-37, 0], [-28, -28], [0, -37], [28, -28], [37, 0], [28, 28], [0, 37], [-28, 28] ],
+  "animationLoops" : false,
+  "piercing" : true,
+  "bounces" : -1,
+  "flippable" : true,
+  "damageKind" : "caloricplasma",
+  "knockback" : 50,
+  "statusEffects" : [
+    {"effect": "starpoundsfood_wispflame", "duration": 20}
+  ],
+
+ "periodicActions" : [
+    {
+      "time" : 0.05,
+      "repeat" : false,
+      "action" : "actions",
+      "list" : [
+        {
+          "action" : "loop",
+          "count" : 20,
+          "body" : [
+            {
+              "action" : "option",
+              "options" : [
+                {
+                  "action" : "particle",
+                  "specification" : {
+                    "type" : "animated",
+                    "animation" : "/animations/wisp/wispflame.animation",
+                    "approach" : [0.5, 0.5],
+                    "timeToLive" : 0.6,
+                    "variance" : {
+                      "timeToLive" : 0.3,
+                      "initialVelocity" : [6, 8]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+    {
+      "action" : "projectile",
+      "type" : "wispflameshockwave",
+      "fuzzAngle" : 0,
+      "inheritDamageFactor" : 0.5,
+      "angleAdjust" : 0
+    },		
+    {
+      "action" : "projectile",
+      "type" : "wispflameshockwave",
+      "fuzzAngle" : 0,
+      "inheritDamageFactor" : 0.5,
+      "angleAdjust" : 180
+    },		
+		
+        {
+          "action" : "sound",
+          "options" : [ "/sfx/gun/grenadeblast_fire1.ogg", "/sfx/gun/grenadeblast_fire2.ogg", "/sfx/gun/grenadeblast_fire3.ogg" ]
+        }
+      ]
+	  
+	  
+	  
+    }
+  ]	  
+	  
+	  
+    }
