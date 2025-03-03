@@ -40,7 +40,7 @@
     }
   ],
   "statusEffects" : [
-    {"effect": "starpoundsbloat", "duration": 2.5},
+    {"effect": "starpoundsfood_bloat", "duration": 2.5},
     {"effect": "starpoundsfood", "duration": 2.5},
     {"effect": "starpoundsratebloat", "duration": 1}
   ],

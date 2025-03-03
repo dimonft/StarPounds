@@ -100,7 +100,7 @@
       "teamType" : "enemy",
       "damageSourceKind" : "caloric",
       "knockback" : 0,
-      "statusEffects" : ["starpoundsvoresourceforce", {"effect": "starpoundsbloat", "duration": 100}]
+      "statusEffects" : ["starpoundsvoresourceforce", {"effect": "starpoundsfood_bloat", "duration": 100}]
     },
 
     "metaBoundBox" : [-4, -4, 4, 4],

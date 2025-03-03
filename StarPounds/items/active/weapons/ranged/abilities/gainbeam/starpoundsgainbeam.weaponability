@@ -10,7 +10,7 @@
     "energyUsage" : 20,
 
     "damageConfig" : {
-      "statusEffects" : [{"effect": "starpoundsbloat", "duration": 30},  {"effect": "starpoundsrategainrapid", "duration" : 3} ],
+      "statusEffects" : [{"effect": "starpoundsfood_bloat", "duration": 30},  {"effect": "starpoundsrategainrapid", "duration" : 3} ],
       "damageSourceKind" : "caloricplasma",
       "knockback" : 8
     },

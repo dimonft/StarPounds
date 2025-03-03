@@ -13,7 +13,7 @@
   "knockback" : 2,
   "piercing" : true,
   "statusEffects" : [
-    {"effect": "starpoundsbloat", "duration": 30},
+    {"effect": "starpoundsfood_bloat", "duration": 30},
     {"effect": "starpoundsrategainrapid", "duration" : 3}
   ],
 

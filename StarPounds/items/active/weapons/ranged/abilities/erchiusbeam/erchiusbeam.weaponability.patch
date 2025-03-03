@@ -7,6 +7,6 @@
   {
     "op" : "add",
     "path" : "/ability/damageConfig/statusEffects/-",
-    "value" : {"effect": "starpoundsbloat", "duration": 20}
+    "value" : {"effect": "starpoundsfood_bloat", "duration": 20}
   }
 ]

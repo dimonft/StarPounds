@@ -1,0 +1,10 @@
+{
+  "name": "starpoundsfood_bloat",
+  "defaultDuration": 1,
+  "effectConfig" : {
+    "type" : "bloat"
+  },
+  "scripts": [
+    "starpoundsfood.lua"
+  ]
+}

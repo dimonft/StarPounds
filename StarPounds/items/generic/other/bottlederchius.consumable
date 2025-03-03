@@ -9,7 +9,7 @@
   "maxStack" : 1,
   "effects" : [ [
     {
-      "effect" : "starpoundsbloat",
+      "effect" : "starpoundsfood_bloat",
       "duration" : 25
     },
     "bottlederchiusbloat"
