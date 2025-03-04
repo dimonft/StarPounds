@@ -3,8 +3,9 @@
   "wispmageTreasure" : [
     [1, {
       "pool" : [
-        {"weight" : 0.99, "pool" : "noMeatMonsterTreasure"},
-        {"weight" : 0.01, "item" : "starpoundswispmagehead"}
+        {"weight" : 0.989, "pool" : "noMeatMonsterTreasure"},
+        {"weight" : 0.010, "item" : "starpoundswispmagehead"},
+        {"weight" : 0.001, "item" : "starpoundsmagewispAF"}
       ],
       "poolRounds" : [
         [0.80, 1],
@@ -17,8 +18,9 @@
   "wispclericTreasure" : [
     [1, {
       "pool" : [
-        {"weight" : 0.99, "pool" : "noMeatMonsterTreasure"},
-        {"weight" : 0.01, "item" : "starpoundswispclerichead"}
+        {"weight" : 0.989, "pool" : "noMeatMonsterTreasure"},
+        {"weight" : 0.010, "item" : "starpoundswispclerichead"},
+        {"weight" : 0.001, "item" : "starpoundsclericwispAF"}
       ],
       "poolRounds" : [
         [0.80, 1],
@@ -31,8 +33,9 @@
   "wispknightTreasure" : [
     [1, {
       "pool" : [
-        {"weight" : 0.99, "pool" : "noMeatMonsterTreasure"},
-        {"weight" : 0.01, "item" : "starpoundswispknighthead"}
+        {"weight" : 0.989, "pool" : "noMeatMonsterTreasure"},
+        {"weight" : 0.010, "item" : "starpoundswispknighthead"},
+        {"weight" : 0.001, "item" : "starpoundsknightwispAF"}
       ],
       "poolRounds" : [
         [0.80, 1],
@@ -45,8 +48,9 @@
   "wisprogueTreasure" : [
     [1, {
       "pool" : [
-        {"weight" : 0.99, "pool" : "noMeatMonsterTreasure"},
-        {"weight" : 0.01, "item" : "starpoundswisproguehead"}
+        {"weight" : 0.989, "pool" : "noMeatMonsterTreasure"},
+        {"weight" : 0.010, "item" : "starpoundswisproguehead"},
+        {"weight" : 0.001, "item" : "starpoundsroguewispAF"}
       ],
       "poolRounds" : [
         [0.80, 1],
@@ -59,9 +63,10 @@
   "lipomancerTreasure" : [
     [1, {
       "pool" : [
-        {"weight" : 0.7, "item" : [ "money", 125]},
-        {"weight" : 0.2, "item" : "starpoundsqueenburger"},
-        {"weight" : 0.1, "item" : "starpoundslipomancerhead"}
+        {"weight" : 0.700, "item" : [ "money", 125]},
+        {"weight" : 0.150, "item" : "starpoundsqueenburger"},
+        {"weight" : 0.145, "item" : "starpoundslipomancerhead"},
+        {"weight" : 0.005, "item" : "starpoundslipomancerAF"}
       ],
       "poolRounds" : [
         [0.25, 1],

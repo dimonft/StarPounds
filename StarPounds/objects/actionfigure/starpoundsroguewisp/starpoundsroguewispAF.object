@@ -1,0 +1,31 @@
+{
+  "objectName" : "starpoundsroguewispAF",
+  "colonyTags" : ["pretty"],
+  "rarity" : "Legendary",
+  "category" : "actionFigure",
+  "price" : 5000,
+  "printable" : false,
+  "description" : "The label reads, \"It seems quite sketchy, so watch your pockets!\"",
+  "shortdescription" : "Wisp Rogue Figurine",
+
+  "inventoryIcon" : "starpoundsroguewispAF.png",
+  "orientations" : [
+    {
+      "image" : "starpoundsroguewispAF.png:<color>",
+      "imagePosition" : [-2, 0],
+      "direction" : "left",
+      "flipImages" : true,
+
+      "spaces" : [ [0, 0], [0, 1] ],
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "image" : "starpoundsroguewispAF.png:<color>",
+      "imagePosition" : [-2, 0],
+      "direction" : "right",
+
+      "spaces" : [ [0, 0], [0, 1] ],
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "objectName" : "starpoundsclericwispaf",
+  "colonyTags" : ["pretty"],
+  "rarity" : "Legendary",
+  "category" : "actionFigure",
+  "price" : 5000,
+  "printable" : false,
+  "description" : "The label reads, \"It has a shy nature, and seems more interested in reading books.\"",
+  "shortdescription" : "Wisp Cleric Figurine",
+
+  "inventoryIcon" : "starpoundsclericwispaf.png",
+  "orientations" : [
+    {
+      "image" : "starpoundsclericwispaf.png:<color>",
+      "imagePosition" : [-2, 0],
+      "direction" : "left",
+      "flipImages" : true,
+
+      "spaces" : [ [0, 0], [0, 1] ],
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "image" : "starpoundsclericwispaf.png:<color>",
+      "imagePosition" : [-2, 0],
+      "direction" : "right",
+
+      "spaces" : [ [0, 0], [0, 1] ],
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

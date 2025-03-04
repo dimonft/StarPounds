@@ -1,0 +1,32 @@
+{
+  "objectName" : "starpoundslipomancerAF",
+  "colonyTags" : ["pretty"],
+  "rarity" : "Legendary",
+  "category" : "actionFigure",
+  "price" : 5000,
+  "printable" : false,
+  "description" : "The label reads, \"The matriarch of the Wisps. She is sworn to protect the secrets of lipomancy.\"",
+  "shortdescription" : "Lipomancer Figurine",
+
+
+  "inventoryIcon" : "starpoundslipomancerAFicon.png",
+  "orientations" : [
+    {
+      "image" : "starpoundslipomancerAF.png:<color>",
+      "imagePosition" : [-8, 0],
+      "direction" : "left",
+      "flipImages" : true,
+
+      "spaces" : [ [0, 0], [0, 1] ],
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "image" : "starpoundslipomancerAF.png:<color>",
+      "imagePosition" : [-8, 0],
+      "direction" : "right",
+
+      "spaces" : [ [0, 0], [0, 1] ],
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}
