@@ -16,6 +16,11 @@
   },
   {
     "op": "add",
+    "path": "/traits/gilten",
+    "value": { "description": "Gilten", "stats": [ ["firePenalty", "mult", 0.75], ["jumpPenalty", "sub", 0.25], ["knockbackResistance", "add", 0.25] ] }
+  },
+  {
+    "op": "add",
     "path": "/traits/saturn",
     "value": { "description": "Saturnian", "stats": [ ["health", "mult", 1.25], ["digestionEnergy", "add", 0.5], ["bloatDigestion", "mult", 0.8] ] }
   },

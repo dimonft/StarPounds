@@ -16,6 +16,11 @@
   },
   {
   "op": "add",
+  "path": "/gilten",
+  "value": { "weightGain": true }
+  },
+  {
+  "op": "add",
   "path": "/gelsemis",
   "value": { "weightGain": true, "override": "human" }
   },
