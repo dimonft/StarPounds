@@ -2,8 +2,8 @@
   "background" : {
     "type" : "background",
     "fileHeader" : "/interface/tooltips/header.png",
-    "fileBody" : "/interface/tooltips/bodyobject4.png",
-    "fileFooter" : "/interface/tooltips/footerobject4.png"
+    "fileBody" : "/interface/tooltips/starpoundsbodystaff.png",
+    "fileFooter" : "/interface/tooltips/starpoundsfooterstaff.png"
   },
   "moneyIcon" : {
     "type" : "image",
@@ -44,19 +44,19 @@
   },
   "levelTitleLabel" : {
     "type" : "label",
-    "position" : [9, 91],
-    "hAnchor" : "left",
-    "value" : "Level:"
+    "position" : [126, 167],
+    "hAnchor" : "right",
+    "value" : "^gray;Lvl^reset;"
   },
   "levelLabel" : {
     "type" : "label",
-    "position" : [130, 91],
-    "hAnchor" : "right",
-    "wrapWidth" : 126
-  },
+    "position" : [134, 167],
+    "color": "gray",
+    "hAnchor" : "right"
+  }, 
   "handednessLabel" : {
     "type" : "label",
-    "position" : [90, 158],
+    "position" : [90, 148],
     "hAnchor" : "right",
     "centered" : true,
     "wrapWidth" : 126
@@ -70,7 +70,7 @@
   },
   "damageKindImage" : {
     "type" : "image",
-    "position" : [120, 120],
+    "position" : [120, 110],
     "file" : "",
     "centered" : true,
     "maxSize" : [16, 16],
@@ -78,7 +78,7 @@
   },
   "objectImage" : {
     "type" : "image",
-    "position" : [70, 129],
+    "position" : [70, 119],
     "file" : "",
     "centered" : true,
     "maxSize" : [75, 45],
@@ -89,6 +89,7 @@
     "position" : [9, 70],
     "hAnchor" : "left",
     "vAnchor" : "top",
+    "color" : "gray",
     "wrapWidth" : 126
   }
 }

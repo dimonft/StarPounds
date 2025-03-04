@@ -4,9 +4,10 @@
   "level" : 4,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "^gray;Infused with the righteous heft of the Ponderous Order!",
+  "description" : "Infused with the righteous heft of the Ponderous Order!",
   "shortdescription" : "Hammer of the Ponderous",
   "tooltipKind" : "starpoundssword",
+  "tooltipFields" : {"damageKindImage" : "/interface/elements/caloric.png"},
   "category" : "hammer",
   "twoHanded" : true,
   "itemTags" : ["weapon","melee","hammer","upgradeableWeapon"],
@@ -51,7 +52,7 @@
 
   "altAbilityType" : "starpoundsponderouspound",
 
-  "builder" : "/items/buildscripts/buildunrandweapon.lua",
+  "builder" : "/items/buildscripts/buildstarpoundsunrandweapon.lua",
 
   "upgradeParameters" : {
     "inventoryIcon" : "starpoundsponderoushammer_l6.png",

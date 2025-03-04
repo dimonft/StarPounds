@@ -70,8 +70,8 @@
   },
   "storeInventory" : {
     "weapons" : [
-    {"input": [["tungstenbar", 6], ["logblock", 4], ["adiposeportion", 5]], "output": "caloriccrossbow"},
-    {"input": [["titaniumbar", 6], ["copperbar", 4], ["adiposeportion", 5]], "output": "aviandartgun"},
+    {"input": [["titaniumbar", 6], ["copperbar", 4], ["adiposeportion", 5]], "output": "caloriccrossbow"},
+    {"input": [["tungstenbar", 6], ["logblock", 4], ["adiposeportion", 5]], "output": "aviandartgun"},
     {"input": [["titaniumbar", 6], ["smallbattery", 2], ["adiposeportion", 5]], "output": "cultistdartgun"},
     {"input": [["durasteelbar", 6], ["syringe", 6], ["adiposeportion", 5]], "output": "apexdartgun"},
     {"input": [["durasteelbar", 6], ["livingroot", 6], ["starpoundsliquidcalorium", 50]], "output": "caloricneedler"},

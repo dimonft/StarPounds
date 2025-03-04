@@ -4,9 +4,10 @@
   "level" : 4,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "^gray;Based on a ravenous insect that once terrorized the Gluttonist tribe.",
+  "description" : "Based on a ravenous insect that once terrorized the Gluttonist tribe.",
   "shortdescription" : "Blossoming Blade",
   "tooltipKind" : "starpoundssword",
+  "tooltipFields" : {"damageKindImage" : "/interface/elements/caloric.png"},
   "category" : "broadsword",
   "twoHanded" : true,
   "itemTags" : ["weapon","melee","broadsword","upgradeableWeapon"],
@@ -38,7 +39,7 @@
 
   "altAbilityType" : "starpoundsgaleslash",
 
-  "builder" : "/items/buildscripts/buildunrandweapon.lua",
+  "builder" : "/items/buildscripts/buildstarpoundsunrandweapon.lua",
 
   "upgradeParameters" : {
     "inventoryIcon" : "starpoundsblossomsword_l6.png",

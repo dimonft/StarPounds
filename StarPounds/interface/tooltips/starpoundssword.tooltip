@@ -2,8 +2,8 @@
   "background" : {
     "type" : "background",
     "fileHeader" : "/interface/tooltips/header.png",
-    "fileBody" : "/interface/tooltips/bodyobject4.png",
-    "fileFooter" : "/interface/tooltips/footerobject4.png"
+    "fileBody" : "/interface/tooltips/starpoundsbodyobject.png",
+    "fileFooter" : "/interface/tooltips/starpoundsfooterobject.png"
   },
   "moneyIcon" : {
     "type" : "image",
@@ -18,38 +18,38 @@
   },
   "altAbilityTitleLabel" : {
     "type" : "label",
-    "position" : [9, 73],
+    "position" : [9, 75],
     "hAnchor" : "left",
     "value" : ""
   },
   "altAbilityLabel" : {
     "type" : "label",
-    "position" : [130, 73],
+    "position" : [130, 75],
     "hAnchor" : "right",
     "centered" : true,
     "wrapWidth" : 126
   },
   "speedTitleLabel" : {
     "type" : "label",
-    "position" : [9, 82],
+    "position" : [9, 84],
     "hAnchor" : "left",
     "value" : "Rate of Fire:"
   },
   "speedLabel" : {
     "type" : "label",
-    "position" : [130, 82],
+    "position" : [130, 84],
     "hAnchor" : "right",
     "wrapWidth" : 126
   },
   "damagePerShotTitleLabel" : {
     "type" : "label",
-    "position" : [9, 91],
+    "position" : [9, 93],
     "hAnchor" : "left",
     "value" : "Damage Per Swing:"
   },
   "damagePerShotLabel" : {
     "type" : "label",
-    "position" : [130, 91],
+    "position" : [130, 93],
     "hAnchor" : "right",
     "wrapWidth" : 126
   },
@@ -62,13 +62,14 @@
   },
   "levelTitleLabel" : {
     "type" : "label",
-    "position" : [126, 173],
+    "position" : [126, 177],
     "hAnchor" : "right",
-    "value" : "^gray;lvl^reset;"
+    "value" : "^gray;Lvl^reset;"
   },
   "levelLabel" : {
     "type" : "label",
-    "position" : [134, 173],
+    "position" : [134, 177],
+    "color": "gray",
     "hAnchor" : "right"
   },   
   "rarityLabel" : {
@@ -88,7 +89,7 @@
   },
   "objectImage" : {
     "type" : "image",
-    "position" : [70, 129],
+    "position" : [70, 130],
     "file" : "",
     "centered" : true,
     "maxSize" : [75, 45],
@@ -99,18 +100,7 @@
     "position" : [9, 70],
     "hAnchor" : "left",
     "vAnchor" : "top",
+    "color" : "gray",
     "wrapWidth" : 126
-  },
-  "damagePerSpeedTitleLabel" : {
-  "type" : "label",
-  "position" : [9, 100],
-  "hAnchor" : "left",
-  "value" : "DPS:"
-  },
-  "dpsLabel" :{
-  "type" : "label",
-  "position" : [130, 100],
-  "hAnchor" : "right",
-  "wrapWidth" : 126
   }
 }

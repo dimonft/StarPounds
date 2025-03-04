@@ -4,10 +4,10 @@
   "inventoryIcon" : "caloriccrossbow.png",
   "maxStack" : 1,
   "rarity" : "Uncommon",
-  "description" : "Shoots powerful bolts.",
-  "shortdescription" : "Caloric Crossbow",
-  "level" : 2,
-  "tooltipKind" : "gun",
+  "description" : "A Ponderous crossbow with bolts dipped in wispflame.",
+  "shortdescription" : "Ponderous Crossbow",
+  "level" : 3,
+  "tooltipKind" : "starpoundsgun",
   "category" : "crossbow",
   "itemTags" : ["weapon","ranged","crossbow"],
   "twoHanded" : true,
@@ -36,15 +36,15 @@
     "scripts" : ["/items/active/weapons/ranged/gunfire.lua"],
     "class" : "GunFire",
 
-    "fireTime" : 1.0,
-    "baseDps" : 8,
+    "fireTime" : 1.25,
+    "baseDps" : 10,
     "energyUsage" : 25,
     "inaccuracy" : 0.008,
 
     "projectileCount" : 1,
     "fireType" : "auto",
 
-    "projectileType" : "florancaloricdart",
+    "projectileType" : "wispflamebolt",
     "projectileParameters" : {
       "knockback" : 20
     },

@@ -2,8 +2,8 @@
   "background" : {
     "type" : "background",
     "fileHeader" : "/interface/tooltips/header.png",
-    "fileBody" : "/interface/tooltips/bodyobject4.png",
-    "fileFooter" : "/interface/tooltips/footerobject4.png"
+    "fileBody" : "/interface/tooltips/starpoundsbodygun.png",
+    "fileFooter" : "/interface/tooltips/starpoundsfootergun.png"
   },
   "moneyIcon" : {
     "type" : "image",
@@ -18,69 +18,70 @@
   },
   "altAbilityTitleLabel" : {
     "type" : "label",
-    "position" : [9, 73],
+    "position" : [9, 75],
     "hAnchor" : "left",
     "value" : ""
   },
   "altAbilityLabel" : {
     "type" : "label",
-    "position" : [130, 73],
+    "position" : [130, 75],
     "hAnchor" : "right",
     "centered" : true,
     "wrapWidth" : 126
   },
   "speedTitleLabel" : {
     "type" : "label",
-    "position" : [9, 91],
+    "position" : [9, 93],
     "hAnchor" : "left",
     "value" : "Rate of Fire:"
   },
   "speedLabel" : {
     "type" : "label",
-    "position" : [130, 91],
+    "position" : [130, 93],
     "hAnchor" : "right",
     "wrapWidth" : 126
   },
   "damagePerShotTitleLabel" : {
     "type" : "label",
-    "position" : [9, 100],
+    "position" : [9, 102],
     "hAnchor" : "left",
     "value" : "Damage Per Shot:"
   },
   "damagePerShotLabel" : {
     "type" : "label",
-    "position" : [130, 100],
+    "position" : [130, 102],
     "hAnchor" : "right",
     "wrapWidth" : 126
   },
   "energyPerShotTitleLabel" : {
     "type" : "label",
-    "position" : [9, 82],
+    "position" : [9, 84],
     "hAnchor" : "left",
     "value" : "Energy Per Shot:"
   },
   "energyPerShotLabel" : {
     "type" : "label",
-    "position" : [130, 82],
+    "position" : [130, 84],
     "hAnchor" : "right",
     "wrapWidth" : 126
   },
   "handednessLabel" : {
     "type" : "label",
-    "position" : [90, 158],
+    "position" : [90, 168],
     "hAnchor" : "right",
     "centered" : true,
     "wrapWidth" : 126
   },
   "levelTitleLabel" : {
     "type" : "label",
-    "position" : [126, 173],
+    "position" : [126, 187],
     "hAnchor" : "right",
-    "value" : "^gray;lvl^reset;"
+    "value" : "^gray;Lvl^reset;"
   },
   "levelLabel" : {
     "type" : "label",
-    "position" : [134, 173],
+    "position" : [134, 187],
+    "color": "gray",
     "hAnchor" : "right"
   }, 
   "rarityLabel" : {
@@ -92,7 +93,7 @@
   },
   "damageKindImage" : {
     "type" : "image",
-    "position" : [120, 132],
+    "position" : [120, 130],
     "file" : "",
     "centered" : true,
     "maxSize" : [16, 16],
@@ -100,7 +101,7 @@
   },
   "damageKindBImage" : {
     "type" : "image",
-    "position" : [120, 152],
+    "position" : [120, 150],
     "file" : "",
     "centered" : true,
     "maxSize" : [16, 16],
@@ -108,11 +109,11 @@
   },  
   "objectImage" : {
     "type" : "image",
-    "position" : [70, 135],
+    "position" : [70, 145],
     "file" : "",
     "centered" : true,
-    "maxSize" : [40, 40],
-    "minSize" : [40, 40]
+    "maxSize" : [60, 60],
+    "minSize" : [60, 60]
   },
   "descriptionLabel" : {
     "type" : "label",
@@ -124,26 +125,14 @@
   },
   "damagePerEnergyTitleLabel" : {
   "type" : "label",
-  "position" : [9, 164],
+  "position" : [9, 166],
   "hAnchor" : "left",
   "value" : ""
   },
   "damagePerEnergyLabel" : {
   "type" : "label",
-  "position" : [9, 164],
+  "position" : [9, 166],
   "hAnchor" : "left",
-  "wrapWidth" : 126
-  },
-  "damagePerSpeedTitleLabel" : {
-  "type" : "label",
-  "position" : [9, 109],
-  "hAnchor" : "left",
-  "value" : "DPS:"
-  },
-  "dpsLabel" : {
-  "type" : "label",
-  "position" : [130, 109],
-  "hAnchor" : "right",
   "wrapWidth" : 126
   }
 }
