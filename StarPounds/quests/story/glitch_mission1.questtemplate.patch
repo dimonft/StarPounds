@@ -1,0 +1,24 @@
+[
+  {
+    "op": "add",
+    "path": "/scriptConfig/objectValues/starpoundsponderousbookshelf",
+    "value": 5
+  },
+  {
+    "op": "add",
+    "path": "/scriptConfig/objectValues/starpoundsponderousidol",
+    "value": 20
+  },
+  {
+    "op": "add",
+    "path": "/scriptConfig/radioMessages/uniqueProgress/starpoundsponderousidol",
+    "value": {
+      "messageId": "starpounds_glitch_mission1_up1",
+      "type": "quest",
+      "unique": false,
+      "senderName": "Esther",
+      "text": "This old idol contains such power. I wonder...",
+      "portraitImage": "/interface/chatbubbles/estherthoughtful.png:<frame>"
+    }
+  }
+]
