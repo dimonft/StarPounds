@@ -16,6 +16,6 @@
   "damageKind" : "caloric",
   "statusEffects" : [
     {"effect": "starpoundsfood_liquidfood_noexperience", "duration": 5},
-    {"effect": "starpoundsfood_liquid", "duration": 5}
+    {"effect": "starpoundsfood_weaponLiquid", "duration": 5}
   ]
 }

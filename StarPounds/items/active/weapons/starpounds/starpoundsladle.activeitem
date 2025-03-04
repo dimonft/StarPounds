@@ -35,9 +35,9 @@
     "fireTime" : 0.5,
     "baseDps" : 1.0,
     "damageConfig" : {
-      "statusEffects" : [ 
-        {"effect": "starpoundsfood_bloat", "duration": 5},
-        {"effect": "starpoundsfood_fat", "duration" : 5}
+      "statusEffects" : [
+        {"effect": "starpoundsfood_bloat", "duration": 2.5},
+        {"effect": "starpoundsfood_fat", "duration" : 1}
 	     ],
       "knockback" : 50
     }

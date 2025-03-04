@@ -13,9 +13,9 @@
   "damageKind" : "caloric",
   "emitters" : [ ],
   "statusEffects" : [
-    {"effect": "starpoundsfood", "duration" : 3},
+    {"effect": "starpoundsfood_weapon", "duration" : 5},
     {"effect": "starpoundsfood_bloat", "duration": 5},
-    {"effect": "starpoundsfood_fat", "duration" : 10}
+    {"effect": "starpoundsfood_fat", "duration" : 2.5}
   ],
   "actionOnReap" : [
     {

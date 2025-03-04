@@ -1,0 +1,10 @@
+{
+  "name": "starpoundsfood_weapon",
+  "defaultDuration": 1,
+  "effectConfig" : {
+    "type" : "weapon"
+  },
+  "scripts": [
+    "starpoundsfood.lua"
+  ]
+}

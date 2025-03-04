@@ -12,8 +12,8 @@
   "damagePoly" : [ [-12, 0], [-8, -8], [0, -12], [8, -8], [12, 0], [8, 8], [0, 12], [-8, 8] ],
   "piercing" : true,
   "statusEffects" : [
-    {"effect": "starpoundsfood_liquidfood_noexperience", "duration": 20},
-    {"effect": "starpoundsfood_liquid", "duration": 20}
+    {"effect": "starpoundsfood_weaponLiquid", "duration": 10},
+    {"effect": "starpoundsfood_liquid", "duration": 10}
   ],
   "damageKind" : "caloric"
 }
