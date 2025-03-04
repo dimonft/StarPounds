@@ -12,8 +12,8 @@
   "damagePoly" : [ [-44, -24], [44, -24], [44, 24], [-44, 24] ],
   "piercing" : true,
   "statusEffects" : [
-    {"effect": "starpoundsratebloat", "duration": 10},
-    {"effect": "starpoundsrategain", "duration": 10}
+    {"effect": "starpoundsfood_bloat", "duration": 10},
+    {"effect": "starpoundsfood_fat", "duration": 10}
   ],
   "damageTeam" : { "type" : "indiscriminate" },
   "damageType" : "ignoresdef",

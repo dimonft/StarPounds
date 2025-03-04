@@ -32,6 +32,6 @@
   {
     "op" : "add",
     "path" : "/ability/elementalConfig/caloric",
-    "value" : { "damageConfig" : { "statusEffects" : [ { "effect": "starpoundsrategainslow", "duration": 30 }, { "effect": "starpoundsratebloatfast", "duration": 30 } ] } }
+    "value" : { "damageConfig" : { "statusEffects" : [ {"effect": "starpoundsfood_bloat", "duration": 25}, {"effect": "starpoundsfood_fat", "duration": 25} ] } }
   }
 ]

@@ -53,7 +53,7 @@
             "rotation" : 180,
             "angularVelocity" : 180
             }
-          }  
+          }
         },
         {
           "action" : "particle",
@@ -76,10 +76,10 @@
             "initialVelocity" : [0, 4]
             }
           }
-        } 
+        }
       ]
     }
-  ],  
+  ],
   "actionOnReap" : [
     {
       "action" : "loop",
@@ -95,14 +95,14 @@
       "action" : "sound",
       "options" : [ "/sfx/projectiles/poisonorb_break1.ogg", "/sfx/projectiles/poisonorb_break2.ogg" ]
     }
-  ],   
+  ],
   "speed" : 0,
   "power" : 30,
   "damageKind" : "poison",
   "damagePoly" : [ [-10, 0], [-7, -7], [0, -10], [7, -7], [10, 0], [7, 7], [0, 10], [-7, 7] ],
   "statusEffects" : [
-    {"effect": "starpoundsratebloat", "duration": 10},
-    {"effect": "starpoundsrategain", "duration": 10}
+    {"effect": "starpoundsfood_bloat", "duration": 10},
+    {"effect": "starpoundsfood_fat", "duration": 10}
   ],
   "damageRepeatTimeout" : 0.25,
 

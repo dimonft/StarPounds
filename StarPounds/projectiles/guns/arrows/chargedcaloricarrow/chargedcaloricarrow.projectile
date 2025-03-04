@@ -10,8 +10,8 @@
   "lightColor" : [48, 79, 13],
   "emitters" : [ "caloricdrip" ],
   "statusEffects" : [
-    {"effect": "starpoundsratebloat", "duration": 10},
-    {"effect": "starpoundsrategain", "duration": 10}
+    {"effect": "starpoundsfood_bloat", "duration": 10},
+    {"effect": "starpoundsfood_fat", "duration": 10}
   ],
   "actionOnReap" : [
     {

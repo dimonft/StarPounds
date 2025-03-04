@@ -15,9 +15,9 @@
   "damagePoly" : [ [-6, 0], [-4, -4], [0, -6], [4, -4], [6, 0], [4, 4], [0, 6], [-4, 4] ],
   "piercing" : true,
   "statusEffects" : [
-    {"effect": "starpoundsfood_bloat", "duration": 30},
-    {"effect": "starpoundsfood", "duration": 10},
-    {"effect": "starpoundsrategainrapid", "duration": 3}
+    {"effect": "starpoundsfood_bloat", "duration": 15},
+    {"effect": "starpoundsfood_weapon", "duration": 15},
+    {"effect": "starpoundsfood_fat", "duration" : 10}
   ],
 
   "fullbright" : true,

@@ -10,8 +10,8 @@
     }
   ],
   "statusEffects" : [
-    {"effect": "starpoundsrategain", "duration": 5},
-    {"effect": "starpoundsratebloat", "duration": 5}
+    {"effect": "starpoundsfood_bloat", "duration": 10},
+    {"effect": "starpoundsfood_fat", "duration": 25}
   ],
   "image" : "apexcaloricdart.png",
   "animationCycle" : 0.25,

@@ -8,7 +8,10 @@
   "pointLight" : false,
   "flippable" : true,
 
-  "statusEffects" : [{"effect": "starpoundsratebloatslow", "duration": 10}, {"effect": "starpoundsrategainrapid", "duration": 1}],
+  "statusEffects" : [
+    {"effect": "starpoundsfood_bloat", "duration": 10},
+    {"effect": "starpoundsfood_fat", "duration": 10}
+  ],
   "actionOnReap" : [
     {
       "action" : "config",

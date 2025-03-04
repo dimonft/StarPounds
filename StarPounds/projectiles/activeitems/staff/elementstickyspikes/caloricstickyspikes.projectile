@@ -37,7 +37,7 @@
         }
       ]
     }
-  ],  
+  ],
   "actionOnReap" : [
     {
       "action" : "loop",
@@ -60,8 +60,8 @@
   "damagePoly" : [ [-9, 0], [-6, -6], [0, -9], [6, -6], [9, 0], [6, 6], [0, 9], [-6, 6] ],
   "damageRepeatTimeout" : 0.5,
   "statusEffects" : [
-    {"effect": "starpoundsratebloat", "duration": 10},
-    {"effect": "starpoundsrategain", "duration": 10}
+    {"effect": "starpoundsfood_bloat", "duration": 10},
+    {"effect": "starpoundsfood_fat", "duration": 10}
   ],
 
   "fullbright" : true,

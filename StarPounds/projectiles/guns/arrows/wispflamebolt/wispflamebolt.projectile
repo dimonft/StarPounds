@@ -18,8 +18,8 @@
   // "pointLight" : true,
   // "lightColor" : [188, 59, 123],
   "statusEffects" : [
-    {"effect": "starpoundsratebloat", "duration": 10},
-    {"effect": "starpoundsrategain", "duration": 10}
+    {"effect": "starpoundsfood_wispflame", "duration": 20},
+    {"effect": "starpoundsfood_fat", "duration": 20}
   ],
   "power" : 5.0,
   "knockback" : 20,

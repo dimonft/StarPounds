@@ -71,8 +71,8 @@
     }
   ],
   "statusEffects" : [
-    {"effect": "starpoundsrategainslow", "duration": 3},
-    {"effect": "starpoundsratebloatfast", "duration": 3}
+    {"effect": "starpoundsfood_bloat", "duration": 5},
+    {"effect": "starpoundsfood_fat", "duration": 5}
   ],
   "power" : 15.0,
   "speed" : 100,
