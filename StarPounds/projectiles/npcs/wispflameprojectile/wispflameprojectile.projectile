@@ -14,7 +14,7 @@
   "actionOnReap" : [
     {
       "action" : "sound",
-      "options" : [ "/sfx/projectiles/impact_plasma.ogg" ]
+      "options" : [ "/sfx/gun/impact_plasma.ogg" ]
     }
   ],
   "bounces" : 0,
