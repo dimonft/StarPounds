@@ -3,31 +3,57 @@ local statuses = starPounds.module:new("statuses")
 function statuses:init()
   self.bonuses = {}
   self.multipliers = {}
+  self.activeStatuses = {}
 end
 
 function statuses:update(dt)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
+  -- Reset statuses if we're immune.
+  if status.statPositive("statusImmunity") then
+    if not self.statusImmune then
+      self.activeStatuses = {}
+      self:updateStats()
+      self.statusImmune = true
+    end
+    return
+  end
+
+  self.statusImmune = false
+
+  -- Iterate to find statuses that can affect stats.
+  local updateStats = false
+  for effectName in pairs(self.data.statuses) do
+    local active = status.uniqueStatusEffectActive(effectName)
+    updateStats = updateStats or (active ~= not not self.activeStatuses[effectName])
+    -- Set this to nil when it's inactive so we don't iterate over it.
+    self.activeStatuses[effectName] = active or nil
+  end
+  -- Only recalculate stat values if we need to.
+  if updateStats then
+    self:updateStats()
+  end
+end
+
+function statuses:updateStats()
   self.bonuses = {}
   self.multipliers = {}
-  -- Don't create if we can't add statuses anyway.
-  if status.statPositive("statusImmunity") then return end
-  for effectName, stats in pairs(self.data.bonuses) do
-    if status.uniqueStatusEffectActive(effectName) then
-      for stat, bonus in pairs(stats) do
-        local currentBonus = self.bonuses[stat] or 0
-        self.bonuses[stat] = currentBonus + bonus
-      end
+
+  for effectName in pairs(self.activeStatuses) do
+    local effectConfig = self.data.statuses[effectName] or {}
+    -- Bonuses.
+    for stat, bonus in pairs(effectConfig.bonuses or {}) do
+      local currentBonus = self.bonuses[stat] or 0
+      self.bonuses[stat] = currentBonus + bonus
+    end
+    -- Multipliers.
+    for stat, multiplier in pairs(effectConfig.multipliers or {}) do
+      local currentMultiplier = self.multipliers[stat] or 1
+      self.multipliers[stat] = currentMultiplier * multiplier
     end
   end
-  for effectName, stats in pairs(self.data.multipliers) do
-    if status.uniqueStatusEffectActive(effectName) then
-      for stat, multiplier in pairs(stats) do
-        local currentMultiplier = self.multipliers[stat] or 1
-        self.multipliers[stat] = currentMultiplier * multiplier
-      end
-    end
-  end
+  -- Fire stat change event.
+  starPounds.events:fire("main:statChange", "statuses:updatedStats")
 end
 
 -- Overwrite stub functions.
