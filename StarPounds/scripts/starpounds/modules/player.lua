@@ -212,19 +212,20 @@ end
 
 function _player:landing()
   if not storage.starPounds.enabled then return end
-  if starPounds.hasOption("disableMovementSounds") then return end
 
   if self.wasFalling and not starPounds.mcontroller.falling then
     if starPounds.mcontroller.groundMovement then
-      local landVolume = self:soundMult()
-      starPounds.moduleFunc("sound", "play", "land", landVolume * self.data.landingSoundVolume, self.data.landingSoundPitch)
-
-      local weightMult = self.data.sloshWeightMult * landVolume
       local stomachMult = self.data.sloshStomachMult * starPounds.stomach.contents / (entity.weight * starPounds.currentSize.thresholdMultiplier)
-      local sloshVolume = math.round(math.min(weightMult + stomachMult, self.data.maximumSloshVolume), 2)
-
-      if sloshVolume > self.data.minimumSloshVolume then
-        starPounds.moduleFunc("sound", "play", "slosh", sloshVolume * self.data.landingSoundVolume, 0.75)
+      starPounds.events:fire("stomach:slosh", math.min(stomachMult, 1))
+      -- Sounds.
+      if not starPounds.hasOption("disableMovementSounds") then
+        local landVolume = self:soundMult()
+        local weightMult = self.data.sloshWeightMult * landVolume
+        local sloshVolume = math.round(math.min(weightMult + stomachMult, self.data.maximumSloshVolume), 2)
+        starPounds.moduleFunc("sound", "play", "land", landVolume * self.data.landingSoundVolume, self.data.landingSoundPitch)
+        if sloshVolume > self.data.minimumSloshVolume then
+          starPounds.moduleFunc("sound", "play", "slosh", sloshVolume * self.data.landingSoundVolume, 0.75)
+        end
       end
     end
   end

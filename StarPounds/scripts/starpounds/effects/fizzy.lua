@@ -9,6 +9,12 @@ function fizzy:init()
   self.expiring = false
   self.baseDuration = starPounds.effects.fizzy.duration
   starPounds.moduleFunc("sound", "stop", "fizz")
+
+  self.onSlosh = function(sloshAmount)
+    self:shake(sloshAmount)
+  end
+
+  starPounds.events:on("stomach:slosh", self.onSlosh)
 end
 
 function fizzy:apply()
@@ -33,16 +39,6 @@ function fizzy:update(dt)
     self.expiring = true
     starPounds.moduleFunc("sound", "setVolume", "fizz", 0, 1)
   end
-  -- Add air bloat.
-  if not (starPounds.mcontroller.zeroG or starPounds.mcontroller.liquidMovement) and not starPounds.mcontroller.onGround then
-    if not self.jumped then
-      starPounds.moduleFunc("sound", "play", "slosh", 0.5 * self.volumeMultiplier)
-      self:shake(1)
-      self.jumped = true
-    end
-  elseif starPounds.mcontroller.onGround then
-    self.jumped = false
-  end
   starPounds.feed(self.airAmount * self.fizzMultiplier * dt, "air")
 end
 
@@ -52,6 +48,7 @@ end
 
 function fizzy:uninit()
   starPounds.moduleFunc("sound", "stop", "fizz")
+  starPounds.events:off("stomach:slosh", self.onSlosh)
 end
 
 function fizzy:shake(duration)
