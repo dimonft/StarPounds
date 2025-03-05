@@ -13,7 +13,7 @@
   "accessoryType" : "trinket",
 
   "stats": [
-    {"name": "bloatAmount", "modifier": 1},
+    {"name": "digestion", "modifier": -0.25},
     {"name": "bloatDigestion", "modifier": -0.5},
     {"name": "experienceMultiplier", "modifier": 0.5}
   ],
