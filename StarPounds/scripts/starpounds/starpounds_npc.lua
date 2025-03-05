@@ -31,7 +31,7 @@ function init()
   starPounds.effectInit()
   starPounds.setWeight(storage.starPounds.weight)
 
-  starPounds.events:on("main:statChange", function()
+  starPounds.events:on("main:statChange", function(trace)
     starPounds.updateStats(true)
   end)
 end
@@ -50,7 +50,7 @@ function update(dt)
   -- Modules.
   starPounds.moduleUpdate(dt)
   -- Stat/status updating stuff.
-  starPounds.updateStats(nil, dt)
+  starPounds.updateStats()
   starPounds.updateEffects(dt)
   -- Dumb, but fixes the vanilla issue where stunned NPCs don't realise they're dead.
   -- Might make this separate fix later.

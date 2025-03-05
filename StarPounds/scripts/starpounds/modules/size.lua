@@ -38,12 +38,12 @@ function size:update(dt)
   starPounds.currentSize, starPounds.currentSizeIndex = self:get(storage.starPounds.weight)
   starPounds.currentVariant = self:getVariant(starPounds.currentSize)
   starPounds.weight = storage.starPounds.weight
-  starPounds.weightMultiplier = storage.starPounds.enabled and math.round(1 + (storage.starPounds.weight/entity.weight), 1) or 1
+  starPounds.weightMultiplier = self:weightMultiplier()
 
   if starPounds.currentSizeIndex ~= self.oldSizeIndex then
     starPounds.events:fire("sizes:changed", starPounds.currentSizeIndex - (self.oldSizeIndex or 0))
     -- Force stat update.
-    starPounds.events:fire("main:statChange")
+    starPounds.events:fire("main:statChange", "sizes:changed")
     -- Don't play the sound on the first load.
     if self.oldSizeIndex then
       -- Play sound to indicate size change.
@@ -53,7 +53,7 @@ function size:update(dt)
     starPounds.moduleFunc("trackers", "clearStatuses")
     starPounds.moduleFunc("trackers", "createStatuses")
   elseif starPounds.weightMultiplier ~= self.oldWeightMultiplier then
-    starPounds.events:fire("main:statChange")
+    starPounds.events:fire("main:statChange", "sizes:weightMultChanged")
   end
 
   self.oldSizeIndex = starPounds.currentSizeIndex
@@ -94,6 +94,12 @@ end
 function size:sizeIndex()
   -- Shorthand for other scripts to use.
   return starPounds.currentSizeIndex or 1
+end
+
+function size:weightMultiplier()
+  -- NPCs just use the base size weight so we don't screw up their movement every time the mult changes.
+  local weight = starPounds.type == "player" and storage.starPounds.weight or starPounds.currentSize.weight
+  return storage.starPounds.enabled and math.round(1 + weight/entity.weight, 1) or 1
 end
 
 function size:getVariant(size)

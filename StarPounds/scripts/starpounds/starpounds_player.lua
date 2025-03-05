@@ -33,7 +33,7 @@ function init()
   starPounds.effectInit()
   starPounds.setWeight(storage.starPounds.weight)
 
-  starPounds.events:on("main:statChange", function()
+  starPounds.events:on("main:statChange", function(trace)
     -- Kill the cache, and force an update to stats.
     starPounds.statCacheTimer = 0
     starPounds.statCache = {}
@@ -53,7 +53,7 @@ function update(dt)
   -- Modules.
   starPounds.moduleUpdate(dt)
   -- Stat/status updating stuff.
-  starPounds.updateStats(nil, dt)
+  starPounds.updateStats()
   starPounds.updateEffects(dt)
 end
 

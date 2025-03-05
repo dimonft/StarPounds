@@ -25,7 +25,7 @@ function starPoundsInit()
   starPounds.setWeight(storage.starPounds.weight)
   starPounds.weightMultiplier = 1
 
-  starPounds.events:on("main:statChange", function()
+  starPounds.events:on("main:statChange", function(trace)
     starPounds.updateStats(true)
   end)
 end

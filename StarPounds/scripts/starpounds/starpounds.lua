@@ -202,12 +202,9 @@ starPounds.spawnMouthProjectile = function(actions, count)
   })
 end
 
-starPounds.updateStats = function(updateStats, dt)
+starPounds.updateStats = function(updateStats)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
-  -- Update stats based on the timer.
-  starPounds.statRefreshTimer = math.max((starPounds.statRefreshTimer or 0) - (dt or 0), 0)
-  updateStats = updateStats or starPounds.statRefreshTimer == 0
   -- Give the entity hitbox, bonus stats, and effects based on fatness.
   local size = starPounds.currentSize
   local sizeIndex = starPounds.currentSizeIndex
@@ -239,10 +236,6 @@ starPounds.updateStats = function(updateStats, dt)
       if not skip then filteredPersistentEffects[#filteredPersistentEffects + 1] = effect end
     end
     status.setPersistentEffects("starpounds", filteredPersistentEffects)
-    -- Only the timer resets itself.
-    if dt then
-      starPounds.statRefreshTimer = starPounds.settings.statRefreshTimer
-    end
   end
 
   -- Check if the entity is using a morphball (Tech patch bumps this number for the morphball).
@@ -278,20 +271,32 @@ starPounds.updateStats = function(updateStats, dt)
       starPounds.swimModifier = math.max(starPounds.settings.minimumSwimMultiplier, 1 - ((1 - starPounds.movementMultiplier) * starPounds.getStat("swimPenalty")))
     end
 
+
+    local updateModifiers = false
+    for _, value in pairs({"movementMultiplier", "jumpModifier", "swimModifier"}) do
+      if starPounds[value] ~= starPounds[value.."Old"] then
+        starPounds[value.."Old"] = starPounds[value]
+        updateModifiers = true
+      end
+    end
+
     local movementMultiplier = starPounds.movementMultiplier
     local weightMultiplier = starPounds.weightMultiplier
 
-    starPounds.controlModifiers = weightMultiplier == 1 and {} or {
-      groundMovementModifier = movementMultiplier,
-      liquidMovementModifier = starPounds.swimModifier,
-      speedModifier = movementMultiplier,
-      airJumpModifier = starPounds.jumpModifier,
-      liquidJumpModifier = starPounds.swimModifier
-    }
-    -- Silly, but better than updating modifiers every tick.
-    starPounds.controlModifiersAlt = (movementMultiplier < starPounds.settings.minimumAltSpeedMultiplier) and sb.jsonMerge(starPounds.controlModifiers, {
-      speedModifier = starPounds.settings.minimumAltSpeedMultiplier
-    }) or nil
+    if updateModifiers then
+      starPounds.controlModifiers = weightMultiplier == 1 and {} or {
+        groundMovementModifier = movementMultiplier,
+        liquidMovementModifier = starPounds.swimModifier,
+        speedModifier = movementMultiplier,
+        airJumpModifier = starPounds.jumpModifier,
+        liquidJumpModifier = starPounds.swimModifier
+      }
+      -- Silly, but better than updating modifiers every tick.
+      starPounds.controlModifiersAlt = (movementMultiplier < starPounds.settings.minimumAltSpeedMultiplier) and sb.jsonMerge(starPounds.controlModifiers, {
+        speedModifier = starPounds.settings.minimumAltSpeedMultiplier
+      }) or nil
+    end
+
     starPounds.controlParameters = weightMultiplier == 1 and {} or {
       mass = parameters.mass * weightMultiplier,
       airForce = parameters.airForce * weightMultiplier,
@@ -369,7 +374,7 @@ starPounds.setOption = function(option, enable)
   -- Argument sanitisation.
   option = tostring(option)
   storage.starPounds.options[option] = enable and true or nil
-  starPounds.events:fire("main:statChange")
+  starPounds.events:fire("main:statChange", "setOption")
   -- This is stupid, but prevents 'null' data being saved.
   if getmetatable(storage.starPounds.options) then
     getmetatable(storage.starPounds.options).__nils = {}
@@ -447,7 +452,7 @@ starPounds.upgradeSkill = function(skill, cost)
   starPounds.moduleFunc("experience", "add")
   starPounds.parseSkills()
   starPounds.parseStats()
-  starPounds.events:fire("main:statChange")
+  starPounds.events:fire("main:statChange", "upgradeSkill")
 end
 
 starPounds.forceUnlockSkill = function(skill, level)
@@ -466,7 +471,7 @@ starPounds.forceUnlockSkill = function(skill, level)
   starPounds.parseStats()
   -- Update stats if we're already up and running.
   if starPounds.currentSize then
-    starPounds.events:fire("main:statChange")
+    starPounds.events:fire("main:statChange", "forceUnlockSkill")
   end
 end
 
@@ -483,7 +488,7 @@ starPounds.setSkill = function(skill, level)
   end
   starPounds.parseSkills()
   starPounds.parseStats()
-  starPounds.events:fire("main:statChange")
+  starPounds.events:fire("main:statChange", "setSkill")
 end
 
 starPounds.parseStats = function()
@@ -534,7 +539,7 @@ starPounds.parseStats = function()
     end
   end
 
-  starPounds.events:fire("main:statChange")
+  starPounds.events:fire("main:statChange", "parseStats")
   starPounds.backup()
 end
 
@@ -827,7 +832,7 @@ starPounds.setAccessory = function(item)
   end
   storage.starPounds.accessory = item and root.createItem(item) or nil
   starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
-  starPounds.events:fire("main:statChange")
+  starPounds.events:fire("main:statChange", "setAccessory")
   starPounds.backup()
 end
 
@@ -1028,7 +1033,7 @@ starPounds.toggleEnable = function()
   storage.starPounds.enabled = not storage.starPounds.enabled
   -- Make sure the movement penalty stuff gets reset as well.
   starPounds.parseSkills()
-  starPounds.events:fire("main:statChange")
+  starPounds.events:fire("main:statChange", "toggleEnable")
   if not storage.starPounds.enabled then
     starPounds.moduleUninit()
     starPounds.movementMultiplier = 1
