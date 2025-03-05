@@ -176,6 +176,11 @@
   },
   {
     "op": "add",
+    "path": "/traits/skumks",
+    "value": { "description": "Skunk", "stats": [ ["experienceMultiplier", "add", 0.25] ] }
+  },
+  {
+    "op": "add",
     "path": "/traits/myfirsttest",
     "value": { "description": "Latex", "stats": [ ["experienceMultiplier", "add", 0.25] ] }
   },
