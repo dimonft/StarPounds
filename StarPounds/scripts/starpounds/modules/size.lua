@@ -73,13 +73,15 @@ function size:get(weight)
   weight = math.max(tonumber(weight) or 0, 0)
 
   local sizeIndex = 0
+  -- Disable supersized stages with options, or on the tech missions so you can actually complete them.
+  local supersizeDisabled = starPounds.hasOption("disableSupersize") or status.uniqueStatusEffectActive("starpoundstechmissionmobility")
   -- Go through all starPounds.sizes (smallest to largest) to find which size.
   for i in ipairs(starPounds.sizes) do
-    -- Disable supersized stages with options, or on the tech missions so you can actually complete them.
-    local supersizeDisabled = starPounds.hasOption("disableSupersize") or status.uniqueStatusEffectActive("starpoundstechmissionmobility")
     local skipSize = starPounds.sizes[i].yOffset and supersizeDisabled
     if weight >= starPounds.sizes[i].weight and not skipSize then
       sizeIndex = i
+    else
+      break
     end
   end
 

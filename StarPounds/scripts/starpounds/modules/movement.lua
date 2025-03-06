@@ -1,6 +1,29 @@
 local movement = starPounds.module:new("movement")
 
 function movement:init()
+  self.metatable = { __index = function(cache, key)
+    -- Return the cache if it exists. ~= nil since values can be cached as false.
+    local cached = rawget(cache, key)
+    if cached ~= nil then
+      return cached
+    end
+    -- Fetch the value if it's not cached.
+    local func = mcontroller[key]
+    if func then
+      local value = func()
+      cache[key] = value
+      return value
+    end
+    -- Funni StarPounds function c:
+    if key == "mouthPosition" then
+      local value = movement:mouthPosition()
+      cache[key] = value
+      return value
+    end
+
+    return nil
+  end }
+
   self.mcontroller = self:getController()
   self.effort = 0
 end
@@ -28,41 +51,10 @@ function movement:update(dt)
 end
 
 function movement:getController()
-  self.mcontroller = {
-    onGround = mcontroller.onGround(),
-    groundMovement = mcontroller.groundMovement(),
-    liquidMovement = mcontroller.liquidMovement(),
-    liquidPercentage = mcontroller.liquidPercentage(),
-    zeroG = mcontroller.zeroG(),
-
-    facingDirection = mcontroller.facingDirection(),
-    movingDirection = mcontroller.movingDirection(),
-    rotation = mcontroller.rotation(),
-
-    crouching = mcontroller.crouching(),
-    walking = mcontroller.walking(),
-    running = mcontroller.running(),
-    canJump = mcontroller.canJump(),
-    jumping = mcontroller.jumping(),
-    falling = mcontroller.falling(),
-    flying = mcontroller.flying(),
-
-    position = mcontroller.position(),
-    velocity = mcontroller.velocity(),
-    xVelocity = mcontroller.xVelocity(),
-    yVelocity = mcontroller.yVelocity(),
-    anchorState = mcontroller.anchorState()
-  }
-  -- Needs some of the above values to calculate properly.
-  self.mcontroller.mouthPosition = self:mouthPosition()
-
+  self.mcontroller = setmetatable({}, self.metatable)
   starPounds.mcontroller = self.mcontroller
 
   return self.mcontroller
-end
-
-function movement:controller()
-  return self.mcontroller or self:getController()
 end
 
 function movement:mouthPosition()
@@ -74,10 +66,8 @@ function movement:mouthPosition()
   return vec2.add(world.entityMouthPosition(id), mouthOffset)
 end
 
-
 function movement:getEffort()
   return self.effort
 end
-
 
 starPounds.modules.movement = movement
