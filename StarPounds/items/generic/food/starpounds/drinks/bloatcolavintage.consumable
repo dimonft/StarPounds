@@ -8,14 +8,7 @@
   "shortdescription" : "Bloat-Cola Classic",
   "maxStack" : 1,
   "effects" : [ [
-    {
-        "effect" : "starpoundsratebloatfast",
-        "duration" : 5
-    },
-    {
-        "effect" : "starpoundsfood_bloat",
-        "duration" : 35
-    },
+    "starpoundseffect_bloatcolavintage",
     {
         "effect" : "maxenergyscalingboostfood",
         "duration" : 120

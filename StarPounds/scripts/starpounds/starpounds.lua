@@ -665,6 +665,7 @@ starPounds.loadScriptedEffect = function(effect)
       _SBLOADED[effectConfig.script] = nil
       util.mergeTable(storage.starPounds.effects[effect], starPounds.scriptedEffects[effect].data)
       starPounds.scriptedEffects[effect].data = storage.starPounds.effects[effect]
+      starPounds.scriptedEffects[effect].config = copy(effectConfig.effectConfig)
       starPounds.scriptedEffects[effect]:moduleInit()
       starPounds.modules[string.format("effect_%s", effect)] = starPounds.scriptedEffects[effect]
       starPounds.modules[string.format("effect_%s", effect)]:setUpdateDelta(effectConfig.scriptDelta or 1)
@@ -679,7 +680,7 @@ starPounds.effectInit = function()
   end
 end
 
-starPounds.addEffect = function(effect, duration)
+starPounds.addEffect = function(effect, duration, level)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
   -- Argument sanitisation.
@@ -688,6 +689,7 @@ starPounds.addEffect = function(effect, duration)
   local effectData = storage.starPounds.effects[effect] or {}
   if effectConfig then
     duration = tonumber(duration) or effectConfig.duration
+    level = tonumber(level) or 1
     -- Negative durations become infinite.
     if duration < 0 then duration = nil end
     if effectConfig.particle then
@@ -707,7 +709,7 @@ starPounds.addEffect = function(effect, duration)
       starPounds.moduleFunc("sound", "play", "digest", 0.5, (math.random(120,150)/100))
     end
     effectData.duration = duration and math.max(effectData.duration or 0, duration) or nil
-    effectData.level = math.min((effectData.level or 0) + 1, effectConfig.levels or 1)
+    effectData.level = math.min((effectData.level or 0) + level, effectConfig.levels or 1)
     storage.starPounds.effects[effect] = effectData
     if not (effectConfig.ephemeral or effectConfig.hidden) then
       storage.starPounds.discoveredEffects[effect] = true

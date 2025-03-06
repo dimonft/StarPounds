@@ -1,0 +1,11 @@
+{
+  "name": "starpoundseffect_bloatcolavintage",
+  "defaultDuration": 60,
+  "effectConfig" : {
+    "type" : "bloatCola",
+    "level": 3
+  },
+  "scripts": [
+    "starpoundseffect.lua"
+  ]
+}

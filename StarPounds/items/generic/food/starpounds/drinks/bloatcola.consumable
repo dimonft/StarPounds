@@ -8,14 +8,7 @@
   "shortdescription" : "Bloat-Cola",
   "maxStack" : 1,
   "effects" : [ [
-    {
-        "effect" : "starpoundsratebloat",
-        "duration" : 5
-    },
-    {
-        "effect" : "starpoundsfood_bloat",
-        "duration" : 20
-    },
+    "starpoundseffect_bloatcola",
     {
         "effect" : "maxenergyscalingboostfood",
         "duration" : 120

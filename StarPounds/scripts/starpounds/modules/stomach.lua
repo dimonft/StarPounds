@@ -191,6 +191,7 @@ function stomach:digest(dt, isGurgle, isBelch)
     local healing = starPounds.getStat("healing")
     local digestionEnergy = starPounds.getStat("digestionEnergy")
     local breastEfficiency = starPounds.getStat("breastEfficiency")
+    local belchAmount = starPounds.getStat("belchAmount")
 
     local maxHealth = status.resourceMax("health")
     local maxEnergy = status.isResource("energy") and status.resourceMax("energy") or 0
@@ -217,7 +218,7 @@ function stomach:digest(dt, isGurgle, isBelch)
         end
         -- Bonus digestion for belches.
         if isBelch and foodConfig.multipliers.belch > 0 then
-          digestionRate = digestionRate + digestionRate * foodConfig.multipliers.belch
+          digestionRate = digestionRate + digestionRate * foodConfig.multipliers.belch * belchAmount
         end
         if isBelch and foodConfig.belchParticles and not starPounds.hasOption("disableBelchParticles") then
           self:spawnBelchParticles(foodConfig.belchParticles, foodConfig.belchParticleCount)

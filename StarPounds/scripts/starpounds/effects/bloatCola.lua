@@ -1,13 +1,13 @@
-local fizzy = starPounds.effect:new()
+local bloatCola = starPounds.effect:new()
 
-function fizzy:init()
-  self.airAmount = 5
-  self.fizzVolume = 0.25
+function bloatCola:init()
+  self.airAmount = self.config.airAmount or 2
+  self.fizzVolume = self.config.volume or 0.25
   self.fizzMultiplier = 1
   self.volumeMultiplier = 1
   self.firstUpdate = false
   self.expiring = false
-  self.baseDuration = starPounds.effects.fizzy.duration
+  self.baseDuration = starPounds.effects.bloatCola.duration
   starPounds.moduleFunc("sound", "stop", "fizz")
 
   self.onSlosh = function(sloshAmount)
@@ -17,11 +17,12 @@ function fizzy:init()
   starPounds.events:on("stomach:slosh", self.onSlosh)
 end
 
-function fizzy:apply()
+function bloatCola:apply()
   self.expiring = false
+  self.airAmount = (self.config.airAmount or 2.5) * self.data.level
 end
 
-function fizzy:update(dt)
+function bloatCola:update(dt)
   -- Decrease fizz amount and sound volume as it runs out.
   self.fizzMultiplier = math.max(math.min(self.data.duration/self.baseDuration, 1), 0.25)
   self.volumeMultiplier = (self.fizzMultiplier + 1) * 0.5
@@ -42,20 +43,20 @@ function fizzy:update(dt)
   starPounds.feed(self.airAmount * self.fizzMultiplier * dt, "air")
 end
 
-function fizzy:expire()
+function bloatCola:expire()
   self:uninit()
 end
 
-function fizzy:uninit()
+function bloatCola:uninit()
   starPounds.moduleFunc("sound", "stop", "fizz")
   starPounds.events:off("stomach:slosh", self.onSlosh)
 end
 
-function fizzy:shake(duration)
+function bloatCola:shake(duration)
   -- Remove duration for double the air.
   starPounds.feed(duration * self.airAmount * self.fizzMultiplier * 2, "air")
   self.data.duration = math.max(self.data.duration - duration, 0)
   starPounds.moduleFunc("stomach", "rumble", self.volumeMultiplier)
 end
 -- Add the effect.
-starPounds.scriptedEffects.fizzy = fizzy
+starPounds.scriptedEffects.bloatCola = bloatCola
