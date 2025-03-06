@@ -10,7 +10,7 @@ function StarPoundsSpearPuncture:init()
   self.punctureDamageConfig.baseDamage = self.baseDps * self.minCooldownTime
   self.punctureDamageConfig = sb.jsonMerge(self.damageConfig, self.punctureDamageConfig)
 
-  -- A little confusing, but effectively just allows knockback at the same rate as the regular stab. 
+  -- A little confusing, but effectively just allows knockback at the same rate as the regular stab.
   self.punctureKnockback = self.punctureDamageConfig.knockback
   self.punctureKnockbackCycle = math.ceil(self.fireTime / self.minCooldownTime)
   self.punctureKnockbackCycleCount = 0
@@ -45,8 +45,10 @@ function StarPoundsSpearPuncture:swing()
       animator.setAnimationState("swoosh", "fire")
       animator.playSound("flurry")
 
-      self.punctureDamageConfig.knockback = self.punctureKnockbackCycleCount == 0 and self.punctureKnockback or 0
-      self.punctureKnockbackCycleCount = (self.punctureKnockbackCycleCount + 1) % self.punctureKnockbackCycle
+      -- Adds 1 - 3 (Avg. 2) to the cycle count (which is doubled). A little bit of randomness never hurt anyone ;)
+      local knockbackCycleCount = self.punctureKnockbackCycleCount
+      self.punctureKnockbackCycleCount = (self.punctureKnockbackCycleCount + math.random(1, 3)) % (self.punctureKnockbackCycle * 2)
+      self.punctureDamageConfig.knockback = (knockbackCycleCount > self.punctureKnockbackCycleCount) and self.punctureKnockback or 0
 
       util.wait(self.stances.swing.duration, function(dt)
         local damageArea = partDamageArea("swoosh")
