@@ -1,0 +1,33 @@
+{
+  "objectName" : "blubberbuttmodel",
+  "colonyTags" : ["astronaut", "starpounds"],
+  "printable" : false,
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 75,
+  "description" : "A relatively obscure planet. It seems prone to full moons.",
+  "shortdescription" : "Blubberbutt Model",
+  "race" : "generic",
+
+  "apexDescription" : "Rumor has it this planet is a living person. Nonsense, I think.",
+  "avianDescription" : "Legend has it Velhanu blessed a planet and even it grew hungry.",
+  "floranDescription" : "Big planet mussst be good hunter.",
+  "glitchDescription" : "Awestruck. This planet is perfectly purple.",
+  "humanDescription" : "I remember it being called 'Planet XL,' before we really got a good look at it.",
+  "hylotlDescription" : "I'm not sure even our grand library has chronicled this celestial body.",
+  "novakidDescription":  "I ain't ever seen a planet denser than a star before.",
+  "throgDescription":  "Our Eternal Blubberbutt's size is proof of her grand design and appetite.",
+
+  "inventoryIcon" : "bbmodelicon.png",
+  "orientations" : [
+    {
+      "image" : "blubberbuttmodel.png:<color>",
+      "imagePosition" : [-4, -32],
+      
+      "direction" : "right",
+
+      "spaces" : [ [0, 0], [0, -1], [-1, -2], [0, -2], [1, -2], [-1, -3], [0, -3], [1, -3], [-1, -4], [0, -4], [1, -4] ],
+      "fgAnchors" : [ [0, 1] ]
+    }
+  ]
+}
