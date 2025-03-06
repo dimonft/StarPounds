@@ -53,7 +53,7 @@ function StarPoundsSpearPuncture:swing()
       end)
 
       -- allow changing aim during cooldown
-      self.weapon:setStance(self.stances.idle)
+      self.weapon:setStance(self.stances.swingWindup)
       util.wait(cooldownTime - self.stances.swing.duration, function(dt)
         return self.fireMode ~= "primary"
       end)

@@ -66,9 +66,10 @@
         "allowFlip" : false
       },
       "swingWindup" : {
-        "armRotation" : -90,
-        "weaponRotation" : 0,
-        "twoHanded" : false,
+        "duration" : 0.1,
+        "armRotation" : -110,
+        "weaponRotation" : 20,
+        "twoHanded" : true,
         "weaponOffset" : [0, 0.5],
 
         "allowRotate" : true,
