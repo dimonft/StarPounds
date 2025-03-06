@@ -10,8 +10,10 @@ function StarPoundsSpearPuncture:init()
   self.punctureDamageConfig.baseDamage = self.baseDps * self.minCooldownTime
   self.punctureDamageConfig = sb.jsonMerge(self.damageConfig, self.punctureDamageConfig)
 
+  -- A little confusing, but effectively just allows knockback at the same rate as the regular stab. 
   self.punctureKnockback = self.punctureDamageConfig.knockback
-  self.punctureKnockbackCycle = 0
+  self.punctureKnockbackCycle = math.ceil(self.fireTime / self.minCooldownTime)
+  self.punctureKnockbackCycleCount = 0
 end
 
 function StarPoundsSpearPuncture:fire()
@@ -43,8 +45,8 @@ function StarPoundsSpearPuncture:swing()
       animator.setAnimationState("swoosh", "fire")
       animator.playSound("flurry")
 
-      self.punctureDamageConfig.knockback = self.punctureKnockbackCycle == 0 and self.punctureKnockback or 0
-      self.punctureKnockbackCycle = (self.punctureKnockbackCycle + 1) % self.punctureDamageConfig.knockbackCycle
+      self.punctureDamageConfig.knockback = self.punctureKnockbackCycleCount == 0 and self.punctureKnockback or 0
+      self.punctureKnockbackCycleCount = (self.punctureKnockbackCycleCount + 1) % self.punctureKnockbackCycle
 
       util.wait(self.stances.swing.duration, function(dt)
         local damageArea = partDamageArea("swoosh")
@@ -60,10 +62,9 @@ function StarPoundsSpearPuncture:swing()
 
       cooldownTime = math.max(self.minCooldownTime, cooldownTime - self.cooldownSwingReduction)
 
-      currentRotationOffset = currentRotationOffset + 1
-      if currentRotationOffset > #self.cycleRotationOffsets then
-        currentRotationOffset = 1
-      end
+      local count = #self.cycleRotationOffsets
+      currentRotationOffset = (currentRotationOffset + math.random(1, count - 1)) % count
+      if currentRotationOffset == 0 then currentRotationOffset = count end
     end
   end
 end

@@ -29,12 +29,11 @@
 
     "punctureDamageConfig" : {
       "knockback" : 15,
-      "knockbackCycle" : 5, // Knockback every fifth hit. Prevents stunlocking enemies since it doesn't use energy.
       "timeout" : 0.15,
       "timeoutGroup" : "puncture"
     },
 
-    "cycleRotationOffsets" : [0, 7.5, -7.5],
+    "cycleRotationOffsets" : [0, 3, -3],
     "stances" : {
       "idle" : {
         "armRotation" : -90,
