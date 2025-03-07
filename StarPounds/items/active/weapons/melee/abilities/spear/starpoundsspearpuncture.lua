@@ -63,6 +63,7 @@ function StarPoundsSpearPuncture:swing()
       end)
 
       cooldownTime = math.max(self.minCooldownTime, cooldownTime - self.cooldownSwingReduction)
+      self.cooldownTimer = self:cooldownTime()
 
       local count = #self.cycleRotationOffsets
       currentRotationOffset = (currentRotationOffset + math.random(1, count - 1)) % count
