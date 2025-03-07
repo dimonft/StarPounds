@@ -54,7 +54,7 @@ function update(dt)
   starPounds.updateEffects(dt)
   -- Dumb, but fixes the vanilla issue where stunned NPCs don't realise they're dead.
   -- Might make this separate fix later.
-  -- self.die = (self.shouldDie and not status.resourcePositive("health")) or self.forceDie
+  self.die = self.die or (self.shouldDie and not status.resourcePositive("health")) or self.forceDie
 end
 
 function uninit()
