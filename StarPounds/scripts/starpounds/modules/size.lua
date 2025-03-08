@@ -216,7 +216,7 @@ function size:equip(equipConfig)
     -- If the item is not generated, try to update it. Otherwise, give it back and remove it.
     elseif item and not item.parameters.size then
       -- Item only needs to be updated if we're at base size and it has a size tag, or the size tag does not match our current size.
-      local needsUpdate = (equipConfig[itemType] == "" and item.parameters.tempSize) or ((equipConfig[itemType] ~= "") and (equipConfig[itemType] ~= item.parameters.tempSize))
+      local needsUpdate = (equipConfig[itemType] == "" and item.parameters.scaledSize) or ((equipConfig[itemType] ~= "") and (equipConfig[itemType] ~= item.parameters.scaledSize))
       if needsUpdate then
         local updatedItem, canUpdate = self:updateClothing(item, itemType, equipConfig)
         if canUpdate then
@@ -273,8 +273,16 @@ function size:updateClothing(item, itemType, equipConfig)
   if pcall(root.itemType, newItemName) then
     -- If found, give the new item some parameters for easier checking.
     item.parameters.baseName = itemName
-    item.parameters.tempSize = equipConfig[itemType]
+    item.parameters.scaledSize = equipConfig[itemType]
     item.name = newItemName
+    return item, true
+  end
+
+  -- Just give items that hide the body the tags so we ignore them.
+  local conf = root.itemConfig(item).config
+  if conf.hideBody or conf.ignoreSize then
+    item.parameters.baseName = itemName
+    item.parameters.scaledSize = equipConfig[itemType]
     return item, true
   end
   -- Return the old, restored item if a new one could not be found.
@@ -283,14 +291,14 @@ end
 
 function size:restoreClothing(item)
   -- Only run if it's actually a scaled up piece.
-  if item.parameters.tempSize and item.parameters.baseName then
+  if item.parameters.scaledSize and item.parameters.baseName then
     -- Restore the original item.
     item = {
       name = item.parameters.baseName,
       parameters = item.parameters,
       count = item.count
     }
-    item.parameters.tempSize = nil
+    item.parameters.scaledSize = nil
     item.parameters.baseName = nil
     return item
   end
@@ -322,7 +330,7 @@ function size:cursorCheck()
       return
     end
     -- Restore scaled up clothing items.
-    if item.parameters.tempSize and item.parameters.baseName then
+    if item.parameters.scaledSize and item.parameters.baseName then
       item = self:restoreClothing(item)
       player.setSwapSlotItem(item)
     end
