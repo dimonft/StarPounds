@@ -193,7 +193,7 @@ function _player:footstep(dt)
     local sloshVolume = math.round(math.min(weightMult + stomachMult, self.data.maximumSloshVolume), 2)
 
     -- No step sound if we can't move (i.e. Immobile without the skill), but boost the slosh volume.
-    if starPounds.currentSize.movementMultiplier == 0 then
+    if starPounds.movementMultiplier == 0 then
       stepVolume = 0
       sloshVolume = sloshVolume ^ 0.8
     end
