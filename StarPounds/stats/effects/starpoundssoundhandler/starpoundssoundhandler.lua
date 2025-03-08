@@ -15,7 +15,7 @@ function update(dt)
   if secret and not starPounds.hasSkill("secret") then
     effect.expire()
   end
-  if not secret then
+  if starPounds and not secret then
     secret = starPounds.hasSkill("secret")
   end
 end
