@@ -157,7 +157,8 @@ function size:equipmentConfig(sizeIndex)
     return {
       chest = "",
       legs = "",
-      chestVariant = ""
+      chestVariant = "",
+      sizeIndex = 1
     }
   end
   -- Size cap based on occupied vehicle. Uses math.huge by default because
@@ -187,8 +188,11 @@ function size:equipmentConfig(sizeIndex)
 
   return {
     chest = starPounds.sizes[chestIndex].size,
+    chestVariant = chestVariant,
+    chestIndex = chestIndex,
+
     legs = starPounds.sizes[legsIndex].size,
-    chestVariant = chestVariant
+    legsIndex = legsIndex
   }
 end
 
@@ -279,8 +283,7 @@ function size:updateClothing(item, itemType, equipConfig)
   end
 
   -- Just give items that hide the body the tags so we ignore them.
-  local conf = root.itemConfig(item).config
-  if conf.hideBody or conf.ignoreSize then
+  if equipConfig[itemType.."Index"] < self.supersizeIndex and (root.itemConfig(item).config.hideBody or configParameter(item, "ignoreSize")) then
     item.parameters.baseName = itemName
     item.parameters.scaledSize = equipConfig[itemType]
     return item, true

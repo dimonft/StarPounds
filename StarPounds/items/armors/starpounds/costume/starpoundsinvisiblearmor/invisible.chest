@@ -1,6 +1,6 @@
 {
   "itemName" : "starpoundsinvisiblechest",
-  "price" : 0,  
+  "price" : 0,
   "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "Common",
@@ -8,6 +8,7 @@
   "description" : "You can't see it, but this shirt is certainly there.",
   "shortdescription" : "Invisible Shirt",
   "tooltipKind" : "armor",
+  "ignoreSize" : true,
 
   "maleFrames" : {
     "body" : "chest.png",

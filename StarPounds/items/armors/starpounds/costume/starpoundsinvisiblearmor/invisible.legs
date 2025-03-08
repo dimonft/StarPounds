@@ -1,6 +1,6 @@
 {
   "itemName" : "starpoundsinvisiblelegs",
-  "price" : 0,  
+  "price" : 0,
   "inventoryIcon" : "icons.png:pants",
   "maxStack" : 1,
   "rarity" : "Common",
@@ -8,6 +8,7 @@
   "description" : "You can't see it, but the pants is certainly there.",
   "shortdescription" : "Invisible Pants",
   "tooltipKind" : "armor",
+  "ignoreSize" : true,
 
   "maleFrames" : "pants.png",
   "femaleFrames" : "pants.png"
