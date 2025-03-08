@@ -37,6 +37,7 @@ function init()
 
   weightDecrease:setVisible(isAdmin)
   weightIncrease:setVisible(isAdmin)
+  unlockAll:setVisible(isAdmin)
   barPadding:setVisible(not isAdmin)
   enableUpgrades = metagui.inputData.isObject or isAdmin
   selectedSkill = nil
@@ -76,6 +77,7 @@ function update()
     enableUpgrades = metagui.inputData.isObject or isAdmin
     weightDecrease:setVisible(isAdmin)
     weightIncrease:setVisible(isAdmin)
+    unlockAll:setVisible(isAdmin)
     barPadding:setVisible(not isAdmin)
 
     checkSkills()
@@ -126,6 +128,15 @@ function reset:onClick()
       end)
     end
   end)
+end
+
+function unlockAll:onClick()
+  for skillName, skill in pairs(skills) do
+    if not (skill.internal or skill.hidden) then
+      starPounds.forceUnlockSkill(skillName, skill.levels or 1)
+    end
+  end
+  checkSkills()
 end
 
 function populateSkillTree()
