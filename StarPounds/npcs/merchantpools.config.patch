@@ -3,14 +3,14 @@
     "path" : "/throgweapons",
     "value" : [
       [ 0, [
-        { "item": { "name": "throgdinnerplate" }, "rarity" : 0.02 },
-        { "item": { "name": "adipobeamcomponent" }, "rarity" : 0.02 },
-        { "item": { "name": "depletedgaincrystal" }, "rarity" : 0.02 },
-        { "item": { "name": "erchiusbloatcatalyzer" }, "rarity" : 0.02 },
-        { "item": { "name": "meatberries" }, "rarity" : 0.02 },
-        { "item": { "name": "onikillersake" }, "rarity" : 0.02 },
-        { "item": { "name": "ponderouscore" }, "rarity" : 0.02 },
-        { "item": { "name": "stardustrootpop" }, "rarity" : 0.02 }
+        { "item": { "name": "starpoundsthrogdinnerplate" }, "rarity" : 0.02 },
+        { "item": { "name": "starpoundsadipobeamcomponent" }, "rarity" : 0.02 },
+        { "item": { "name": "starpoundsdepletedgaincrystal" }, "rarity" : 0.02 },
+        { "item": { "name": "starpoundserchiusbloatcatalyzer" }, "rarity" : 0.02 },
+        { "item": { "name": "starpoundsmeatberries" }, "rarity" : 0.02 },
+        { "item": { "name": "starpoundsonikillersake" }, "rarity" : 0.02 },
+        { "item": { "name": "starpoundsponderouscore" }, "rarity" : 0.02 },
+        { "item": { "name": "starpoundsstardustrootpop" }, "rarity" : 0.02 }
       ] ]
     ]
   },
@@ -43,7 +43,7 @@
         { "item" : { "name" : "sugar" }, "rarity" : 0.05 },
         { "item" : { "name" : "chocolate" }, "rarity" : 0.05 },
         { "item" : { "name" : "milk" }, "rarity" : 0.05 },
-        { "item" : { "name" : "adiposeportion" }, "rarity" : 0.05 },
+        { "item" : { "name" : "starpoundsadiposeportion" }, "rarity" : 0.05 },
         { "item" : { "name" : "starpoundshugecherrycake" }, "rarity" : 0.01 },
         { "item" : { "name" : "starpoundshugechunkofmeat" }, "rarity" : 0.01 },
         { "item" : { "name" : "starpoundshugepancakes" }, "rarity" : 0.01 }

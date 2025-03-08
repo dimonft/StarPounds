@@ -51,14 +51,14 @@
             "chestCosmetic" : [ { "name" : "predatorychest", "parameters" : { "directives" : "?replace;ffca8a=eab3db;e0975c=d35eae;a85636=97276d;6f2919=59163f;d93a3a=d35eae;932625=97276d;601119=59163f;" } } ],
             "legsCosmetic" : [ { "name" : "predatorypants", "parameters" : { "directives" : "?replace;ffca8a=eab3db;e0975c=d35eae;a85636=97276d;6f2919=59163f;d93a3a=d35eae;932625=97276d;601119=59163f;" } } ],
             "primary" : [
-              "npcgluttonistspear",
-              "npcgluttonistaxe",
-              "caloricneedler",
-              "npcgluttonistbroadsword"
+              "starpoundsnpcgluttonistspear",
+              "starpoundsnpcgluttonistaxe",
+              "starpoundscaloricneedler",
+              "starpoundsnpcgluttonistbroadsword"
             ],
             "sheathedprimary" : [
-              "caloricneedler",
-        ""
+              "starpoundscaloricneedler",
+              ""
             ],
             "alt" : [
               "floranshield",

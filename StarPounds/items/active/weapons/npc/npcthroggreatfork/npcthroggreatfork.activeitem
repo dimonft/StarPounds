@@ -1,5 +1,5 @@
 {
-  "itemName" : "npcthroggreatfork",
+  "itemName" : "starpoundsnpcthroggreatfork",
   "price" : 0,
   "maxStack" : 1,
   "rarity" : "Common",
@@ -10,13 +10,13 @@
   "twoHanded" : false,
   "itemTags" : ["weapon","melee","spear"],
 
-  "inventoryIcon" : "npcthroggreatfork.png:idle.1",
+  "inventoryIcon" : "starpoundsnpcthroggreatfork.png:idle.1",
 
-  "animation" : "npcthroggreatfork.animation",
+  "animation" : "starpoundsnpcthroggreatfork.animation",
   "animationParts" : {
     "handle" : "",
-    "blade" : "npcthroggreatfork.png",
-    "bladefullbright" : "npcthroggreatforkfullbright.png"
+    "blade" : "starpoundsnpcthroggreatfork.png",
+    "bladefullbright" : "starpoundsnpcthroggreatforkfullbright.png"
   },
   "animationCustom" : {
     "animatedParts" : { "parts" : { "swoosh" : { "properties" : {

@@ -1,8 +1,8 @@
 {
-  "itemName" : "gaincrystal",
+  "itemName" : "starpoundsgaincrystal",
   "level" : 4,
   "price" : 2500,
-  "inventoryIcon" : "gaincrystalicon.png",
+  "inventoryIcon" : "starpoundsgaincrystalicon.png",
   "maxStack" : 1,
   "rarity" : "Legendary",
   "description" : "This sacred artifact is infused with Velhanu's love, and it wishes to be spread~",
@@ -13,11 +13,11 @@
   "itemTags" : ["weapon","ranged","upgradeableWeapon"],
   "twoHanded" : true,
 
-  "animation" : "gaincrystal.animation",
+  "animation" : "starpoundsgaincrystal.animation",
   "animationParts" : {
-    "beamorigin" : "gaincrystalbeammuzzle.png",
-    "muzzleFlash" : "gaincrystalbeammuzzle.png",
-    "erchiuseye" : "gaincrystal.png"
+    "beamorigin" : "starpoundsgaincrystalbeam_muzzle.png",
+    "muzzleFlash" : "starpoundsgaincrystalbeam_muzzle.png",
+    "erchiuseye" : "starpoundsgaincrystal.png"
   },
   "animationCustom" : {
     "sounds" : {
@@ -49,9 +49,9 @@
   "builder" : "/items/buildscripts/buildstarpoundsunrandweapon.lua",
 
   "upgradeParameters" : {
-    "inventoryIcon" : "gaincrystalicon_l6.png",
+    "inventoryIcon" : "starpoundsgaincrystalicon_l6.png",
     "animationParts" : {
-      "erchiuseye" : "gaincrystal_l6.png"
+      "erchiuseye" : "starpoundsgaincrystal_l6.png"
     },
     "shortdescription" : "Crystal of Gain ^yellow;^reset;"
   }

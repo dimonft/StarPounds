@@ -51,8 +51,8 @@
   },
   {
     "op": "add",
-    "path": "/starpoundsspearpuncture",
-    "value": "/items/active/weapons/melee/abilities/spear/starpoundsspearpuncture.weaponability"
+    "path": "/starpoundstridentpuncture",
+    "value": "/items/active/weapons/melee/abilities/starpoundstrident/tridentpuncture.weaponability"
   },
   {
     "op": "add",
@@ -63,5 +63,5 @@
     "op": "add",
     "path": "/starpoundsponderouspound",
     "value": "/items/active/weapons/melee/abilities/hammer/groundslam/starpoundsponderouspound.weaponability"
-  }  
+  }
 ]

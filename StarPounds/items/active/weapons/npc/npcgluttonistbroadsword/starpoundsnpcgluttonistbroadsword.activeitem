@@ -1,5 +1,5 @@
 {
-  "itemName" : "npcgluttonistbroadsword",
+  "itemName" : "starpoundsnpcgluttonistbroadsword",
   "price" : 0,
   "maxStack" : 1,
   "rarity" : "Common",
@@ -13,7 +13,7 @@
   "animation" : "/items/active/weapons/melee/broadsword/broadsword.animation",
   "animationParts" : {
     "handle" : "",
-    "blade" : "/items/active/weapons/npc/npcgluttonistbroadsword/npcgluttonistbroadsword.png"
+    "blade" : "/items/active/weapons/npc/npcgluttonistbroadsword/starpoundsnpcgluttonistbroadsword.png"
   },
 
   "scripts" : ["/items/active/weapons/melee/meleeweapon.lua"],

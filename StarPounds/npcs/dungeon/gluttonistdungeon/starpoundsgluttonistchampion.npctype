@@ -67,10 +67,10 @@
             "headCosmetic" : [ { "name" : "gluttonistchampionhead" } ],
 
             "primary" : [
-              "npcgluttonistgreatfork"
+              "starpoundsnpcgluttonistgreatfork"
             ],
             "sheathedprimary" : [
-              "npcmeatfork"
+              "starpoundsnpcmeatfork"
             ]
           }
         ] ]

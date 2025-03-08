@@ -25,10 +25,10 @@
             "chestCosmetic": [ { "name" : "throgneochest", "parameters" : { "colorIndex" : 9 } } ],
             "legsCosmetic": [ { "name" : "throgneolegs", "parameters" : { "colorIndex" : 9 } } ],
             "primary" : [
-              "npcthroggreatfork"
+              "starpoundsnpcthroggreatfork"
             ],
             "alt" : [
-              "throgdinnerplate"
+              "starpoundsthrogdinnerplate"
             ]
           }
         ] ]

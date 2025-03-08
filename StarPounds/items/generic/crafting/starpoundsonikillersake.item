@@ -1,9 +1,9 @@
 {
-  "itemName" : "onikillersake",
+  "itemName" : "starpoundsonikillersake",
   "price" : 5000,
   "rarity" : "Legendary",
   "category" : "craftingMaterial",
-  "inventoryIcon" : "onikillersake.png",
+  "inventoryIcon" : "starpoundsonikillersake.png",
   "description" : "A brutally harsh yet irresistable flavor of sake. It contains an incredibly high amount of alcohol.",
   "shortdescription" : "Oni Killer Sake",
   "itemTags" : [ "reagent" ]

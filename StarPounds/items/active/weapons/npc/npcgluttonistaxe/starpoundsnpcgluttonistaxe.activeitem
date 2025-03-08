@@ -1,5 +1,5 @@
 {
-  "itemName" : "npcgluttonistaxe",
+  "itemName" : "starpoundsnpcgluttonistaxe",
   "price" : 0,
   "maxStack" : 1,
   "rarity" : "Common",
@@ -13,7 +13,7 @@
   "animation" : "/items/active/weapons/melee/axe/axe.animation",
   "animationParts" : {
     "handle" : "",
-    "blade" : "/items/active/weapons/npc/npcgluttonistaxe/npcgluttonistaxe.png"
+    "blade" : "/items/active/weapons/npc/npcgluttonistaxe/starpoundsnpcgluttonistaxe.png"
   },
   "animationCustom" : { },
 

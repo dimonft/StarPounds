@@ -1,5 +1,5 @@
 {
-  "itemName" : "gluttonistgreatfork",
+  "itemName" : "starpoundsnpcgluttonistgreatfork",
   "price" : 2500,
   "level" : 4,
   "maxStack" : 1,
@@ -8,20 +8,19 @@
   "shortdescription" : "Gluttonist's Greatfork",
   "tooltipKind" : "starpoundssword",
   "tooltipFields" : {"damageKindImage" : "/interface/elements/caloric.png"},
-  "category" : "spear",
+  "category" : "trident",
   "twoHanded" : true,
-  "itemTags" : ["weapon","melee","spear","upgradeableWeapon"],
+  "itemTags" : ["weapon","melee","trident","upgradeableWeapon"],
 
-  "inventoryIcon" : "gluttonistgreatfork.png",
+  "inventoryIcon" : "starpoundsgluttonistgreatfork.png",
 
   "animation" : "/items/active/weapons/melee/starpoundstrident/trident.animation",
   "animationParts" : {
     "handle" : "",
-    "blade" : "gluttonistgreatfork.png"
+    "blade" : "starpoundsgluttonistgreatfork.png"
   },
   "animationCustom" : {
     "sounds" : {
-      "physicalTravelSlash" : ["/sfx/melee/ixodoomclaw_web2.ogg"],
       "fire" : [ "/sfx/melee/swing_spear.ogg" ]
     }
   },
@@ -32,10 +31,28 @@
 
   "aimOffset" : -1.0,
 
-  "primaryAbilityType" : "starpoundsspearpuncture",
+  "primaryAbilityType" : "spearstab",
   "primaryAbility" : {
     "fireTime" : 0.95,
-    "baseDps" : 11
+    "baseDps" : 7.5,
+    "allowHold" : false,
+    "stances" : {
+      "idle" : {
+        "allowRotate" : false
+      },
+      "windup" : {
+        "hold" : true,
+        "duration" : 0.55,
+
+        "allowRotate" : false
+      },
+      "fire" : {
+        "allowRotate" : false
+      },
+      "hold" : {
+        "allowRotate" : false
+      }
+    }
   },
 
   "altAbilityType" : "starpoundsmeatshot",
@@ -43,9 +60,9 @@
   "builder" : "/items/buildscripts/buildstarpoundsunrandweapon.lua",
 
   "upgradeParameters" : {
-    "inventoryIcon" : "gluttonistgreatfork_l6.png",
+    "inventoryIcon" : "starpoundsgluttonistgreatfork_l6.png",
     "animationParts" : {
-      "blade" : "gluttonistgreatfork_l6.png"
+      "blade" : "starpoundsgluttonistgreatfork_l6.png"
     },
     "shortdescription" : "Gluttonist's Greatfork ^yellow;^reset;"
   }

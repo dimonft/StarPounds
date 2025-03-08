@@ -8,5 +8,10 @@
     "op": "add",
     "path": "/labels/starpoundsuniqueaccessory",
     "value": "Unique Accessory"
+  },
+  {
+    "op": "add",
+    "path": "/labels/trident",
+    "value": "Trident"
   }
 ]

@@ -2,9 +2,9 @@ require "/items/active/weapons/melee/meleeslash.lua"
 
 -- Spear stab attack
 -- Extends normal melee attack and adds a hold state
-StarPoundsSpearPuncture = MeleeSlash:new()
+TridentPuncture = MeleeSlash:new()
 
-function StarPoundsSpearPuncture:init()
+function TridentPuncture:init()
   MeleeSlash.init(self)
 
   self.punctureDamageConfig.baseDamage = self.baseDps * self.minCooldownTime
@@ -16,7 +16,7 @@ function StarPoundsSpearPuncture:init()
   self.punctureKnockbackCycleCount = 0
 end
 
-function StarPoundsSpearPuncture:fire()
+function TridentPuncture:fire()
   MeleeSlash.fire(self)
   if self.fireMode == "primary" and self.allowHold ~= false then
     self.firstSwing = true
@@ -24,7 +24,7 @@ function StarPoundsSpearPuncture:fire()
   end
 end
 
-function StarPoundsSpearPuncture:swing()
+function TridentPuncture:swing()
   local cooldownTime = self.maxCooldownTime
   local currentRotationOffset = 1
   while self.fireMode == "primary" do

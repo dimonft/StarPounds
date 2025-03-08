@@ -1,9 +1,9 @@
 {
-  "itemName" : "depletedgaincrystal",
+  "itemName" : "starpoundsdepletedgaincrystal",
   "price" : 5000,
   "rarity" : "Legendary",
   "category" : "craftingMaterial",
-  "inventoryIcon" : "depletedgaincrystal.png",
+  "inventoryIcon" : "starpoundsdepletedgaincrystal.png",
   "description" : "An avolite crystal of a pink hue. It seems to be powerless.",
   "shortdescription" : "Depleted Crystal",
   "itemTags" : [ "reagent" ]

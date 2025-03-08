@@ -1,5 +1,5 @@
 {
-  "itemName" : "throgdinnerplate",
+  "itemName" : "starpoundsthrogdinnerplate",
   "price" : 1250,
   "maxStack" : 1,
   "rarity" : "Legendary",
@@ -10,12 +10,12 @@
   "twoHanded" : false,
   "itemTags" : ["shield"],
 
-  "inventoryIcon" : "images/throgdinnerplate.png:nearidle",
+  "inventoryIcon" : "images/starpoundsthrogdinnerplate.png:nearidle",
 
   "animation" : "shieldfullbright.animation",
   "animationParts" : {
-    "shield" : "images/throgdinnerplate.png",
-  "shieldFullbright" : "images/throgdinnerplatefullbright.png"
+    "shield" : "images/starpoundsthrogdinnerplate.png",
+  "shieldFullbright" : "images/starpoundsthrogdinnerplatefullbright.png"
   },
   "animationCustom" : {
     "animatedParts" : { "parts" : { "shield" : { "properties" : {

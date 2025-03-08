@@ -1,5 +1,5 @@
 {
-  "itemName" : "npcgluttonistspear",
+  "itemName" : "starpoundsnpcgluttonistspear",
   "price" : 0,
   "maxStack" : 1,
   "rarity" : "Common",
@@ -10,12 +10,12 @@
   "twoHanded" : false,
   "itemTags" : ["weapon","melee","spear"],
 
-  "inventoryIcon" : "/items/active/weapons/npc/npcgluttonistspear/npcgluttonistspear.png",
+  "inventoryIcon" : "/items/active/weapons/npc/npcgluttonistspear/starpoundsnpcgluttonistspear.png",
 
   "animation" : "/items/active/weapons/melee/spear/spear.animation",
   "animationParts" : {
     "handle" : "",
-    "blade" : "/items/active/weapons/npc/npcgluttonistspear/npcgluttonistspear.png"
+    "blade" : "/items/active/weapons/npc/npcgluttonistspear/starpoundsnpcgluttonistspear.png"
   },
   "animationCustom" : {
     "animatedParts" : { "parts" : { "swoosh" : { "properties" : {

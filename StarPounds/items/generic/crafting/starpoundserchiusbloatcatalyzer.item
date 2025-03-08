@@ -1,9 +1,9 @@
 {
-  "itemName" : "erchiusbloatcatalyzer",
+  "itemName" : "starpoundserchiusbloatcatalyzer",
   "price" : 5000,
   "rarity" : "Legendary",
   "category" : "craftingMaterial",
-  "inventoryIcon" : "erchiusbloatcatalyzer.png",
+  "inventoryIcon" : "starpoundserchiusbloatcatalyzer.png",
   "description" : "A uniquely charged Erchius Crystal. It radiates a pink glow.",
   "shortdescription" : "Erchius Catalyzer",
   "itemTags" : [ "reagent" ]

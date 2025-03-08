@@ -1,5 +1,5 @@
 {
-  "itemName" : "npcmeatfork",
+  "itemName" : "starpoundsnpcmeatfork",
   "price" : 960,
   "maxStack" : 1,
   "rarity" : "Uncommon",
@@ -11,12 +11,12 @@
   "itemTags" : ["weapon","ranged","sniperrifle"],
   "level" : 5,
 
-  "inventoryIcon" : "npcmeatfork.png",
+  "inventoryIcon" : "starpoundsnpcmeatfork.png",
 
   "animation" : "/items/active/weapons/ranged/gun.animation",
   "animationParts" : {
     "butt" : "",
-    "middle" : "npcmeatfork.png",
+    "middle" : "starpoundsnpcmeatfork.png",
     "barrel" : "",
     "muzzleFlash" : ""
   },
@@ -42,7 +42,7 @@
 
     "baseDps" : 60.5,
     "energyUsage" : 25.5,
-    "fireTime" : 0.045,  
+    "fireTime" : 0.045,
     "inaccuracy" : 0.15,
 
     "projectileCount" : 5,
@@ -50,7 +50,7 @@
 
     "projectileType" : "starpoundsgreatforkmeat",
     "projectileParameters" : {
-      "speed" : 60  
+      "speed" : 60
     },
     "stances" : {
       "idle" : {

@@ -1,5 +1,5 @@
 {
-  "itemName" : "ponderousstaff",
+  "itemName" : "starpoundsponderousstaff",
   "price" : 2500,
   "maxStack" : 1,
   "level" : 4,
@@ -12,11 +12,11 @@
   "twoHanded" : true,
   "itemTags" : ["weapon","staff","upgradeableWeapon"],
 
-  "animation" : "/items/active/weapons/starpounds/ponderousstaff/ponderousstaff.animation",
+  "animation" : "/items/active/weapons/starpounds/ponderousstaff/starpoundsponderousstaff.animation",
   "animationParts" : {
-    "staff" : "ponderousstaff.png",
-    "stone" : "stone.png",
-    "chargeEffect" : "staffglow.png"
+    "staff" : "starpoundsponderousstaff.png",
+    "stone" : "starpoundsponderousstaffstone.png",
+    "chargeEffect" : "starpoundsponderousstaffglow.png"
   },
   "animationCustom" : {
     "lights" : {
@@ -44,7 +44,7 @@
     }
   },
 
-  "inventoryIcon" : "ponderousstaff.png",
+  "inventoryIcon" : "starpoundsponderousstaff.png",
 
   "scripts" : ["/items/active/weapons/staff/staff.lua"],
 
@@ -98,7 +98,7 @@
 
   "primaryAbilityType" : "plasmabladebarrage",
   "primaryAbility" : {
-    "name" : "Wisp Barrage",  
+    "name" : "Wisp Barrage",
     "projectileType" : "ponderousbolt",
     "projectileCount" : 8,
     "maxCastRange" : 30,
@@ -106,7 +106,7 @@
     "projectileParameters" : {
       "baseDamage" : 40
     },
-   
+
     "projectileDelayFirst" : 0.75,
     "projectileDelayEach" : 0.15,
 
@@ -135,10 +135,10 @@
   "builder" : "/items/buildscripts/buildstarpoundsunrandweapon.lua",
 
   "upgradeParameters" : {
-    "inventoryIcon" : "ponderousstaff_l6.png",
+    "inventoryIcon" : "starpoundsponderousstaff_l6.png",
     "animationParts" : {
-      "staff" : "ponderousstaff_l6.png",
-      "stone" : "stone_l6.png"
+      "staff" : "starpoundsponderousstaff_l6.png",
+      "stone" : "starpoundsponderousstaffstone_l6.png"
     },
     "shortdescription" : "Staff of the Ponderous ^yellow;^reset;"
   }

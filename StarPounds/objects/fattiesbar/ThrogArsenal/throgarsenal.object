@@ -70,20 +70,20 @@
   },
   "storeInventory" : {
     "weapons" : [
-    {"input": [["titaniumbar", 6], ["copperbar", 4], ["adiposeportion", 5]], "output": "caloriccrossbow"},
-    {"input": [["tungstenbar", 6], ["logblock", 4], ["adiposeportion", 5]], "output": "aviandartgun"},
-    {"input": [["titaniumbar", 6], ["smallbattery", 2], ["adiposeportion", 5]], "output": "cultistdartgun"},
-    {"input": [["durasteelbar", 6], ["syringe", 6], ["adiposeportion", 5]], "output": "apexdartgun"},
-    {"input": [["durasteelbar", 6], ["livingroot", 6], ["starpoundsliquidcalorium", 50]], "output": "caloricneedler"},
-    {"input": [["durasteelbar", 6], ["siliconboard", 1], ["adipobeamcomponent", 1]], "output": "adipobeam"},
-    {"input": [["durasteelbar", 6], ["goldbar", 4], ["depletedgaincrystal", 1]], "output": "gaincrystal"},
-    {"input": [["durasteelbar", 6], ["liquidfuel", 50], ["erchiusbloatcatalyzer", 1]], "output": "erchipudgesprayer"},
-    {"input": [["durasteelbar", 6], ["sharpenedclaw", 3], ["meatberries", 1]], "output": "gluttonistgreatfork"},
-    {"input": [["durasteelbar", 6], ["petalred", 6], ["meatberries", 1]], "output": "starpoundsblossomsword"},
-    {"input": [["durasteelbar", 6], ["climbingrope", 4], ["onikillersake", 1]], "output": "ogresmoonshiner"},
-    {"input": [["durasteelbar", 6], ["phasematter", 4], ["ponderouscore", 1]], "output": "ponderousstaff"},
-    {"input": [["durasteelbar", 6], ["copperbar", 6], ["ponderouscore", 1]], "output": "starpoundsponderoushammer"},
-    {"input": [["durasteelbar", 6], ["copperbar", 4], ["stardustrootpop", 1]], "output": "scatterpopper"}
+    {"input": [["titaniumbar", 6], ["copperbar", 4], ["starpoundsadiposeportion", 5]], "output": "starpoundsponderouscrossbow"},
+    {"input": [["tungstenbar", 6], ["logblock", 4], ["starpoundsadiposeportion", 5]], "output": "starpoundsaviandartgun"},
+    {"input": [["titaniumbar", 6], ["smallbattery", 2], ["starpoundsadiposeportion", 5]], "output": "starpoundscultistdartgun"},
+    {"input": [["durasteelbar", 6], ["syringe", 6], ["starpoundsadiposeportion", 5]], "output": "starpoundsapexdartgun"},
+    {"input": [["durasteelbar", 6], ["livingroot", 6], ["starpoundsliquidcalorium", 50]], "output": "starpoundscaloricneedler"},
+    {"input": [["durasteelbar", 6], ["siliconboard", 1], ["starpoundsadipobeamcomponent", 1]], "output": "starpoundsadipobeam"},
+    {"input": [["durasteelbar", 6], ["goldbar", 4], ["starpoundsdepletedgaincrystal", 1]], "output": "starpoundsgaincrystal"},
+    {"input": [["durasteelbar", 6], ["liquidfuel", 50], ["starpoundserchiusbloatcatalyzer", 1]], "output": "starpoundserchipudgesprayer"},
+    {"input": [["durasteelbar", 6], ["sharpenedclaw", 3], ["starpoundsmeatberries", 1]], "output": "starpoundsgluttonistgreatfork"},
+    {"input": [["durasteelbar", 6], ["petalred", 6], ["starpoundsmeatberries", 1]], "output": "starpoundsblossomsword"},
+    {"input": [["durasteelbar", 6], ["climbingrope", 4], ["starpoundsonikillersake", 1]], "output": "starpoundsogresmoonshiner"},
+    {"input": [["durasteelbar", 6], ["phasematter", 4], ["starpoundsponderouscore", 1]], "output": "starpoundsponderousstaff"},
+    {"input": [["durasteelbar", 6], ["copperbar", 6], ["starpoundsponderouscore", 1]], "output": "starpoundsponderoushammer"},
+    {"input": [["durasteelbar", 6], ["copperbar", 4], ["starpoundsstardustrootpop", 1]], "output": "starpoundsscatterpopper"}
     ],
     "utilities" : [
       {"input": [["money", 500], ["liquidmilk", 100], ["sugar", 3]], "output": "starpoundsmilkshakesquirtgun"},
@@ -94,14 +94,14 @@
       "winch", "starpoundsmilkingtool", "starpoundspizzapda"
     ],
     "crafting" : [
-    {"input": [["essence", 50]], "output": "adiposeportion"},
-    {"input": [["essence", 500]], "output": "adipobeamcomponent"},
-    {"input": [["essence", 500]], "output": "depletedgaincrystal"},
-    {"input": [["essence", 500]], "output": "erchiusbloatcatalyzer"},
-    {"input": [["essence", 500]], "output": "meatberries"},
-    {"input": [["essence", 500]], "output": "onikillersake"},
-    {"input": [["essence", 500]], "output": "ponderouscore"},
-    {"input": [["essence", 500]], "output": "stardustrootpop"}
+    {"input": [["essence", 50]], "output": "starpoundsadiposeportion"},
+    {"input": [["essence", 500]], "output": "starpoundsadipobeamcomponent"},
+    {"input": [["essence", 500]], "output": "starpoundsdepletedgaincrystal"},
+    {"input": [["essence", 500]], "output": "starpoundserchiusbloatcatalyzer"},
+    {"input": [["essence", 500]], "output": "starpoundsmeatberries"},
+    {"input": [["essence", 500]], "output": "starpoundsonikillersake"},
+    {"input": [["essence", 500]], "output": "starpoundsponderouscore"},
+    {"input": [["essence", 500]], "output": "starpoundsstardustrootpop"}
     ]
   }
 }

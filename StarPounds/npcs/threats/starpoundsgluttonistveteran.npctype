@@ -73,10 +73,10 @@
             "legsCosmetic" : [ { "name" : "predatorypants", "parameters" : { "directives" : "?replace;ffca8a=eab3db;e0975c=d35eae;a85636=97276d;6f2919=59163f;d93a3a=d35eae;932625=97276d;601119=59163f;" } } ],
 
             "primary" : [
-              "npcgluttonistgreatfork"
+              "starpoundsnpcgluttonistgreatfork"
             ],
             "sheathedprimary" : [
-              "npcmeatfork"
+              "starpoundsnpcmeatfork"
             ]
           }
         ] ]

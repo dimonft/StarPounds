@@ -1,9 +1,9 @@
 {
-  "itemName" : "stardustrootpop",
+  "itemName" : "starpoundsstardustrootpop",
   "price" : 5000,
   "rarity" : "Legendary",
   "category" : "craftingMaterial",
-  "inventoryIcon" : "stardustrootpop.png",
+  "inventoryIcon" : "starpoundsstardustrootpop.png",
   "description" : "A mastercraft of the carbonated arts. It never seems to lose its fizz.",
   "shortdescription" : "Stardust Rootpop",
   "itemTags" : [ "reagent" ]

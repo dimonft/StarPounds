@@ -9,7 +9,7 @@
         {"weight" : 0.2, "pool" : "healingItem"},
         {"weight" : 0.03, "item" : ["hivebomb", 5]},
         {"weight" : 0.01, "item" : "gluttonisthead"},
-        {"weight" : 0.01, "item" : "caloricneedler"}
+        {"weight" : 0.01, "item" : "starpoundscaloricneedler"}
       ],
       "poolRounds" : [
         [0.8, 1],

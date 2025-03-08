@@ -1,5 +1,5 @@
 {
-  "itemName" : "erchipudgesprayer",
+  "itemName" : "starpoundserchipudgesprayer",
   "price" : 2500,
   "maxStack" : 1,
   "rarity" : "Legendary",
@@ -13,14 +13,14 @@
   "level" : 4,
 
   "inventoryIcon" : [
-    { "image" : "erchipudgesprayer.png" }
+    { "image" : "starpoundserchipudgesprayer.png" }
   ],
 
-  "animation" : "erchipudgesprayer.animation",
+  "animation" : "starpoundserchipudgesprayer.animation",
   "animationParts" : {
-    "middle" : "erchipudgesprayer.png",
-    "middleFullbright" : "erchipudgesprayerlit.png",
-    "muzzleFlash" : "muzzleflash.png"
+    "middle" : "starpoundserchipudgesprayer.png",
+    "middleFullbright" : "starpoundserchipudgesprayerlit.png",
+    "muzzleFlash" : "starpoundserchipudgesprayer_muzzleflash.png"
   },
   "animationCustom" : {
     "sounds" : {
@@ -134,10 +134,10 @@
   "builder" : "/items/buildscripts/buildstarpoundsunrandweapon.lua",
 
   "upgradeParameters" : {
-    "inventoryIcon" : "erchipudgesprayer_l6.png",
+    "inventoryIcon" : "starpoundserchipudgesprayer_l6.png",
     "animationParts" : {
-      "middle" : "erchipudgesprayer_l6.png",
-    "middleFullbright" : "erchipudgesprayerlit_l6.png"
+      "middle" : "starpoundserchipudgesprayer_l6.png",
+    "middleFullbright" : "starpoundserchipudgesprayerlit_l6.png"
     },
     "shortdescription" : "Erchipudge Sprayer ^yellow;^reset;"
   }

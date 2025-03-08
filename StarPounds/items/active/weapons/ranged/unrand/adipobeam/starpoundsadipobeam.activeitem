@@ -1,5 +1,5 @@
 {
-  "itemName" : "adipobeam",
+  "itemName" : "starpoundsadipobeam",
   "level" : 4,
   "price" : 2500,
   "maxStack" : 1,
@@ -11,14 +11,14 @@
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","upgradeableWeapon"],
 
-  "inventoryIcon" : "adipobeam.png",
+  "inventoryIcon" : "starpoundsadipobeam.png",
 
   "animation" : "/items/active/weapons/ranged/gun.animation",
   "animationParts" : {
     "butt" : "",
-    "middle" : "adipobeam.png",
+    "middle" : "starpoundsadipobeam.png",
     "barrel" : "",
-    "muzzleFlash" : "muzzleflash.png"
+    "muzzleFlash" : "starpoundsadipobeam_muzzleflash.png"
   },
   "animationCustom" : {
     "animatedParts" : { "stateTypes" : { "middle" : {
@@ -42,7 +42,7 @@
           "middle" : {
             "idle" : {
               "properties" : {
-                "image" : "adipobeamlit.png:<frame><paletteSwaps>"
+                "image" : "starpoundsadipobeamlit.png:<frame><paletteSwaps>"
               }
             }
           }
@@ -157,9 +157,9 @@
   "builder" : "/items/buildscripts/buildunrandweapon.lua",
 
   "upgradeParameters" : {
-    "inventoryIcon" : "adipobeam_l6.png",
+    "inventoryIcon" : "starpoundsadipobeam_l6.png",
     "animationParts" : {
-      "middle" : "adipobeam_l6.png"
+      "middle" : "starpoundsadipobeam_l6.png"
     },
     "shortdescription" : "Adipobeam ^yellow;^reset;"
   }

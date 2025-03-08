@@ -98,7 +98,7 @@
   "starpoundsmeatberrypool" : [
     [1, {
       "fill" : [
-        {"item" : [ "meatberries", 1]}
+        {"item" : [ "starpoundsmeatberries", 1]}
       ]
     }]
   ],
@@ -306,7 +306,7 @@
   "starpoundsponderouscorepool" : [
     [1, {
       "fill" : [
-        {"item" : [ "ponderouscore", 1]}
+        {"item" : [ "starpoundsponderouscore", 1]}
       ]
     }]
   ]

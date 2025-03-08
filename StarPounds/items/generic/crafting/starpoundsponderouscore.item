@@ -1,9 +1,9 @@
 {
-  "itemName" : "ponderouscore",
+  "itemName" : "starpoundsponderouscore",
   "price" : 5000,
   "rarity" : "Legendary",
   "category" : "craftingMaterial",
-  "inventoryIcon" : "ponderouscore.png",
+  "inventoryIcon" : "starpoundsponderouscore.png",
   "description" : "Surging with strange power, this artifact belonged to a powerful lipomancer.",
   "shortdescription" : "Ponderous Core",
   "itemTags" : [ "reagent" ]

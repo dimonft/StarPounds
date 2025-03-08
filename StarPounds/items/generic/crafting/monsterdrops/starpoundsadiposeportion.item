@@ -1,9 +1,9 @@
 {
-  "itemName" : "adiposeportion",
+  "itemName" : "starpoundsadiposeportion",
   "price" : 50,
   "rarity" : "Uncommon",
   "category" : "craftingMaterial",
-  "inventoryIcon" : "adiposeportion.png",
+  "inventoryIcon" : "starpoundsadiposeportion.png",
   "description" : "A portion of dense fat with strange properties. Can be used for crafting.",
   "shortdescription" : "Adipose Portion",
   "itemTags" : [ "reagent" ]

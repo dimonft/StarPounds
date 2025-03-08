@@ -1,5 +1,5 @@
 {
-  "itemName" : "ogresmoonshiner",
+  "itemName" : "starpoundsogresmoonshiner",
   "price" : 2500,
   "level" : 4,
   "maxStack" : 1,
@@ -12,12 +12,12 @@
   "twoHanded" : true,
   "itemTags" : ["weapon","melee","hammer","upgradeableWeapon"],
 
-  "inventoryIcon" : "ogresmoonshiner.png",
+  "inventoryIcon" : "starpoundsogresmoonshiner.png",
 
   "animation" : "/items/active/weapons/melee/hammer/hammer.animation",
   "animationParts" : {
     "handle" : "",
-    "blade" : "ogresmoonshiner.png"
+    "blade" : "starpoundsogresmoonshiner.png"
   },
   "animationCustom" : {
     "animatedParts": { "parts": { "swoosh" : {
@@ -66,9 +66,9 @@
   "builder" : "/items/buildscripts/buildstarpoundsunrandweapon.lua",
 
   "upgradeParameters" : {
-    "inventoryIcon" : "ogresmoonshiner_l6.png",
+    "inventoryIcon" : "starpoundsogresmoonshiner_l6.png",
     "animationParts" : {
-      "blade" : "ogresmoonshiner_l6.png"
+      "blade" : "starpoundsogresmoonshiner_l6.png"
     },
     "shortdescription" : "Ogre's Moonshiner ^yellow;^reset;"
   }

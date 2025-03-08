@@ -8,14 +8,14 @@
 
   "ability" : {
     "name" : "Puncture",
-    "type" : "starpoundsspearpuncture",
-    "scripts" : ["/items/active/weapons/melee/abilities/spear/starpoundsspearpuncture.lua"],
-    "class" : "StarPoundsSpearPuncture",
+    "type" : "starpoundstridentpuncture",
+    "scripts" : ["/items/active/weapons/melee/abilities/starpoundstrident/tridentpuncture.lua"],
+    "class" : "TridentPuncture",
 
     "fireTime" : 1.0,
     "baseDps" : 9.5,
     "damageConfig" : {
-      "damageSourceKind" : "spear",
+      "damageSourceKind" : "starpoundstrident",
       "statusEffects" : [ ],
       "knockbackMode" : "aim",
       "knockback" : 30,

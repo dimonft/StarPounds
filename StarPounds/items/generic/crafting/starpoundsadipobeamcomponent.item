@@ -1,9 +1,9 @@
 {
-  "itemName" : "adipobeamcomponent",
+  "itemName" : "starpoundsadipobeamcomponent",
   "price" : 5000,
   "rarity" : "Legendary",
   "category" : "craftingMaterial",
-  "inventoryIcon" : "adipobeamcomponent.png",
+  "inventoryIcon" : "starpoundsadipobeamcomponent.png",
   "description" : "An essential component for an experimental Miniknog weapon.",
   "shortdescription" : "Adipobeam Component",
   "itemTags" : [ "reagent" ]
