@@ -14,7 +14,7 @@
 
   "inventoryIcon" : "gluttonistgreatfork.png",
 
-  "animation" : "/items/active/weapons/melee/spear/spear.animation",
+  "animation" : "/items/active/weapons/melee/starpoundstrident/trident.animation",
   "animationParts" : {
     "handle" : "",
     "blade" : "gluttonistgreatfork.png"

@@ -14,7 +14,7 @@
 
   "inventoryIcon" : "gluttonistgreatfork.png",
 
-  "animation" : "/items/active/weapons/melee/spear/spear.animation",
+  "animation" : "/items/active/weapons/melee/starpoundstrident/trident.animation",
   "animationParts" : {
     "handle" : "",
     "blade" : "gluttonistgreatfork.png"
@@ -32,7 +32,7 @@
 
   "aimOffset" : -1.0,
 
-  "primaryAbilityType" : "spearstab",
+  "primaryAbilityType" : "starpoundsspearpuncture",
   "primaryAbility" : {
     "fireTime" : 0.95,
     "baseDps" : 7.5

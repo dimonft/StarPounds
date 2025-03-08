@@ -78,11 +78,7 @@
     "boostSpeed" : 0,
     "boostForce" : 0,
 
-    "elementalConfig" : {
-      "physical" : {
-        "projectileType" : "starpoundsgreatforkmeat"
-      }
-    },
+    "projectileType" : "starpoundsgreatforkmeat",
     "projectileParameters" : {
       "speed" : 20
     },

@@ -44,6 +44,7 @@ function StarPoundsSpearPuncture:swing()
 
       animator.setAnimationState("swoosh", "fire")
       animator.playSound("flurry")
+      animator.burstParticleEmitter((self.elementalType or self.weapon.elementalType) .. "swoosh")
 
       -- Adds 1 - 3 (Avg. 2) to the cycle count (which is doubled). A little bit of randomness never hurt anyone ;)
       local knockbackCycleCount = self.punctureKnockbackCycleCount

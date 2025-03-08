@@ -6,7 +6,7 @@
       "active" : false,
       "transformationGroups" : ["swoosh"],
       "emissionRate" : 40,
-      "offsetRegion" : [-1.5, -0.25, 1.5, 2.0],
+      "offsetRegion" : [3.5, -1.0, 5.5, 1.0],
       "particles" : [
         { "particle" : "caloricswoosh1" },
         { "particle" : "caloricswoosh2" },
