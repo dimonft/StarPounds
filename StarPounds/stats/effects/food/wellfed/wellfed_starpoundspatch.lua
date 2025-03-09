@@ -5,13 +5,14 @@ function init()
   init_old()
   -- Cross script stuff.
   starPounds = getmetatable ''.starPounds
-  starPoundsEnabled = starPounds and starPounds.isEnabled()
   -- Turn off the particles if the mod is running.
   animator.setParticleEmitterActive("healing", config.getParameter("particles", not starPoundsEnabled))
 end
 
 
 function update(dt)
+  local starPounds = getmetatable ''.starPounds
+  starPoundsEnabled = starPounds and starPounds.isEnabled()
   -- Remove the effect if we toggle.
   if starPoundsEnabled ~= (starPounds and starPounds.isEnabled()) then
     effect.expire()
