@@ -396,7 +396,7 @@ function prey:createDrops(items)
     if item then
       if (item.parameters and item.parameters.tempSize) then
         item.name = item.parameters.baseName
-        item.parameters.tempSize = nil
+        item.parameters.scaledSize = nil
         item.parameters.baseName = nil
       end
       item.name = configParameter(item, "regurgitateItem", item.name)

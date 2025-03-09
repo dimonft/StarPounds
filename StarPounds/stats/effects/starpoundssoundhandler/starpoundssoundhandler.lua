@@ -1,10 +1,10 @@
 require "/scripts/messageutil.lua"
 
 function init()
-  message.setHandler("starPounds.playSound", simpleHandler(playSound))
-  message.setHandler("starPounds.stopSound", simpleHandler(animator.stopAllSounds))
-  message.setHandler("starPounds.setSoundVolume", simpleHandler(setSoundVolume))
-  message.setHandler("starPounds.setSoundPitch", simpleHandler(setSoundPitch))
+  message.setHandler("starPounds.handler_playSound", localHandler(playSound))
+  message.setHandler("starPounds.handler_stopSound", localHandler(animator.stopAllSounds))
+  message.setHandler("starPounds.handler_setSoundVolume", localHandler(setSoundVolume))
+  message.setHandler("starPounds.handler_setSoundPitch", localHandler(setSoundPitch))
   message.setHandler("starPounds.expire", localHandler(effect.expire))
 end
 
