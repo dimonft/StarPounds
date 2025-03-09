@@ -34,7 +34,10 @@
   "primaryAbilityType" : "starpoundstridentpuncture",
   "primaryAbility" : {
     "fireTime" : 0.95,
-    "baseDps" : 11
+    "baseDps" : 11,
+    "damageConfig": {
+      "damageSourceKind": "bow"
+    }
   },
 
   "altAbilityType" : "starpoundsmeatshot",
