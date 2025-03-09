@@ -228,5 +228,10 @@
     "op": "add",
     "path": "/traits/lucario",
     "value": { "description": "Lucario", "stats": [ ["poisonResistance", "add", 0.2], ["firePenalty", "mult", 1.25] ], "skills": [ ["poisonImmunity", 1] ] }
+  },
+  {
+    "op": "add",
+    "path": "/traits/inkling",
+    "value": { "description": "Inkling", "stats": [ ["absorption", "mult", 1.25], ["swimPenalty", "sub", 0.25], ["health", "mult", 0.8] ] }
   }
 ]

@@ -174,5 +174,27 @@
     "path": "/storeInventory/feedingtube/-",
     "value": "auracitefeedingtube" 
     } 
+  ],
+  
+  [
+    {
+    "op": "add",
+    "path": "/storeInventory/scales/-",
+    "value": "starpoundsinklingweightscale" 
+    } 
+  ],
+  [
+    {
+    "op": "add",
+    "path": "/storeInventory/treadmill/-",
+    "value": "starpoundsinklingtreadmill" 
+    } 
+  ],
+  [
+    {
+    "op": "add",
+    "path": "/storeInventory/feedingtube/-",
+    "value": "starpoundsinklingfeedingtube" 
+    } 
   ]
 ]
