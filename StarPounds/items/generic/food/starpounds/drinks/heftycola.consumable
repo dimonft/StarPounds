@@ -14,5 +14,6 @@
     }
   ] ],
   "foodValue": 15,
+  "fatValue": 15,
   "emitters" : [ "drinking" ]
 }

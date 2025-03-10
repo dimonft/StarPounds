@@ -1,7 +1,7 @@
 {
   "input" : [
-    { "item" : "starpoundsliquidhoney", "count" : 2 }
+    { "item" : "starpoundsliquidhoney", "count" : 3 }
   ],
-  "output" : { "item" : "sugar", "count" : 1 },
+  "output" : { "item" : "sugar", "count" : 2 },
   "groups" : [ "craftingfood", "desserts" ]
 }

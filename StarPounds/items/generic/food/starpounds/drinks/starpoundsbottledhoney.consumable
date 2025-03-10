@@ -13,7 +13,7 @@
       "duration" : 30
     }
   ] ],
-  "foodValue": 35,
+  "foodValue": 30,
   "emote" : "",
   "emitters" : [ "drinkinghealing" ]
 }
