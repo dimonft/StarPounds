@@ -134,7 +134,9 @@ function _player:damageHitboxTiles(tileDamage)
 end
 
 function _player:updateFoodItem(item)
-  if configParameter(item, "foodValue") and not configParameter(item, "starpounds_effectApplied", false) then
+  local foodValue = configParameter(item, "foodValue")
+  local fatValue = configParameter(item, "fatValue")
+  if (foodValue or fatValue) and not configParameter(item, "starpounds_effectApplied", false) then
     local experienceBonus = starPounds.settings.foodExperienceBonus
     local effects = configParameter(item, "effects", jarray())
 
@@ -142,19 +144,28 @@ function _player:updateFoodItem(item)
       table.insert(effects, jarray())
     end
 
-    -- Set the food type.
     local category = configParameter(item, "category", ""):lower()
     local foodType = (category == "drink") and "drink" or "food"
-    local foodValue = configParameter(item, "foodValue", 0)
-    local disableExperience = configParameter(item, "starpounds_disableExperience", false)
-
     local rarity = configParameter(item, "rarity", "common"):lower()
-    local bonusExperience = foodValue * (experienceBonus[rarity] or 0)
-    table.insert(effects[1], {
-      effect = string.format("starpoundsfood_%sitem%s", foodType, disableExperience and "_noexperience" or ""),
-      duration = foodValue
-    })
-    if not disableExperience and bonusExperience > 0 then
+    local disableExperience = configParameter(item, "starpounds_disableExperience", false)
+    local bonusExperience = (foodValue or 0) * (experienceBonus[rarity] or 0) * (disableExperience and 0 or 1)
+
+    if foodValue then
+      table.insert(effects[1], {
+        effect = string.format("starpoundsfood_%sitem%s", foodType, disableExperience and "_noexperience" or ""),
+        duration = foodValue
+      })
+    end
+
+    if fatValue then
+      local fatFoodType = foodType == "drink" and "fatliquid" or "fatfood"
+      table.insert(effects[1], {
+        effect = string.format("starpoundsfood_%s", fatFoodType),
+        duration = fatValue
+      })
+    end
+
+    if bonusExperience > 0 then
       table.insert(effects[1], {effect = "starpoundsfood_bonusexperience", duration = bonusExperience})
     end
 

@@ -204,7 +204,7 @@ function stomach:digest(dt, isGurgle, isBelch)
       if starPounds.foods[foodType] and (storage.starPounds.stomachContents[foodType] > 0) then
         local foodConfig = starPounds.foods[foodType]
         local ratio = 1
-        if not foodConfig.ignoreCapacity then
+        if self.stomach.contents > 0 and not foodConfig.ignoreCapacity then
           ratio = math.max(math.round((amount * foodConfig.multipliers.capacity) / self.stomach.contents, 2), 0.05)
         end
         -- Add up all the digestion stats.

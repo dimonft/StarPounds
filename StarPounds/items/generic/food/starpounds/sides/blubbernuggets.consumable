@@ -7,6 +7,7 @@
   "description" : "Tasty, all white meat. ",
   "shortdescription" : "Blubber Nuggets",
   "foodValue": 25,
+  "fatValue": 10,
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 12,

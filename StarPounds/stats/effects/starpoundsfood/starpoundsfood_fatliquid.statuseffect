@@ -1,0 +1,10 @@
+{
+  "name": "starpoundsfood_fatliquid",
+  "defaultDuration": 1,
+  "effectConfig" : {
+    "type" : "fatLiquid"
+  },
+  "scripts": [
+    "starpoundsfood.lua"
+  ]
+}

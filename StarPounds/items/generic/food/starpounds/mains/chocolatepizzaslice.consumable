@@ -12,7 +12,8 @@
         "duration" : 135
     }
   ] ],
-  "foodValue": 15,
+  "foodValue": 18.75,
+  "fatValue": 6.66,
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

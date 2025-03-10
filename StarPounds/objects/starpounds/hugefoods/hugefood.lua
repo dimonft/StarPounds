@@ -6,6 +6,7 @@ function init()
   self.stages = config.getParameter("stages", 5)
   self.bitesPerStage = config.getParameter("bitesPerStage", 4)
   self.food = config.getParameter("food", 1000)/(self.bitesPerStage * self.stages)
+  self.fat = config.getParameter("fat", 0)/(self.bitesPerStage * self.stages)
   self.strainedThresholds = root.assetJson("/scripts/starpounds/starpounds.config:settings.thresholds.strain")
 
   self.experienceBonus = root.assetJson("/scripts/starpounds/starpounds.config:settings.foodExperienceBonus")
@@ -33,6 +34,7 @@ function onInteraction(args)
       animator.playSound("bite")
 
       world.sendEntityMessage(args.sourceId, "starPounds.feed", self.food, "hugeFood")
+      world.sendEntityMessage(args.sourceId, "starPounds.feed", self.fat, "fatFood")
       world.sendEntityMessage(args.sourceId, "starPounds.feed", self.bonusExperience, "bonusExperience")
       world.sendEntityMessage(args.sourceId, "starPounds.playSound", "swallow", 0.75)
 

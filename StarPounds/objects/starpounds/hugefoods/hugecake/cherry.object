@@ -13,6 +13,7 @@
   "stages": 5,
   "bitesPerStage": 4,
   "food": 840,
+  "fat": 240,
 
   "apexDescription" : "This is an absurdly big cake.",
   "avianDescription" : "What a huge cake. The amount of sugar in this would make a person sick.",

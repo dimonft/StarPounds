@@ -13,6 +13,7 @@
   "stages": 5,
   "bitesPerStage": 3,
   "food": 675,
+  "fat": 100,
 
   "apexDescription" : "These pancakes are thicker then bricks.",
   "avianDescription" : "Oh my, this is a lot of super sized pancakes!",
