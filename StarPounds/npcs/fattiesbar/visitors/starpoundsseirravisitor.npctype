@@ -60,8 +60,8 @@
     "override" : [
       [0, [
         {
-          "chestCosmetic": [ { "name": "chubsterseirrachest", "parameters": {"tempSize": "chubster"} } ],
-          "legsCosmetic": [ { "name": "chubsterseirralegs", "parameters": {"tempSize": "chubster"} } ]
+          "chestCosmetic": [ { "name": "starpoundsseirrachest" } ],
+          "legsCosmetic": [ { "name": "starpoundsseirralegs" } ]
         }
       ]]
     ]

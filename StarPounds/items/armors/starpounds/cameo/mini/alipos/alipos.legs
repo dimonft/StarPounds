@@ -1,5 +1,5 @@
 {
-  "itemName" : "plumpaliposlegs",
+  "itemName" : "starpoundsaliposlegs",
   "price" : 0,
   "inventoryIcon" : "icons.png:pants",
   "maxStack" : 1,
@@ -8,6 +8,8 @@
   "description" : "Derg.",
   "shortdescription" : "Alipos legs",
   "tooltipKind" : "armor",
+
+  "ignoreSize" : true,
 
   "maleFrames" : "pants.png",
   "femaleFrames" : "pants.png"

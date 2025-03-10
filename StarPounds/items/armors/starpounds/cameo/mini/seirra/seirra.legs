@@ -1,5 +1,5 @@
 {
-  "itemName" : "chubsterseirralegs",
+  "itemName" : "starpoundsseirralegs",
   "price" : 0,
   "inventoryIcon" : "icons.png:pants",
   "maxStack" : 1,
@@ -8,6 +8,8 @@
   "description" : "Boof.",
   "shortdescription" : "Seirra legs",
   "tooltipKind" : "armor",
+
+  "ignoreSize" : true,
 
   "maleFrames" : "pants.png",
   "femaleFrames" : "pants.png"

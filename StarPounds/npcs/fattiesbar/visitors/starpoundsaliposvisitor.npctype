@@ -68,9 +68,9 @@
     "override" : [
       [0, [
         {
-          "headCosmetic": [ { "name": "aliposhead" } ],
-          "chestCosmetic": [ { "name": "plumpaliposchest", "parameters": {"tempSize": "plump"} } ],
-          "legsCosmetic": [ { "name": "plumpaliposlegs", "parameters": {"tempSize": "plump"} } ]
+          "headCosmetic": [ { "name": "starpoundsaliposhead" } ],
+          "chestCosmetic": [ { "name": "starpoundsaliposchest" } ],
+          "legsCosmetic": [ { "name": "pstarpoundsaliposlegs" } ]
         }
       ]]
     ]

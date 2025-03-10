@@ -1,13 +1,15 @@
 {
-  "itemName" : "chubsterseirrachest",
+  "itemName" : "starpoundsaliposchest",
   "price" : 0,
   "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "Essential",
   "category" : "chestwear",
-  "description" : "Boof.",
-  "shortdescription" : "Seirra chest",
+  "description" : "Derg.",
+  "shortdescription" : "Alipos chest",
   "tooltipKind" : "armor",
+
+  "ignoreSize" : true,
 
   "maleFrames" : {
     "body" : "chest.png",

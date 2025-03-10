@@ -1,13 +1,15 @@
 {
-  "itemName" : "plumpaliposchest",
+  "itemName" : "starpoundsseirrachest",
   "price" : 0,
   "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "Essential",
   "category" : "chestwear",
-  "description" : "Derg.",
-  "shortdescription" : "Alipos chest",
+  "description" : "Boof.",
+  "shortdescription" : "Seirra chest",
   "tooltipKind" : "armor",
+
+  "ignoreSize" : true,
 
   "maleFrames" : {
     "body" : "chest.png",
