@@ -57,7 +57,7 @@ function pred:eat(preyId, options, check)
   -- Legacy mode doesn't require the skill.
   options.ignoreSkills = options.ignoreSkills or starPounds.hasOption("legacyMode")
   -- Check if they exist.
-  if not world.entityExists(preyId) then return false end
+  if not world.entityExists(preyId, true) then return false end
   -- Counting this as 'combat', so no eating stuff on protected worlds. (e.g. the outpost)
   if world.getProperty("nonCombat") and not options.ignoreProtection then return false end
   -- Don't do anything if pred is disabled.
@@ -395,11 +395,11 @@ function pred:release(preyId, releaseAll)
   if releaseAll then
     releasedEntity = storage.starPounds.stomachEntities[1]
     for preyIndex, prey in ipairs(storage.starPounds.stomachEntities) do
-      if world.entityExists(prey.id) then
+      if world.entityExists(prey.id, true) then
         world.sendEntityMessage(prey.id, "starPounds.getReleased", entity.id(), statusEffect)
       end
     end
-    if releasedEntity and world.entityExists(releasedEntity.id) then
+    if releasedEntity and world.entityExists(releasedEntity.id, true) then
       local belchMultiplier = 1 - math.round((releasedEntity.weight + storage.starPounds.weight - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
       starPounds.belch(0.75, starPounds.belchPitch(belchMultiplier))
     end
@@ -417,7 +417,7 @@ function pred:release(preyId, releaseAll)
       end
     end
     -- Call back to release the entity incase the pred is releasing them.
-    if releasedEntity and world.entityExists(releasedEntity.id) then
+    if releasedEntity and world.entityExists(releasedEntity.id, true) then
       local belchMultiplier = 1 - math.round((releasedEntity.weight - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
       starPounds.belch(0.75, starPounds.belchPitch(belchMultiplier))
       world.sendEntityMessage(releasedEntity.id, "starPounds.getReleased", entity.id(), statusEffect)
@@ -441,7 +441,7 @@ function pred:preyCheck(dt)
   -- table.remove is doodoo poop water.
   local newStomach = jarray()
   for preyIndex, prey in ipairs(storage.starPounds.stomachEntities) do
-    if world.entityExists(prey.id) then
+    if world.entityExists(prey.id, true) then
       newStomach[#newStomach + 1] = prey
     elseif (starPounds.type == "player") and (prey.world == player.worldId()) then
       self:preyDigested(prey.id)

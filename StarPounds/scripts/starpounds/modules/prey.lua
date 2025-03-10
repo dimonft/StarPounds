@@ -26,7 +26,7 @@ function prey:eaten(dt)
   if not storage.starPounds.pred then self.heartbeat = self.data.heartbeat return end
   -- Spectating pred stuff.
   if storage.starPounds.spectatingPred then
-    if not (starPounds.hasOption("spectatePred") and world.entityExists(storage.starPounds.pred)) then
+    if not (starPounds.hasOption("spectatePred") and world.entityExists(storage.starPounds.pred, true)) then
       self:released()
       status.setResource("health", 0)
       return
@@ -35,7 +35,7 @@ function prey:eaten(dt)
     end
   end
   -- Check that the entity actually exists.
-  if not world.entityExists(storage.starPounds.pred) or starPounds.hasOption("disablePrey") then
+  if not world.entityExists(storage.starPounds.pred, true) or starPounds.hasOption("disablePrey") then
     self:released()
     return
   end
@@ -91,7 +91,7 @@ function prey:swallowed(pred, options)
   -- Don't allow if we're on cooldown.
   if self.voreCooldown > 0 then return false end
   -- Check that the entity actually exists.
-  if not world.entityExists(pred) then return false end
+  if not world.entityExists(pred, true) then return false end
   -- Don't get eaten if already dead.
   if not status.resourcePositive("health") then return false end
   -- Save the entityId of the pred.
@@ -290,7 +290,7 @@ function prey:released(source, overrideStatus)
     end
   end
   -- Out.
-  if world.entityExists(pred) then
+  if world.entityExists(pred, true) then
     -- Callback incase the entity calls this.
     if source ~= pred then
       world.sendEntityMessage(pred, "starPounds.releaseEntity", entity.id())
@@ -325,7 +325,7 @@ function prey:digesting(pred, digestionRate, protectionPierce)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
   -- Don't do anything if a pred ID isn't specified.
-  if not pred or not world.entityExists(tonumber(pred) or 0) then return end
+  if not pred or not world.entityExists(tonumber(pred) or 0, true) then return end
   -- Tell the pred we're not eaten there's an ID mismatch.
   if storage.starPounds.pred ~= pred then
     world.sendEntityMessage(pred, "starPounds.releaseEntity", entity.id())
