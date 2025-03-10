@@ -3,8 +3,6 @@
   "physics" : "grenade",
   "bounces" : 0,
   "damageKindImage" : "icon.png",
-  "pointLight" : true,
-  "lightColor" : [255, 41, 112],
   "image" : "starpoundslaunchedadipobombs.png",
   "animationCycle" : 0.5,
   "timeToLive" : 3,
