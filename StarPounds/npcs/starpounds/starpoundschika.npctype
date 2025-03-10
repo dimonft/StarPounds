@@ -60,7 +60,7 @@
       [0, [
           {
             "headCosmetic": [ { "name": "glasses4head" } ],
-            "chestCosmetic": [ { "name": "starpoundsinvisiblechest" } ],
+            "chestCosmetic": [ ""  ],
             "legsCosmetic": [ { "name": "predatorypants" } ]
           }
         ] ]
