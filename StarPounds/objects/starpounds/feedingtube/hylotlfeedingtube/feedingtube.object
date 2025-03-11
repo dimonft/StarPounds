@@ -1,10 +1,10 @@
 {
   "objectName" : "hylotlfeedingtube",
-  "colonyTags" : ["starpounds", "hylotl", "unnamedhylotlfatfaction", "feeding"],
+  "colonyTags" : ["starpounds", "hylotl", "umiyoni", "feeding"],
   "rarity" : "Common",
   "category" : "furniture",
   "price" : 300,
-  "description" : "A tank that can be filled with any liquid. ^green;Fill by using the [Q] key to drop liquids.^reset;",
+  "description" : "A tank that can be filled with any liquid. \n^green;Fill by using the [Q] key to drop liquids.^reset;",
   "shortdescription" : "Blue Feeding Tube",
   "race" : "hylotl",
 
