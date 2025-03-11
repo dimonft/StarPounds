@@ -127,6 +127,10 @@ function onNpcPlay(npcId)
   end
 end
 
+function npcToy.isOccupied()
+  return npcToy.getMaxNpcs() ~= nil and npcToy.npcCount >= npcToy.getMaxNpcs() and not world.loungeableOccupied(entity.id())
+end
+
 function die()
   if storage.liquid then
     world.spawnItem(storage.liquid.item, entity.position(), storage.amount)
