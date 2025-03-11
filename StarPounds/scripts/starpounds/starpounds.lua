@@ -1059,17 +1059,22 @@ end
 
 starPounds.reset = function()
   -- Save accessories.
-  local accessories = storage.starPounds.accessories
+  local accessory = storage.starPounds.accessory
   -- Reset to base data.
   storage.starPounds = root.assetJson("/scripts/starpounds/starpounds.config:baseData")
-  -- Restore accessories.
-  storage.starPounds.accessories = accessories
+  -- Delete json metadata so we don't store nils.
+  setmetatable(storage.starPounds, nil)
   -- If we set this to true, the enable function sets it back to false.
   -- Means we can keep all the 'get rid of stuff' code in one place.
   storage.starPounds.enabled = true
   starPounds.toggleEnable()
   -- Bye bye fat techs.
   if starPounds.type == "player" then
+    -- Restore accessories.
+    if accessory then
+      player.giveItem(accessory)
+    end
+    -- Remove StarPounds techs.
     for _, v in ipairs(player.availableTechs()) do
       if v:find("starpounds") then
         player.makeTechUnavailable(v)
