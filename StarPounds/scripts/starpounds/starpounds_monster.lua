@@ -11,6 +11,9 @@ function starPoundsInit()
   getmetatable(storage.starPounds).__nils = {}
   -- Used in functions for detection.
   starPounds.type = "monster"
+  -- Delete json metadata so we don't store nils.
+  setmetatable(storage.starPounds, nil)
+  -- Base module.
   starPounds.moduleInit("base")
   -- Setup message handlers
   starPounds.messageHandlers()

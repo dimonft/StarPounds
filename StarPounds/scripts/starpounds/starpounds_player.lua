@@ -15,6 +15,9 @@ function init()
   if loadBackup then
     storage.starPounds = sb.jsonMerge(storage.starPounds, player.getProperty("starPoundsBackup", {}))
   end
+  -- Delete json metadata so we don't store nils.
+  setmetatable(storage.starPounds, nil)
+  -- Base module.
   starPounds.moduleInit("base")
   -- Setup message handlers
   starPounds.messageHandlers()
