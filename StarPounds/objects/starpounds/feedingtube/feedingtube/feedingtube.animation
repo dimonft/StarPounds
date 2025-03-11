@@ -14,7 +14,8 @@
           "feeding" : {
             "frames" : 9,
             "cycle" : 0.8,
-            "mode" : "loop"
+            "mode" : "transition",
+            "transition" : "default"
           }
         }
       }

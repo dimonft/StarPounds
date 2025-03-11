@@ -1,23 +1,19 @@
 require "/scripts/messageutil.lua"
 require "/scripts/util.lua"
+require "/scripts/rect.lua"
 
 function init()
   self.gulpDelay = config.getParameter("gulpDelay", 0.8)
-  self.stateTimer = self.gulpDelay
-  self.queryTimer = 0
-  self.animationRate = 1
+  self.gulpTimer = self.gulpDelay
+  self.collectTimer = 0
   self.capacity = config.getParameter("capacity", 1000)
   self.maxWeight = root.assetJson("/scripts/starpounds/starpounds.config:settings.maxWeight")
   self.liquids = root.assetJson("/scripts/starpounds/modules/liquid.config:liquids")
-  self.boundBox = object.boundBox()
+  self.pickupBounds = rect.pad(object.boundBox(), -1)
+
   self.statusBlacklist = {
-    "wet",
-    "swimming",
-    "slimeslow",
-    "tarslow",
-    "starpoundschocolateslow",
-    "starpoundshoneyslow",
-    "caloriumliquid"
+    "wet", "swimming", "slimeslow", "tarslow",
+    "starpoundschocolateslow", "starpoundshoneyslow", "caloriumliquid"
   }
 
   local liquidName, liquidAmount = table.unpack(config.getParameter("defaultLiquid", jarray()))
@@ -46,77 +42,88 @@ end
 
 function update(dt)
   promises:update()
-  self.stateTimer = math.max(0, self.stateTimer - dt)
-  self.queryTimer = math.max(0, self.queryTimer - dt)
-  if world.loungeableOccupied(entity.id()) then
-    if feedTarget and world.entityExists(feedTarget) then
-      if storage.amount > 0 then
-        promises:add(world.sendEntityMessage(feedTarget, "starPounds.getData"), function(data)
-          self.animationRate = 1 + math.floor((data.weight/self.maxWeight) * 100 + 0.5) * 0.01
-          animator.setAnimationRate(self.animationRate)
-        end)
-        if self.stateTimer == 0 then
-          animator.setAnimationState("feedState", "feeding", true)
-          self.stateTimer = self.gulpDelay/self.animationRate
-        elseif self.stateTimer > self.gulpDelay/5 and math.max(0, self.stateTimer - dt) < self.gulpDelay/5 then
-          animator.playSound("drink")
-          storage.amount = math.max(0, storage.amount - 1)
-          for foodType, foodAmount in pairs(self.liquids[storage.liquid.name] or self.liquids.default) do
-            world.sendEntityMessage(feedTarget, "starPounds.feed", foodAmount, foodType)
-            world.sendEntityMessage(feedTarget, "starPounds.spawnDrinkingParticles", {storage.liquid.name, 1})
-          end
-          for _, statusEffect in pairs(storage.liquid.statusEffects) do
-            if not contains(self.statusBlacklist, statusEffect) then
-              world.sendEntityMessage(feedTarget, "applyStatusEffect", statusEffect)
-            end
-          end
-          world.sendEntityMessage(feedTarget, "applyStatusEffect", "starpoundsdrinking")
-        end
-      else
-        setLiquidType()
-        animator.setAnimationState("feedState", "default", true)
-      end
-    else
-      feedTarget = nil
+  -- Player/NPC detection. Resets the target if nobody lounging.
+  if self.feedTarget and not self.startedLounging then
+    if not world.loungeableOccupied(entity.id()) then
+      self.feedTarget = nil
     end
   else
-    reset()
+    self.startedLounging = false
   end
-
+  -- Main loop.
+  if self.feedTarget then
+    if canFeed() then
+      if animator.animationState("feedState") == "default" then
+        -- Remove stored liquid.
+        storage.amount = math.max(0, storage.amount - 1)
+        -- Give food.
+        for foodType, foodAmount in pairs(self.liquids[storage.liquid.name] or self.liquids.default) do
+          world.sendEntityMessage(self.feedTarget, "starPounds.feed", foodAmount, foodType)
+        end
+        -- Give status effects.
+        for _, statusEffect in pairs(storage.liquid.statusEffects) do
+          if not contains(self.statusBlacklist, statusEffect) then
+            world.sendEntityMessage(self.feedTarget, "applyStatusEffect", statusEffect)
+          end
+        end
+        -- Prevent belches, and spawn drinking particles.
+        world.sendEntityMessage(self.feedTarget, "starPounds.spawnDrinkingParticles", {storage.liquid.name, 1})
+        world.sendEntityMessage(self.feedTarget, "applyStatusEffect", "starpoundsdrinking")
+        -- Play sound.
+        animator.playSound("drink")
+        -- Reset delay.
+        self.gulpTimer = self.gulpDelay
+        -- Connected to mouth, animated.
+        animator.setAnimationState("feedState", "feeding")
+      end
+    else
+      self.gulpTimer = self.gulpDelay
+      -- Make NPCs hop off when empty.
+      if world.entityType(self.feedTarget ) == "npc" then
+        world.callScriptedEntity(self.feedTarget, "status.setResource", "stunned", 0)
+        world.callScriptedEntity(self.feedTarget, "mcontroller.resetAnchorState")
+      end
+      -- Connected to mouth, static.
+      animator.setAnimationState("feedState", "default")
+    end
+  else
+    -- Disconnected.
+    animator.setAnimationState("feedState", "idle")
+  end
+  -- Reset the liquid if we're empty.
   if storage.amount <= 0 then
     setLiquidType()
   end
-
+  -- Set the displayed liquid amount.
   self.liquidLevel = math.round(util.lerp(dt * 2, self.liquidLevel, storage.amount), 4)
   animator.setGlobalTag("liquidLevel", math.max(0, math.min(math.ceil(self.liquidLevel * 39/self.capacity), 39)))
-
-  if self.queryTimer == 0 then
-    findLiquidDrops()
-    self.queryTimer = 1
+  -- Grab nearby liquid items.
+  self.collectTimer = math.max(self.collectTimer - dt, 0)
+  if self.collectTimer == 0 then
+    collectLiquid()
+    self.collectTimer = 1
   end
+end
+
+function canFeed()
+  return storage.amount > 0
 end
 
 function onInteraction(args)
   if not world.loungeableOccupied(entity.id()) then
-    feedTarget = args.sourceId
-    self.animationRate = 1
+    self.feedTarget = args.sourceId
+    self.startedLounging = true
+    -- Connect.
+    animator.setAnimationState("feedState", canFeed() and "feeding" or "default")
   end
 end
 
 function onNpcPlay(npcId)
-  if not world.loungeableOccupied(entity.id()) then
-    onInteraction({sourceId = npcId})
+  onInteraction({sourceId = npcId})
+  if self.feedTarget == npcId then
     world.callScriptedEntity(npcId, "lounge", {entity = entity.id()})
     world.callScriptedEntity(npcId, "mcontroller.clearControls")
-    world.callScriptedEntity(feedTarget, "status.setResource", "stunned", math.random(5, 30))
-  end
-end
-
-function reset()
-  animator.setAnimationState("feedState", "idle", true)
-  animator.setAnimationRate(1)
-  if feedTarget and world.entityExists(feedTarget) and world.entityType(feedTarget) == "npc" then
-    world.callScriptedEntity(feedTarget, "status.setResource", "stunned", 0)
+    world.callScriptedEntity(npcId, "status.setResource", "stunned", math.random(5, 30))
   end
 end
 
@@ -126,9 +133,9 @@ function die()
   end
 end
 
-function findLiquidDrops()
+function collectLiquid()
   if storage.amount < self.capacity then
-    local items = world.itemDropQuery(entity.position(), 4)
+    local items = world.itemDropQuery(rect.ll(self.pickupBounds), rect.ur(self.pickupBounds))
     for _, itemId in pairs(items) do
       local item = world.itemDropItem(itemId)
       if root.itemType(item.name) == "liquid" then
