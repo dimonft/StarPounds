@@ -24,7 +24,7 @@ function update(dt)
       {0, (bounds[2] + bounds[4])/2},
       {0, bounds[2]}
     }) < 1 then
-      if onGround then
+      if onGround and effect.getParameter("correct", true) then
         -- If they're laying on the ground, slowly move to a laying down position.
         local leftSpringDistance = minimumSpringDistance({{-0.75, (bounds[2] + bounds[4])/2}})
         local rightSpringDistance = minimumSpringDistance({{0.75, (bounds[2] + bounds[4])/2}})

@@ -1,0 +1,97 @@
+{
+  "type" : "starpoundsshirovisitor",
+  "baseType" : "fattiesbarvisitor",
+  "displayTitle" : "Anomalous Entity",
+
+  "scripts" : [
+    "/npcs/bmain.lua",
+    "/scripts/starpounds/starpounds_npc.lua",
+    "/npcs/starpounds/scripts/shiro.lua"
+  ],
+
+  "scriptConfig" : {
+    "initialStorage": {
+      "homePosition": [0,0]
+    },
+    // ======================== PLEASE READ ========================
+    // This character belongs to someone, and these settings reflect
+    // their preferences. Please respect them and don't remove,
+    // change, or otherwise alter these settings.
+    // ======================== PLEASE READ ========================
+    "starPounds_options": {
+      "disableSupersize" : true,
+      "disableBreastGrowth" : true,
+      "disableGain" : true,
+      "disableGurgles" : true,
+      "disableHitbox" : true,
+      "disableLoss" : true,
+      "disableMilkGain" : true,
+      "disableLeaking" : true,
+      "disablePred" : true,
+      "disablePrey" : true,
+      "disableSound" : true,
+      "disableStomachGrowth" : true
+    },
+
+    "dialogMode" : "",
+    "dialog": {
+      "converse": {
+        "default": {
+          "default": [
+            "Do I know you?",
+            "So do you usually try talking to random animals, or...?",
+            "I used to be a master of pyromancy. Now I'm just stuck as a stupid little Fennix.",
+            "Yes, I know I'm a Fennix. No, this isn't what I normally look like. No, I don't know how it happened. And no, I don't know how to fix it.",
+            "People keep chasing me around and trying to pour milk on me. I have no idea why.",
+            "Why do people keep giving me sticks? I don't want them.",
+            "I wish people would stop kicking me. It hurts a lot...",
+            "These Throgs are unbearably rude. I'd burn this place to the ground if I weren't stuck as this... thing.",
+            "Hey, have you seen a bee lady around here? I've got a bone to pick with her.",
+            "Listen, I'm only here because I'm helping Scarlett update her stock. She pays well.",
+            "This place's ambience makes me uneasy. I'd block it out, but they don't make earplugs that would fit a Fennix.",
+            "I have no interest in the food here. I feel like I'd go into cardiac arrest after just one bite.",
+            "I wonder what the Intergalactic Health Department would have to say about this place.",
+            "Even in this sea of freaks and weirdos, I still stick out like a sore thumb... *sigh*...",
+            "I hate being this short, but getting under people's feet and making them fall on their butts is at least amusing.",
+            "I can think of at least twelve different things that would be a better use of your time than talking to me.",
+            "Isn't it weird that this place always smells like cinnamon rolls? Not that I'm complaining, mind you.",
+            "That Floran... Fayane, I think? She keeps looking at me funny. I don't like it.",
+            "I miss having hands...",
+            "I'm shocked that this place is so clean, given how big of slobs the Throgs tend to be."
+          ]
+        }
+      }
+    }
+  },
+
+  "humanoidConfig" : "/humanoid/starpounds/cameo/shiro/shiro.config",
+
+  "identity" : {
+    "species" : "human",
+    "gender" : "male",
+    "hairGroup" : "hair",
+    "hairType" : "1",
+    "imagePath": "starpounds/cameo/shiro",
+    "name": "^#ac0019;Shiro^reset;",
+    "personalityIdle" : "idle.1",
+    "personalityArmIdle" : "idle.1",
+    "personalityArmOffset" : [0, 0],
+    "personalityHeadOffset" : [0, 0],
+    "color" : [0, 0, 0],
+    "bodyDirectives" : "?replace;000=000;",
+    "emoteDirectives" : "?replace;000=000;",
+    "hairDirectives" : "?replace;000=000;"
+  },
+
+  "items" : {
+
+  },
+
+  "statusControllerSettings" : {
+    "primaryScriptSources" : [
+      "/stats/npc_primary.lua",
+      "/scripts/vec2.lua",
+      "/npcs/starpounds/scripts/shiro_primary.lua"
+    ]
+  }
+}
