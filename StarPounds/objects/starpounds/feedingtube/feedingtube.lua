@@ -128,7 +128,7 @@ function onNpcPlay(npcId)
 end
 
 function npcToy.isOccupied()
-  return npcToy.getMaxNpcs() ~= nil and npcToy.npcCount >= npcToy.getMaxNpcs() and not world.loungeableOccupied(entity.id())
+  return (npcToy.getMaxNpcs() ~= nil and npcToy.npcCount >= npcToy.getMaxNpcs()) or world.loungeableOccupied(entity.id())
 end
 
 function die()
