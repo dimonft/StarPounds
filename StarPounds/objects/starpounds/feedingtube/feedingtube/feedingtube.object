@@ -66,7 +66,7 @@
     "maxNpcs" : 1
   },
   "scripts" : [
-    "/objects/starpounds/feedingtube/feedingtube.lua",
-    "/scripts/npcToyObject.lua"
+    "/scripts/npcToyObject.lua",
+    "/objects/starpounds/feedingtube/feedingtube.lua"
    ]
 }
