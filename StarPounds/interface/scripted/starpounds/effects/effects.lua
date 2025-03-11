@@ -398,24 +398,22 @@ end
 
 function reset:onClick()
   local confirmLayout = sb.jsonMerge(root.assetJson("/interface/confirmation/resetstarpoundsconfirmation.config"), {
-  title = metagui.inputData.title or "Skills",
-  icon = string.format("/interface/scripted/starpounds/skills/icon%s.png", metagui.inputData.iconSuffix or ""),
-  images = {
-    poreffect = world.entityPoreffect(player.id(), "full")
-  }
+    title = "Effects",
+    icon = "/interface/scripted/starpounds/menu/icon.png",
+    images = {
+      portrait = world.entityPortrait(player.id(), "full")
+    }
   })
   promises:add(player.confirm(confirmLayout), function(response)
-  if response then
-    promises:add(world.sendEntityMessage(player.id(), "starPounds.reset"), function()
-    -- checkSkills()
-    resetInfoPanel()
-    -- effectButtons(true)
-    local buttonIcon = "disabled.png"
-    enable:setImage(buttonIcon, buttonIcon, buttonIcon.."?border=2;00000000;00000000?crop=2;3;88;22")
-    end)
-  end
+    if response then
+      promises:add(world.sendEntityMessage(player.id(), "starPounds.reset"), function()
+        local buttonIcon = "disabled.png"
+        enable:setImage(buttonIcon, buttonIcon, buttonIcon.."?border=2;00000000;00000000?crop=2;3;88;22")
+      end)
+    end
   end)
 end
+
 
 function weightDecrease:onClick()
   local progress = (starPounds.weight - starPounds.currentSize.weight)/((starPounds.sizes[starPounds.currentSizeIndex + 1] and starPounds.sizes[starPounds.currentSizeIndex + 1].weight or starPounds.settings.maxWeight) - starPounds.currentSize.weight)
