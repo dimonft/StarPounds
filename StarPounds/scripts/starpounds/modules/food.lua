@@ -24,7 +24,6 @@ function food:getFatValue(itemName)
       local inputFatValue = self:getFatValue(input.name)
       if inputFatValue > 0 then
         fatValue = fatValue + (input.count * inputFatValue) / (recipe.output.count or 1)
-        chat.send(sb.print(input.name.. " | "..inputFatValue.." | "..input.count))
       end
     end
   end
