@@ -33,6 +33,10 @@
       "disableStomachGrowth" : true
     },
 
+    "personalities" : [
+        [1.0, { "personality" : "jerk", "reactions" : {} }]
+    ],
+
     "dialogMode" : "",
     "dialog": {
       "converse": {

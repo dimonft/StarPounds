@@ -4,80 +4,44 @@ function init(...)
   init_old(...)
 end
 
-function applyDamageRequest(damageRequest)
-  if self.hitInvulnerabilityTime > 0 or world.getProperty("nonCombat") then
-    damageRequest.damage = 0
-    damageRequest.damageType = "Knockback"
+local applyDamageRequest_old = applyDamageRequest
+function applyDamageRequest(damageRequest, ...)
+  if world.getProperty("nonCombat") then
+    -- Hides blood particles.
     if damageRequest.damageSourceKind ~= "nodamage" and
        damageRequest.damageSourceKind ~= "hidden" and
        damageRequest.damageSourceKind ~= "direct" and
-         damageRequest.damageSourceKind ~= "starpoundsstomachsmash"
+       damageRequest.damageSourceKind ~= "starpoundsstomachsmash"
     then
       damageRequest.damageSourceKind = "bugnet"
     end
-    damageRequest.statusEffects = {}
-  end
 
-  local damage = 0
-  if damageRequest.damageType == "Damage" or damageRequest.damageType == "Knockback" then
-    damage = damage + root.evalFunction2("protection", damageRequest.damage, status.stat("protection"))
-  elseif damageRequest.damageType == "IgnoresDef" then
-    damage = damage + damageRequest.damage
-  elseif damageRequest.damageType == "Status" then
-    -- only apply status effects
-    status.addEphemeralEffects(damageRequest.statusEffects, damageRequest.sourceEntityId)
-    return {}
-  elseif damageRequest.damageType == "Environment" then
-    return {}
-  end
-
-  if damageRequest.hitType == "ShieldHit" and status.statPositive("shieldHealth") and status.resourcePositive("shieldStamina") then
-    status.modifyResource("shieldStamina", -damage / status.stat("shieldHealth"))
-    status.setResourcePercentage("shieldStaminaRegenBlock", 1.0)
-    damage = 0
-    damageRequest.statusEffects = {}
-    damageRequest.damageSourceKind = "shield"
-  end
-
-  local healthLost = math.min(damage, status.resource("health"))
-  if healthLost > 0 and damageRequest.damageType ~= "Knockback" then
-    status.modifyResource("health", -healthLost)
-    self.damageFlashTime = 0.07
-    if status.statusProperty("hitInvulnerability") then
-      local damageHealthPercentage = healthLost / status.resourceMax("health")
-      if damageHealthPercentage > status.statusProperty("hitInvulnerabilityThreshold") then
-        self.hitInvulnerabilityTime = status.statusProperty("hitInvulnerabilityTime")
-      end
+    -- Apply knockback.
+    local knockbackFactor = 1.5 -- God speed, Shiro.
+    local momentum = knockbackMomentum(vec2.mul(damageRequest.knockbackMomentum, knockbackFactor))
+    if status.resourcePositive("health") and vec2.mag(momentum) > 0 then
+      mcontroller.setVelocity({0,0})
+      mcontroller.addMomentum(momentum)
+      status.addEphemeralEffect("ragdoll_nocorrect")
+      self.bounces = 3
+      status.setResource("stunned", math.max(status.resource("stunned"), status.stat("knockbackStunTime")))
     end
-  end
 
-  status.addEphemeralEffects(damageRequest.statusEffects, damageRequest.sourceEntityId)
-
-  local knockbackFactor = 1.5 -- God speed, Shiro.
-  local momentum = knockbackMomentum(vec2.mul(damageRequest.knockbackMomentum, knockbackFactor))
-  if status.resourcePositive("health") and vec2.mag(momentum) > 0 then
-    mcontroller.setVelocity({0,0})
-    mcontroller.addMomentum(momentum)
-    status.addEphemeralEffect("ragdoll_nocorrect")
-    self.bounces = 3
-    status.setResource("stunned", math.max(status.resource("stunned"), status.stat("knockbackStunTime")))
+    -- No damage.
+    return {{
+      sourceEntityId = damageRequest.sourceEntityId,
+      targetEntityId = entity.id(),
+      position = mcontroller.position(),
+      damageDealt = 0,
+      healthLost = 0,
+      hitType = damageRequest.hitType,
+      kind = "Normal",
+      damageSourceKind = damageRequest.damageSourceKind,
+      targetMaterialKind = status.statusProperty("targetMaterialKind")
+    }}
   end
-
-  local hitType = damageRequest.hitType
-  if not status.resourcePositive("health") then
-    hitType = "kill"
-  end
-  return {{
-    sourceEntityId = damageRequest.sourceEntityId,
-    targetEntityId = entity.id(),
-    position = mcontroller.position(),
-    damageDealt = damage,
-    healthLost = healthLost,
-    hitType = hitType,
-    kind = "Normal",
-    damageSourceKind = damageRequest.damageSourceKind,
-    targetMaterialKind = status.statusProperty("targetMaterialKind")
-  }}
+  -- Return standard stuff.
+  return applyDamageRequest_old(damageRequest, ...)
 end
 
 local update_old = update
