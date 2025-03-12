@@ -1,9 +1,3 @@
-local init_old = init
-function init(...)
-  self.bounces = 0
-  init_old(...)
-end
-
 local applyDamageRequest_old = applyDamageRequest
 function applyDamageRequest(damageRequest, ...)
   if world.getProperty("nonCombat") then
@@ -23,7 +17,6 @@ function applyDamageRequest(damageRequest, ...)
       mcontroller.setVelocity({0,0})
       mcontroller.addMomentum(momentum)
       status.addEphemeralEffect("ragdoll_nocorrect")
-      self.bounces = 3
       status.setResource("stunned", math.max(status.resource("stunned"), status.stat("knockbackStunTime")))
     end
 
@@ -46,15 +39,10 @@ end
 
 local update_old = update
 function update(...)
-  self.onGround = mcontroller.onGround()
   if status.uniqueStatusEffectActive("ragdoll_nocorrect") and (math.abs(mcontroller.yVelocity()) > 25 or math.abs(mcontroller.xVelocity()) > 40) then
     mcontroller.controlParameters({
       bounceFactor = 0.8
     })
-    if self.onGround and not self.wasOnGround then
-      self.bounces = self.bounces - 1
-    end
   end
-  self.wasOnGround = self.onGround
   update_old(...)
 end
