@@ -13,6 +13,7 @@
   "stages": 5,
   "bitesPerStage": 4,
   "food": 1200,
+  "fat": 200,
 
   "apexDescription" : "An incredibly large chunk of meat. The beast this used to be must've been massive.",
   "avianDescription" : "I've never seen such a large amount of meat before, all from the same creature.",

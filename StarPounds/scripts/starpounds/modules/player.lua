@@ -135,7 +135,7 @@ end
 
 function _player:updateFoodItem(item)
   local foodValue = configParameter(item, "foodValue")
-  local fatValue = configParameter(item, "fatValue")
+  local fatValue = starPounds.moduleFunc("food", "getFatValue", item.name)
   if (foodValue or fatValue) and not configParameter(item, "starpounds_effectApplied", false) then
     local experienceBonus = starPounds.settings.foodExperienceBonus
     local effects = configParameter(item, "effects", jarray())

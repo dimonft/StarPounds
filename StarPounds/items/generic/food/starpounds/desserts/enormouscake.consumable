@@ -17,7 +17,6 @@
     }
   ] ],
   "foodValue": 325,
-  "fatValue": 150,
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,
