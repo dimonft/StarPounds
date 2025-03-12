@@ -26,5 +26,20 @@
       "spaceScan" : 0.1,
       "anchors" : [ "background" ]
     }
-  ]
+  ],
+
+  "scripts" : [ "/scripts/npcToyObject.lua"],
+  "npcToy" : {
+    "influence" : [
+      "artwork"
+    ],
+    "defaultReactions" : {
+      "artwork" : [
+        [1.0, "smile"],
+        [1.0, "love"],
+        [1.0, "nosebleed"]
+      ]
+    },
+    "randomStandXRange" : [-2.5, 2.5]
+  }
 }
