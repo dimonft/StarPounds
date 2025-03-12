@@ -61,8 +61,15 @@
   },
   "npcToy": {
     "ownerOnly" : false,
-    "influence" : [],
-    "defaultReactions" : {},
+    "influence" : [
+      "feedingTube"
+    ],
+    "defaultReactions" : {
+      "feedingTube" : [
+        [3.0, "neutral"],
+        [1.0, "love"]
+      ]
+    },
     "maxNpcs" : 1
   },
   "scripts" : [
