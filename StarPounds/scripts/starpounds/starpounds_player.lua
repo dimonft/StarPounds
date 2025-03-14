@@ -1,4 +1,3 @@
-require "/scripts/rect.lua"
 -- Run on load.
 function init()
   -- Load StarPounds.
