@@ -20,12 +20,16 @@ function food:getFatValue(itemName)
   local fatValue = 0
   local recipes = root.recipesForItem(itemName)
   for _, recipe in ipairs(recipes) do
+    local recipeFatValue = 0
+
     for _, input in ipairs(recipe.input) do
       local inputFatValue = self:getFatValue(input.name)
       if inputFatValue > 0 then
-        fatValue = fatValue + (input.count * inputFatValue) / (recipe.output.count or 1)
+        recipeFatValue = recipeFatValue + (input.count * inputFatValue) / (recipe.output.count or 1)
       end
     end
+
+    fatValue = math.max(fatValue, recipeFatValue)
   end
 
   self.cache[itemName] = fatValue
