@@ -13,7 +13,7 @@
     }
   ] ],
   "foodValue": 100,
-  "fatValue": 20,
+  "fatValue": 100, // Extra because it's funny
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

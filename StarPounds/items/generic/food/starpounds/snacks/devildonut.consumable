@@ -13,7 +13,7 @@
     }
   ] ],
   "foodValue": 80,
-  "fatValue": 20,
+  "fatValue": 45, // Same as starpoundschocoglazeddonut
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

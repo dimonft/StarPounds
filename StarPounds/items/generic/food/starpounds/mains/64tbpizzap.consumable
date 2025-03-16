@@ -17,7 +17,7 @@
     }
   ] ],
   "foodValue": 225,
-  "fatValue": 100,
+  "fatValue": 100, // Same as pizzaslice x5
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

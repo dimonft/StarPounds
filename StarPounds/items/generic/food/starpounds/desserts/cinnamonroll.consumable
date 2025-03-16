@@ -12,8 +12,8 @@
         "duration" : 270
     }
   ] ],
-  "foodValue": 30,
-  "fatValue": 10,
+  "foodValue": 30, // Brownie but double.
+  "fatValue": 10, // Brownie but double.
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

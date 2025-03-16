@@ -12,8 +12,8 @@
         "duration" : 135
     }
   ] ],
-  "foodValue": 18.75,
-  "fatValue": 6.66,
+  "foodValue": 45,
+  "fatValue": 20, // Same as starpoundsgreasepizzaslice
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

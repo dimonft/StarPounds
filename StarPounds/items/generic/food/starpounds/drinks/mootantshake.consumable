@@ -10,8 +10,8 @@
   "effects": [[
       "lactaid"
   ]],
-  "foodValue": 25,
-  "fatValue": 10,
+  "foodValue": 45,
+  "fatValue": 35, // Same as mooshake
   "tooltipKind" : "food",
   "emote" : "",
   "emitters" : [ "drinking" ]

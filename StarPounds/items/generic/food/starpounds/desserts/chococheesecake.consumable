@@ -3,7 +3,7 @@
   "rarity" : "Rare",
   "price" : 440,
   "category" : "preparedFood",
-  "inventoryIcon" : "starpoundschococheesecake.png",
+  "inventoryIcon" : "chococheesecake.png",
   "description" : "A simple slice of chocolate cheesecake, packing more calories than you'd think.",
   "shortdescription" : "Chocolate Cheesecake",
   "effects" : [ [
@@ -13,7 +13,7 @@
     }
   ] ],
   "foodValue": 90,
-  "fatValue": 20,
+  "fatValue": 45, // 50% more than starpoundschocolatemoomilkdeluxe
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

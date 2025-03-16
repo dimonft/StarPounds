@@ -12,8 +12,8 @@
         "duration" : 135
     }
   ] ],
-  "foodValue": 15,
-  "fatValue": 5,
+  "foodValue": 15, // Same as brownie.
+  "fatValue": 5, // Same as brownie.
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

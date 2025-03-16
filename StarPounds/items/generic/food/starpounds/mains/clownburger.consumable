@@ -13,7 +13,7 @@
     }
   ] ],
   "foodValue": 50,
-  "fatValue": 10,
+  "fatValue": 20, // A little less than 50% of starpoundsmeatwich
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

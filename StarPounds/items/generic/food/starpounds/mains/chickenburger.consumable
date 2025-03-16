@@ -13,7 +13,7 @@
     }
   ] ],
   "foodValue": 75,
-  "fatValue": 15,
+  "fatValue": 20, // 50% more than starpoundsclownburger
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

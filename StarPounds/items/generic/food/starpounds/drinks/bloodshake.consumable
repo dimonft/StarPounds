@@ -13,7 +13,7 @@
     }
   ] ],
   "foodValue": 75,
-  "fatValue": 40,
+  "fatValue": 20, // Roughly the same ratio compared to cooked meat (???)
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

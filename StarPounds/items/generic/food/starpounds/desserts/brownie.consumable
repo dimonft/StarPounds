@@ -12,8 +12,8 @@
         "duration" : 90
     }
   ] ],
-  "foodValue": 10,
-  "fatValue": 5,
+  "foodValue": 15, // Copying from chocolate until actual recipe.
+  "fatValue": 5, // Copying from chocolate until actual recipe.
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

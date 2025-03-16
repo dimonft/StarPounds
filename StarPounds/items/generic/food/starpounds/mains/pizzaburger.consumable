@@ -13,7 +13,7 @@
     }
   ] ],
   "foodValue": 115,
-  "fatValue": 35,
+  "fatValue": 42.5, // Same as starpoundsgreaseburger
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

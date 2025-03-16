@@ -13,7 +13,7 @@
     }
   ] ],
   "foodValue": 45,
-  "fatValue": 30,
+  "fatValue": 35, // Same as starpoundschocolateicecream minus the chocolate
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

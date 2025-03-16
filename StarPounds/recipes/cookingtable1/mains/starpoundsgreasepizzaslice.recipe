@@ -2,6 +2,6 @@
   "input" : [
     { "item" : "starpoundsgreasepizza", "count" : 1 }
   ],
-  "output" : { "item" : "starpoundsgreasepizzaslice", "count" : 12 },
+  "output" : { "item" : "starpoundsgreasepizzaslice", "count" : 5 },
   "groups" : [ "craftingfood", "mains" ]
 }

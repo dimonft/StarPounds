@@ -13,7 +13,7 @@
     }
   ] ],
   "foodValue": 50,
-  "fatValue": 20,
+  "fatValue": 20, // Same as starpoundspeanutbutter
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

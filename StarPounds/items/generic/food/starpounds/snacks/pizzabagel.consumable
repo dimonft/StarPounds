@@ -13,6 +13,7 @@
     }
   ] ],
   "foodValue": 15,
+  "fatValue": 5, // Meat x1
   "tooltipKind" : "food",
   "builder" : "/items/buildscripts/buildfood.lua",
   "maxStack" : 1,

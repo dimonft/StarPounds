@@ -4,7 +4,7 @@
   "price" : 280,
   "category" : "preparedFood",
   "inventoryIcon" : "endomorphicjelly.png",
-  "description" : "A slime based dessert. Eyeball free. ",
+  "description" : "A slime based dessert. Eyeball free.",
   "shortdescription" : "Endomorphic Jelly",
   "effects" : [ [
     {
