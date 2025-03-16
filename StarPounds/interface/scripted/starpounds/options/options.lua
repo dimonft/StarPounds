@@ -5,7 +5,7 @@ starPounds = getmetatable ''.starPounds
 function init()
   local buttonIcon = string.format("%s.png", starPounds.enabled and "enabled" or "disabled")
   enable:setImage(buttonIcon, buttonIcon, buttonIcon.."?border=2;00000000;00000000?crop=2;3;88;22")
-  options = root.assetJson("/scripts/starpounds/starpounds_options.config:options")
+  options = starPounds.options
   stats = root.assetJson("/scripts/starpounds/starpounds_stats.config")
   tabs = root.assetJson("/scripts/starpounds/starpounds_options.config:tabs")
   tabs[#tabs + 1] = {
@@ -13,9 +13,7 @@ function init()
     description = "Miscellaneous Options",
     icon = "miscellaneous.png"
   }
-  if starPounds then
-    populateOptions()
-  end
+  populateOptions()
 end
 
 function update()
@@ -47,26 +45,35 @@ function populateOptions()
   firstTab:select()
 
   for optionIndex, option in ipairs(options) do
-    local statModifierString = ""
-    if not option.hideStats then
-      for _, statModifier in ipairs(option.statModifiers or jarray()) do
-        local modifierColour = (stats[statModifier[1]].negative and statModifier[2] < 0 or statModifier[2] > 0) and "^green;" or "^red;"
-        local amount = (stats[statModifier[1]].invertDescriptor and (statModifier[2] * -1) or statModifier[2]) * 100
-        local statColour = stats[statModifier[1]].colour and ("^#"..stats[statModifier[1]].colour.."aa;") or "^gray;"
-        statModifierString = statModifierString..string.format("\n%s%s^gray; %s by %s%s", statColour, stats[statModifier[1]].pretty, amount > 0 and "increased" or "reduced", modifierColour, math.floor(math.abs(amount) + 0.5)).."%"
-      end
+    local optionStats = jarray()
+    local optionStatString = ""
 
-      for _, statOverride in ipairs(option.statOverrides or jarray()) do
-        local overrideColour = (stats[statOverride[1]].negative and statOverride[2] < stats[statOverride[1]].base or statOverride[2] > stats[statOverride[1]].base) and "^green;" or "^red;"
-        local amount = (stats[statOverride[1]].invertDescriptor and (statOverride[2] * -1) or statOverride[2]) * (stats[statOverride[1]].flat and 1 or 100)
-        local statColour = stats[statOverride[1]].colour and ("^#"..stats[statOverride[1]].colour.."aa;") or "^gray;"
-        statModifierString = statModifierString..string.format("\n%s%s^gray; set to %s%s", statColour, stats[statOverride[1]].pretty, overrideColour, math.floor(math.abs(amount) + 0.5))..(stats[statOverride[1]].flat and "" or "%")
+    if option.stats and not option.hideStats then
+      for _, stat in ipairs(option.stats) do
+        local statString = ""
+        local modStat = starPounds.stats[stat[1]]
+        local amount = stat[3]
+        if stat[2] == "mult" then
+          local negative = (modStat.negative and amount > 1) or (not modStat.negative and amount < 1)
+          statString = string.format("%s%s x%s", amount > 1 and "increased to" or "decreased to", negative and "^red;" or "^green;", string.format("%.2f", (modStat.invertDescriptor and (1/amount) or amount)):gsub("%.?0+$", ""))
+        elseif stat[2] ~= "override" then
+          local negative = (modStat.negative and amount > 0) or (not modStat.negative and amount < 0)
+          if stat[2] == "sub" then negative = not negative end
+          statString = string.format("%s%s %s", ((not modStat.invertDescriptor and stat[2] == "add") or (modStat.invertDescriptor and stat[2] == "sub")) and "increased by" or "decreased by", negative and "^red;" or "^green;", string.format("%.2f", modStat.flat and amount or (amount * 100)):gsub("%.?0+$", "")..(modStat.flat and "" or "%"))
+        end
+        local statColour = modStat.colour and ("^#"..modStat.colour.."aa;") or ""
+        optionStats[#optionStats + 1] = string.format("%s%s ^gray;%s", statColour, modStat.pretty, statString)
       end
     end
+
+    for i in ipairs(optionStats) do
+      optionStatString = optionStatString.."\n"..optionStats[i]
+    end
+
     local optionWidget = {
       type = "panel", style = "concave", expandMode = {1, 0}, children = {
         {type = "layout", mode = "manual", size = {131, 20}, children = {
-          {id = string.format("%sOption", option.name), type = "checkBox", position = {4, 5}, size = {9, 9}, toolTip = option.description..statModifierString..(option.footer and "\n"..option.footer or ""), radioGroup = option.group and option.name or nil},
+          {id = string.format("%sOption", option.name), type = "checkBox", position = {4, 5}, size = {9, 9}, toolTip = option.description..optionStatString..(option.footer and "\n"..option.footer or ""), radioGroup = option.group and option.name or nil},
           {type = "label", position = {15, 6}, size = {120, 9}, align = "left", text = option.pretty},
         }}
       }
@@ -89,8 +96,6 @@ function toggleOption(option)
     end
   end
   _ENV[string.format("%sOption", option.name)]:setChecked(enabled)
-  starPounds.setOptionsMultipliers(options)
-  starPounds.setOptionsOverrides(options)
 end
 
 function weightDecrease:onClick()

@@ -8,6 +8,7 @@ starPounds = {
   version = root.assetJson("/scripts/starpounds/starpounds.config:version"),
   settings = root.assetJson("/scripts/starpounds/starpounds.config:settings"),
   sizes = root.assetJson("/scripts/starpounds/starpounds_sizes.config:sizes"),
+  options = root.assetJson("/scripts/starpounds/starpounds_options.config:options"),
   stats = root.assetJson("/scripts/starpounds/starpounds_stats.config"),
   foods = root.assetJson("/scripts/starpounds/starpounds_foods.config"),
   skills = root.assetJson("/scripts/starpounds/starpounds_skills.config:skills"),
@@ -337,38 +338,22 @@ starPounds.createStatuses = function()
   status[((storage.starPounds.pred or not status.resourcePositive("health")) and "add" or "remove").."EphemeralEffect"]("starpoundseaten")
 end
 
-starPounds.setOptionsMultipliers = function(options)
-  storage.starPounds.optionMultipliers = {}
-  for _, option in ipairs(options) do
-    if option.statModifiers and starPounds.hasOption(option.name) then
-      for _, statModifier in ipairs(option.statModifiers) do
-        storage.starPounds.optionMultipliers[statModifier[1]] = (storage.starPounds.optionMultipliers[statModifier[1]] or 1) + statModifier[2]
-      end
-    end
-  end
-end
-
 starPounds.getOptionsMultiplier = function(stat)
   -- Argument sanitisation.
   stat = tostring(stat)
-  return storage.starPounds.optionMultipliers[stat] or 1
+  return (starPounds.optionStats[stat] or {0, 1})[2]
 end
 
-starPounds.setOptionsOverrides = function(options)
-  storage.starPounds.optionOverrides = {}
-  for _, option in ipairs(options) do
-    if option.statOverrides and starPounds.hasOption(option.name) then
-      for _, statOverride in ipairs(option.statOverrides) do
-        storage.starPounds.optionOverrides[statOverride[1]] = statOverride[2]
-      end
-    end
-  end
+starPounds.getOptionsBonus = function(stat)
+  -- Argument sanitisation.
+  stat = tostring(stat)
+  return (starPounds.optionStats[stat] or {0, 1})[1]
 end
 
 starPounds.getOptionsOverride = function(stat)
   -- Argument sanitisation.
   stat = tostring(stat)
-  return storage.starPounds.optionOverrides[stat] or nil
+  return (starPounds.optionStats[stat] or {0, 1})[3]
 end
 
 starPounds.hasOption = function(option)
@@ -381,6 +366,7 @@ starPounds.setOption = function(option, enable)
   -- Argument sanitisation.
   option = tostring(option)
   storage.starPounds.options[option] = enable and true or nil
+  starPounds.parseStats()
   starPounds.events:fire("main:statChange", "setOption")
   -- This is stupid, but prevents 'null' data being saved.
   if getmetatable(storage.starPounds.options) then
@@ -406,8 +392,8 @@ starPounds.getStat = function(stat)
     statAmount = statAmount + starPounds.getTraitBonus(stat) + starPounds.getEffectBonus(stat)
     -- Status effect multipliers and bonuses.
     statAmount = statAmount * starPounds.getStatusEffectMultiplier(stat) + starPounds.getStatusEffectBonus(stat)
-    -- Option multipliers.
-    statAmount = starPounds.getOptionsOverride(stat) or (statAmount * starPounds.getOptionsMultiplier(stat))
+    -- Option multipliers, bonuses, and overrides.
+    statAmount = starPounds.getOptionsOverride(stat) or (statAmount * starPounds.getOptionsMultiplier(stat) + starPounds.getOptionsBonus(stat))
     -- Cap the stat between 0 and it's maxValue.
     starPounds.statCache[stat] = math.max(math.min(statAmount, starPounds.stats[stat].maxValue or math.huge), starPounds.stats[stat].minValue or 0)
   end
@@ -517,7 +503,7 @@ starPounds.parseStats = function()
   local selectedTrait = starPounds.traits[starPounds.getTrait() or "default"]
   local speciesTrait = starPounds.traits[starPounds.getSpecies()] or starPounds.traits.default
   for _, trait in ipairs({speciesTrait, selectedTrait}) do
-    for _, stat in ipairs(trait.stats or jarray()) do
+    for _, stat in ipairs(trait.stats or {}) do
       starPounds.traitStats[stat[1]] = starPounds.traitStats[stat[1]] or {0, 1}
       if stat[2] == "add" then
         starPounds.traitStats[stat[1]][1] = starPounds.traitStats[stat[1]][1] + stat[3]
@@ -533,7 +519,7 @@ starPounds.parseStats = function()
   for effectName, effectData in pairs(storage.starPounds.effects) do
     local effectConfig = starPounds.effects[effectName]
     if effectConfig then
-      for _, stat in ipairs(effectConfig.stats or jarray()) do
+      for _, stat in ipairs(effectConfig.stats or {}) do
         starPounds.effectStats[stat[1]] = starPounds.effectStats[stat[1]] or {0, 1}
         if stat[2] == "add" then
           starPounds.effectStats[stat[1]][1] = starPounds.effectStats[stat[1]][1] + stat[3] + (effectData.level - 1) * (stat[4] or 0)
@@ -541,6 +527,24 @@ starPounds.parseStats = function()
           starPounds.effectStats[stat[1]][1] = starPounds.effectStats[stat[1]][1] - (stat[3] + (effectData.level - 1) * (stat[4] or 0))
         elseif stat[2] == "mult" then
           starPounds.effectStats[stat[1]][2] = starPounds.effectStats[stat[1]][2] * stat[3] + (effectData.level - 1) * (stat[4] or 0)
+        end
+      end
+    end
+  end
+  -- Options stats
+  starPounds.optionStats = {}
+  for _, optionConfig in ipairs(starPounds.options) do
+    if starPounds.hasOption(optionConfig.name) then
+      for _, stat in ipairs(optionConfig.stats or {}) do
+        starPounds.optionStats[stat[1]] = starPounds.optionStats[stat[1]] or {0, 1}
+        if stat[2] == "add" then
+          starPounds.optionStats[stat[1]][1] = starPounds.optionStats[stat[1]][1] + stat[3]
+        elseif stat[2] == "sub" then
+          starPounds.optionStats[stat[1]][1] = starPounds.optionStats[stat[1]][1] - stat[3]
+        elseif stat[2] == "mult" then
+          starPounds.optionStats[stat[1]][2] = starPounds.optionStats[stat[1]][2] * stat[3]
+        elseif stat[2] == "override" then
+          starPounds.optionStats[stat[1]][3] = stat[3]
         end
       end
     end
