@@ -36,5 +36,44 @@ function food:getFatValue(itemName)
   return fatValue
 end
 
+function food:updateItem(item)
+  local foodValue = configParameter(item, "foodValue")
+  local fatValue = configParameter(item, "fatValue", starPounds.moduleFunc("food", "getFatValue", item.name))
+
+  if (foodValue or fatValue) and not configParameter(item, "starpounds_effectApplied", false) then
+    local effects = configParameter(item, "effects", jarray())
+
+    if not effects[1] then
+      table.insert(effects, jarray())
+    end
+    -- Get the specific food type for the item category.
+    local category = configParameter(item, "category", ""):lower()
+    local foodType = self.data.categoryTypes[category:lower()] or self.data.categoryTypes.food
+    -- Add food.
+    if foodValue then
+      table.insert(effects[1], { effect = foodType.food..(disableExperience and "_noexperience" or ""), duration = foodValue })
+    end
+    -- Add fat.
+    if fatValue then
+      table.insert(effects[1], { effect = foodType.fat, duration = fatValue })
+    end
+    -- Add experience.
+    local rarity = configParameter(item, "rarity", "common"):lower()
+    local disableExperience = configParameter(item, "starpounds_disableExperience", false)
+    if foodValue and self.data.experienceBonus[rarity] and not disableExperience then
+      bonusExperience = foodValue * self.data.experienceBonus[rarity]
+      table.insert(effects[1], { effect = "starpoundsfood_bonusexperience", duration = bonusExperience })
+    end
+
+    item.parameters.starpounds_effectApplied = true
+    item.parameters.effects = effects
+    item.parameters.starpounds_foodValue = foodValue
+    item.parameters.foodValue = 0
+
+    return item
+  end
+  return false
+end
+
 
 starPounds.modules.food = food

@@ -37,7 +37,7 @@ function _player:update(dt)
 
   starPounds.swapSlotItem = player.swapSlotItem()
   if starPounds.swapSlotItem and root.itemType(starPounds.swapSlotItem.name) == "consumable" then
-    local replaceItem = self:updateFoodItem(starPounds.swapSlotItem)
+    local replaceItem = starPounds.moduleFunc("food", "updateItem", starPounds.swapSlotItem)
     if replaceItem then
       player.setSwapSlotItem(replaceItem)
     end
@@ -131,52 +131,6 @@ function _player:damageHitboxTiles(tileDamage)
   -- Damage valid tiles based on fall damage.
   world.damageTiles(lowDamageTiles, "foreground", position, "explosive", tileDamage * 0.25, 1, entity.id())
   world.damageTiles(highDamageTiles, "foreground", position, "explosive", tileDamage * 0.75, 1, entity.id())
-end
-
-function _player:updateFoodItem(item)
-  local foodValue = configParameter(item, "foodValue")
-  local fatValue = starPounds.moduleFunc("food", "getFatValue", item.name)
-  if (foodValue or fatValue) and not configParameter(item, "starpounds_effectApplied", false) then
-    local experienceBonus = starPounds.settings.foodExperienceBonus
-    local effects = configParameter(item, "effects", jarray())
-
-    if not effects[1] then
-      table.insert(effects, jarray())
-    end
-
-    local category = configParameter(item, "category", ""):lower()
-    local foodType = (category == "drink") and "drink" or "food"
-    local rarity = configParameter(item, "rarity", "common"):lower()
-    local disableExperience = configParameter(item, "starpounds_disableExperience", false)
-    local bonusExperience = (foodValue or 0) * (experienceBonus[rarity] or 0) * (disableExperience and 0 or 1)
-
-    if foodValue then
-      table.insert(effects[1], {
-        effect = string.format("starpoundsfood_%sitem%s", foodType, disableExperience and "_noexperience" or ""),
-        duration = foodValue
-      })
-    end
-
-    if fatValue then
-      local fatFoodType = foodType == "drink" and "fatliquid" or "fatfood"
-      table.insert(effects[1], {
-        effect = string.format("starpoundsfood_%s", fatFoodType),
-        duration = fatValue
-      })
-    end
-
-    if bonusExperience > 0 then
-      table.insert(effects[1], {effect = "starpoundsfood_bonusexperience", duration = bonusExperience})
-    end
-
-    item.parameters.starpounds_effectApplied = true
-    item.parameters.effects = effects
-    item.parameters.starpounds_foodValue = foodValue
-    item.parameters.foodValue = 0
-
-    return item
-  end
-  return false
 end
 
 -- Audio doesn't line up to the normal step sound (and can't),
