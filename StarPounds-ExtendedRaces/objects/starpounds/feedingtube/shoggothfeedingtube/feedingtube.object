@@ -53,7 +53,7 @@
     }
   ],
 
-  "animation" : "feedingtube.animation",
+  "animation" : "/objects/starpounds/feedingtube/feedingtube.animation",
   "animationPosition" : [-15, 0],
   "animationParts" : {
     "tank" : "feedingtubetank.png",
@@ -61,14 +61,21 @@
   },
   "npcToy": {
     "ownerOnly" : false,
-    "influence" : [],
-    "defaultReactions" : {},
+    "influence" : [
+      "feedingTube"
+    ],
+    "defaultReactions" : {
+      "feedingTube" : [
+        [3.0, "neutral"],
+        [1.0, "love"]
+      ]
+    },
     "maxNpcs" : 1
   },
   "scripts" : [
-    "/objects/starpounds/feedingtube/feedingtube.lua",
-    "/scripts/npcToyObject.lua"
-   ],
+    "/scripts/npcToyObject.lua",
+    "/objects/starpounds/feedingtube/feedingtube.lua"
+  ],
   "sitCoverImage" : "/objects/starpounds/feedingtube/shoggothfeedingtube/feedingtubecover.png",
 
   "placementImage" : "/objects/starpounds/feedingtube/shoggothfeedingtube/feedingtubepreview.png",

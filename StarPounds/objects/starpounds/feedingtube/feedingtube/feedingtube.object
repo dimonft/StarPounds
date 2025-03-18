@@ -53,7 +53,7 @@
     }
   ],
 
-  "animation" : "feedingtube.animation",
+  "animation" : "/objects/starpounds/feedingtube/feedingtube.animation",
   "animationPosition" : [-15, 0],
   "animationParts" : {
     "tank" : "feedingtubetank.png",
@@ -75,5 +75,5 @@
   "scripts" : [
     "/scripts/npcToyObject.lua",
     "/objects/starpounds/feedingtube/feedingtube.lua"
-   ]
+  ]
 }
