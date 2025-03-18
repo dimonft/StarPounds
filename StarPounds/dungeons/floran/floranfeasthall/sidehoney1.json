@@ -17,7 +17,7 @@
         }, 
         {
          "compression":"zlib",
-         "data":"eJztmdsNwyAMRRmjf5mji2SHrtBVulGmqiKFCjk8rmNMKPhIVhNA2AeQglTnjJl5TxTmfnZ\/goHMKeFFnv17LC+3ZgoyD3c9JXDc0XW44p7KQ+urScqd9nHWgOue2ttcPRIezIg5lFwosfHUGd0LCbvPuv8ux\/sS9AVtqzu7e1L+qHtqr8Nnbfdc5Nydi\/sj7tRbcg6vgLqXoP4cd4\/fCyR6ci950TGxsx47h78+xjlE0XBH7jap\/pr1lKidy9zNveTeop4cGrnM3dw5fVr1pLjLvWU9uVy5fL6fi8Rdo55SvjBn2HaFq+5a9ZTY74mfI6R3Rom7Rj051iCPD8kaS91r19OSGvv+r5g73j4S5o63j4S54+0jYe54+0i0dt+CuXsJioZ7j94t3Kk3+h+5ZrRw79G7hXuv51z7zG9krl6jNlt5yJCY91yY91yM5n33d6eH7\/sMYczNF5hOpNg=",
+         "data":"eJztmdENAiEMQBnDP+dwAUe4HVzBVdzoptKLNiE9oO2Vcgh9SeMdENoHJEdiCM7MPCcKd9+735jBmVPDAz3DeyqvtGYMZx7pemqQuHPX4Yh7Lg+uryY5d9wnWQOpe25vS\/VouAgj5UC5YFLjsTN3LzRsPssn7tfvO\/wG1LaEvTuQ8+e65\/Y6frZ2L0XJPYS0P8cde2vO4RG47hTYX+IOwF5woid3yguPSZ311DkEJOeQi4U7526T669ZD0XtXO7u7pR7i3pKWORyd3eX9FnVk+Ms95b1lHKV8kG\/FI27RT1Uvjhn3HaEo+5W9VBs98TXL7R3Ro27RT0lligPhGaNte6162lJjX3\/V9yd3z4S7s5vHwl357ePhLvz20eitfsazd1LYCzce\/Ru4Y69uf+RW0YL9x69W7j3es6tz\/yK5uo1arPSQ4bEvefCvediNO+zvzs9fN9nCGdu3mzAxNQ=",
          "encoding":"base64",
          "height":50,
          "name":"front",
@@ -177,7 +177,7 @@
                  "y":368
                 }, 
                 {
-                 "gid":7792,
+                 "gid":7838,
                  "height":16,
                  "id":695,
                  "name":"",
@@ -197,7 +197,7 @@
                  "y":368
                 }, 
                 {
-                 "gid":2147491440,
+                 "gid":2147491486,
                  "height":16,
                  "id":696,
                  "name":"",
@@ -217,7 +217,7 @@
                  "y":368
                 }, 
                 {
-                 "gid":7792,
+                 "gid":7838,
                  "height":16,
                  "id":697,
                  "name":"",
@@ -237,7 +237,7 @@
                  "y":352
                 }, 
                 {
-                 "gid":7792,
+                 "gid":7838,
                  "height":16,
                  "id":698,
                  "name":"",
@@ -257,7 +257,7 @@
                  "y":368
                 }, 
                 {
-                 "gid":7792,
+                 "gid":7838,
                  "height":16,
                  "id":699,
                  "name":"",
@@ -401,7 +401,7 @@
                  "y":168
                 }, 
                 {
-                 "gid":7792,
+                 "gid":7838,
                  "height":16,
                  "id":710,
                  "name":"",
@@ -421,7 +421,7 @@
                  "y":368
                 }, 
                 {
-                 "gid":7792,
+                 "gid":7838,
                  "height":16,
                  "id":711,
                  "name":"",
@@ -628,119 +628,119 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/materials.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/materials.json"
         }, 
         {
          "firstgid":198,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/supports.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/supports.json"
         }, 
         {
          "firstgid":235,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/miscellaneous.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/miscellaneous.json"
         }, 
         {
          "firstgid":259,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/liquids.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/liquids.json"
         }, 
         {
          "firstgid":287,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/ancient.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/ancient.json"
         }, 
         {
          "firstgid":450,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/apex.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/apex.json"
         }, 
         {
          "firstgid":821,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/avian.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/avian.json"
         }, 
         {
          "firstgid":1126,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/floran.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/floran.json"
         }, 
         {
          "firstgid":1321,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/generic.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/generic.json"
         }, 
         {
          "firstgid":3305,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/glitch.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/glitch.json"
         }, 
         {
          "firstgid":3531,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/human.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/human.json"
         }, 
         {
          "firstgid":3819,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/hylotl.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/hylotl.json"
         }, 
         {
          "firstgid":4051,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/novakid.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-race\/novakid.json"
         }, 
         {
          "firstgid":4115,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/breakable.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/breakable.json"
         }, 
         {
          "firstgid":4425,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/decorative.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/decorative.json"
         }, 
         {
          "firstgid":5866,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/door.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/door.json"
         }, 
         {
          "firstgid":5998,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/farmable.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/farmable.json"
         }, 
         {
          "firstgid":6073,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/furniture.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/furniture.json"
         }, 
         {
          "firstgid":6427,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/light.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/light.json"
         }, 
         {
          "firstgid":6885,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/railpoint.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/railpoint.json"
         }, 
         {
          "firstgid":6890,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/teleporter.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/teleporter.json"
         }, 
         {
          "firstgid":6932,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/trap.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/trap.json"
         }, 
         {
          "firstgid":7136,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/wire.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/wire.json"
         }, 
         {
          "firstgid":7358,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-type\/container.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-type\/container.json"
         }, 
         {
          "firstgid":7643,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-type\/teleporter.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-type\/teleporter.json"
         }, 
         {
          "firstgid":7670,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/mods\/StarPounds\/tilesets\/starpounds\/Fatty-Interactives.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/mods\/StarPounds\/tilesets\/starpounds\/Fatty-Interactives.json"
         }, 
         {
          "firstgid":7701,
-         "source":"..\/..\/..\/tilesets\/Starpounds-Fatty-Dungeons.json"
+         "source":"..\/..\/..\/..\/..\/..\/..\/Desktop\/blossom's fatty dungeons\/tilesets\/Starpounds-Fatty-Dungeons.json"
         }, 
         {
-         "firstgid":7723,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/storage.json"
+         "firstgid":7769,
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/assets\/packed\/tilesets\/packed\/objects-by-category\/storage.json"
         }, 
         {
-         "firstgid":7957,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/mods\/StarPounds\/tilesets\/starpounds\/Fatty-Liquids.json"
+         "firstgid":8003,
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Program Files (x86)\/Steam\/steamapps\/common\/Starbound\/mods\/StarPounds\/tilesets\/starpounds\/Fatty-Liquids.json"
         }],
  "tilewidth":8,
  "type":"map",
