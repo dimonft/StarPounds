@@ -163,23 +163,23 @@ function size:equipmentConfig(sizeIndex)
   end
   -- Size cap based on occupied vehicle. Uses math.huge by default because
   -- math.min doesn't ignore nils and I'd rather not do 10 more if statements.
-  local vehicleCap = self.vehicleCap or math.huge
+  local vehicleCap = self.vehicleCap or {chest = math.huge, legs = math.huge}
   -- These can be independent based on options.
-  local chestIndex = math.min(sizeIndex, vehicleCap)
-  local legsIndex = math.min(sizeIndex, vehicleCap)
+  local chestIndex = math.min(sizeIndex, vehicleCap.chest)
+  local legsIndex = math.min(sizeIndex, vehicleCap.legs)
 
   -- Don't do this for supersized stages.
   if not starPounds.sizes[sizeIndex].yOffset then
     -- Calculate the 'target' size based on options and vehicle caps.
     for option, amount in pairs(self.data.sizeOptions.chest) do
       if starPounds.hasOption(option) then
-        chestIndex = math.min(math.max(sizeIndex + amount), self.supersizeIndex - 1, vehicleCap)
+        chestIndex = math.min(math.max(sizeIndex + amount), self.supersizeIndex - 1, vehicleCap.chest)
       end
     end
     -- Same for legs.
     for option, amount in pairs(self.data.sizeOptions.legs) do
       if starPounds.hasOption(option) then
-        legsIndex = math.min(math.max(sizeIndex + amount), self.supersizeIndex - 1, vehicleCap)
+        legsIndex = math.min(math.max(sizeIndex + amount), self.supersizeIndex - 1, vehicleCap.legs)
       end
     end
   end
@@ -312,10 +312,14 @@ end
 function size:trackVehicleCap()
   -- Reset if the mod is disabled.
   if not (storage.starPounds.enabled and self.canGain) then self.anchored = nil return end
-  local anchored = starPounds.mcontroller.anchorState
+  local anchored, index = mcontroller.anchorState()
   if self.anchored ~= anchored then
+    self.vehicleCap = nil
+
     local anchorEntity = anchored and world.entityName(anchored) or nil
-    self.vehicleCap = anchorEntity and self.data.vehicleCap[anchorEntity] or nil
+    if self.data.vehicleCap[anchorEntity] then
+      self.vehicleCap = self.data.vehicleCap[anchorEntity][index + 1] or nil
+    end
   end
   self.anchored = anchored
 end
