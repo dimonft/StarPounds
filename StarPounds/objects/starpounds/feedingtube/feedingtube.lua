@@ -57,7 +57,7 @@ function update(dt)
         -- Remove stored liquid.
         storage.amount = math.max(0, storage.amount - 1)
         -- Give food.
-        for foodType, foodAmount in pairs(self.liquids[storage.liquid.name] or self.liquids.default) do
+        for foodType, foodAmount in pairs((self.liquids[storage.liquid.name] or self.liquids.default).food) do
           world.sendEntityMessage(self.feedTarget, "starPounds.feed", foodAmount, foodType)
         end
         -- Give status effects.
@@ -67,7 +67,7 @@ function update(dt)
           end
         end
         -- Prevent belches, and spawn drinking particles.
-        world.sendEntityMessage(self.feedTarget, "starPounds.spawnDrinkingParticles", {storage.liquid.name, 1})
+        world.sendEntityMessage(self.feedTarget, "starPounds.spawnDrinkingParticles", storage.liquid.name)
         world.sendEntityMessage(self.feedTarget, "applyStatusEffect", "starpoundsdrinking")
         -- Play sound.
         animator.playSound("drink")
