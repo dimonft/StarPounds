@@ -45,7 +45,7 @@ function oSB:toggleBind()
 end
 -- Menu time.
 function oSB:menuBinds()
-  for _, menu in ipairs({"menu", "skills", "accessories", "options"}) do
+  for _, menu in ipairs({"menu", "skills", "effects", "options"}) do
     if input.bindDown("starpounds", menu.."Menu") then
       player.interact("ScriptPane", {gui = {}, scripts = {"/metagui.lua"}, ui = "starpounds:"..menu})
     end
