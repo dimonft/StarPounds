@@ -1,0 +1,12 @@
+{
+  "projectileName" : "starpoundsdrinkvore",
+  "timeToLive" : 0.35,
+  "image": "starpoundsdrinkvore.png",
+  "piercing" : true,
+  "damageType" : "Status",
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damagePoly" : [ [-6, 0], [-4.5, -4.5], [0, -6], [4.5, -4.5], [6, 0], [4.5, 4.5], [0, 6], [-4.5, 4.5] ],
+  "statusEffects" : [ "starpoundsvoretargetdrink" ],
+  "speed" : 0,
+  "power" : 0
+}

@@ -23,6 +23,11 @@
         "group": "starpounds",
         "name": "Belch"
       },
+      "drink": {
+        "default": [],
+        "group": "starpounds",
+        "name": "Drink Liquid"
+      },
       "voreEat": {
         "default": [{
           "type": "key",
@@ -55,10 +60,10 @@
         "group": "starpoundsmenus",
         "name": "Open Skills"
       },
-      "accessoriesMenu": {
+      "effectsMenu": {
         "default": [],
         "group": "starpoundsmenus",
-        "name": "Open Accessories"
+        "name": "Open Effects"
       },
       "optionsMenu": {
         "default": [],

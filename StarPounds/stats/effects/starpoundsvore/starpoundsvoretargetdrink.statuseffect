@@ -1,0 +1,14 @@
+{
+  "name": "starpoundsvoretargetdrink",
+  "effectConfig": {
+    "options" : {
+      "ignoreCapacity" : true,
+      "ignoreEnergyRequirement" : true,
+      "energyMultiplier" : 0
+    }
+  },
+  "defaultDuration": 1,
+  "scripts": [
+    "starpoundsvoretarget.lua"
+  ]
+}

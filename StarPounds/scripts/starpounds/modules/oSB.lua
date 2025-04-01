@@ -13,6 +13,7 @@ function oSB:update(dt)
     self:toggleBind()
     self:menuBinds()
     self:belchBind()
+    self:drinkBind()
     self:voreBinds(dt)
     self:lactateBind(dt)
   end
@@ -88,6 +89,15 @@ function oSB:lactateBind(dt)
     end
   else
     self.lactateBindTimer = self.data.lactateBindTime
+  end
+end
+
+-- Drink.
+function oSB:drinkBind()
+  -- Only run this if we have auto drinking disabled.
+  if not starPounds.hasOption("disableDrinking") then return end
+  if input.bind("starpounds", "drink") then
+    starPounds.moduleFunc("drinking", "drink")
   end
 end
 
