@@ -1,18 +1,14 @@
 {
   "itemName" : "hypermootantchest",
-  "price" : 0,  
+  "price" : 0,
   "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "legendary",
-  "category" : "chestwear",  
+  "category" : "chestwear",
   "description" : "Someone is a bit well developed.",
   "shortdescription" : "Hyper Bust",
   "tooltipKind" : "starpoundsarmor",
-  
-  "statusEffects": [
-    "starpounds",
-    "starpoundshyper"
-  ],
+  "statusEffects": [ "starpounds", "starpoundshyper" ],
 
   "maleFrames" : {
     "body" : "chestm.png",

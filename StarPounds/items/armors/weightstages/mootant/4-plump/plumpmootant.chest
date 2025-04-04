@@ -1,17 +1,14 @@
 {
   "itemName" : "plumpmootantchest",
-  "price" : 0,  
+  "price" : 0,
   "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "legendary",
-  "category" : "chestwear",  
+  "category" : "chestwear",
   "description" : "When your gut is resting on a table, it's pretty fat porky.",
   "shortdescription" : "Plump Belly",
   "tooltipKind" : "starpoundsarmor",
-  
-  "statusEffects": [
-    "starpoundsplump"
-  ],
+  "statusEffects": [ "starpoundsplump" ],
 
   "maleFrames" : {
     "body" : "chestm.png",

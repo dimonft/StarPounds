@@ -1,18 +1,14 @@
 {
   "itemName" : "thickhypermootantchest",
-  "price" : 0,    
+  "price" : 0,
   "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "legendary",
-  "category" : "chestwear",  
+  "category" : "chestwear",
   "description" : "Got some real nice melons there.",
   "shortdescription" : "Hyper Thick Bust",
   "tooltipKind" : "starpoundsarmor",
-  
-  "statusEffects": [
-    "starpoundsthick",
-    "starpoundshyper"
-  ],
+  "statusEffects": [ "starpoundsthick", "starpoundshyper" ],
 
   "maleFrames" : {
     "body" : "chestm.png",

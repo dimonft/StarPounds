@@ -4,15 +4,12 @@
   "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "legendary",
-  "category" : "chestwear",  
+  "category" : "chestwear",
   "description" : "A bit out of shape and having a big meal, huh?",
   "shortdescription" : "Stuffed Thick Belly",
   "tooltipKind" : "starpoundsarmor",
-  
-  "statusEffects": [
-    "starpoundsthick",
-    "starpoundsstuffed"
-  ],
+  "statusEffects": [ "starpoundsthick", "starpoundsstuffed" ],
+
   "maleFrames" : {
     "body" : "chestm.png",
     "backSleeve" : "bsleeve.png",

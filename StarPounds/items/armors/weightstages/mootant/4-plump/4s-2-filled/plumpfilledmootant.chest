@@ -1,18 +1,14 @@
 {
   "itemName" : "plumpfilledmootantchest",
-  "price" : 0,  
+  "price" : 0,
   "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "legendary",
-  "category" : "chestwear",  
+  "category" : "chestwear",
   "description" : "A meal like this must just be an appetizer for you.",
   "shortdescription" : "Filled Plump Belly",
   "tooltipKind" : "starpoundsarmor",
-  
-  "statusEffects": [
-    "starpoundsplump",
-    "starpoundsfilled"
-  ],
+  "statusEffects": [ "starpoundsplump", "starpoundsfilled" ],
 
   "maleFrames" : {
     "body" : "chestm.png",

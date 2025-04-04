@@ -1,18 +1,14 @@
 {
   "itemName" : "saturatedmootantchest",
-  "price" : 0,  
+  "price" : 0,
   "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "legendary",
-  "category" : "chestwear",  
+  "category" : "chestwear",
   "description" : "Got a nice small gut from that meal you just had.",
   "shortdescription" : "Saturated Belly",
   "tooltipKind" : "starpoundsarmor",
-  
-  "statusEffects": [
-    "starpounds",
-    "starpoundssaturated"
-  ],
+  "statusEffects": [ "starpounds", "starpoundssaturated" ],
 
   "maleFrames" : {
     "body" : "chestm.png",

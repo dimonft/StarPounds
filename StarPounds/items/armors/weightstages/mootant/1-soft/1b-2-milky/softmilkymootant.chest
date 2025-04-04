@@ -1,6 +1,6 @@
 {
   "itemName" : "softmilkymootantchest",
-  "price" : 0,    
+  "price" : 0,
   "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "legendary",
@@ -8,11 +8,7 @@
   "description" : "It's okay that you got a bit of a belly. Those sloshing milkers are hiding it.",
   "shortdescription" : "XBusty Soft Belly",
   "tooltipKind" : "starpoundsarmor",
-  
-  "statusEffects": [
-    "starpoundssoft",
-    "starpoundsmilky"
-  ],
+  "statusEffects": [ "starpoundssoft", "starpoundsmilky" ],
 
   "maleFrames" : {
     "body" : "chestm.png",

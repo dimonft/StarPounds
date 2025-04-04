@@ -4,15 +4,11 @@
   "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "legendary",
-  "category" : "chestwear",  
+  "category" : "chestwear",
   "description" : "No wonder you've packed on weight with meals like this.",
   "shortdescription" : "Filled Soft Belly",
   "tooltipKind" : "starpoundsarmor",
-  
-  "statusEffects": [
-    "starpoundssoft",
-    "starpoundsfilled"
-  ],
+  "statusEffects": [ "starpoundssoft", "starpoundsfilled" ],
 
   "maleFrames" : {
     "body" : "chestm.png",

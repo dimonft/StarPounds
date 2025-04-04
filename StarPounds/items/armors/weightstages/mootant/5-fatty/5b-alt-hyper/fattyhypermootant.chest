@@ -1,18 +1,14 @@
 {
   "itemName" : "fattyhypermootantchest",
-  "price" : 0,  
+  "price" : 0,
   "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "legendary",
-  "category" : "chestwear",  
+  "category" : "chestwear",
   "description" : "Those boobs are as wide as you are tall.",
   "shortdescription" : "Hyper Fatty Bust",
   "tooltipKind" : "starpoundsarmor",
-  
-  "statusEffects": [
-    "starpoundsfatty",
-    "starpoundshyper"
-  ],
+  "statusEffects": [ "starpoundsfatty", "starpoundshyper" ],
 
   "maleFrames" : {
     "body" : "chestm.png",
