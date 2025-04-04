@@ -142,7 +142,8 @@ function pred:eat(preyId, options, check)
   local preyOptions = {
     triggerCooldown = options.triggerPreyCooldown,
     noStruggle = options.noStruggle,
-    noDamage = options.noDamage
+    noDamage = options.noDamage,
+    maxWeight = options.maxWeight
   }
   -- Ask the entity to be eaten, add to stomach if the promise is successful.
   promises:add(world.sendEntityMessage(preyId, "starPounds.getEaten", entity.id(), preyOptions), function(prey)
@@ -172,6 +173,9 @@ function pred:eat(preyId, options, check)
       end
       local energyCost = (options.energyMultiplier or 1) * (self.data.energyBase + self.data.energy * preyHealthPercent * preySizeMult)
       status.overConsumeResource("energy", energyCost)
+    end
+    if options.triggerPredCooldown then
+      self:cooldownStart()
     end
     -- Swallow sound
     if not (options.noSound or options.noSwallowSound) then

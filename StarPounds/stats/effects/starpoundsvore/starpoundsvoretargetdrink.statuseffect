@@ -2,10 +2,12 @@
   "name": "starpoundsvoretargetdrink",
   "effectConfig": {
     "options" : {
+      "triggerPredCooldown" : true,
       "ignoreCapacity" : true,
       "ignoreEnergyRequirement" : true,
       "energyMultiplier" : 0
-    }
+    },
+    "maxWeight": true
   },
   "defaultDuration": 1,
   "scripts": [

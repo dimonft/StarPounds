@@ -1,7 +1,11 @@
 function init()
-  source = effect.sourceEntity()
+  local source = effect.sourceEntity()
+  local options = effect.getParameter("options", {})
+  -- Set the max mass option to the effect's duration if we have the tag.
+  local maxWeight = effect.getParameter("maxWeight")
+  if maxWeight then options.maxWeight = effect.duration() end
   if source ~= entity.id() then
-    world.sendEntityMessage(source, "starPounds.eatEntity", entity.id(), effect.getParameter("options", {}))
+    world.sendEntityMessage(source, "starPounds.eatEntity", entity.id(), options)
   end
   effect.expire()
 end

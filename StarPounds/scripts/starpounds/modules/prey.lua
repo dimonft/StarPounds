@@ -6,6 +6,15 @@ function prey:init()
   message.setHandler("starPounds.getDigested", function(_, _, ...) return self:digesting(...) end)
   message.setHandler("starPounds.newPred", function(_, _, ...) return self:newPred(...) end)
 
+  message.setHandler("starPounds.drinkVoreNudge", function(_, _, sourceId, maxWeight, args)
+    if storage.starPounds.pred then return end
+    if maxWeight < (entity.weight + storage.starPounds.weight) then return end
+    if mcontroller.liquidPercentage() < 0.25 then return end
+    if not entity.entityInSight(sourceId) then return end
+
+    return mcontroller.controlApproachVelocityAlongAngle(table.unpack(args))
+  end)
+
   self.voreCooldown = 0
   self.options = {}
   self.heartbeat = self.data.heartbeat
@@ -90,6 +99,10 @@ function prey:swallowed(pred, options)
   if storage.starPounds.pred then return false end
   -- Don't allow if we're on cooldown.
   if self.voreCooldown > 0 then return false end
+  -- Don't allow if the max weight is less than the prey's
+  if options.maxWeight and (options.maxWeight < (entity.weight + storage.starPounds.weight)) then
+    return false
+  end
   -- Check that the entity actually exists.
   if not world.entityExists(pred, true) then return false end
   -- Don't get eaten if already dead.

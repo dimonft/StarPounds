@@ -1,8 +1,6 @@
 local movement = starPounds.module:new("movement")
 
 function movement:init()
-  message.setHandler("starPounds.controlApproachVelocityAlongAngle", function(_, _, ...) return mcontroller.controlApproachVelocityAlongAngle(...) end)
-
   self.metatable = { __index = function(cache, key)
     -- Return the cache if it exists. ~= nil since values can be cached as false.
     local cached = rawget(cache, key)

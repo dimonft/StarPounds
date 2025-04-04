@@ -73,10 +73,10 @@ end
 function drinking:consumeLiquidsAtPosition(position)
   if not position then return 0 end
 
-  local drinkConfig = self.data.levels[starPounds.getStat("drinkVolume")]
+  local drinkConfig = self.data.levels[math.min(starPounds.getStat("drinkVolume"), #self.data.levels)]
   local query = world.entityQuery(starPounds.mcontroller.mouthPosition, drinkConfig[1], {includedTypes = {"player", "npc", "monster"}, withoutEntityId = entity.id()})
   local consumedLiquids = {}
-  for _, pos in pairs(drinkConfig[2]) do
+  for _, pos in pairs(drinkConfig[3]) do
     local drinkPosition = vec2.add(pos, position)
     local collision = world.lineTileCollision(position, drinkPosition)
     if not collision then
@@ -105,13 +105,15 @@ function drinking:consumeLiquidsAtPosition(position)
         local incidence = math.min(1 - (distance - 1) / (drinkConfig[1] - 1), distance / 1)
         local angle = vec2.angle(direction)
 
-        world.sendEntityMessage(entityId, "starPounds.controlApproachVelocityAlongAngle", angle, 10, 750 * incidence, true)
+        world.sendEntityMessage(entityId, "starPounds.drinkVoreNudge", entity.id(), drinkConfig[2], {angle, 10, 750 * incidence, true})
       end
     end
     -- Spawn vore projectile at the player's mouth.
     -- Better than triggering vore multiple times for each entity while they're moving towards us.
     if #query > 0 then
-      world.spawnProjectile("starpoundsdrinkvore", starPounds.mcontroller.mouthPosition, entity.id(), nil, true)
+      world.spawnProjectile("starpoundsdrinkvore", starPounds.mcontroller.mouthPosition, entity.id(), nil, true, {
+        statusEffects = {{effect = "starpoundsvoretargetdrink", duration = drinkConfig[2]}}
+      })
     end
   end
 
