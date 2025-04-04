@@ -3,9 +3,8 @@ require "/scripts/util.lua"
 require "/scripts/rect.lua"
 
 function init()
-  self.gulpDelay = config.getParameter("gulpDelay", 0.8)
-  self.gulpTimer = self.gulpDelay
   self.collectTimer = 0
+  self.liquidAmount = 1
   self.capacity = config.getParameter("capacity", 1000)
   self.maxWeight = root.assetJson("/scripts/starpounds/starpounds.config:settings.maxWeight")
   self.liquids = root.assetJson("/scripts/starpounds/modules/liquid.config:liquids")
@@ -55,10 +54,11 @@ function update(dt)
     if canFeed() then
       if animator.animationState("feedState") == "default" then
         -- Remove stored liquid.
-        storage.amount = math.max(0, storage.amount - 1)
+        local amount = math.min(storage.amount, self.liquidAmount)
+        storage.amount = math.max(0, storage.amount - amount)
         -- Give food.
         for foodType, foodAmount in pairs((self.liquids[storage.liquid.name] or self.liquids.default).food) do
-          world.sendEntityMessage(self.feedTarget, "starPounds.feed", foodAmount, foodType)
+          world.sendEntityMessage(self.feedTarget, "starPounds.feed", foodAmount * amount, foodType)
         end
         -- Give status effects.
         for _, statusEffect in pairs(storage.liquid.statusEffects) do
@@ -69,15 +69,18 @@ function update(dt)
         -- Prevent belches, and spawn drinking particles.
         world.sendEntityMessage(self.feedTarget, "starPounds.spawnDrinkingParticles", storage.liquid.name)
         world.sendEntityMessage(self.feedTarget, "applyStatusEffect", "starpoundsdrinking")
-        -- Play sound.
+        -- Swallow sound.
+        world.sendEntityMessage(self.feedTarget, "starPounds.playSound", "swallow", math.min(0.3 + 0.06 * amount, 0.6)) -- 30% -> 60% volume.
+        -- Play sound. Pitch decreases by 7.5% per liquid amount, volume increases by 7.5%.
+        animator.setSoundVolume("drink", math.min(1 + 0.075 * (amount - 1), 1.3)) -- 100% -> 130% volume.
+        animator.setSoundPitch("drink", math.max(1 - 0.075 * (amount - 1), 0.7)) -- 100% -> 70% pitch.
         animator.playSound("drink")
-        -- Reset delay.
-        self.gulpTimer = self.gulpDelay
         -- Connected to mouth, animated.
         animator.setAnimationState("feedState", "feeding")
+        -- Grab the amount again in case the skill changes.
+        setLiquidAmount()
       end
     else
-      self.gulpTimer = self.gulpDelay
       -- Make NPCs hop off when empty.
       if world.entityType(self.feedTarget ) == "npc" then
         world.callScriptedEntity(self.feedTarget, "status.setResource", "stunned", 0)
@@ -113,6 +116,7 @@ function onInteraction(args)
   if not world.loungeableOccupied(entity.id()) then
     self.feedTarget = args.sourceId
     self.startedLounging = true
+    setLiquidAmount()
     -- Connect.
     animator.setAnimationState("feedState", canFeed() and "feeding" or "default")
   end
@@ -167,6 +171,15 @@ function collectLiquid()
         end
       end
     end
+  end
+end
+
+function setLiquidAmount()
+  self.liquidAmount = 1
+  if self.feedTarget then
+    promises:add(world.sendEntityMessage(self.feedTarget, "starPounds.getStat", "drinkVolume"), function(amount)
+      self.liquidAmount = math.max(amount, 1)
+    end)
   end
 end
 
