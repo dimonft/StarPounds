@@ -104,7 +104,7 @@ function stomach:getDefault()
 end
 
 function stomach:interpolateContents(dt)
-  if storage.starPounds.enabled then
+  if storage.starPounds.enabled and (self.stomach.contents + self.stomachLerp) > 0 then
     if self.stomach.contents > self.stomachLerp and (self.stomach.contents - self.stomachLerp) > 1 then
       self.stomachLerp = math.round(util.lerp(5 * dt, self.stomachLerp, self.stomach.contents), 4)
     else

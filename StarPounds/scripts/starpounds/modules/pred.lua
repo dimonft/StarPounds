@@ -23,8 +23,11 @@ function pred:update(dt)
   -- Tick down tool/hotkey cooldown.
   self.voreCooldown = math.max(self.voreCooldown - (dt / starPounds.getStat("voreCooldown")), 0)
   self.struggleCooldown = math.max(self.struggleCooldown - dt, 0)
-  self.struggleVolumeLerp = math.max(0, math.round(util.lerp(dt, self.struggleVolumeLerp, self.storedStruggleVolume - 0.05), 4))
   self:preyCheck(dt)
+  -- Don't run if we don't need to.
+  if (self.struggleVolumeLerp + self.storedStruggleVolume > 0) then
+    self.struggleVolumeLerp = math.max(0, math.round(util.lerp(dt, self.struggleVolumeLerp, self.storedStruggleVolume - 0.05), 4))
+  end
 end
 
 function pred:digest(dt)
