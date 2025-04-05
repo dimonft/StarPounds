@@ -51,6 +51,26 @@
     ]
   },
   { "op" : "add",
+    "path" : "/mootantchefmerchant",
+    "value" : [
+      [ 0, [
+        { "item" : { "name" : "starpoundsmoomilk" }, "rarity" : 0.05 },
+        { "item" : { "name" : "starpoundsmoomilkdeluxe" }, "rarity" : 0.01 },
+        { "item" : { "name" : "starpoundsmooshake" }, "rarity" : 0.05 },
+        { "item" : { "name" : "starpoundschocolatemoomilk" }, "rarity" : 0.05 },
+        { "item" : { "name" : "starpoundschocolatemoomilkdeluxe" }, "rarity" : 0.01 },
+        { "item" : { "name" : "starpoundschocolatemooshake" }, "rarity" : 0.05 },
+        { "item" : { "name" : "starpoundsstrawberrymoomilk" }, "rarity" : 0.05 },
+        { "item" : { "name" : "starpoundsstrawberrymoomilkdeluxe" }, "rarity" : 0.01 },
+        { "item" : { "name" : "starpoundsstrawberrymooshake" }, "rarity" : 0.05 },
+        { "item" : { "name" : "starpoundsbuttersnack" }, "rarity" : 0.05 },
+        { "item" : { "name" : "cheese" }, "rarity" : 0.1 },
+        { "item" : { "name" : "milk" }, "rarity" : 0.1 },
+        { "item" : { "name" : "starpoundsmootantshake" }, "rarity" : 0.01 }
+      ] ]
+    ]
+  },
+  { "op" : "add",
     "path" : "/throgarmour",
     "value" : [
       [ 0, [

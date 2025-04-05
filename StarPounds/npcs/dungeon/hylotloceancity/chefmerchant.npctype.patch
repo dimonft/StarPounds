@@ -1,0 +1,30 @@
+[
+ {
+  "op": "add",
+  "path": "/scriptConfig/merchant/categories/throg",
+  "value": [
+   "chefmerchant"
+  ]
+ },
+ {
+  "op": "add",
+  "path": "/scriptConfig/merchant/categories/mootant",
+  "value": [
+   "mootantchefmerchant"
+  ]
+ },
+ {
+  "op": "add",
+  "path": "/items/override/0/1/0/chestCosmetic",
+  "value": [
+   "chefchest"
+  ]
+ },
+ {
+  "op": "add",
+  "path": "/items/override/0/1/0/legsCosmetic",
+  "value": [
+   "cheflegs"
+  ]
+ }
+]

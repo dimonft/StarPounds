@@ -1,0 +1,20 @@
+{
+  "type" : "chefmerchantmootanttenant",
+  "baseType" : "chefmerchanttenant",
+  "dropPools" : [],
+
+  "scriptConfig" : {
+    "starPounds_skills": {
+      "minimumSize": [3, 3]
+    },
+    "questGenerator" : {
+      "pools" : ["common", "tenant"],
+      "enableParticipation" : true,
+
+      "timeLimit" : 30,
+      "nearbyQuestLimit" : 2,
+      "nearbyQuestRange" : 50,
+      "chance" : 0.01
+    }
+  }
+}

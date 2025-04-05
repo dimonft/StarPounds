@@ -1,0 +1,36 @@
+{
+  "type" : "chefmerchantthrogtenant",
+  "baseType" : "chefmerchanttenant",
+  "dropPools" : [],
+
+  "scriptConfig" : {
+    "starPounds_skills": {
+      "minimumSize": [3, 3]
+    },
+    "questGenerator" : {
+      "pools" : ["common", "tenant", "shady"],
+      "enableParticipation" : true,
+
+      "timeLimit" : 30,
+      "nearbyQuestLimit" : 2,
+      "nearbyQuestRange" : 50,
+      "chance" : 0.01
+    }
+  },
+
+  "items" : {
+    "override" : [
+      [0, [
+          {
+            "head" : [ "chefhead" ],
+            "chestcosmetic" : [
+              { "name" : "woollychest", "parameters" : { "colorIndex" : 9 } }
+            ],
+            "legscosmetic" : [
+              { "name" : "woollylegs", "parameters" : { "colorIndex" : 9 } }
+            ]
+          }
+        ] ]
+    ]
+  }
+}
