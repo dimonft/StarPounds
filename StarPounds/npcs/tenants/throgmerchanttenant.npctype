@@ -1,0 +1,14 @@
+{
+  "type" : "throgmerchanttenant",
+  "baseType" : "merchant",
+  "dropPools" : [],
+
+  "scriptConfig" : {
+    "starPounds_skills": {
+      "minimumSize": [3, 3]
+    },
+    "questGenerator" : {
+      "pools" : ["throgcommon", "tenant", "merchant", "shady"]
+    }
+  }
+}

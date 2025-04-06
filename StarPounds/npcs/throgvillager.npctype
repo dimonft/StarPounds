@@ -1,0 +1,13 @@
+{
+  "type" : "throgvillager",
+  "baseType" : "villager",
+
+  "scriptConfig" : {
+    "starPounds_skills": {
+      "minimumSize": [3, 3]
+    },
+    "questGenerator" : {
+      "pools" : ["throgcommon"]
+    }
+  }
+}

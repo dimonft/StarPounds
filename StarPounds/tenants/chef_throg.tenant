@@ -12,8 +12,8 @@
   "tenants": [
     {
       "spawn": "npc",
-      "species": "mootant",
-      "type": "chefmerchanttenant",
+      "species": "throg",
+      "type": "throgchefmerchanttenant",
       "overrides": {
   "scriptConfig" : {
     "starPounds_skills": {

@@ -13,7 +13,7 @@
     {
       "spawn": "npc",
       "species": "mootant",
-      "type": "chefmerchanttenant",
+      "type": "mootantchefmerchanttenant",
       "overrides": {
   "scriptConfig" : {
     "starPounds_skills": {

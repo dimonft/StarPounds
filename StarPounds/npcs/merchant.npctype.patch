@@ -3,5 +3,67 @@
     "op": "add",
     "path": "/scripts/-",
     "value": "/scripts/starpounds/starpounds_npc.lua"
+  },
+  { "op" : "add",
+    "path" : "/scriptConfig/merchant/categories/throg",
+    "value" : [ "genericarmour", "basicmerchant", "throgfurniture", "randomguns", "randomswords", "throgarmour", "throgingredients", "throgweapons", "starpoundsaccessories" ]
+  },
+  { "op" : "add",
+    "path" : "/scriptConfig/merchant/categories/mootant",
+    "value" : [ "genericarmour", "basicmerchant", "humanfurniture", "randomguns", "randomswords", "humanarmour", "humaningredients", "starpoundsaccessories" ]
+  },
+  { "op" : "add",
+    "path" : "/items/throg",
+    "value" :[
+    [0, [
+    {
+        "head": [ { "name": "throgpreacherhead" } ],
+        "chestCosmetic": [ { "name": "throgneochest" } ],
+        "legsCosmetic": [ { "name": "throgneolegs" } ]
+    }
+    ] ]
+    ]
+  },
+  { "op" : "add",
+    "path" : "/items/mootant",
+    "value" :[
+    [0, [
+    {
+        "head" : [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          { "name" : "fancyhead", "parameters" : { "colorIndex" : [1, 2, 3, 8] } },
+          { "name" : "fedorahead", "parameters" : { "colorIndex" : [1, 2, 3, 8] } },
+          { "name" : "glasses1head", "parameters" : { "colorIndex" : [1, 2, 3, 4, 8] } },
+          { "name" : "glasses2head" },
+          { "name" : "glasses4head", "parameters" : { "colorIndex" : [1, 2, 3, 4, 8] } },
+          { "name" : "glasses5head", "parameters" : { "colorIndex" : [1, 2, 3, 4, 8] } },
+          { "name" : "coolfezhead" },
+          { "name" : "eyepatchhead", "parameters" : { "colorIndex" : [0, 1] } },
+          { "name" : "ushankahead", "parameters" : { "colorIndex" : [1, 11] } }
+        ],
+        "chestCosmetic" : [
+          ""
+        ],
+        "legsCosmetic" : [
+          ""
+        ],
+        "back" : [
+          { "name" : "survivalgearback", "parameters" : { "colorIndex" : [1, 2, 3, 4, 8] } },
+          { "name" : "medicback" },
+          { "name" : "hikerback", "parameters" : { "colorIndex" : [1, 2, 3, 4, 8] } },
+          { "name" : "mrclausback" }
+        ]
+    }
+    ] ]
+    ]
   }
 ]

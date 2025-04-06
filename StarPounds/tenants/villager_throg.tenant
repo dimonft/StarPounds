@@ -11,9 +11,14 @@
   "tenants": [
     {
       "spawn": "npc",
-      "species": "mootant",
-      "type": "generictenant",
+      "species": "throg",
+      "type": "throggenerictenant",
       "overrides": {
+  "scriptConfig" : {
+    "starPounds_skills": {
+      "minimumSize": [3, 3]
+    }
+  }
        }
      }
    ],

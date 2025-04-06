@@ -1,0 +1,27 @@
+{
+  "type" : "mootantgenerictenant",
+  "baseType" : "villager",
+  "dropPools" : [],
+
+  "scriptConfig" : {
+    "starPounds_skills": {
+      "minimumSize": [1, 4]
+    },
+    "starPounds_options": {
+      "bottomHeavy": true,
+      "milky": true
+    },
+    "behaviorConfig" : {
+      "greetingChance" : 0
+    },
+    "questGenerator" : {
+      "pools" : ["mootantcommon", "tenant", "hats"],
+      "enableParticipation" : true,
+
+      "timeLimit" : 30,
+      "nearbyQuestLimit" : 2,
+      "nearbyQuestRange" : 50,
+      "chance" : 0.02
+    }
+  }
+}

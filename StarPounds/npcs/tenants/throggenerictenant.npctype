@@ -1,20 +1,23 @@
 {
-  "type" : "chefmerchantmootanttenant",
-  "baseType" : "chefmerchanttenant",
+  "type" : "throggenerictenant",
+  "baseType" : "villager",
   "dropPools" : [],
 
   "scriptConfig" : {
+    "behaviorConfig" : {
+      "greetingChance" : 0
+    },
     "starPounds_skills": {
       "minimumSize": [3, 3]
     },
     "questGenerator" : {
-      "pools" : ["common", "tenant"],
+      "pools" : ["throgcommon", "tenant", "hats", "shady"],
       "enableParticipation" : true,
 
       "timeLimit" : 30,
       "nearbyQuestLimit" : 2,
       "nearbyQuestRange" : 50,
-      "chance" : 0.01
+      "chance" : 0.02
     }
   }
 }

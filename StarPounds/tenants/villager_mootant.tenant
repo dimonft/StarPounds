@@ -12,9 +12,18 @@
     {
       "spawn": "npc",
       "species": "mootant",
-      "type": "generictenant",
+      "type": "mootantgenerictenant",
       "overrides": {
-        "identity" : {
+  "scriptConfig" : {
+    "starPounds_skills": {
+      "minimumSize": [1, 4]
+    },
+    "starPounds_options": {
+      "bottomHeavy": true,
+      "milky": true
+    }
+  },
+  "identity" : {
     "species" : "mootant",
     "gender" : "female",
     "hairGroup" : "hair",

@@ -1,0 +1,18 @@
+{
+  "type" : "mootantmerchanttenant",
+  "baseType" : "merchant",
+  "dropPools" : [],
+
+  "scriptConfig" : {
+    "starPounds_skills": {
+      "minimumSize": [1, 4]
+    },
+    "starPounds_options": {
+      "bottomHeavy": true,
+      "milky": true
+    },
+    "questGenerator" : {
+      "pools" : ["mootantcommon", "tenant", "merchant"]
+    }
+  }
+}

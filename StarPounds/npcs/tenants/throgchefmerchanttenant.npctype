@@ -1,0 +1,20 @@
+{
+  "type" : "throgchefmerchanttenant",
+  "baseType" : "chefmerchanttenant",
+  "dropPools" : [],
+
+  "scriptConfig" : {
+    "starPounds_skills": {
+      "minimumSize": [3, 3]
+    },
+    "questGenerator" : {
+      "pools" : ["throgcommon", "tenant", "shady"],
+      "enableParticipation" : true,
+
+      "timeLimit" : 30,
+      "nearbyQuestLimit" : 2,
+      "nearbyQuestRange" : 50,
+      "chance" : 0.01
+    }
+  }
+}
