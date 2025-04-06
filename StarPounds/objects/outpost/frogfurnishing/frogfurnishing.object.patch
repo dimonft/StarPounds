@@ -1,0 +1,14 @@
+[
+  { "op" : "add",
+	"path" : "/storeInventory/deeds/-",
+	"value" : "throgcolonydeed"
+  },
+  { "op" : "add",
+	"path" : "/storeInventory/deeds/-",
+	"value" : "throgshcolonydeed"
+  },
+  { "op" : "add",
+	"path" : "/storeInventory/deeds/-",
+	"value" : "throgsvcolonydeed"
+  }
+]
