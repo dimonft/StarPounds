@@ -1,25 +1,16 @@
 {
-  "itemName" : "fattywizardchest",
+  "itemName" : "chubsterwizardlegs",
   "price" : 250,
-  "inventoryIcon" : "icons.png:chest",
+  "inventoryIcon" : "icons.png:pants",
   "maxStack" : 1,
   "rarity" : "Uncommon",
-  "category" : "chestwear",
-  "description" : "Wizards are often seen wearing tops like this.",
-  "shortdescription" : "Wizard XXXL Robe Top",
+  "category" : "legwear",
+  "description" : "It's like a bathrobe, but for very serious wizards. Do wizards take a lot of baths?",
+  "shortdescription" : "Wizard XL Robe Bottoms",
   "tooltipKind" : "armor",
 
-  "maleFrames" : {
-    "body" : "chestm.png",
-    "backSleeve" : "bsleeve.png",
-    "frontSleeve" : "fsleeve.png"
-  },
-
-  "femaleFrames" : {
-    "body" : "chestf.png",
-    "backSleeve" : "bsleeve.png",
-    "frontSleeve" : "fsleeve.png"
-  },
+  "maleFrames" : "pantsm.png",
+  "femaleFrames" : "pantsf.png",
 
   "colorOptions" : [
     // RED
