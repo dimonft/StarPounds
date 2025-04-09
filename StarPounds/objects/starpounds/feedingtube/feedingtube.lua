@@ -77,8 +77,8 @@ function update(dt)
         animator.playSound("drink")
         -- Connected to mouth, animated.
         animator.setAnimationState("feedState", "feeding")
-        -- Grab the amount again in case the skill changes.
-        setLiquidAmount()
+        -- Set the amount/speed again in case the skill changes.
+        setDrinkSpeed()
       end
     else
       -- Make NPCs hop off when empty.
@@ -116,7 +116,8 @@ function onInteraction(args)
   if not world.loungeableOccupied(entity.id()) then
     self.feedTarget = args.sourceId
     self.startedLounging = true
-    setLiquidAmount()
+    animator.setAnimationRate(1)
+    setDrinkSpeed()
     -- Connect.
     animator.setAnimationState("feedState", canFeed() and "feeding" or "default")
   end
@@ -174,11 +175,12 @@ function collectLiquid()
   end
 end
 
-function setLiquidAmount()
+function setDrinkSpeed()
   self.liquidAmount = 1
   if self.feedTarget then
-    promises:add(world.sendEntityMessage(self.feedTarget, "starPounds.getStat", "drinkVolume"), function(amount)
-      self.liquidAmount = math.max(amount, 1)
+    promises:add(world.sendEntityMessage(self.feedTarget, "starPounds.getStat", "drinkStrength"), function(level)
+      self.liquidAmount = math.max(level, 1)
+      animator.setAnimationRate(1 + (level - 1) * 0.125)
     end)
   end
 end
