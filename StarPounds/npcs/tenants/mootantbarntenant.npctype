@@ -1,0 +1,51 @@
+{
+  "type" : "mootantbarntenant",
+  "baseType" : "villager",
+  "dropPools" : [],
+
+  "scriptConfig" : {
+    "starPounds_skills": {
+      "minimumSize": [1, 4]
+    },
+    "starPounds_options": {
+      "bottomHeavy": true,
+      "milky": true
+    },
+    "behaviorConfig" : {
+      "greetingChance" : 0
+    },
+    "questGenerator" : {
+      "pools" : [],
+      "enableParticipation" : false,
+
+      "timeLimit" : 30,
+      "nearbyQuestLimit" : 2,
+      "nearbyQuestRange" : 50,
+      "chance" : 0.02
+    },
+    "dialog" : {
+      "tenant" : {
+        "grumbles" : {
+          "tagCriteria" : "/dialog/mootant.config:tagCriteria",
+          "enclosedArea" : "/dialog/mootant.config:enclosedArea",
+          "otherDeed" : "/dialog/mootant.config:otherDeed",
+          "severe" : "/dialog/mootant.config:severe",
+          "final" : "/dialog/mootant.config:final"
+        },
+        "arrivedHome" : {
+          "beacon" : "/dialog/mootant.config:beacon",
+          "rent" : "/dialog/mootant.config:rent"
+        }
+      },
+      "flee" : {
+        "helpme" : "/dialog/mootant.config:helpme",
+        "safe" : "/dialog/mootant.config:safe"
+      },
+      "breakObject" : "/dialog/mootant.config:breakObject",
+      "greeting" : "/dialog/mootant.config:greeting",
+      "converse" : "/dialog/mootant.config:converse",
+      "accuse" : "/dialog/mootant.config:accuse",
+      "alert" : "/dialog/mootant.config:alert"
+    }
+  }
+}
