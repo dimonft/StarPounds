@@ -1,0 +1,15 @@
+{
+  "name" : "starpoundscaloricsnare",
+
+  "effectConfig" : {},
+  "defaultDuration" : 5,
+
+  "scripts" : [
+    "starpoundscaloricsnare.lua"
+  ],
+
+  "animationConfig" : "starpoundscaloricslow.animation",
+
+  "label" : "Slow",
+  "icon" : "/interface/statuses/caloric.png"
+}

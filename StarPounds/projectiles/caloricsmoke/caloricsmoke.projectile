@@ -13,7 +13,8 @@
   "piercing" : true,
   "statusEffects" : [
     {"effect": "starpoundsfood_bloat", "duration": 5},
-    {"effect": "starpoundsfood_fat", "duration": 5}
+    {"effect": "starpoundsfood_fat", "duration": 5},
+    {"effect": "starpoundscaloricsnare", "duration": 1}
   ],
   "damageType" : "ignoresdef",
   "damageKind" : "caloric"
