@@ -4,7 +4,13 @@ function food:init()
   self.cache = copy(self.data.cache)
 end
 
-function food:getFatValue(itemName)
+function food:getFatValue(itemName, recursionCache)
+  -- Don't parse again if we've already seen this item.
+  recursionCache = recursionCache or {}
+  if recursionCache[itemName] then
+    return 0
+  end
+
   if self.cache[itemName] then
     return self.cache[itemName]
   end
@@ -17,13 +23,16 @@ function food:getFatValue(itemName)
     return itemConfig.config.fatValue
   end
 
+  recursionCache[itemName] = true
+
   local fatValue = 0
   local recipes = root.recipesForItem(itemName)
+
   for _, recipe in ipairs(recipes) do
     local recipeFatValue = 0
 
     for _, input in ipairs(recipe.input) do
-      local inputFatValue = self:getFatValue(input.name)
+      local inputFatValue = self:getFatValue(input.name, shallowCopy(recursionCache))
       if inputFatValue > 0 then
         recipeFatValue = recipeFatValue + (input.count * inputFatValue) / (recipe.output.count or 1)
       end
