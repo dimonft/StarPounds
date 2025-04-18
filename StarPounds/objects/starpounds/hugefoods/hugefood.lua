@@ -9,7 +9,7 @@ function init()
   self.fat = config.getParameter("fat", 0)/(self.bitesPerStage * self.stages)
   self.strainedThresholds = root.assetJson("/scripts/starpounds/starpounds.config:settings.thresholds.strain")
 
-  self.experienceBonus = root.assetJson("/scripts/starpounds/starpounds.config:settings.foodExperienceBonus")
+  self.experienceBonus = root.assetJson("/scripts/starpounds/modules/food.config:experienceBonus")
   self.rarity = config.getParameter("rarity", "common"):lower()
   self.bonusExperience = self.food * (self.experienceBonus[self.rarity] or 0)
 
