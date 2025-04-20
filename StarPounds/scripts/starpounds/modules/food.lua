@@ -63,7 +63,7 @@ function food:updateItem(item)
       table.insert(effects[1], { effect = foodType.food..(disableExperience and "_noexperience" or ""), duration = foodValue })
     end
     -- Add fat.
-    if foodValue > 0 then
+    if fatValue > 0 then
       table.insert(effects[1], { effect = foodType.fat, duration = fatValue })
     end
     -- Add experience.
