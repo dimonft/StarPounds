@@ -16,18 +16,11 @@ function strain:update(dt)
   if self.effort == 0 then return end
   -- Skip this if we're in a sphere.
   if status.stat("activeMovementAbilities") > 1 then return end
-  -- Skip this for monsters.
-  if starPounds.type == "monster" then return end
-  -- NPCs just get the base penalty.
-  if starPounds.type == "npc" and self:strained() then
-    self.speedModifier = 1 - self.data.penalty
-  end
-  -- Player's strain scales based on energy.
-  if  starPounds.type == "player" and self:strained() then
+  -- Strain scales based on energy.
+  if self:strained() then
     local strainedPenalty = starPounds.getStat("strainedPenalty")
     local energyPercent = status.resourcePercentage("energy")
     local energyLocked = status.resourceLocked("energy")
-    if starPounds.type == "monster" then return end
     -- Slow movement when out of energy and strained, based on energy left.
     self.speedModifier = (1 - self.data.penalty - (self.data.scalingPenalty * (energyLocked and 1 or (1 - energyPercent)))) ^ strainedPenalty
     -- Consume and lock energy when running.
