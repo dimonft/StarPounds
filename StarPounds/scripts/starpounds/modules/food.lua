@@ -61,6 +61,9 @@ function food:updateItem(item)
     -- Add food.
     if foodValue > 0 then
       table.insert(effects[1], { effect = foodType.food..(disableExperience and "_noexperience" or ""), duration = foodValue })
+      -- Reset the item's vanilla food value.
+      item.parameters.starpounds_foodValue = foodValue
+      item.parameters.foodValue = configParameter(item, "foodValue") and 0 or nil
     end
     -- Add fat.
     if fatValue > 0 then
@@ -76,8 +79,6 @@ function food:updateItem(item)
 
     item.parameters.starpounds_effectApplied = true
     item.parameters.effects = effects
-    item.parameters.starpounds_foodValue = foodValue
-    item.parameters.foodValue = 0
 
     return item
   end
