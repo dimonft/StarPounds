@@ -177,14 +177,15 @@ function pred:eat(preyId, options, check)
       local energyCost = (options.energyMultiplier or 1) * (self.data.energyBase + self.data.energy * preyHealthPercent * preySizeMult)
       status.overConsumeResource("energy", energyCost)
     end
+    -- Trigger the tool/hotkey cooldown.
     if options.triggerPredCooldown then
       self:cooldownStart()
     end
-    -- Swallow sound
+    -- Swallow sound.
     if not (options.noSound or options.noSwallowSound) then
       starPounds.moduleFunc("sound", "play", "swallow", 1 + math.random(0, 10)/100, 1)
     end
-    -- Stomach sound
+    -- Stomach sound.
     if not (options.noSound or options.noDigestSound) then
       starPounds.moduleFunc("sound", "play", "digest", 1, 0.75)
     end
