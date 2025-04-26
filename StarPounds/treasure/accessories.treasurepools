@@ -185,7 +185,8 @@
 
         {"item": "angeltrinket", "weight": 1},
         {"item": "blueberrytrinket", "weight": 1},
-        {"item": "lotustrinket", "weight": 1}
+        {"item": "lotustrinket", "weight": 1},
+        {"item": "demonictrinket", "weight": 1}
       ]
     }]
   ],
@@ -203,7 +204,8 @@
         {"item": "feyrethring", "weight": 1},
         {"item": "applering", "weight": 1},
 
-        {"item": "minitrinket", "weight": 1}
+        {"item": "minitrinket", "weight": 1},
+        {"item": "emptinesstrinket", "weight": 1}
       ]
     }]
   ]

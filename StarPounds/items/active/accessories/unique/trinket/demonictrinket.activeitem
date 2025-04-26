@@ -1,0 +1,23 @@
+{
+  "itemName" : "demonictrinket",
+  "price" : 5000,
+  "maxStack" : 1,
+  "rarity" : "Rare",
+  "description" : "A corrupted Ankh overflowing with the sin of Gluttony.",
+  "shortdescription" : "Demonic Ankh",
+  "inventoryIcon" : "demonictrinket.png",
+  "category" : "starpoundsuniqueaccessory",
+
+  "tooltipKind": "accessory",
+
+  "accessoryType" : "trinket",
+
+  "stats": [
+    {"name": "hunger", "modifier": 0.5},
+    {"name": "metabolism", "modifier": -0.5},
+    {"name": "experienceMultiplier", "modifier": -0.25}
+  ],
+
+  "builder" : "/items/buildscripts/buildaccessory.lua",
+  "builderConfig" : {}
+}

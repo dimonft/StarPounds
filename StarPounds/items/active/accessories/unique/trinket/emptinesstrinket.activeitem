@@ -1,0 +1,23 @@
+{
+  "itemName" : "emptinesstrinket",
+  "price" : 10000,
+  "maxStack" : 1,
+  "rarity" : "Legendary",
+  "description" : "An ancient relic of forbidden darkness. It leaves you empty, and never satisfied.",
+  "shortdescription" : "Ankh of the Maw",
+  "inventoryIcon" : "emptinesstrinket.png",
+  "category" : "starpoundsuniqueaccessory",
+
+  "tooltipKind": "accessory",
+
+  "accessoryType" : "trinket",
+
+  "stats": [
+    {"name": "hunger", "modifier": 1},
+    {"name": "foodValue", "modifier": -0.8},
+    {"name": "metabolism", "modifier": 1.0}
+  ],
+
+  "builder" : "/items/buildscripts/buildaccessory.lua",
+  "builderConfig" : {}
+}
