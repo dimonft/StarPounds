@@ -30,6 +30,15 @@
          "liquid":"starpoundscaloriumliquid",
          "source":"true"
         },
+     "12":
+        {
+         "liquid":"starpoundsblueberryliquid"
+        },
+     "13":
+        {
+         "liquid":"starpoundsblueberryliquid",
+         "source":"true"
+        },
      "2":
         {
          "liquid":"starpoundscreamliquid"
@@ -83,6 +92,15 @@
          "liquid":"string"
         },
      "11":
+        {
+         "liquid":"string",
+         "source":"string"
+        },
+     "12":
+        {
+         "liquid":"string"
+        },
+     "13":
         {
          "liquid":"string",
          "source":"string"
@@ -147,6 +165,18 @@
      "11":
         {
          "image":"..\/..\/..\/tiled\/starpounds\/liquids\/starpoundscalorium_source.png",
+         "imageheight":8,
+         "imagewidth":8
+        },
+     "12":
+        {
+         "image":"..\/..\/..\/tiled\/starpounds\/liquids\/starpoundsblueberry.png",
+         "imageheight":8,
+         "imagewidth":8
+        },
+     "13":
+        {
+         "image":"..\/..\/..\/tiled\/starpounds\/liquids\/starpoundsblueberry_source.png",
          "imageheight":8,
          "imagewidth":8
         },
