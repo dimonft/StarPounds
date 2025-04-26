@@ -1,0 +1,20 @@
+{
+  "itemName" : "starpoundsblueberry",
+  "rarity" : "Common",
+  "price" : 120,
+  "category" : "food",
+  "eventCategory" : "eventCrop",
+  "inventoryIcon" : "starpoundsblueberryicon.png",
+  "description" : "These aren't your standard Earth blueberries, they're space blueberries.",
+  "shortdescription" : "Blueberries",
+  "foodValue" : 3.75,
+  "tooltipKind" : "food",
+  "builder" : "/items/buildscripts/buildfood.lua",
+  "maxStack" : 1,
+  "itemAgingScripts" : ["/scripts/items/rotting.lua"],
+  "rottingMultiplier" : 5.0,
+  "blockingEffects" : [
+    "wellfed"
+  ],
+  "learnBlueprintsOnPickup" : [ "blueberryjuice" ]
+}

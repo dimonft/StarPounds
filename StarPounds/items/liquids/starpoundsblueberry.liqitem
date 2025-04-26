@@ -1,0 +1,11 @@
+{
+  "itemName" : "starpoundsliquidblueberry",
+  "rarity" : "Common",
+  "category" : "liquid",
+  "inventoryIcon" : "starpoundsliquidblueberryicon.png",
+  "shortdescription" : "Blueberry Juice",
+  "description" : "The not quite blue liquid of a blueberry.",
+
+  "liquid" : "starpoundsblueberryliquid",
+  "price" : 0
+}

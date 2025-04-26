@@ -1,0 +1,22 @@
+{
+  "itemName" : "starpoundsblueberrypie",
+  "rarity" : "Uncommon",
+  "price" : 300,
+  "category" : "preparedFood",
+  "inventoryIcon" : "blueberrypie.png",
+  "description" : "Homestyle, and 100% natural.",
+  "shortdescription" : "Blueberry Pie",
+  "effects" : [ [
+    {
+        "effect" : "maxenergyscalingboostfood",
+        "duration" : 225
+    }
+  ] ],
+  "foodValue": 25,
+  "fatValue": 10, // I don't know.
+  "tooltipKind" : "food",
+  "builder" : "/items/buildscripts/buildfood.lua",
+  "maxStack" : 1,
+  "itemAgingScripts" : ["/scripts/items/rotting.lua"],
+  "rottingMultiplier" : 5.0
+}
