@@ -1,0 +1,12 @@
+{
+  "itemName" : "starpoundscinnamonstick",
+  "rarity" : "Common",
+  "price" : 120,
+  "category" : "cookingIngredient",
+  "eventCategory" : "eventCrop",
+  "inventoryIcon" : "starpoundscinnamonstickicon.png",
+  "description" : "A stick of cinnamon fresh from the cinnamon mines. The smell is divine.",
+  "shortdescription" : "Cinnamon Stick",
+  "maxStack" : 1000,
+  "learnBlueprintsOnPickup" : [ "starpoundscinnamonroll" ]
+}
