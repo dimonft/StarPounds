@@ -1,0 +1,11 @@
+{
+  "itemName" : "starpoundsbrewpod",
+  "rarity" : "Common",
+  "price" : 75,
+  "category" : "cookingIngredient",
+  "eventCategory" : "eventCrop",
+  "inventoryIcon" : "starpoundsbrewpod.png",
+  "description" : "These bulbs are full of an alien yeast- perfect for brewing!",
+  "shortdescription" : "Brewpod",
+  "maxStack" : 1000,
+}

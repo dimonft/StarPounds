@@ -1,0 +1,12 @@
+{
+  "name" : "starpoundshangover",
+  "effectConfig" : {},
+  "defaultDuration" : 10,
+
+  "scripts" : [
+    "starpoundshangover.lua"
+  ],
+
+  "label" : "Hangover",
+  "icon" : "/interface/statuses/starpounds_hangover.png"
+}

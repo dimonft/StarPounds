@@ -1,0 +1,42 @@
+{
+  "objectName" : "starpoundsstill",
+  "colonyTags" : ["cooking"],
+  "printable" : false,
+  "price" : 100,
+  "rarity" : "Uncommon",
+  "category" : "crafting",
+  "interactAction" : "OpenCraftingInterface",
+  "interactData" : {
+    "config" : "/interface/windowconfig/craftingstill.config",
+    "filter" : [ "craftingstill" ]
+  },
+  "description" : "Used to brew liquors and homemade sodas with various effects.",
+  "shortdescription" : "^orange;Still^white;",
+  "race" : "generic",
+
+  "apexDescription" : "A still. I think I remember some secret Rebel recipes.",
+  "avianDescription" : "I could brew some grounded cocktails here!",
+  "floranDescription" : "Floran fanciesss some Skullsmash!",
+  "glitchDescription" : "Excited. I've always wanted to start my own brewery!",
+  "humanDescription" : "Let's see if those internet homebrewing lessons will work.",
+  "hylotlDescription" : "Perhaps I could brew some sake with this.",
+  "novakidDescription" : "Now we're talkin! Let's get moonshinin'!",
+
+  "inventoryIcon" : "starpoundsstillicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "starpoundsstill.png:<color>.<frame>",
+
+      "imagePosition" : [-16, 0],
+      "frames" : 15,
+      "animationCycle" : 1.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+	
+  ],
+
+  "npcToy" : {}
+}

@@ -1,0 +1,11 @@
+{
+  "name" : "starpoundsvoracious",
+
+  "effectConfig" : {  },
+  "defaultDuration" : 120,
+
+  "scripts" : [  ],
+
+  "label" : "Voracious",
+  "icon" : "/interface/statuses/starpoundsvoracious.png"
+}

@@ -1,0 +1,12 @@
+{
+  "name" : "starpoundssodacrash",
+  "effectConfig" : {},
+  "defaultDuration" : 10,
+
+  "scripts" : [
+    "starpoundshangover.lua"
+  ],
+
+  "label" : "Sugar Crash",
+  "icon" : "/interface/statuses/starpounds_sodacrash.png"
+}
