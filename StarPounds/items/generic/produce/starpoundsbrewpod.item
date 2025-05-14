@@ -7,5 +7,5 @@
   "inventoryIcon" : "starpoundsbrewpod.png",
   "description" : "These bulbs are full of an alien yeast- perfect for brewing!",
   "shortdescription" : "Brewpod",
-  "maxStack" : 1000,
+  "maxStack" : 1000
 }
