@@ -1,0 +1,420 @@
+[[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/24/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/24/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/25/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/25/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/26/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/26/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/27/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/27/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/29/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/29/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/30/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/30/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/31/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/31/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/32/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/32/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/49/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/49/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/50/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/50/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/51/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/51/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/52/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/52/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/78/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/78/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/79/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/79/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/80/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/80/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/81/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/81/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/94/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/94/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/95/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/95/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/96/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/96/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/97/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/97/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/140/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/140/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/141/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/141/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/142/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/142/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/143/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/143/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/144/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/144/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/145/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/145/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/162/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/162/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/163/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/163/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/164/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/164/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/165/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/165/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/166/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/166/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/167/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/167/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/168/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/168/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/169/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/169/properties/npc",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/170/properties/npc",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/170/properties/npc",
+    "value": "deadbeat"
+  }
+]]

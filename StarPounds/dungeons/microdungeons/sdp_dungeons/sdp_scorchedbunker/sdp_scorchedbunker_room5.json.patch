@@ -1,0 +1,36 @@
+[[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/18/properties/0/value",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/18/properties/0/value",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/19/properties/0/value",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/19/properties/0/value",
+    "value": "deadbeat"
+  }
+],
+[
+  {
+    "op": "test",
+    "path": "/layers/3/objects/20/properties/0/value",
+    "value": "human"
+  },
+  {
+    "op": "replace",
+    "path": "/layers/3/objects/20/properties/0/value",
+    "value": "deadbeat"
+  }
+]]

@@ -8,5 +8,12 @@
     "op": "replace",
     "path": "/tenants/0/species",
     "value": "deadbeat"
+  },
+  {
+    "op": "add",
+    "path": "/tenants/0/overrides/identity",
+    "value": {
+      "hairType": "0"
+    }
   }
 ]]

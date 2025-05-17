@@ -3,12 +3,23 @@
     "op": "add",
     "path": "/identity",
     "value": {
-      "bodyDirectives": "?replace;c7815b=4f432c;ffe2c5=e6d9b1;ffc181=baaa7c;d39c6c=85734f?replace;dc1f00=baaa7c;951500=4f432c;be1b00=85734f",
-      "emoteDirectives": "?replace;c7815b=4f432c;ffe2c5=e6d9b1;ffc181=baaa7c;d39c6c=85734f?replace;dc1f00=baaa7c;951500=4f432c;be1b00=85734f",
-      "hairGroup": "hair",
+      "species": "deadbeat",
       "hairType": "0",
-      "species": "deadbeat"
+  	  "facialMaskGroup" : "horn",
+  	  "facialMaskType" : "0",
+      "emoteDirectives" : "?replace;c7815b=4f5257;ffe2c5=d5dce0;ffc181=b2babf;d39c6c=7c838a?replace;ffca8a=e7dfbd00;e0975c=baaa7c00;a85636=85734f00;6f2919=6f291900;ffc48a=ffc48a00;e0935c=e0935c00;a85136=a8513600;70271a=70271a00;e07b5c=e07b5c00;ffc08a=ffc08a00;e08d5c=e08d5c00;a84b36=a84b3600;ffb58a=ffb58a00;e0825c=e0825c00;ffab8a=ffab8a00;ffbb8a=ffbb8a00;e0865c=e0865c00;ffaf8a=ffaf8a00"
     }
+  },
+  {
+    "op": "replace",
+    "path": "/items/override/0/1/0/head",
+    "value": [{
+      "name": "deadbeathornhelmhead",
+      "parameters": { "colorIndex" : [0, 1, 2] }
+    },{
+      "name": "deadbeathelmhead",
+      "parameters": { "colorIndex" : [0, 1, 2] }
+    }]
   },
   {
     "op": "replace",

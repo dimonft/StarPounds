@@ -3,34 +3,47 @@
     "op": "add",
     "path": "/identity",
     "value": {
-      "bodyDirectives": "?replace;c7815b=24424b;ffe2c5=61e6db;ffc181=4facb2;d39c6c=39727d?replace;dc1f00=baaa7c;951500=4f432c;be1b00=85734f",
-      "emoteDirectives": "?replace;c7815b=24424b;ffe2c5=61e6db;ffc181=4facb2;d39c6c=39727d?replace;dc1f00=baaa7c;951500=4f432c;be1b00=85734f",
-      "hairGroup": "hair",
       "hairType": "0",
       "species": "deadbeat"
     }
   },
+ {
+  "op": "add",
+  "path": "/scriptConfig/dialog/converse/deadbeat",
+  "value": {
+   "default": [
+    "Space is boring! I don't want to be in space anymore! Let's land somewhere already!",
+    "Our homeworld was scorched by nuclear fire... Radiation has passed by now but the heat never went away!",
+    "Oh hi there! We are looking for a new planet to settle on because our homeworld is a little bit too hot these days. Do you happen to know any good planets?",
+    "I don't want to talk with anybody on this ship. They didn't allow me to take my pet Fennix with us, and I'm still sad about it.",
+    "Not gonna lie, I don't even know how our ship was able to take off. Not that I care, though, I'm just glad that we're finally far away from burnt wastelands.",
+    "I found a spider web in a corner yesterday. Never knew spiders can survive in low-gravity environments. But I know that I need a flamethrower now.",
+    "Why is everyone calling us deadbeats? I mean, yeah, we can be lazy sometimes, but at least we put enough effort into building this shuttle.",
+    "Oh hey, a guest from space! Sorry, we have no tea left for you. Nor cookies. In fact, we're running out of food and this is very, very bad.",
+    "I'm blue da ba dee da ba die... Oh sorry, didn't see you approaching.",
+    "It's too cold! I wouldn't mind a cup of hot chocolate. And a pie. And sweet cookies, too... Okay, great, now I'm cold and hungry.",
+    "Judging by that matter thingy in your hand, you're one of those Protectorate dudes, right? Do you provide any aid to refugees? We definitely could use some.",
+    "Guys, I'm telling you, we need to turn back! I forgot to turn off my oven before we left!"
+   ]
+  }
+ },
   {
     "op": "replace",
     "path": "/items/override/0/1/0/head",
     "value": [{
-      "name": "deadbeathornshead",
-      "parameters": { "colorIndex" : [0, 11] }
+      "name": "deadbeatncmaskhead"
     },{
-      "name": "deadbeathornmaskhead",
-      "parameters": { "colorIndex" : [0, 11] }
+      "name": "deadbeatncnerdhead"
     },{
-      "name": "deadbeabaldinghead",
-      "parameters": { "colorIndex" : [0, 11] }
+      "name": "deadbeatncglasseshead"
     },{
-      "name": "deadbeatbaldingmaskhead",
-      "parameters": { "colorIndex" : [0, 11] }
+      "name": "deadbeatncscroungerhead"
     },{
-      "name": "deadbeatmaskhead",
-      "parameters": { "colorIndex" : [0, 11] }
+      "name": "deadbeatncscroungerglasseshead"
     },{
-      "name": "deadbeatnerdhead",
-      "parameters": { "colorIndex" : [0, 11] }
+      "name": "deadbeatncscroungermaskhead"
+    },{
+      "name": "deadbeatncscroungernerdhead"
     }]
   },
   {
