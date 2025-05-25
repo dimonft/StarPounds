@@ -1,42 +1,32 @@
 [  
-  {  
-    "op" : "add",
-    "path" : "/attack/human/throg",
-    "value" : [  
-        "This just isn't your day!",
-        "We are the Occasus! You can't stop us, pig!",
-        "Go back to your brick house so we can destroy that too!",
-        "Eating the galaxy planet by planet ain't flying with us, Throg!",
-        "Are you here to stop us? It doesn't matter anyway!",
-        "You can't stop us! Don't even try!",
-        "You shouldn't have come here!",
-        "You picked a bad time to come here!",
-        "Fascist!",
-        "If I kill you, Nox might promote me!",
-        "You shall not stop our plans!",
-        "You won't leave this place!",
-        "We'll rid the galaxy of you Throg fascists!",
-        "We're doing the universe a favor getting rid of you Throgs!"
-      ]
-    },
-  {  
-    "op" : "add",
-    "path" : "/attack/human/mootant",
-    "value" : [  
-        "This just isn't your day!",
-        "We are the Occasus! You can't stop us, mooshi!",
-        "You're no longer even human! Putting you down will be a mercy!",
-        "We're both USCM, the difference is I'm still Human!",
-        "Are you here to stop us? It doesn't matter anyway!",
-        "You can't stop us! Don't even try!",
-        "You shouldn't have come here!",
-        "You picked a bad time to come here!",
-        "Moo for me, cow!",
-        "If I kill you, Nox might promote me!",
-        "You shall not stop our plans!",
-        "You won't leave this place!",
-        "You're just a mistake to be wiped off the galaxy!",
-        "There's nothing natural about you!"
-      ]
-    }
+  {"op": "add", "path": "/attack/human/throg", "value": [
+      "This just isn't your day!",
+      "We are the Occasus! You can't stop us!",
+      "Don't think you can get away, nonbeliever!",
+      "If you aren't with us, then you're against us!",
+      "Are you here to stop us? It doesn't matter anyway!",
+      "You can't stop us! Don't even try!",
+      "You shouldn't have come here!",
+      "A nonbeliever approaches!",
+      "If I kill you, Nox might promote me!",
+      "You shall not stop our plans!",
+      "We'll rid the galaxy of you Throg fascists!",
+      "We're doing the universe a favor getting rid of you Throgs!"
+    ]
+  },
+  {"op": "add", "path": "/attack/human/mootant", "value": [
+      "This just isn't your day!",
+      "We are the Occasus! You can't stop us!",
+      "Don't think you can get away, nonbeliever!",
+      "If you aren't with us, then you're against us!",
+      "Are you here to stop us? It doesn't matter anyway!",
+      "You can't stop us! Don't even try!",
+      "You shouldn't have come here!",
+      "A nonbeliever approaches!",
+      "If I kill you, Nox might promote me!",
+      "You shall not stop our plans!",
+      "You're just a mistake to be wiped off the galaxy!",
+      "There's nothing natural about you!"
+    ]
+  }
 ]

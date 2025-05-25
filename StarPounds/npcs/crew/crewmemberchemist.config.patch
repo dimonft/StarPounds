@@ -1,0 +1,18 @@
+[
+  {"op": "add", "path": "/scriptConfig/dialog/crewmember/roleDescription/throg","value":{
+    "default":[
+      "I can inject some stimulants onboard to give you a boost.",
+      "This syringe will help give you a boost while onboard, captain."
+      ]
+    }
+  },
+  {"op": "add", "path": "/scriptConfig/dialog/crewmember/combatBenefit/throg","value":{
+    "default":[
+      "Stay in top gear, captain!",
+      "This should give you the edge you need to win!",
+      "I got you, one boost coming up!",
+      "Stand still so I can inject this into you!"
+      ]
+    }
+  }
+]

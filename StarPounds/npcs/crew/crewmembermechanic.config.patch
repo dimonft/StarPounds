@@ -1,0 +1,9 @@
+[
+  {"op": "add", "path": "/scriptConfig/dialog/crewmember/roleDescription/throg","value":{
+    "default":[
+      "I know a thing or two about engines. Fuel efficiency is much better now.",
+      "With Throg tech, you won't be wasting as much fuel when piloting the ship."
+      ]
+    }
+  }
+]

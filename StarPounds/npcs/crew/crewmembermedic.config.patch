@@ -1,0 +1,28 @@
+[
+  {"op": "add", "path": "/scriptConfig/dialog/crewmember/roleDescription/throg","value":{
+    "default":[
+      "You know the drill, if you're injured I'll patch you up.",
+      "I'm no nurse bot, but I'll heal any wounds you may have."
+      ]
+    }
+  },
+  {"op": "add", "path": "/scriptConfig/dialog/crewmember/fieldBenefit/throg","value":{
+    "default":[
+      "Hold still while I patch you up!",
+      "One dose of healing juice coming up!",
+      "These bandages should do the trick!",
+      "Careful now, I got you!"
+      ]
+    }
+  },
+  {"op": "add", "path": "/scriptConfig/dialog/crewmember/combatBenefit/throg","value":{
+    "default":[
+      "Don't get wreckless now, let me patch you up!",
+      "Quick chug this before getting back into it!",
+      "I'm coming to heal you!",
+      "Let me get to those wounds!",
+      "Chew this while you're fighting!"
+      ]
+    }
+  }
+]
