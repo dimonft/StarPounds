@@ -8,6 +8,9 @@
       "Hey, I could be more useful to you alive than dead!",
       "Alright let's calm down and negotiate, I could be quite a handy fighter for you!",
       "This has been one big misunderstanding! I just need a place to lay low.",
+      "Okay this outlaw thing ain't exactly working on for me, how about I join your ship instead?"
+      ]
+    }
   },
   {"op": "add", "path": "/scriptConfig/dialog/crewmember/roleDescription/throg","value":{
     "default":[
