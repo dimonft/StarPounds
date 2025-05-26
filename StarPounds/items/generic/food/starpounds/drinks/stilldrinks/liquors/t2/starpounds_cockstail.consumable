@@ -1,0 +1,25 @@
+{
+  "itemName" : "starpounds_cockstail",
+  "rarity" : "Common",
+  "price" : 120,
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_cockstail.png",
+  "description" : "Some say the pirate Xeloxal mixed the original drink with his own tailfeather.",
+  "shortdescription" : "Cock's Tail",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 150
+    },
+    {
+        "effect" : "jumpboostfood",
+        "duration" : 150
+    }
+  ] ],
+  "foodValue": 18,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "itemName" : "starpounds_mead",
+  "rarity" : "Common",
+  "price" : 120,
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_mead.png",
+  "description" : "A liquor brewed from alien honey, popular among the Glitch.",
+  "shortdescription" : "Mead",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 330
+    },
+    {
+        "effect" : "maxenergyscalingboostfood",
+        "duration" : 330
+    }
+  ] ],
+  "foodValue": 18,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

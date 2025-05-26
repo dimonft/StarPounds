@@ -2,7 +2,7 @@
   "name" : "starpoundsvoracious",
 
   "effectConfig" : {  },
-  "defaultDuration" : 120,
+  "defaultDuration" : 10,
 
   "scripts" : [  ],
 

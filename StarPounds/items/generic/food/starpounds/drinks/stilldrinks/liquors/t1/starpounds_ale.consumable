@@ -1,0 +1,25 @@
+{
+  "itemName" : "starpounds_ale",
+  "rarity" : "Common",
+  "price" : 100,
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_ale.png",
+  "description" : "A big frothing mug of bitter ale. Cheers!",
+  "shortdescription" : "Ale",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 300
+    },
+    {
+        "effect" : "maxhealthscalingboostfood",
+        "duration" : 300
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

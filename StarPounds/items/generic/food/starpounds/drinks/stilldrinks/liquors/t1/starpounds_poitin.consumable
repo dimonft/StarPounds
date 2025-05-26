@@ -1,0 +1,25 @@
+{
+  "itemName" : "starpounds_poitin",
+  "rarity" : "Common",
+  "price" : 80,
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_poitin.png",
+  "description" : "A moonshine brewed from the humble tuber. Bottoms up!",
+  "shortdescription" : "Poitin",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 270
+    },
+    {
+        "effect" : "maxhealthscalingboostfood",
+        "duration" : 270
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}
