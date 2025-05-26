@@ -31,7 +31,8 @@
       "value": {
         "description": "A large feasting hall for the Floran Gluttonist Tribe.",
         "ps_name": "Gluttonist Feasting Hall",
-        "icon": "/interface/cockpit/dungeons/gluttonist.png"
+        "icon": "/interface/cockpit/dungeons/gluttonist.png",
+        "ps_icon": "/objects/fattydungeons/floranfeasthall/meatberryplant/starpoundsmeatberryplanticon.png"
       }
     },
     {
@@ -40,7 +41,8 @@
       "value": {
         "description": "An abandoned Glitch Keep belonging to the Ponderous Order.",
         "ps_name": "Ponderous Keep",
-        "icon": "/interface/cockpit/dungeons/ponderous.png"
+        "icon": "/interface/cockpit/dungeons/ponderous.png",
+        "ps_icon": "/objects/fattydungeons/glitchponderouskeep/ponderousidol/starpoundsponderousidolicon.png"
       }
     },
     {
