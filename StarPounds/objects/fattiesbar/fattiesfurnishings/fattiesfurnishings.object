@@ -54,43 +54,48 @@
     "filter" : [],
     "modTab" : [{
       "file": "/interface/fattyshops/tabs/feedingtube.png",
-      "label": " FeedTube",
+      "label": "FeedTube",
       "filter": [ "feedingtube" ]
     },
     {
       "file": "/interface/fattyshops/tabs/scale.png",
-      "label": " Scales",
+      "label": "Scales",
       "filter": [ "scales" ]
     },
     {
       "file": "/interface/fattyshops/tabs/treadmill.png",
-      "label": " Tread",
+      "label": "Tread",
       "filter": [ "treadmill" ]
     },
     {
       "file": "/interface/fattyshops/tabs/junkfood.png",
-      "label": " JunkFood",
+      "label": "JunkFood",
       "filter": [ "junkfood" ]
     },
     {
       "file": "/interface/fattyshops/tabs/decorations.png",
-      "label": " Decor",
+      "label": "Decor",
       "filter": [ "decor" ]
     },
     {
       "file": "/interface/fattyshops/tabs/plushes.png",
-      "label": " Plushes",
+      "label": "Plushes",
       "filter": [ "plushes" ]
     },
     {
       "file": "/interface/fattyshops/tabs/interactives.png",
-      "label": " Interact",
+      "label": "Interact",
       "filter": [ "interactables" ]
     },
     {
       "file": "/interface/fattyshops/tabs/materials.png",
-      "label": " Material",
+      "label": "Material",
       "filter": [ "materials" ]
+    },
+    {
+      "file": "/interface/fattyshops/tabs/cameo.png",
+      "label": "Cameo",
+      "filter": [ "cameo" ]
     }]
   },
   "storeInventory" : {
@@ -113,7 +118,6 @@
       "hylotlfatposter1", "hylotlfatposter2", "hylotlfatposter3", "hylotlfatposter4", "hylotlfathologram", "fatstudiesinfemalehylotlgy", "starpoundschocolatefountain", "velhanustatuettee", "starpoundsgoldstatuette",
       "bellyemblem", "buttemblem", "starpoundsponderousknightarmor", "starpoundsblossomknightsarmor", "starpoundsgluttonistfeastpainting1", "starpoundsgluttonistfeastpainting2", "starpoundsgluttonistfeastpainting3", "starpoundsgluttonistfeasttable",
       "gluttonistlamp1", "gluttonistlight", "gluttonistlight1", "gluttonistlight2", "gluttonistlight3", "gluttoniststatue", "starpoundsavianpedestal",
-      "gluttonistmamstatue", "mamfathologram", "starpoundsmamblueprint", "starpoundsmambuttposter", "starpoundsmamcavepainting", "starpoundsmampainting", "starpoundsmamportrait", "starpoundsmamposter", "wamfatsign", "mamwantedposter", "mamfrontierpainting", "mamfatsign1", "mamfatsign2", "mamsarco",
       "starpoundsminiwrenchposter", "starpoundsminispaceposter", "blubberbuttmodel"
     ],
     "plushes" : [
@@ -138,6 +142,9 @@
       {"input": [["money", 10]], "output": "throgstairs"},
       {"input": [["money", 10]], "output": "throgpolygonplatform"},
       {"input": [["money", 10]], "output": "throgglassrail"}
+    ],
+    "cameo" : [
+      "gluttonistmamstatue", "mamfathologram", "starpoundsmamblueprint", "starpoundsmambuttposter", "starpoundsmamcavepainting", "starpoundsmampainting", "starpoundsmamportrait", "starpoundsmamposter", "wamfatsign", "mamwantedposter", "mamfrontierpainting", "mamfatsign1", "mamfatsign2", "mamsarco"
     ]
   }
 }
