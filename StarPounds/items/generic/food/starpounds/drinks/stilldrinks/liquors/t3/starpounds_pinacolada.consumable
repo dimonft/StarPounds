@@ -5,7 +5,7 @@
   "category" : "drink",
   "inventoryIcon" : "starpounds_pinacolada.png",
   "description" : "*The* tropical drink, for vacationers and those who are hated by the weather.",
-  "shortdescription" : "Tepache",
+  "shortdescription" : "Pinacolada",
   "maxStack" : 1,
   "effects" : [ [
     {
