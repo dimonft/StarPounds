@@ -1,0 +1,12 @@
+{
+  "name" : "caloricresist",
+  "effectConfig" : {},
+  "defaultDuration" : 60,
+
+  "scripts" : [
+    "caloricresist.lua"
+  ],
+
+  "label" : "Caloric Resistance",
+  "icon" : "/interface/statuses/caloricresist.png"
+}

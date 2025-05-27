@@ -1,0 +1,25 @@
+{
+  "itemName" : "starpounds_grapewine",
+  "rarity" : "Uncommon",
+  "price" : 225,
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_grapewine.png",
+  "description" : "A classy drink for pretending to be more sophisticated than you actually are.",
+  "shortdescription" : "Grape Wine",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 330
+    },
+    {
+        "effect" : "runboostfood",
+        "duration" : 330
+    }
+  ] ],
+  "foodValue": 16,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

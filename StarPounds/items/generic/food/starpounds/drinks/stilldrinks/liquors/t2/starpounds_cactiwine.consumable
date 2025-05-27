@@ -1,7 +1,7 @@
 {
   "itemName" : "starpounds_cactiwine",
   "rarity" : "Common",
-  "price" : 90,
+  "price" : 100,
   "category" : "drink",
   "inventoryIcon" : "starpounds_cactiwine.png",
   "description" : "It's the quenchiest!",

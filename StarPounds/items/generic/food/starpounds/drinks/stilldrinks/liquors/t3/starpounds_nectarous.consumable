@@ -1,0 +1,29 @@
+{
+  "itemName" : "starpounds_nectarous",
+  "rarity" : "Uncommon",
+  "price" : 175,
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_nectarous.png",
+  "description" : "Derived from an ancient Floran folk medicine. It's said to promote good health (except for your liver).",
+  "shortdescription" : "Nectarous",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 300
+    },
+    {
+        "effect" : "regenerationfood",
+        "duration" : 300
+    },
+    {
+        "effect" : "maxhealthscalingboostfood",
+        "duration" : 300
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

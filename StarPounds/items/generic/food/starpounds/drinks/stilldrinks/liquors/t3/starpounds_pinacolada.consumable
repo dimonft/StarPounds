@@ -1,0 +1,29 @@
+{
+  "itemName" : "starpounds_pinacolada",
+  "rarity" : "Uncommon",
+  "price" : 150,
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_pinacolada.png",
+  "description" : "*The* tropical drink, for vacationers and those who are hated by the weather.",
+  "shortdescription" : "Tepache",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 270
+    },
+    {
+        "effect" : "runboostfood",
+        "duration" : 270
+    },
+    {
+        "effect" : "maxenergyscalingboostfood",
+        "duration" : 270
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

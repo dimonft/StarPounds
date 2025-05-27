@@ -3,8 +3,8 @@
   "rarity" : "Common",
   "price" : 120,
   "category" : "drink",
-  "inventoryIcon" : "starpounds_cockstail.png",
   "description" : "Some say the pirate Xeloxal mixed the original drink with his own tailfeather.",
+  "inventoryIcon" : "starpounds_cockstail.png",
   "shortdescription" : "Cock's Tail",
   "maxStack" : 1,
   "effects" : [ [

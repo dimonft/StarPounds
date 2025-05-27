@@ -1,11 +1,11 @@
 {
-  "itemName" : "starpounds_scrumpy",
-  "rarity" : "Common",
-  "price" : 100,
+  "itemName" : "starpounds_bananavodka",
+  "rarity" : "Uncommon",
+  "price" : 150,
   "category" : "drink",
-  "inventoryIcon" : "starpounds_scrumpy.png",
-  "description" : "Ay, me bottle o' scrumpy!",
-  "shortdescription" : "Scrumpy",
+  "inventoryIcon" : "starpounds_bananavodka.png",
+  "description" : "Miniknog agents are often rewarded bottles of this liquor. Now with actual banana!",
+  "shortdescription" : "Banana Vodka",
   "maxStack" : 1,
   "effects" : [ [
     {

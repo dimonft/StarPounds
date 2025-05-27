@@ -1,0 +1,25 @@
+{
+  "itemName" : "starpounds_skullsmash",
+  "rarity" : "Uncommon",
+  "price" : 170,
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_skullsmash.png",
+  "description" : "A pungent, brothy drink popular with the Gluttonist Tribe and other Floran.",
+  "shortdescription" : "Skullsmash",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 360
+    },
+    {
+        "effect" : "ragefood",
+        "duration" : 360
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

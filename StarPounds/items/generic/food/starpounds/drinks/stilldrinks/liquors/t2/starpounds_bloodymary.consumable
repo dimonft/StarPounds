@@ -1,11 +1,11 @@
 {
-  "itemName" : "starpounds_scrumpy",
+  "itemName" : "starpounds_bloodymary",
   "rarity" : "Common",
-  "price" : 100,
+  "price" : 130,
   "category" : "drink",
-  "inventoryIcon" : "starpounds_scrumpy.png",
-  "description" : "Ay, me bottle o' scrumpy!",
-  "shortdescription" : "Scrumpy",
+  "inventoryIcon" : "starpounds_bloodymary.png",
+  "description" : "Say its name 3 times in front of a dark mirror and you'll mysteriously wind up drunk.",
+  "shortdescription" : "Bloody Mary",
   "maxStack" : 1,
   "effects" : [ [
     {
@@ -13,7 +13,7 @@
         "duration" : 330
     },
     {
-        "effect" : "maxenergyscalingboostfood",
+        "effect" : "maxhealthscalingboostfood",
         "duration" : 330
     }
   ] ],

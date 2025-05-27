@@ -1,0 +1,33 @@
+{
+  "itemName" : "starpounds_starpounders",
+  "rarity" : "Uncommon",
+  "price" : 250,
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_starpounders.png",
+  "description" : "A thick, almost milkshake-y liquor that makes you feel softer just looking at it.",
+  "shortdescription" : "Starpounder's",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 360
+    },
+    {
+        "effect" : "caloricresist",
+        "duration" : 360
+    },
+    {
+        "effect" : "maxhealthscalingboostfood",
+        "duration" : 360
+    },
+    {
+        "effect" : "maxenergyscalingboostfood",
+        "duration" : 360
+    }
+  ] ],
+  "foodValue": 33,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

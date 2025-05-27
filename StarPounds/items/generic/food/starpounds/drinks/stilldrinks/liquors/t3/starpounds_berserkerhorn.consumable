@@ -1,0 +1,29 @@
+{
+  "itemName" : "starpounds_berserkerhorn",
+  "rarity" : "Uncommon",
+  "price" : 160,
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_berserkerhorn.png",
+  "description" : "Said to be derived from a forgotten strength stim, an ancient rage broils inside.",
+  "shortdescription" : "Berserker's Horn",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 420
+    },
+    {
+        "effect" : "rage",
+        "duration" : 420
+    },
+    {
+        "effect" : "maxhealthscalingboostfood",
+        "duration" : 420
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

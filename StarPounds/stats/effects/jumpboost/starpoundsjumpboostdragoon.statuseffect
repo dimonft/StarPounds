@@ -1,0 +1,12 @@
+{
+  "name" : "starpoundsjumpboostdragoon",
+  "effectConfig" : {},
+  "defaultDuration" : 5,
+
+  "scripts" : [
+    "starpoundsjumpboostdragoon.lua"
+  ],
+
+  "label" : "Dragoon Jump Boost",
+  "icon" : "/interface/statuses/jumpboost20.png"
+}
