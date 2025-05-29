@@ -4,6 +4,7 @@
   "price" : 100,
   "category" : "drink",
   "inventoryIcon" : "starpounds_cactiwine.png",
+  "tooltipKind" : "fossil",
   "description" : "It's the quenchiest!",
   "shortdescription" : "Cactiwine",
   "maxStack" : 1,

@@ -4,6 +4,7 @@
   "price" : 200,
   "category" : "drink",
   "inventoryIcon" : "starpounds_coolantstout.png",
+  "tooltipKind" : "fossil",
   "description" : "A few steps away from industrial coolant, this liquor is quite popular among Glitch!",
   "shortdescription" : "Coolantstout",
   "maxStack" : 1,

@@ -4,7 +4,8 @@
   "price" : 225,
   "category" : "drink",
   "inventoryIcon" : "starpounds_grapewine.png",
-  "description" : "A classy drink for pretending to be more sophisticated than you actually are.",
+  "tooltipKind" : "fossil",
+  "description" : "A classy drink for those pretending to be more sophisticated than they actually are.",
   "shortdescription" : "Grape Wine",
   "maxStack" : 1,
   "effects" : [ [

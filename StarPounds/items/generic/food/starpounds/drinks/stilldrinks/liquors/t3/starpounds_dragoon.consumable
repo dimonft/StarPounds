@@ -4,7 +4,8 @@
   "price" : 150,
   "category" : "drink",
   "inventoryIcon" : "starpounds_dragoon.png",
-  "description" : "A favorite of space dragon and space wyvern hunters.",
+  "tooltipKind" : "fossil",
+  "description" : "A favorite of space dragon and space wyvern hunters. Some say it bestows a wyvern's flight.",
   "shortdescription" : "Dragoon",
   "maxStack" : 1,
   "effects" : [ [

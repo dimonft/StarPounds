@@ -4,6 +4,7 @@
   "price" : 175,
   "category" : "drink",
   "inventoryIcon" : "starpounds_nectarous.png",
+  "tooltipKind" : "fossil",
   "description" : "Derived from an ancient Floran folk medicine. It's said to promote good health (except for your liver).",
   "shortdescription" : "Nectarous",
   "maxStack" : 1,

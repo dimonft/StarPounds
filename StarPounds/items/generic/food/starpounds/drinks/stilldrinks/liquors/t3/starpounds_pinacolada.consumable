@@ -3,9 +3,10 @@
   "rarity" : "Uncommon",
   "price" : 150,
   "category" : "drink",
+  "tooltipKind" : "fossil",
   "inventoryIcon" : "starpounds_pinacolada.png",
   "description" : "*The* tropical drink, for vacationers and those who are hated by the weather.",
-  "shortdescription" : "Pinacolada",
+  "shortdescription" : "Piña Colada",
   "maxStack" : 1,
   "effects" : [ [
     {

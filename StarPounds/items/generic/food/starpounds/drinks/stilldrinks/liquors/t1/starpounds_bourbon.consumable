@@ -3,6 +3,7 @@
   "rarity" : "Common",
   "price" : 100,
   "category" : "drink",
+  "tooltipKind" : "fossil",
   "inventoryIcon" : "starpounds_bourbon.png",
   "description" : "Novakids are fond of this drink- though more typically its served in a metal flask.",
   "shortdescription" : "Bourbon",

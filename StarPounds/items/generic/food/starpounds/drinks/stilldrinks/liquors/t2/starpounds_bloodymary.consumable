@@ -3,6 +3,7 @@
   "rarity" : "Common",
   "price" : 130,
   "category" : "drink",
+  "tooltipKind" : "fossil",
   "inventoryIcon" : "starpounds_bloodymary.png",
   "description" : "Say its name 3 times in front of a dark mirror and you'll mysteriously wind up drunk.",
   "shortdescription" : "Bloody Mary",

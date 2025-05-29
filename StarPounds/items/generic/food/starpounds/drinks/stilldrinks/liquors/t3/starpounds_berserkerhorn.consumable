@@ -4,7 +4,8 @@
   "price" : 160,
   "category" : "drink",
   "inventoryIcon" : "starpounds_berserkerhorn.png",
-  "description" : "Said to be derived from a forgotten strength stim, an ancient rage broils inside.",
+  "tooltipKind" : "fossil",
+  "description" : "Some say the rage of warriors courses through every drop. Others say its derived from a lost stim.",
   "shortdescription" : "Berserker's Horn",
   "maxStack" : 1,
   "effects" : [ [

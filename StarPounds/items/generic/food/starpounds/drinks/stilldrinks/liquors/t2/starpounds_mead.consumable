@@ -4,6 +4,7 @@
   "price" : 120,
   "category" : "drink",
   "inventoryIcon" : "starpounds_mead.png",
+  "tooltipKind" : "fossil",
   "description" : "A liquor brewed from alien honey, popular among the Glitch.",
   "shortdescription" : "Mead",
   "maxStack" : 1,

@@ -4,6 +4,7 @@
   "price" : 125,
   "category" : "drink",
   "inventoryIcon" : "starpounds_eggnog.png",
+  "tooltipKind" : "fossil",
   "description" : "A delicious seasonal drink. It's the holidays somewhere in space!",
   "shortdescription" : "Eggnog",
   "maxStack" : 1,

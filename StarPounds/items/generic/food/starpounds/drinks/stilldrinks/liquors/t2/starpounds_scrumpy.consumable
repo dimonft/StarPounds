@@ -3,6 +3,7 @@
   "rarity" : "Common",
   "price" : 100,
   "category" : "drink",
+  "tooltipKind" : "fossil",
   "inventoryIcon" : "starpounds_scrumpy.png",
   "description" : "Ay, me bottle o' scrumpy!",
   "shortdescription" : "Scrumpy",

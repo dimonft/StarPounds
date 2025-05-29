@@ -4,6 +4,7 @@
   "price" : 135,
   "category" : "drink",
   "inventoryIcon" : "starpounds_rum.png",
+  "tooltipKind" : "fossil",
   "description" : "A sweetened liquor popular among Avian pirates. Make sure not to lose sight of it!",
   "shortdescription" : "Rum",
   "maxStack" : 1,

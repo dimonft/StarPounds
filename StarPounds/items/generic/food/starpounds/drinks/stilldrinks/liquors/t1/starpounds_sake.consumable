@@ -4,7 +4,8 @@
   "price" : 80,
   "category" : "drink",
   "inventoryIcon" : "starpounds_sake.png",
-  "description" : "A gentle ricewine popular with Hylotl. Traditionally it was brewed by monks.",
+  "tooltipKind" : "fossil",
+  "description" : "A gentle ricewine popular with Hylotl. Traditionally it was brewed from monks chewing and spitting grains into a vat.",
   "shortdescription" : "Sake",
   "maxStack" : 1,
   "effects" : [ [

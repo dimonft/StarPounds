@@ -4,7 +4,8 @@
   "price" : 150,
   "category" : "drink",
   "inventoryIcon" : "starpounds_starshine.png",
-  "description" : "This Novakid concoction is traditionally brewed hidden in the inner workings of their ships.",
+  "tooltipKind" : "fossil",
+  "description" : "This (often illicit) Novakid concoction is traditionally brewed hidden in the inner workings of their ships.",
   "shortdescription" : "Starshine",
   "maxStack" : 1,
   "effects" : [ [

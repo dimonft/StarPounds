@@ -2,6 +2,7 @@
   "itemName" : "starpounds_ale",
   "rarity" : "Common",
   "price" : 100,
+  "tooltipKind" : "fossil",
   "category" : "drink",
   "inventoryIcon" : "starpounds_ale.png",
   "description" : "A big frothing mug of bitter ale. Cheers!",

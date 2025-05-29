@@ -4,6 +4,7 @@
   "price" : 125,
   "category" : "drink",
   "inventoryIcon" : "starpounds_scrapshot.png",
+  "tooltipKind" : "fossil",
   "description" : "This thick, metallic liquor is quite popular among Glitch. The bolts inside add flavor!",
   "shortdescription" : "Scrapshot",
   "maxStack" : 1,

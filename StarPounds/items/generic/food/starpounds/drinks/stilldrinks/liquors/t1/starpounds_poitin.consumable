@@ -3,6 +3,7 @@
   "rarity" : "Common",
   "price" : 80,
   "category" : "drink",
+  "tooltipKind" : "fossil",
   "inventoryIcon" : "starpounds_poitin.png",
   "description" : "A moonshine brewed from the humble tuber. Bottoms up!",
   "shortdescription" : "Poitin",
