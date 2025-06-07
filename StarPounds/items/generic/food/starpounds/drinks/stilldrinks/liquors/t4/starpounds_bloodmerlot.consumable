@@ -1,0 +1,34 @@
+{
+  "itemName" : "starpounds_bloodmerlot",
+  "rarity" : "Rare",
+  "price" : 160,
+  "category" : "drink",
+  "tooltipKind" : "fossil",
+  "inventoryIcon" : "starpounds_bloodmerlot.png",
+  "description" : "For those vvho don't drink vvine.",
+  "shortdescription" : "Blood Merlot",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 360
+    },
+    {
+        "effect" : "maxhealthscalingboostfood",
+        "duration" : 360
+    },
+    {
+        "effect" : "rage",
+        "duration" : 360
+    },
+    {
+        "effect" : "regenerationfood",
+        "duration" : 360
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

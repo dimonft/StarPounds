@@ -1,0 +1,26 @@
+{
+  "itemName" : "starpounds_tidepooler",
+  "rarity" : "Uncommon",
+  "price" : 100,
+  "category" : "drink",
+  "tooltipKind" : "fossil",
+  "inventoryIcon" : "starpounds_tidepooler.png",
+  "description" : "A sweet and salty tropical drink popular among urban Hylotl.",
+  "shortdescription" : "Tidepooler",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 120
+    },
+    {
+        "effect" : "swimboostcola",
+        "duration" : 120
+    }
+  ] ],
+  "foodValue": 5,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

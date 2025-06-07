@@ -19,7 +19,7 @@
     },
     {
         "effect" : "maxenergyscalingboostfood",
-        "duration" : 240
+        "duration" : 300
     }
   ] ],
   "foodValue": 32,  
