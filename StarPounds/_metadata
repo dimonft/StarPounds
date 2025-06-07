@@ -6,5 +6,5 @@
   "friendlyName" : "^#ccbbff;StarPounds: ^reset;Big Fatties",
   "priority" : 789,
   "link" : "https://forum.weightgaming.com/t/starbound-mod-big-fatties/1649",
-  "includes" : ["StardustLib", "QuickbarMini", "MorePlanetInfo"]
+  "includes" : ["StardustLib", "QuickbarMini", "MorePlanetInfo", "mechoverhaul"]
 }
