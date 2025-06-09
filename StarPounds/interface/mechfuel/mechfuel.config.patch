@@ -3,7 +3,7 @@
   "op": "add",
   "path": "/fuels/starpoundsliquidcalorium",
   "value": {
-   "fuelMultiplier": 4,
+   "fuelMultiplier": 2,
    "fuelType": "Calorium",
    "textColor": "#f76fdf"
   }
