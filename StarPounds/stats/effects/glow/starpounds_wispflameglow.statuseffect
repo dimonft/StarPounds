@@ -1,0 +1,14 @@
+{
+  "name" : "starpounds_wispflameglow",
+  "effectConfig" : {},
+  "defaultDuration" : 5,
+
+  "scripts" : [
+    "starpounds_wispflameglow.lua"
+  ],
+
+  "animationConfig" : "starpounds_wispflameglow.animation",
+
+  "label" : "Wispflame Glow",
+  "icon" : "/interface/statuses/glow.png"
+}

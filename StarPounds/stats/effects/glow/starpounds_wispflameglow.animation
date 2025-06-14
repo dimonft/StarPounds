@@ -1,0 +1,19 @@
+{
+  "particleEmitters" : {
+    "sparkles" : {
+      "enabled" : true,
+      "emissionRate" : 3.0,
+      "particles" : [
+        { "particle" : "wispflame" }
+      ]
+    }
+  },
+  "lights" : {
+    "glow" : {
+      "active" : true,
+      "position" : [0, 0],
+      "color" : [230, 125, 7],
+      "pointLight" : true
+    }
+  }
+}

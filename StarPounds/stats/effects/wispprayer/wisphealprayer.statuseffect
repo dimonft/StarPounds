@@ -14,5 +14,5 @@
   "animationConfig" : "wisphealprayer.animation",
 
   "label" : "Prayer of Healing",
-  "icon" : "/interface/statuses/heal.png"
+  "icon" : "/interface/statuses/wispprayer.png"
 }

@@ -1,0 +1,34 @@
+{
+  "itemName" : "starpounds_bigapevintage",
+  "rarity" : "Legendary",
+  "price" : 5000,
+  "tooltipKind" : "fossil",
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_bigapevintage.png",
+  "description" : "A rare, valuable banana wine often given to high-ranking Miniknog officers and scientists.",
+  "shortdescription" : "Big Ape Vintage",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk100",
+        "duration" : 600
+    },
+    {
+        "effect" : "maxenergyscalingboostfood",
+        "duration" : 600
+    },
+    {
+        "effect" : "maxhealthscalingboostfood",
+        "duration" : 600
+    },
+    {
+        "effect" : "regenerationfood",
+        "duration" : 600
+    }
+  ] ],
+  "foodValue": 30,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

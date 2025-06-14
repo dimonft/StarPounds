@@ -1,0 +1,42 @@
+{
+  "itemName" : "starpounds_elementia",
+  "rarity" : "Legendary",
+  "price" : 2500,
+  "tooltipKind" : "fossil",
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_elementia.png",
+  "description" : "A harmonious blend of flavors, this drink manages to combine the five elements in perfect ratios.",
+  "shortdescription" : "Elementia",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk100",
+        "duration" : 480
+    },
+    {
+        "effect" : "caloricresist",
+        "duration" : 480
+    },
+      {
+        "effect" : "fireblock",
+        "duration" : 480
+      },
+      {
+        "effect" : "iceblock",
+        "duration" : 480
+      },
+      {
+        "effect" : "electricblock",
+        "duration" : 480
+      },
+      {
+        "effect" : "poisonblock",
+        "duration" : 480
+      }
+  ] ],
+  "foodValue": 30,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

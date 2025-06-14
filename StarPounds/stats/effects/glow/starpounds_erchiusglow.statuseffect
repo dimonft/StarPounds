@@ -1,0 +1,14 @@
+{
+  "name" : "starpounds_erchiusglow",
+  "effectConfig" : {},
+  "defaultDuration" : 5,
+
+  "scripts" : [
+    "starpounds_erchiusglow.lua"
+  ],
+
+  "animationConfig" : "starpounds_erchiusglow.animation",
+
+  "label" : "Erchius Glow",
+  "icon" : "/interface/statuses/glow.png"
+}

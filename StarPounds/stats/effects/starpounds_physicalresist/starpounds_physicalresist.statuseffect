@@ -1,0 +1,12 @@
+{
+  "name" : "starpounds_physicalresist",
+  "effectConfig" : {},
+  "defaultDuration" : 60,
+
+  "scripts" : [
+    "starpounds_physicalresist.lua"
+  ],
+
+  "label" : "Physical Resistance",
+  "icon" : "/interface/statuses/defense.png"
+}

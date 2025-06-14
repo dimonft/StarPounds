@@ -1,0 +1,38 @@
+{
+  "itemName" : "starpounds_crystalline",
+  "rarity" : "Legendary",
+  "price" : 5000,
+  "tooltipKind" : "fossil",
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_crystalline.png",
+  "description" : "A potent mixture of erchius and pudge, you feel yourself becoming softer just holding it.",
+  "shortdescription" : "Crystalline",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk100",
+        "duration" : 600
+    },
+    {
+        "effect" : "lowgrav",
+        "duration" : 600
+    },
+    {
+        "effect" : "maxenergyscalingboostfood",
+        "duration" : 600
+    },
+    {
+        "effect" : "caloricresist",
+        "duration" : 600
+    },
+    {
+        "effect" : "starpounds_erchiusglow",
+        "duration" : 600
+    }
+  ] ],
+  "foodValue": 30,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

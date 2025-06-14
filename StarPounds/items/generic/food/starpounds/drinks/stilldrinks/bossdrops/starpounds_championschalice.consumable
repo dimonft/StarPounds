@@ -1,0 +1,34 @@
+{
+  "itemName" : "starpounds_championschalice",
+  "rarity" : "Legendary",
+  "price" : 5000,
+  "tooltipKind" : "fossil",
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_championschalice.png",
+  "description" : "The champions of the Gluttonists are the only Floran allowed to drink this noxious smelling booze.",
+  "shortdescription" : "Champion's Chalice",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk100",
+        "duration" : 600
+    },
+    {
+        "effect" : "rage",
+        "duration" : 600
+    },
+    {
+        "effect" : "maxenergyscalingboostfood",
+        "duration" : 600
+    },
+    {
+        "effect" : "starpoundsvoracious",
+        "duration" : 600
+    }
+  ] ],
+  "foodValue": 30,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

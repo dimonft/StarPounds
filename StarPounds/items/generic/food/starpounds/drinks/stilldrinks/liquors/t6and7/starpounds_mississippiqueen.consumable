@@ -1,0 +1,38 @@
+{
+  "itemName" : "starpounds_mississippiqueen",
+  "rarity" : "Rare",
+  "price" : 1000,
+  "tooltipKind" : "fossil",
+  "category" : "drink",
+  "inventoryIcon" : "starpounds_mississippiqueen.png",
+  "description" : "This Bloody Mary from hell's utter disregard for the Scoville scale is known to cause hallucinations.",
+  "shortdescription" : "Mississippi Queen",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 420
+    },
+    {
+        "effect" : "runboostfood",
+        "duration" : 420
+    },
+    {
+        "effect" : "nova",
+        "duration" : 420
+    },
+    {
+        "effect" : "rage",
+        "duration" : 420
+    },
+    {
+        "effect" : "burning",
+        "duration" : 10
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}
