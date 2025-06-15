@@ -1,0 +1,100 @@
+{
+  "objectName" : "koiynvore",
+  "printable" : false,
+  "rarity" : "Legendary",
+
+  "category" : "decorative",
+  "price" : 10000,
+  "description" : "A large fox, with an even larger appetite.",
+  "shortdescription" : "Koiyn: Vore",
+  "race" : "generic",
+
+  "apexDescription" : "Reminds me of rumours about miniknog test subjects.",
+  "avianDescription" : "With a belly that size, you'd be hard pressed to fly using a ship, let alone wings.",
+  "floranDescription" : "Fox hasss big tummy. Musst be good at hunt.",
+  "glitchDescription" : "Curious. This fox has a significant stomach.",
+  "humanDescription" : "Am I hallucinating? Her belly alone probably weighs more than a person.",
+  "hylotlDescription" : "It's hard to imagine how much food it must've taken to produce that stomach.",
+  "novakidDescription" : "This here gut probably weighs more your average joe.",
+  "throgDescription" : "Now this is an impressive size for a fox.",
+  "avaliDescription" : "The gluttony and size of this fox is concerning.",
+
+  "dialog": {
+    "swallow": [
+      "ULF- HRK- GLK... Hwah~ ...Finally.",
+      "GLK- ULP-... Ah~ Right where you belong.",
+      "MHF- ULK-... All mine... Hwagh~...",
+      "HMNRK- Ahn~... Don't worry, I'll be gentle.",
+      "GLK-... Heh... Sorry for the mess, I wasn't expecting guests.",
+      "ULP- GLK-... Oh goodness, finally I get to rest these jugs atop something."
+    ],
+    "struggle": [
+      "Ahn~... Still going in there?",
+      "Mhnf-... just a little more? I've been good.",
+      "That's right... make yourself comfortable... it could be a while.",
+      "Ohf-...I need a diet... can barely see you pushing out.",
+      "Ahf-... Hmf-... You're right <player>! It's so unfair.... More! MORE!!",
+      "Ohff~... still got some fight in you, huh~...",
+      "Whuf~...",
+      "Grrrrkff~..."
+    ],
+    "stop": [
+      "Ah- Another time then.",
+      "Oh <player>. We both know you'll give in eventually...",
+      "Mmmn~ Come back for snuggles anytime.",
+      "Forgot something?",
+      "Left the stove on, huh?",
+      "Well... I'll be here if you want- Eh- need me.",
+      "Great... now I'm hungry...",
+      "That's fine... I'll be here savouring the thoughts of your taste..."
+    ],
+    "digested": [
+      "Ohhh-hrpf- You made for such a cute little paunch.",
+      "All mine...",
+      "Oh-bwUAARPF-* your warmth is so intoxicating.",
+      "Hmmm... what was I doing again?",
+      "Rest now... weary traveller. I'll take good care of you.",
+      "Softened... faded away...",
+      "Oh- Yes... my handles feel so plush now~...",
+      "Ah-... another claimed by the depths...",
+      "Goodness... I'm a monster~...",
+      "Well...hrpf... I better find my breast pump quick. They're getting heavier by the second already....",
+      "I hope you'll be back soon, <player>...",
+      "Ahn~ there's those little tingles I love so much... hah~..."
+    ]
+  },
+
+  "inventoryIcon" : "koiynvore.png:default.default",
+
+  "orientations" : [
+    {
+      "image" : "koiynvore.png:default.default",
+      "imagePosition" : [-23, -24],
+
+      "direction" : "right",
+
+      "mouthPosition": [-0.05, -0.5],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+
+  "scripts" : [
+    "/objects/starpounds/fatprops/voreobject.lua",
+    "/scripts/npcToyObject.lua"
+   ],
+  "scriptDelta" : 1,
+
+  "animation" : "koiynvore.animation",
+  "animationParts" : {
+    "koiyn" : "koiynvore.png",
+    "jumpsuit" : ""
+  },
+  "npcToy": {
+    "ownerOnly" : false,
+    "influence" : [],
+    "defaultReactions" : {},
+    "maxNpcs" : 1
+  }
+}
