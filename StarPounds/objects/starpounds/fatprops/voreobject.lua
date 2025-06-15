@@ -47,7 +47,7 @@ function playSound(soundPool, volume, pitch, loops)
     animator.setSoundPitch(soundPool, pitch or 1, 0)
     animator.playSound(soundPool, loops)
     if soundPool == "struggle" then
-      if math.random(1, 600) == 1 then
+      if math.random(1, 25) == 1 then
         playSound("talk", 1, 1.25)
         animator.burstParticleEmitter("emotehappy")
         object.say(tostring(dialog.struggle[math.random(1, #dialog.struggle)]:gsub("<player>", world.entityName(storage.starPounds.stomachEntities[1].id).."^reset;")))
