@@ -43,5 +43,7 @@
     "koiyn" : "koiynbutt.png",
     "jumpsuit" : "koiynjumpsuitbutt.png",
     "tail" : "koiyntailbutt.png"
-  }
+  },
+
+  "outputNodes" : [ [1, 1] ]
 }

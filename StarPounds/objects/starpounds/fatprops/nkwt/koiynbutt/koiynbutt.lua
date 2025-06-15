@@ -43,6 +43,16 @@ function init()
   cooldown = 0
   opacity = 1
   opacityDelay = 0
+
+  if storage.state == nil then
+    output(false)
+  else
+    output(storage.state)
+  end
+  if storage.timer == nil then
+    storage.timer = 0
+  end
+  self.interval = config.getParameter("interval", 75)
 end
 
 function onInteraction(args)
@@ -72,6 +82,12 @@ function onInteraction(args)
     animator.setAnimationState("interactState", animation)
     cooldown = 5
   end
+
+  if storage.state == false then
+    output(true)
+  end
+
+  storage.timer = self.interval
 end
 
 function update(dt)
@@ -97,6 +113,21 @@ function update(dt)
       opacity = math.max(opacity - (10 * dt), 0)
       animator.setGlobalTag("tailOpacity", hexConverter(math.floor(255 * opacity + 0.5)))
     end
+  end
+
+  if storage.timer > 0 then
+    storage.timer = storage.timer - 1
+
+    if storage.timer == 0 then
+      output(false)
+    end
+  end
+end
+
+function output(state)
+  if storage.state ~= state then
+    storage.state = state
+    object.setAllOutputNodes(state)
   end
 end
 

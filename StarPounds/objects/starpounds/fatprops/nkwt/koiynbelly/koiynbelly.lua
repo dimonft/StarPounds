@@ -47,10 +47,18 @@ function init()
   animator.setSoundPitch("gurgle", 2)
 
   hasNipples = config.getParameter("animationParts", {}).jumpsuit == ""
-  nippleTimer = 0
 
   cooldown = 0
 
+  if storage.state == nil then
+    output(false)
+  else
+    output(storage.state)
+  end
+  if storage.timer == nil then
+    storage.timer = 0
+  end
+  self.interval = config.getParameter("interval", 15)
 end
 
 function onInteraction(args)
@@ -85,6 +93,12 @@ function onInteraction(args)
     animator.setAnimationState("interactState", animation)
     cooldown = 5
   end
+
+  if storage.state == false then
+    output(true)
+  end
+
+  storage.timer = self.interval
 end
 
 function update(dt)
@@ -97,5 +111,20 @@ function update(dt)
       object.say(tostring(selectedDialog.text:gsub("<player>", world.entityName(lastPlayer).."^reset;")))
     end
     lastPlayer = nil
+  end
+
+  if storage.timer > 0 then
+    storage.timer = storage.timer - 1
+
+    if storage.timer == 0 then
+      output(false)
+    end
+  end
+end
+
+function output(state)
+  if storage.state ~= state then
+    storage.state = state
+    object.setAllOutputNodes(state)
   end
 end

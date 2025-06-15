@@ -42,5 +42,7 @@
   "animationParts" : {
     "koiyn" : "koiynbelly.png",
     "jumpsuit" : ""
-  }
+  },
+
+  "outputNodes" : [ [1, 1] ]
 }
