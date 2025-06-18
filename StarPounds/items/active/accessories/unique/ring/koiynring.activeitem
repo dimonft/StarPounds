@@ -1,0 +1,23 @@
+{
+  "itemName" : "koiynring",
+  "price" : 10000,
+  "maxStack" : 1,
+  "rarity" : "Legendary",
+  "description" : "Blah blah blah blah blah.",
+  "shortdescription" : "Blah",
+  "inventoryIcon" : "koiynring.png",
+  "category" : "starpoundsuniqueaccessory",
+
+  "tooltipKind": "accessory",
+
+  "accessoryType" : "ring",
+
+  "stats": [
+    {"name": "capacity", "modifier": 5},
+    {"name": "strainedPenalty", "modifier": -0.35},
+    {"name": "digestion", "modifier": -0.85}
+  ],
+
+  "builder" : "/items/buildscripts/buildaccessory.lua",
+  "builderConfig" : {"fullbright": true}
+}
