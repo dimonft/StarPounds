@@ -208,14 +208,25 @@ function size:equip(equipConfig)
   -- Only play the rip sound once per unequip.
   local playedSound
   -- Shorthand instead of 2 blocks.
-  for _, itemType in ipairs({"legs", "chest"}) do
-    local slot = itemType.."Cosmetic"
+  local slots = {
+    chestCosmetic = {itemType = "chest", default = true},
+    legsCosmetic = {itemType = "legs", default = true}
+  }
+  -- oSB check.
+  if input then
+    slots.cosmetic8 = {itemType = "chest"}
+    slots.cosmetic4 = {itemType = "legs"}
+  end
+
+  for slot, config in pairs(slots) do
+    local itemType = config.itemType
     local item = self.equippedItem(slot)
+    local fitsSlot = item and (root.itemType(item.name):find(itemType) ~= nil)
     -- If we have a generated item, check if it's invalid.
     if item and item.parameters.size then
       local variant = equipConfig[itemType.."Variant"] or ""
       if item.parameters.size ~= (equipConfig[itemType]..variant) then
-        self.setEquippedItem(itemType.."Cosmetic", size:makeSizeItem(itemType, equipConfig))
+        self.setEquippedItem(slot, size:makeSizeItem(itemType, equipConfig))
       end
     -- If the item is not generated, try to update it. Otherwise, give it back and remove it.
     elseif item and not item.parameters.size then
@@ -223,6 +234,11 @@ function size:equip(equipConfig)
       local needsUpdate = (equipConfig[itemType] == "" and item.parameters.scaledSize) or ((equipConfig[itemType] ~= "") and (equipConfig[itemType] ~= item.parameters.scaledSize))
       if needsUpdate then
         local updatedItem, canUpdate = self:updateClothing(item, itemType, equipConfig)
+        -- Retu
+        if not fitsSlot then
+          updatedItem = self:restoreClothing(item)
+          canUpdate = false
+        end
         if canUpdate then
           self.setEquippedItem(slot, updatedItem)
         else
@@ -237,10 +253,10 @@ function size:equip(equipConfig)
         end
       end
     -- Otherwise, apply the base item.
-    elseif not item then
+    elseif config.default and not item then
       local variant = equipConfig[itemType.."Variant"] or ""
       if (equipConfig[itemType]..variant) ~= "" then
-        self.setEquippedItem(itemType.."Cosmetic", size:makeSizeItem(itemType, equipConfig))
+        self.setEquippedItem(slot, size:makeSizeItem(itemType, equipConfig))
       end
     end
   end
