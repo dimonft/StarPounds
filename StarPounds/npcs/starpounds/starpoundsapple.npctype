@@ -112,8 +112,8 @@
       [0, [
         {
           "headCosmetic": [ { "name": "starpoundsapplehead" } ],
-          "chestCosmetic": [ { "name": "conceptchest", "parameters" : { "rarity" : "rare", "statusEffects" : [], "shortdescription" : "Grace's Jacket", "leveledStatusEffects" : [], "directives" : "?replace;e0975c=292d32;ffca8a=555555;a85636=16191e;6f2919=0e0f13", "price" : 2500 } } ],
-          "legsCosmetic": [ { "name": "jeans2legs", "parameters" : {  "rarity" : "rare",  "statusEffects" : [],  "shortdescription" : "Grace's Jeans",  "leveledStatusEffects" : [],  "directives" : "?replace;6f2919=111425;a85636=131a28;e0975c=1a2838;151515=0e0f13;383838=16191e;555555=292d32;b6b6b6=808080;e6e6e6=b5b5b5;9e9e9e=808080;cccccc=b5b5b5;", "price" : 2500 } } ]
+          "chestCosmetic": [ { "name": "conceptchest", "parameters" : { "rarity" : "rare", "statusEffects" : [], "shortdescription" : "^#3161c9;Grace's Jacket", "leveledStatusEffects" : [], "directives" : "?replace;e0975c=292d32;ffca8a=555555;a85636=16191e;6f2919=0e0f13", "price" : 2500 } } ],
+          "legsCosmetic": [ { "name": "jeans2legs", "parameters" : {  "rarity" : "rare",  "statusEffects" : [],  "shortdescription" : "^#3161c9;Grace's Jeans",  "leveledStatusEffects" : [],  "directives" : "?replace;6f2919=111425;a85636=131a28;e0975c=1a2838;151515=0e0f13;383838=16191e;555555=292d32;b6b6b6=808080;e6e6e6=b5b5b5;9e9e9e=808080;cccccc=b5b5b5;", "price" : 2500 } } ]
         }
       ]]
     ]
