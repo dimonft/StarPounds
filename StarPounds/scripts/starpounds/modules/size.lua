@@ -213,7 +213,7 @@ function size:equip(equipConfig)
     legsCosmetic = {itemType = "legs", default = true}
   }
   -- oSB check.
-  if input then
+  if root.assetData then
     slots.cosmetic8 = {itemType = "chest"}
     slots.cosmetic4 = {itemType = "legs"}
   end
