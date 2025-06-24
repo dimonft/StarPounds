@@ -1,13 +1,11 @@
 function patch(data)
   local layout = data.paneLayout
+  local slots = assets.json("/scripts/starpounds/modules/size.config:oSBSlots")
 
-  layout.imgCosmeticBack.file = "/interface/inventory/starpounds_cosmeticsback.png"
-
-  layout["cosmetic8"].backingImage = "/interface/inventory/starpounds_backingimagechest.png"
-  layout["cosmetic8"].data = {tooltipText = "Scaled by ^#ccbbff;StarPounds^reset;"}
-
-  layout["cosmetic4"].backingImage = "/interface/inventory/starpounds_backingimagelegs.png"
-  layout["cosmetic4"].data = {tooltipText = "Scaled by ^#ccbbff;StarPounds^reset;"}
+  for slot, itemType in pairs(slots) do
+    layout[slot].backingImage = "/interface/inventory/starpounds_backingimage" .. itemType .. ".png"
+    layout[slot].data = {tooltipText = layout[slot].data.tooltipText.." | Supports ^#ccbbff;StarPounds^reset;"}
+  end
 
   return data
 end

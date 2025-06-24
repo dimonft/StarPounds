@@ -30,6 +30,19 @@ function size:init()
     end
   end
 
+  -- Scaled slots.
+  -- Sucks this has to be an array but the oSB slots need to load first to cap the vanilla slot variant.
+  self.slots = {}
+  -- oSB check and slots.
+  if root.assetData then
+    for slot, itemType in pairs(self.data.oSBSlots) do
+      self.slots[#self.slots + 1] = {slot, {itemType = itemType}}
+    end
+  end
+  -- Default slots.
+  self.slots[#self.slots + 1] = {"chestCosmetic", {itemType = "chest", default = true}}
+  self.slots[#self.slots + 1] = {"legsCosmetic", {itemType = "legs", default = true}}
+
   message.setHandler("starPounds.getSize", function(_, _, ...) return self:get(...) end)
   message.setHandler("starPounds.getChestVariant", function(_, _, ...) return self:getVariant(...) end)
 end
@@ -207,19 +220,10 @@ function size:equip(equipConfig)
   end
   -- Only play the rip sound once per unequip.
   local playedSound
-  -- Shorthand instead of 2 blocks.
-  local slots = {
-    chestCosmetic = {itemType = "chest", default = true},
-    legsCosmetic = {itemType = "legs", default = true}
-  }
-  -- oSB check.
-  if root.assetData then
-    slots.cosmetic8 = {itemType = "chest"}
-    slots.cosmetic4 = {itemType = "legs"}
-  end
-
-  for slot, config in pairs(slots) do
-    local itemType = config.itemType
+  for _, itemSlot in ipairs(self.slots) do
+    local slot = itemSlot[1]
+    local conf = itemSlot[2]
+    local itemType = conf.itemType
     local item = self.equippedItem(slot)
     local fitsSlot = item and (root.itemType(item.name):find(itemType) ~= nil)
     -- If we have a generated item, check if it's invalid.
@@ -234,11 +238,12 @@ function size:equip(equipConfig)
       local needsUpdate = (equipConfig[itemType] == "" and item.parameters.scaledSize) or ((equipConfig[itemType] ~= "") and (equipConfig[itemType] ~= item.parameters.scaledSize))
       if needsUpdate then
         local updatedItem, canUpdate = self:updateClothing(item, itemType, equipConfig)
-        -- Retu
+        -- Manual check for oSB cosmetic slots.
         if not fitsSlot then
           updatedItem = self:restoreClothing(item)
           canUpdate = false
         end
+        -- Apply the item if it fits, otherwise return it.
         if canUpdate then
           self.setEquippedItem(slot, updatedItem)
         else
@@ -252,8 +257,12 @@ function size:equip(equipConfig)
           end
         end
       end
+      -- Disable all variants if a cosmetic is in the oSB chest slot.
+      if item and (itemType == "chest") and not conf.default then
+        equipConfig.chestVariant = ""
+      end
     -- Otherwise, apply the base item.
-    elseif config.default and not item then
+    elseif conf.default and not item then
       local variant = equipConfig[itemType.."Variant"] or ""
       if (equipConfig[itemType]..variant) ~= "" then
         self.setEquippedItem(slot, size:makeSizeItem(itemType, equipConfig))
