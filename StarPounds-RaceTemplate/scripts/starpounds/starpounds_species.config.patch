@@ -1,0 +1,27 @@
+[
+  {
+  "op": "add",
+  "path": "/template",
+  "value": { "weightGain": true }
+  }
+]
+
+// EXAMPLE
+// This would make the 'human' species use the 'avian' species' fat sprites instead,
+// and apply some directives so that the avian sprite colours match the player's directives.
+// When eaten by another entity, they would also take up 120 'space' in their stomach, and give:
+// 12 food (weight * foodRatio)
+// 108 bloat (weight * (1 - foodRatio))
+// 50 experience points
+//
+//  "human": {
+//    "weightGain": true,
+//    "override": "avian",
+//    "prependDirectives": "?replace;6f2919=951500;a85636=be1b00;e0975c=dc1f00;ffca8a=f32200;951500=c7815b;be1b00=d39c6c;dc1f00=ffc181;f32200=ffe2c5;",
+//    "appendDirectives": "",
+//
+//    "weight": 120,
+//    "foodRatio": 0.1,
+//    "experience": 50
+//  }
+

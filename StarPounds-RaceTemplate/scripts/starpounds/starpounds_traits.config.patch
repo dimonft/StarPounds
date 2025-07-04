@@ -1,0 +1,8 @@
+[
+  {
+    "op": "add",
+    "path": "/traits/template",
+    "value": { "description": "Template", "stats": [ ["experienceMultiplier", "add", 0.25] ] }
+  }
+]
+

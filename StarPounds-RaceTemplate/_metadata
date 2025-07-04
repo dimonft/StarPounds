@@ -1,0 +1,10 @@
+{
+  "version" : "1.0.0",
+  "author" : "^#ccbbff;ShyDispatch^reset; (& ^#77aaff;LittleVulpine^reset;)",
+  "requires" : ["starpounds"],
+  "description" : "Template for providing modded race support for ^#ccbbff;StarPounds!^reset;\n\nProviding a copy of the template armors, and the necessary patches. Just replace the word template in the files for the modded races internal name. \n\nJoin the discord!\n^#ccbbff;discord.gg/starpounds",
+  "name" : "Starpounds Race Template",
+  "friendlyName" : "^#ccbbff;StarPounds Addon: ^reset;Race Template",
+  "priority" : 790,
+  "link" : "https://forum.weightgaming.com/t/starbound-mod-big-fatties/1649"
+}
