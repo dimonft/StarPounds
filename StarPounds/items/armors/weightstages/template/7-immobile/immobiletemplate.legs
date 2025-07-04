@@ -1,14 +1,15 @@
 {
   "itemName" : "immobiletemplatelegs",
-  "price" : 0,  
+  "price" : 0,
   "inventoryIcon" : "icons.png:pants",
   "maxStack" : 1,
   "rarity" : "legendary",
-  "category" : "legwear",  
+  "category" : "legwear",
   "description" : "Now you can't even move fatty. Your gluttony knows no bounds.",
   "shortdescription" : "Immobile Body",
   "tooltipKind" : "starpoundsarmor",
-  
+  "bypassNude" : true,
+
   "statusEffects": [
     "starpoundsimmobile"
   ],
