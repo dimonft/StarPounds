@@ -13,10 +13,10 @@
         "effect" : "starpoundsdrunk",
         "duration" : 360
     },
-    {
-        "effect" : "caloricresist",
-        "duration" : 360
-    },
+//    {
+//        "effect" : "caloricresist",
+//        "duration" : 360
+//    },
     {
         "effect" : "maxhealthscalingboostfood",
         "duration" : 360

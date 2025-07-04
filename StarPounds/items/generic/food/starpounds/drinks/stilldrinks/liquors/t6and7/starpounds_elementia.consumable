@@ -13,10 +13,6 @@
         "effect" : "starpoundsdrunk100",
         "duration" : 480
     },
-    {
-        "effect" : "caloricresist",
-        "duration" : 480
-    },
       {
         "effect" : "fireblock",
         "duration" : 480
