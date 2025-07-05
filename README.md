@@ -54,13 +54,6 @@ If you have `QuickBarMini` or `Stardust Core` installed either within your mods 
 <details>
 <summary>Accessing</summary>
 
-![c84407205b3d7fc5546aefa1d5bb1b94b886ce69](https://github.com/user-attachments/assets/c82f294c-b875-46b4-aa21-8c384480f8bd)
-
-To start, all seven playable races in vanilla are supported. 
-Humans, Avians, Apex, Florans, Hylotl, Glitch, and Novakids. 
-Alongside them most actual races in the base game can be fattened as well. 
-Currently Deadbeats, Fenerox, and Shadows.
-
 ![7a4d90e8f29aaaf0ee6754fabf5c0588820309a2_2_342x500](https://github.com/user-attachments/assets/07bd76c5-9fe7-45b6-ba59-6901398f89ad)
 
 Once installed, any character will automatically have starpounds turned on. Though only races supported will really benefit from it. You can use the quickbar from stardustlite to access a menu where you can access the skill tree, as well as toggle any options you wish to change.
@@ -119,7 +112,8 @@ Huh, it seems like there's a spot in the hub for one more shop... Can't seem to 
 ![24838dc37ae59ebbcddb47088696390d2295eb3d_2_690x247](https://github.com/user-attachments/assets/c86e0ff0-5ae3-4b6c-a326-19ee3a28c38a)
 
 
-And if you have Throgverse, don't forget to keep exploring. You never know what you may find out there...
+And if you have Throgverse, don't forget to keep exploring. You never know what you may find out there... Dungeons filled with the dangerous Floran Gluttonist Tribes. And the abandoned Glitch Ponderous Keeps still guarded by faithful Wisps can currently be found.
+Delve deep and you can find crafting ingredients to make powerful weapons. Weapons that can be enhanced even further at a Weapon Upgrade Anvil.
 </details>
 
 ## ![alt text](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/e/1/e10770676cd56090a925250cf44d6a51077fc61c.gif)
@@ -199,51 +193,127 @@ We have a modified version that does some reversions and some improvements.
 Npcs at the Outpost, Hog Diner, or any other form of hub area generally has protection that prevents them from being fattened up or vored.
 </details>
 
-## ![e2762123a2639f3e12387a73d530e2b832adf608](https://github.com/user-attachments/assets/c8ed9711-1654-4404-9a48-5c793d60c9a9)
+## ![starpounds-racesupport](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/8/0/80a472068d5e586a36fa462dc078deb8a7cb7963.gif)
 
 <details>
-<summary>Modded Races Supported</summary>
+<summary>Races Supported</summary>
 
 Currently, the following species are supported:
-- [Avali](https://steamcommunity.com/workshop/filedetails/?id=729558042)
-- [Aegi](https://steamcommunity.com/sharedfiles/filedetails/?id=850109963)
-- [Saturnian](https://steamcommunity.com/workshop/filedetails/?id=1103027918)
-- [Arcanian](https://steamcommunity.com/sharedfiles/filedetails/?id=2359135864)
-- [Gilten](https://steamcommunity.com/sharedfiles/filedetails/?id=2359135864)
+- Vanilla Races
+
+![Vanilla](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/6/4/640a2da312d488ef3117756c39dce997ea882f21.png)
+
+- Starpounds Races
+
+![Starpounds|600x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/e/5/e561cf960680d43e8bc1d678841b61d4b70a708b.png)
+
+- [Avali Triage](https://steamcommunity.com/workshop/filedetails/?id=729558042)
+
+![Avali|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/a/d/ad6c1682b73d9e459984e149ee403da43ae9377d.png)
+
+- [Elithian Races](https://steamcommunity.com/sharedfiles/filedetails/?id=850109963)
+
+![Elithian Races|690x98](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/c/9/c9f1bd01907487c7bf0fd581f98a262b78c15fb4.png)
+
+- [Arcana](https://steamcommunity.com/sharedfiles/filedetails/?id=2359135864)
+
+![Arcana|690x142](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/a/c/acc62dc503cda6ff06277a625b36ceee36ac2268.png)
+
+- [Saturnians](https://steamcommunity.com/workshop/filedetails/?id=1103027918)
+
+![Saturnian|500x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/9/c/9c76163ed3c8c3e8346161eb9fe175d0db9b6c89.png)
+
 - [Shoggoth (Shoggoth & Friends Beta)](https://github.com/tydapo1/Shoggoths-Stuff-Rework)
-- [Mindflayer (Shoggoth & Friends Beta)](https://github.com/tydapo1/Shoggoths-Stuff-Rework)
-- [Nightgaunt (Shoggoth & Friends Beta)](https://github.com/tydapo1/Shoggoths-Stuff-Rework)
+
+![Shoggoth|690x160](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/9/8/981c9a74329da4e4d1e8bb011e38fa8545f872a0.png)
+
 - [NostOS](https://steamcommunity.com/workshop/filedetails/?id=2740791476)
+
+![NostOS|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/8/b/8bb4d4fec6b72fc8a661409b01fb24f411292b41.png)
+
 - [Kitsune](https://steamcommunity.com/workshop/filedetails/?id=1396610566)
-- [Halfsea](https://steamcommunity.com/workshop/filedetails/?id=1396610566)
+
+![Kitsune|600x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/6/4/648a8e8fa2604d50a2c9c6f31bfa2715bb1ba067.png)
+
 - [Argonian](https://steamcommunity.com/workshop/filedetails/?id=740694177)
+
+![Argonian|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/1/9/19a4a306927f097dc3c4a32246822be33594188f.png)
+
 - [Angel](https://steamcommunity.com/workshop/filedetails/?id=1686520464)
-- [Goblin](https://steamcommunity.com/sharedfiles/filedetails/?id=2925162796)
-- [Oni](https://steamcommunity.com/sharedfiles/filedetails/?id=2978143703)
-- [Merling](https://steamcommunity.com/sharedfiles/filedetails/?id=3287386033)
-- [Sharkling](https://steamcommunity.com/sharedfiles/filedetails/?id=3287386033)
-- [Springeonton](https://steamcommunity.com/sharedfiles/filedetails/?id=2865339320)
-- [Brokenton](https://steamcommunity.com/sharedfiles/filedetails/?id=2865339320)
-- [Kanashimi](https://steamcommunity.com/sharedfiles/filedetails/?id=2865339320)
-- [Deerclops](https://steamcommunity.com/sharedfiles/filedetails/?id=2865339320)
-- [Void Glitches](https://steamcommunity.com/sharedfiles/filedetails/?id=2865339320)
-- [Nightmares](https://steamcommunity.com/sharedfiles/filedetails/?id=2865339320)
-- [Healon](https://steamcommunity.com/sharedfiles/filedetails/?id=2865339320)
-- [Narfin](https://steamcommunity.com/sharedfiles/filedetails/?id=2865339320)
-- [Fennix](https://steamcommunity.com/sharedfiles/filedetails/?id=3194891396)
-- [Eevee](https://steamcommunity.com/sharedfiles/filedetails/?id=3194891396)
+
+![Angel|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/2/c/2ce2745a1381fcfb42a47054cc134003e7d87e02.png)
+
+- [Galactic Goblins](https://steamcommunity.com/sharedfiles/filedetails/?id=2925162796)
+
+![Goblin|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/5/8/58be17a7e739f14de13c24fa7ece56858c37e500.png)
+
+- [Galactic Oni](https://steamcommunity.com/sharedfiles/filedetails/?id=2978143703)
+
+![Oni|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/7/7/775615e35318222c7d896320a11cb0bc9f98de64.png)
+
+- [Galactic Merling](https://steamcommunity.com/sharedfiles/filedetails/?id=3287386033)
+
+![Merling|600x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/7/3/7388d0b025378ce836287369bbae36fbb9b597a1.png)
+
+- [Galactic Aliens](https://steamcommunity.com/sharedfiles/filedetails/?id=3376902876)
+
+![Alien|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/6/7/675a35eb7c5d7ffbe8e8d0e3326ae0d0e68720a4.png)
+
+- [Tsuki's Races](https://steamcommunity.com/sharedfiles/filedetails/?id=2865339320)
+
+![Tsuki|690x58](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/b/7/b701ea4eb9f5f4d28b2bebd99017a70a0d2f8c97.png)
+
+- [Galaxy Foxes EX](https://steamcommunity.com/sharedfiles/filedetails/?id=3194891396)
+
+![Galactic Foxes|690x160](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/d/a/da42ccf7269d94f1225143e330ad5ee22c886002.png)
+
 - [Glaceon](https://steamcommunity.com/sharedfiles/filedetails/?id=2012704863)
+
+![Glaceon|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/3/4/34a456f8258724825c6b562a4d870642de87f827.png)
+
 - [Vaporeon](https://steamcommunity.com/sharedfiles/filedetails/?id=3283738255)
-- [Sylveon](https://steamcommunity.com/sharedfiles/filedetails/?id=2843385916)
+
+![Vaporeon|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/e/b/eb8f0d834e6800084d54eaef5afa2fd0f4f536cd.png)
+
+- [Sylveonoid](https://steamcommunity.com/sharedfiles/filedetails/?id=2843385916)
+
+![Sylveon|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/1/a/1a2b8522d43b3f81aa0604052400f692360c53e8.png)
+
 - [Lucario](https://steamcommunity.com/sharedfiles/filedetails/?id=1356955138)
+
+![Lucario|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/e/4/e47513d81e43ef373cb49f84e93b043e0dd46a4b.png)
+
 - [Zoroark](https://steamcommunity.com/sharedfiles/filedetails/?id=2811625141)
+
+![Zoroark|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/9/d/9dc6182b878f664d2e1797ac3d2ef2e58767d793.png)
+
 - [Hisuian Zoroark](https://steamcommunity.com/sharedfiles/filedetails/?id=2813977483)
-- [Inkling](https://steamcommunity.com/sharedfiles/filedetails/?id=734855883)
+
+![Zoroark Hisuian|350x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/c/a/ca6d2cb39cc49c0d612715f8b89ad7442a159222.png)
+
+- [Inkbound](https://steamcommunity.com/sharedfiles/filedetails/?id=734855883)
+
+![Inkling|600x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/7/5/75b2e5c097ef0448821cb2bb463e321c9a10e97f.png)
+
 - [Space Skunk](https://steamcommunity.com/sharedfiles/filedetails/?id=3423728930)
+
+![Space Skunk|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/2/8/2844a01d16faef2bddf63b338e79ad099064b9be.png)
+
 - [Felin](https://steamcommunity.com/sharedfiles/filedetails/?id=729429063)
+
+![Felin|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/c/0/c0d7d8feff857c3dc2785aa34e262cc4ecb10351.png)
+
 - [Offworlder](https://steamcommunity.com/sharedfiles/filedetails/?id=1380631785)
+
+![Offworlder|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/d/f/dfa99e51a2ee3467b15f0e53d92162f3237063a7.png)
+
 - [Dark Latex](https://steamcommunity.com/sharedfiles/filedetails/?id=1818502101)
+
+![Dark Latex|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/3/2/32358a3343ca662d57abc3b91151a666b998e3b5.png)
+
 - [Troll](https://steamcommunity.com/sharedfiles/filedetails/?id=1301907771)
+
+![Troll|300x186](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/3/9/39c2f5f62c77f97abdfb9f10afe3881cda503f2d.png)
 
 </details>
 
