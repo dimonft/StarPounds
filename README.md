@@ -201,7 +201,9 @@ Npcs at the Outpost, Hog Diner, or any other form of hub area generally has prot
 Currently, the following species are supported:
 - Vanilla Races
 
-![Vanilla](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/6/4/640a2da312d488ef3117756c39dce997ea882f21.png)
+![Vanilla1](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/4/f/4f9293de84cba158d52fa5f5d60db30b2fa0879e.png)
+
+![Vanilla2](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/8/7/87325a1c0a576c1abb97046f17694185f61f35df.png)
 
 - Starpounds Races
 
@@ -261,7 +263,9 @@ Currently, the following species are supported:
 
 - [Tsuki's Races](https://steamcommunity.com/sharedfiles/filedetails/?id=2865339320)
 
-![Tsuki|690x58](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/b/7/b701ea4eb9f5f4d28b2bebd99017a70a0d2f8c97.png)
+![Tsuki1|690x58](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/a/b/abf83a3a4d6670a4ab32214e90f1ac816603610b.png)
+
+![Tsuki2|690x58](https://d1au4vljv71t01.cloudfront.net/forum/original/3X/e/3/e3cc8e7df2d6f45c43d2fad91190d96ed25ef763.png)
 
 - [Galaxy Foxes EX](https://steamcommunity.com/sharedfiles/filedetails/?id=3194891396)
 
