@@ -51,8 +51,9 @@ function drinking:drink()
     -- Reset the drink counter if there is nothing to drink.
     if self.drinkCounter >= 1 then
       -- Gets up to 25% deeper depending on how many 'sips' over 10 were taken.
-      local belchMultiplier = 1 - (self.drinkCounter - 1) * 0.25
-      starPounds.belch(0.75, starPounds.belchPitch(belchMultiplier))
+      local belchVolume = 0.75
+      local belchPitch = 1 - (self.drinkCounter - 1) * 0.25
+      starPounds.belch(belchVolume, starPounds.belchPitch(belchPitch))
     end
     self.drinkCounter = 0
   end

@@ -13,7 +13,7 @@ function exercise:update(dt)
   -- Skip the rest if we're not moving.
   if effort == 0 then return end
   -- Lose weight based on weight, effort, and the multiplier.
-  local amount = effort * (starPounds.weightMultiplier ^ 0.5) * self.data.multiplier * starPounds.getStat("metabolism") * dt
+  local amount = effort * (starPounds.weightMultiplier ^ self.data.weightExponent) * self.data.multiplier * starPounds.getStat("metabolism") * dt
   -- Weight loss reduced by 75% if you're full, and have food in your stomach.
   if self.hasFood and status.resource("food") >= (status.resourceMax("food") + status.stat("foodDelta")) and starPounds.stomach.food > 0 then
     amount = amount * self.data.foodMultiplier

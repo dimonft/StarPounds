@@ -89,7 +89,7 @@ function breasts:setMilkType(liquidType)
   local newFood = starPounds.moduleFunc("liquid", "getFood", liquidType)
   local convertRatio = currentFood/newFood
   storage.starPounds.breastType = liquidType
-  self:setMilk(self.breasts.contents * convertRatio, 4)
+  self:setMilk(self.breasts.contents * convertRatio)
 end
 
 function breasts:milkProduction(food)

@@ -298,8 +298,9 @@ function pred:preyDigested(preyId, items, preyStomach)
   local doBelchParticles = doBelch and not starPounds.hasOption("disableBelchParticles")
   -- Burp/Stomach rumble.
   if doBelch then
-    local belchMultiplier = 1 - math.round(((digestedEntity.base + digestedEntity.weight) - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
-    starPounds.belch(0.75, starPounds.belchPitch(belchMultiplier))
+    local belchVolume = 0.75
+    local belchPitch = 1 - math.round(((digestedEntity.base + digestedEntity.weight) - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
+    starPounds.belch(belchVolume, starPounds.belchPitch(belchPitch))
   end
 
   if doBelchParticles then
@@ -408,8 +409,9 @@ function pred:release(preyId, releaseAll)
       end
     end
     if releasedEntity and world.entityExists(releasedEntity.id, true) then
-      local belchMultiplier = 1 - math.round((releasedEntity.weight + storage.starPounds.weight - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
-      starPounds.belch(0.75, starPounds.belchPitch(belchMultiplier))
+      local belchVolume = 0.75
+      local belchPitch = 1 - math.round((releasedEntity.weight + storage.starPounds.weight - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
+      starPounds.belch(belchVolume, starPounds.belchPitch(belchPitch))
     end
     storage.starPounds.stomachEntities = jarray()
   else
@@ -426,8 +428,10 @@ function pred:release(preyId, releaseAll)
     end
     -- Call back to release the entity incase the pred is releasing them.
     if releasedEntity and world.entityExists(releasedEntity.id, true) then
+      local belchVolume = 0.75
       local belchMultiplier = 1 - math.round((releasedEntity.weight - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
-      starPounds.belch(0.75, starPounds.belchPitch(belchMultiplier))
+      starPounds.belch(belchVolume, starPounds.belchPitch(belchPitch))
+
       world.sendEntityMessage(releasedEntity.id, "starPounds.getReleased", entity.id(), statusEffect)
       starPounds.events:fire("pred:releaseEntity", releasedEntity)
     end

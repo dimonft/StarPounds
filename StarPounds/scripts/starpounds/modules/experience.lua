@@ -18,8 +18,7 @@ function experience:add(amount, multiplier, isLevel)
   if starPounds.hasOption("legacyMode") then return end
   -- Argument sanitisation.
   amount = math.max(tonumber(amount) or 0, 0)
-  local hungerPenalty = starPounds.hasOption("disableHunger") and math.max((starPounds.getStat("hunger") - starPounds.stats.hunger.base) * 0.2, 0) or 0
-  multiplier = tonumber(multiplier) or math.max(starPounds.getStat("experienceMultiplier") - hungerPenalty, 0)
+  multiplier = tonumber(multiplier) or math.max(starPounds.getStat("experienceMultiplier") - self:hungerPenalty(), 0)
   -- Skip everything else if we're just adding straight levels.
   if isLevel then
     self:addLevel(amount)
@@ -52,6 +51,14 @@ end
 function experience:addLevel(amount)
   amount = math.round(math.max(tonumber(amount) or 0, 0))
   storage.starPounds.level = math.min(storage.starPounds.level + amount, self.data.maxLevel)
+end
+
+function experience:hungerPenalty()
+  if starPounds.hasOption("disableHunger") then
+    return math.max((starPounds.getStat("hunger") - starPounds.stats.hunger.base) * 0.2, 0)
+  end
+
+  return 0
 end
 
 starPounds.modules.experience = experience

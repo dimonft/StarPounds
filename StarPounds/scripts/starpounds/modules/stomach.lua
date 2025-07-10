@@ -282,7 +282,9 @@ function stomach:gurgle(noDigest)
       isBelch = true
       -- Every 100 pitches the sound down and volume up by 10%, max 25%.
       local belchMultiplier = math.min(self.stomach.belchable/1000, 0.25)
-      starPounds.belch(0.5 + belchMultiplier, starPounds.belchPitch(1 - belchMultiplier))
+      local belchVolume = 0.5 + belchMultiplier
+      local belchPitch = 1 - belchMultiplier
+      starPounds.belch(belchMultiplier, starPounds.belchPitch(belchPitch))
     end
     self:digest(seconds, true, isBelch)
   end
