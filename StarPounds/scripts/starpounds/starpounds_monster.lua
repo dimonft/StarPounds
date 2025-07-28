@@ -15,6 +15,8 @@ function starPoundsInit()
   setmetatable(storage.starPounds, nil)
   -- Base module.
   starPounds.moduleInit("base")
+  -- Versioning.
+  storage.starPounds = starPounds.moduleFunc("versioning", "update", storage.starPounds)
   -- Setup message handlers
   starPounds.messageHandlers()
   -- Reload whenever the entity loads in/beams/etc.
