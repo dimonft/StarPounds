@@ -40,6 +40,7 @@ function stomach:init()
   message.setHandler("starPounds.digest", function(_, _, ...) return self:digest(...) end)
   message.setHandler("starPounds.gurgle", function(_, _, ...) return self:gurgle(...) end)
   message.setHandler("starPounds.rumble", function(_, _, ...) return self:rumble(...) end)
+  message.setHandler("starPounds.resetStomach", localHandler(self.reset))
 
   self:squelchEvents()
 end
@@ -290,7 +291,7 @@ function stomach:digest(dt, isGurgle, isBelch)
         local milkProduced, milkCost = starPounds.moduleFunc("breasts", "milkProduction", digestAmount * absorption * foodConfig.multipliers.food)
         starPounds.moduleFunc("breasts", "gainMilk", milkProduced)
         -- Gain weight based on amount digested, milk production, and digestion efficiency.
-        starPounds.gainWeight((digestAmount * (foodConfig.ignoreAbsorption and 1 or absorption) * foodConfig.multipliers.weight) - ((milkCost or 0)/math.max(1, breastEfficiency)))
+        starPounds.moduleFunc("size", "gainWeight", (digestAmount * (foodConfig.ignoreAbsorption and 1 or absorption) * foodConfig.multipliers.weight) - ((milkCost or 0)/math.max(1, breastEfficiency)))
         -- Don't heal if eaten.
         if not storage.starPounds.pred then
           -- Base amount 1 health (100 food would restore 100 health, modified by healing and absorption)
@@ -485,6 +486,12 @@ function stomach:spawnBelchParticles(particles, count)
     actions[#actions + 1] = {action = "particle", specification = starPounds.makeBelchParticle(particle)}
   end
   starPounds.spawnMouthProjectile(actions, count)
+end
+
+function stomach.reset()
+  storage.starPounds.stomachContents = {}
+  storage.starPounds.stomachEntities = jarray()
+  return true
 end
 
 starPounds.modules.stomach = stomach

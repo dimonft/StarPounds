@@ -55,13 +55,6 @@ function _player:setup()
   }
   local mt = {__index = function () return nullFunction end}
   setmetatable(entity, mt)
-  if not speciesData.weightGain then
-    message.setHandler("starPounds.feed", simpleHandler(function(amount) status.giveResource("food", amount) end))
-    starPounds.getDirectives = function() return "" end
-    starPounds.gainWeight = nullFunction
-    starPounds.loseWeight = nullFunction
-    starPounds.setWeight = nullFunction
-  end
 end
 
 -- Damage listener for fall/fire damage.

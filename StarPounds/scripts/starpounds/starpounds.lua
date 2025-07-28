@@ -602,7 +602,7 @@ starPounds.setTrait = function(trait)
   end
   -- Set trait starting values. Done a bit weirdly so it still applies when the mod is off.
   storage.starPounds.weight = math.max(storage.starPounds.weight, selectedTrait.weight)
-  starPounds.setWeight(storage.starPounds.weight)
+  starPounds.moduleFunc("size", "setWeight", storage.starPounds.weight)
   -- Give trait milk
   storage.starPounds.breasts = math.max(storage.starPounds.breasts, selectedTrait.breasts)
   starPounds.moduleFunc("breasts", "setMilk", storage.starPounds.breasts)
@@ -914,42 +914,6 @@ starPounds.getDirectives = function(target)
   return directives
 end
 
-starPounds.gainWeight = function(amount, fullAmount)
-  -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return 0 end
-  -- Argument sanitisation.
-  amount = math.max(tonumber(amount) or 0, 0)
-  -- Don't do anything if weight gain is disabled.
-  if starPounds.hasOption("disableGain") then return end
-  -- Increase weight by amount.
-  amount = math.min(amount * (fullAmount and 1 or starPounds.getStat("weightGain")), starPounds.settings.maxWeight - storage.starPounds.weight)
-  starPounds.setWeight(storage.starPounds.weight + amount)
-  return amount
-end
-
-starPounds.loseWeight = function(amount, fullAmount)
-  -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return 0 end
-  -- Argument sanitisation.
-  amount = math.max(tonumber(amount) or 0, 0)
-  -- Don't do anything if weight loss is disabled.
-  if starPounds.hasOption("disableLoss") then return end
-  -- Decrease weight by amount (min: 0)
-  amount = math.min(amount * (fullAmount and 1 or starPounds.getStat("weightLoss")), storage.starPounds.weight)
-  starPounds.setWeight(storage.starPounds.weight - amount)
-  return amount
-end
-
-starPounds.setWeight = function(amount)
-  -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return end
-  -- Argument sanitisation.
-  amount = math.max(tonumber(amount) or 0, 0)
-  -- Set weight, rounded to 4 decimals.
-  amount = math.round(amount, 4)
-  storage.starPounds.weight = math.max(math.min(amount, starPounds.settings.maxWeight), starPounds.sizes[(starPounds.getSkillLevel("minimumSize") + 1)].weight)
-end
-
 starPounds.messageHandlers = function()
   -- Handler for enabling the mod.
   message.setHandler("starPounds.toggleEnable", localHandler(starPounds.toggleEnable))
@@ -978,15 +942,9 @@ starPounds.messageHandlers = function()
   -- Handlers for affecting the entity.
   message.setHandler("starPounds.belch", simpleHandler(starPounds.belch))
   message.setHandler("starPounds.belchPitch", simpleHandler(starPounds.belchPitch))
-  message.setHandler("starPounds.gainWeight", simpleHandler(starPounds.gainWeight))
-  message.setHandler("starPounds.loseWeight", simpleHandler(starPounds.loseWeight))
-  message.setHandler("starPounds.setWeight", simpleHandler(starPounds.setWeight))
   -- Interface/debug stuff.
   message.setHandler("starPounds.reset", localHandler(starPounds.reset))
   message.setHandler("starPounds.resetConfirm", localHandler(starPounds.reset))
-  message.setHandler("starPounds.resetWeight", localHandler(starPounds.resetWeight))
-  message.setHandler("starPounds.resetStomach", localHandler(starPounds.resetStomach))
-  message.setHandler("starPounds.resetBreasts", localHandler(starPounds.resetBreasts))
   message.setHandler("starPounds.resetTrait", localHandler(starPounds.resetTrait))
   message.setHandler("starPounds.resetEffects", localHandler(starPounds.resetEffects))
   message.setHandler("starPounds.setResource", localHandler(status.setResource))
@@ -1063,22 +1021,6 @@ starPounds.resetConfirm = function()
       starPounds.reset()
     end
   end)
-  return true
-end
-
-starPounds.resetWeight = function()
-  storage.starPounds.weight = starPounds.sizes[(starPounds.getSkillLevel("minimumSize") + 1)].weight
-  return true
-end
-
-starPounds.resetStomach = function()
-  storage.starPounds.stomachContents = {}
-  storage.starPounds.stomachEntities = jarray()
-  return true
-end
-
-starPounds.resetBreasts = function()
-  storage.starPounds.breasts = 0
   return true
 end
 

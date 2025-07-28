@@ -10,6 +10,7 @@ function breasts:init()
   message.setHandler("starPounds.gainMilk", function(_, _, ...) return self:gainMilk(...) end)
   message.setHandler("starPounds.loseMilk", function(_, _, ...) return self:loseMilk(...) end)
   message.setHandler("starPounds.lactate", function(_, _, ...) return self:lactate(...) end)
+  message.setHandler("starPounds.resetBreasts", localHandler(self.reset))
 end
 
 function breasts:update(dt)
@@ -141,6 +142,11 @@ function breasts:loseMilk(amount)
   amount = math.min(amount, storage.starPounds.breasts)
   storage.starPounds.breasts = math.max(0, math.round(storage.starPounds.breasts - amount, 4))
   return amount
+end
+
+function breasts.reset()
+  storage.starPounds.breasts = 0
+  return true
 end
 
 starPounds.modules.breasts = breasts

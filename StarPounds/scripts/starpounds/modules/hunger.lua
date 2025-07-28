@@ -25,7 +25,7 @@ function hunger:update(dt)
         self.isStarving = false
         local lossMultiplier = math.max(1, 1/math.max(0.01, (starPounds.getStat("foodValue") * starPounds.getStat("absorption"))))
         -- Converting fat, so ignore weight loss modifiers.
-        starPounds.loseWeight(foodDelta * lossMultiplier, true)
+        starPounds.moduleFunc("size", "loseWeight", foodDelta * lossMultiplier, true)
       end
     end
   end

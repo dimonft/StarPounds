@@ -10,7 +10,7 @@ function respawn:uninit()
     storage.starPounds.level = math.max(storage.starPounds.level - experienceCost, 0)
     storage.starPounds.experience = math.max(experienceProgress - (self.data.experiencePercentile * starPounds.getStat("deathPenalty")), 0) * experienceConfig.experienceAmount * (1 + storage.starPounds.level * experienceConfig.experienceIncrement)
     -- Lose weight.
-    starPounds.loseWeight(weightCost)
+    starPounds.moduleFunc("size", "loseWeight", weightCost)
     -- Reset stomach.
     starPounds.resetStomach()
     starPounds.resetBreasts()

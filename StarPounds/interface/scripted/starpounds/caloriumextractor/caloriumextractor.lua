@@ -18,7 +18,7 @@ function update()
       if extractTimer == 0 then
         local nextWeight = starPounds.sizes[starPounds.currentSizeIndex + 1] and starPounds.sizes[starPounds.currentSizeIndex + 1].weight or starPounds.settings.maxWeight
         local caloriumCost = caloriumFat + math.floor(0.02 * (nextWeight - starPounds.currentSize.weight) + 0.5)
-        local converted = math.floor(starPounds.loseWeight(caloriumCost, true)/caloriumCost + 0.5)
+        local converted = math.floor(starPounds.moduleFunc("size", "loseWeight", caloriumCost, true)/caloriumCost + 0.5)
         starPounds.caloriumExtractTracker = (starPounds.caloriumExtractTracker or 0) + (caloriumCost * converted)
         -- Roughly every 1000lb (effectTarget), add a stack. Slightly random for funsies.
         local chance = starPounds.caloriumExtractTracker / effectTarget

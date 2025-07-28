@@ -395,7 +395,7 @@ function prey:digesting(pred, digestionRate, protectionPierce)
     -- Getting digested by a player removes all your fat.
     local predType = world.entityType(storage.starPounds.pred)
     if (predType == "player") or (predType == "npc") then
-      starPounds.setWeight(0)
+      starPounds.moduleFunc("size", "setWeight", 0)
     end
     -- Run standard monster/NPC death stuff.
     if die then die() end

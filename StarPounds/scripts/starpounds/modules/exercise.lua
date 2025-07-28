@@ -18,7 +18,7 @@ function exercise:update(dt)
   if self.hasFood and status.resource("food") >= (status.resourceMax("food") + status.stat("foodDelta")) and starPounds.stomach.food > 0 then
     amount = amount * self.data.foodMultiplier
   end
-  starPounds.loseWeight(amount)
+  starPounds.moduleFunc("size", "loseWeight", amount)
 end
 
 starPounds.modules.exercise = exercise

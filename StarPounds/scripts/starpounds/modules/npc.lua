@@ -107,12 +107,6 @@ function _npc:setup()
     preserved.starPounds = storage.starPounds
     return preserved
   end
-  -- Disable anything that uses visuals if the species doesn't have a patch.
-  if not speciesData.weightGain then
-    starPounds.gainWeight = nullFunction
-    starPounds.loseWeight = nullFunction
-    starPounds.setWeight = nullFunction
-  end
   -- No XP if disabled.
   if config.getParameter("starPounds_options.disableExperience") then
     entity.foodType = entity.foodType.."_noExperience"

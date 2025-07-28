@@ -43,8 +43,12 @@ function size:init()
   self.slots[#self.slots + 1] = {"chestCosmetic", {itemType = "chest", default = true}}
   self.slots[#self.slots + 1] = {"legsCosmetic", {itemType = "legs", default = true}}
 
+  message.setHandler("starPounds.gainWeight", function(_, _, ...) return self:gainWeight(...) end)
+  message.setHandler("starPounds.loseWeight", function(_, _, ...) return self:loseWeight(...) end)
+  message.setHandler("starPounds.setWeight", function(_, _, ...) return self:setWeight(...) end)
   message.setHandler("starPounds.getSize", function(_, _, ...) return self:get(...) end)
   message.setHandler("starPounds.getChestVariant", function(_, _, ...) return self:getVariant(...) end)
+  message.setHandler("starPounds.resetWeight", localHandler(self.reset))
 end
 
 function size:update(dt)
@@ -75,6 +79,44 @@ function size:update(dt)
   self:cursorCheck()
   self:trackVehicleCap()
   self:equip(self:equipmentConfig(starPounds.currentSizeIndex))
+end
+
+
+
+function size:gainWeight(amount, fullAmount)
+  -- Don't do anything if the mod is disabled.
+  if not (storage.starPounds.enabled and self.canGain) then return 0 end
+  -- Argument sanitisation.
+  amount = math.max(tonumber(amount) or 0, 0)
+  -- Don't do anything if weight gain is disabled.
+  if starPounds.hasOption("disableGain") then return end
+  -- Increase weight by amount.
+  amount = math.min(amount * (fullAmount and 1 or starPounds.getStat("weightGain")), starPounds.settings.maxWeight - storage.starPounds.weight)
+  self:setWeight(storage.starPounds.weight + amount)
+  return amount
+end
+
+function size:loseWeight(amount, fullAmount)
+  -- Don't do anything if the mod is disabled.
+  if not (storage.starPounds.enabled and self.canGain) then return 0 end
+  -- Argument sanitisation.
+  amount = math.max(tonumber(amount) or 0, 0)
+  -- Don't do anything if weight loss is disabled.
+  if starPounds.hasOption("disableLoss") then return end
+  -- Decrease weight by amount (min: 0)
+  amount = math.min(amount * (fullAmount and 1 or starPounds.getStat("weightLoss")), storage.starPounds.weight)
+  self:setWeight(storage.starPounds.weight - amount)
+  return amount
+end
+
+function size:setWeight(amount)
+  -- Don't do anything if the mod is disabled.
+  if not (storage.starPounds.enabled and self.canGain) then return end
+  -- Argument sanitisation.
+  amount = math.max(tonumber(amount) or 0, 0)
+  -- Set weight, rounded to 4 decimals.
+  amount = math.round(amount, 4)
+  storage.starPounds.weight = math.max(math.min(amount, starPounds.settings.maxWeight), starPounds.sizes[(starPounds.getSkillLevel("minimumSize") + 1)].weight)
 end
 
 function size:get(weight)
@@ -367,6 +409,11 @@ function size:cursorCheck()
       player.setSwapSlotItem(item)
     end
   end
+end
+
+function size.reset()
+  storage.starPounds.weight = starPounds.sizes[(starPounds.getSkillLevel("minimumSize") + 1)].weight
+  return true
 end
 
 starPounds.modules.size = size

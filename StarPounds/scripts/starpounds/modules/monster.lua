@@ -55,9 +55,6 @@ function _monster:setup()
   -- Disable stuff monsters don't use
   starPounds.getDirectives = function() return "" end
   starPounds.getSpecies = function() return "" end
-  starPounds.gainWeight = nullFunction
-  starPounds.loseWeight = nullFunction
-  starPounds.setWeight = nullFunction
   -- Save default functions.
   openDoors_old = openDoors_old or openDoors
   closeDoors_old = closeDoors_old or closeDoors
