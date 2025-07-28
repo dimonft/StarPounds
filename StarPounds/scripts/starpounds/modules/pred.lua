@@ -11,6 +11,8 @@ function pred:init()
 
   self.voreCooldown = 0
 
+  self.hasEntity = false
+
   self.struggleCooldown = 0
   self.storedStruggleStrength = 0
   self.storedStruggleVolume = 0
@@ -28,6 +30,8 @@ function pred:update(dt)
   if (self.struggleVolumeLerp + self.storedStruggleVolume > 0) then
     self.struggleVolumeLerp = math.max(0, math.round(util.lerp(dt, self.struggleVolumeLerp, self.storedStruggleVolume - 0.05), 4))
   end
+
+  self.hasEntity = storage.starPounds.enabled and (#storage.starPounds.stomachEntities > 0)
 end
 
 function pred:digest(dt)
@@ -379,11 +383,15 @@ function pred:struggle(preyId, struggleStrength, escape)
         world.sendEntityMessage(preyId, "starPounds.getDigested", entity.id(), damageMultiplier, protectionMultiplier)
       end
 
+      -- Outside the block so we can pass it to the event.
+      local struggleVolume = math.min(0.75, 0.25 + preyHealthPercent * (preyWeight/(starPounds.species.default.weight * 2)) + self.struggleVolumeLerp)
+      local strugglePitch = 1 + 0.1 * (math.random() - 0.5)
+
       if not starPounds.hasOption("disableStruggleSounds") then
-        local soundVolume = math.min(1, 0.25 + preyHealthPercent * (preyWeight/(starPounds.species.default.weight * 2)) + self.struggleVolumeLerp)
-        local soundPitch = 1 + 0.1 * (math.random() - 0.5)
-        starPounds.moduleFunc("sound", "play", "struggle", soundVolume, soundPitch)
+        starPounds.moduleFunc("sound", "play", "struggle", struggleVolume, strugglePitch)
       end
+
+      starPounds.events:fire("pred:struggle", struggleVolume, strugglePitch)
 
       self.storedStruggleVolume = 0
       self.storedStruggleStrength = 0
@@ -444,7 +452,7 @@ function pred:preyCheck(dt)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
   -- Don't do anything if there's no eaten entities.
-  if #storage.starPounds.stomachEntities == 0 then return end
+  if not self.hasEntity then return end
   -- Run on a timer unless manually called.
   if dt then
     self.preyCheckTimer = math.max(self.preyCheckTimer - dt, 0)

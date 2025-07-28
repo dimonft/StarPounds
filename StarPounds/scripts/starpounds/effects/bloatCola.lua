@@ -15,6 +15,7 @@ function bloatCola:init()
   end
 
   starPounds.events:on("stomach:slosh", self.onSlosh)
+  starPounds.events:on("player:landing", self.onSlosh)
 end
 
 function bloatCola:apply()

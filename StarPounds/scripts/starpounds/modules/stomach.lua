@@ -11,6 +11,10 @@ function stomach:init()
   self.sloshDeactivateTimer = 0
   self.sloshActivations = 0
 
+  self.squelchVolume = 0
+
+  self.preySquelching = false
+
   self.digestionExperience = 0
 
   self.defaultContents = {
@@ -34,6 +38,8 @@ function stomach:init()
   message.setHandler("starPounds.digest", function(_, _, ...) return self:digest(...) end)
   message.setHandler("starPounds.gurgle", function(_, _, ...) return self:gurgle(...) end)
   message.setHandler("starPounds.rumble", function(_, _, ...) return self:rumble(...) end)
+
+  self:squelchEvents()
 end
 
 function stomach:update(dt)
@@ -41,6 +47,7 @@ function stomach:update(dt)
   starPounds.stomach = self:get()
   self:digest(dt)
   self:sloshing(dt)
+  self:squelching(dt)
   self:interpolateContents(dt)
 end
 
@@ -339,6 +346,77 @@ function stomach:sloshing(dt)
     self.sloshActivations = 0
   end
   self.wasCrouching = starPounds.mcontroller.crouching
+end
+
+function stomach:squelching(dt)
+  local hasPrey = storage.starPounds.enabled and (#storage.starPounds.stomachEntities > 0) and not starPounds.hasOption("disableSquelchSounds")
+  -- Activate squelch loop.
+  if hasPrey then
+    starPounds.moduleFunc("sound", "setVolume", "squelchloop", self.squelchVolume)
+    if not self.preySquelching then
+      starPounds.moduleFunc("sound", "play", "squelchloop", 0, 1, -1) -- Zero volume if it's activating, ramps up slowly.
+      self.preySquelching = true
+      self.squelchDeactivateTimer = self.data.squelchRampTime
+    end
+  end
+  -- Deactivate squelch loop.
+  if not hasPrey and self.preySquelching then
+    -- Fade out the sound initially.
+    if self.squelchDeactivateTimer == self.data.squelchRampTime then
+      starPounds.moduleFunc("sound", "setVolume", "squelchloop", 0, self.data.squelchRampTime)
+    end
+    -- Wait for the fade out to finish, and then deactivate the sound so it's not abrupt.
+    self.squelchDeactivateTimer = math.max(self.squelchDeactivateTimer - dt, 0)
+    if self.squelchDeactivateTimer == 0 then
+      starPounds.moduleFunc("sound", "stop", "squelchloop")
+      self.preySquelching = false
+    end
+  end
+
+  if storage.starPounds.enabled then
+    local fullness = math.max(self.stomach.baseFullness / starPounds.currentSize.stomachMultiplier, self.stomach.fullness)
+    local volume = math.max(self.data.squelchMinimumVolume, math.min(fullness / self.data.squelchMaxVolumeCapacity, 1))
+    self.squelchVolume = math.round(volume * self.data.squelchVolume, 2)
+  else
+    self.squelchVolume = 0
+  end
+end
+
+function stomach:squelch(volume, pitch)
+  -- Don't do anything if the mod is disabled.
+  if not storage.starPounds.enabled then return end
+  if not starPounds.hasOption("disableSquelchSounds") then
+    volume = math.min(tonumber(volume) or 1, 1)
+    pitch = math.min(tonumber(pitch) or 1, 1)
+    starPounds.moduleFunc("sound", "play", "squelch", self.squelchVolume * volume, pitch)
+  end
+end
+
+function stomach:squelchEvents()
+  local struggleSquelch = function(volume, pitch)
+    volume = (tonumber(volume) or 1) * self.data.squelchStruggleVolume
+    if not starPounds.hasOption("disableStruggleSounds") then
+      self:squelch(volume, pitch)
+    end
+  end
+
+  local sloshSquelch = function(volume, pitch)
+    volume = (tonumber(volume) or 1) * self.data.squelchSloshVolume
+    if not starPounds.hasOption("disableMovementSounds") then
+      self:squelch(volume, pitch)
+    end
+  end
+
+  local landingSquelch = function(volume, pitch)
+    volume = (tonumber(volume) or 1) * self.data.squelchLandingVolume
+    if not starPounds.hasOption("disableMovementSounds") then
+      self:squelch(volume, pitch)
+    end
+  end
+
+  starPounds.events:on("pred:struggle", struggleSquelch)
+  starPounds.events:on("stomach:slosh", sloshSquelch)
+  starPounds.events:on("player:landing", landingSquelch)
 end
 
 function stomach:stepTimer(timer, dt)

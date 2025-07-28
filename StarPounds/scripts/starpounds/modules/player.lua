@@ -181,7 +181,7 @@ function _player:landing()
   if self.wasFalling and not starPounds.mcontroller.falling then
     if starPounds.mcontroller.groundMovement then
       local stomachMult = self.data.sloshStomachMult * starPounds.stomach.contents / (entity.weight * starPounds.currentSize.thresholdMultiplier)
-      starPounds.events:fire("stomach:slosh", math.min(stomachMult, 1))
+      starPounds.events:fire("player:landing", math.min(stomachMult, 1))
       -- Sounds.
       if not starPounds.hasOption("disableMovementSounds") then
         local landVolume = self:soundMult()

@@ -54,6 +54,18 @@
       "/sfx/starpounds/struggle/struggle10.ogg",
       "/sfx/starpounds/struggle/struggle11.ogg"
     ],
+    "squelch": [
+      "/sfx/starpounds/squelch/squelch1.ogg",
+      "/sfx/starpounds/squelch/squelch2.ogg",
+      "/sfx/starpounds/squelch/squelch3.ogg",
+      "/sfx/starpounds/squelch/squelch4.ogg",
+      "/sfx/starpounds/squelch/squelch5.ogg",
+      "/sfx/starpounds/squelch/squelch6.ogg",
+      "/sfx/starpounds/squelch/squelch7.ogg",
+      "/sfx/starpounds/squelch/squelch8.ogg",
+      "/sfx/starpounds/squelch/squelch9.ogg",
+      "/sfx/starpounds/squelch/squelch10.ogg"
+    ],
     "swallow": [
       "/sfx/starpounds/swallow/swallow1.ogg",
       "/sfx/starpounds/swallow/swallow2.ogg",
@@ -79,6 +91,7 @@
       "/sfx/starpounds/belch/belch7.ogg",
       "/sfx/starpounds/belch/belch8.ogg"
     ],
+    "squelchloop": ["/sfx/starpounds/squelch/squelchloop.ogg"],
     "footstep": ["/sfx/starpounds/other/footstep.ogg"],
     "land": ["/sfx/starpounds/other/footstep.ogg"],
     "clothingrip": [ "/sfx/starpounds/other/clothingrip.ogg" ],
