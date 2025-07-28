@@ -32,7 +32,7 @@ function init()
   starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
   starPounds.moduleInit({"entity", "humanoid", "npc", "vore"})
   starPounds.effectInit()
-  starPounds.setWeight(storage.starPounds.weight)
+  starPounds.moduleFunc("size", "setWeight", storage.starPounds.weight)
 
   starPounds.events:on("main:statChange", function(trace)
     starPounds.updateStats(true)

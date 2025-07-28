@@ -33,7 +33,7 @@ function init()
   starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
   starPounds.moduleInit({"entity", "humanoid", "player", "vore"})
   starPounds.effectInit()
-  starPounds.setWeight(storage.starPounds.weight)
+  starPounds.moduleFunc("size", "setWeight", storage.starPounds.weight)
 
   starPounds.events:on("main:statChange", function(trace)
     -- Kill the cache, and force an update to stats.

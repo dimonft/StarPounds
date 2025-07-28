@@ -25,7 +25,6 @@ function starPoundsInit()
   starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
   starPounds.moduleInit({"entity", "monster", "vore"})
   starPounds.effectInit()
-  starPounds.setWeight(storage.starPounds.weight)
   starPounds.weightMultiplier = 1
 
   starPounds.events:on("main:statChange", function(trace)
