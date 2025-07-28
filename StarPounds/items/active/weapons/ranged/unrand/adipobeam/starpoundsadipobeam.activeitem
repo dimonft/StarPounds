@@ -52,6 +52,13 @@
     "sounds" : {
       "fire" : ["/sfx/gun/plasma_ar4.ogg"],
       "altFire" : [ "/sfx/gun/plasma_shotgun1.ogg" ]
+    },
+    "lights" : {
+      "muzzleFlash" : {
+        "active" : false,
+        "position" : [0, 0],
+        "color" : [102, 43, 62]
+      }
     }
   },
   "baseOffset" : [0.625, 0.125],

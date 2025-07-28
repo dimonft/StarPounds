@@ -5,9 +5,10 @@
   "damageKindImage" : "icon.png",
   "image" : "starpoundslaunchedadipobombs.png",
   "animationCycle" : 0.5,
-  "timeToLive" : 3,
+  "timeToLive" : 4,
   "frameNumber" : 6,
   "piercing" : true,
+  "lightColor" : [51, 21, 31],
 
   "actionOnReap" : [
     {
@@ -30,16 +31,17 @@
       "type" : "caloricsmoke",
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0
+      "inheritDamageFactor" : 0.0,
+      "delaySteps" : 10
     },
     {
       "action" : "projectile",
       "type" : "caloricsmoke",
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0
+      "inheritDamageFactor" : 0.0,
+      "delaySteps" : 20
     },
-
     {
       "action" : "projectile",
       "type" : "caloricsmoke",
@@ -54,7 +56,7 @@
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
       "inheritDamageFactor" : 0.0,
-      "delaySteps" : 30
+      "delaySteps" : 40
     },
     {
       "action" : "projectile",
@@ -62,16 +64,7 @@
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
       "inheritDamageFactor" : 0.0,
-      "delaySteps" : 30
-    },
-
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 60
+      "delaySteps" : 50
     },
     {
       "action" : "projectile",
@@ -87,16 +80,15 @@
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
       "inheritDamageFactor" : 0.0,
-      "delaySteps" : 60
+      "delaySteps" : 70
     },
-
     {
       "action" : "projectile",
       "type" : "caloricsmoke",
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
       "inheritDamageFactor" : 0.0,
-      "delaySteps" : 90
+      "delaySteps" : 80
     },
     {
       "action" : "projectile",
@@ -112,9 +104,16 @@
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
       "inheritDamageFactor" : 0.0,
-      "delaySteps" : 90
+      "delaySteps" : 100
     },
-
+    {
+      "action" : "projectile",
+      "type" : "caloricsmoke",
+      "fuzzAngle" : 180,
+      "inheritSpeedFactor" : 0.1,
+      "inheritDamageFactor" : 0.0,
+      "delaySteps" : 110
+    },
     {
       "action" : "projectile",
       "type" : "caloricsmoke",
@@ -129,7 +128,7 @@
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
       "inheritDamageFactor" : 0.0,
-      "delaySteps" : 120
+      "delaySteps" : 130
     },
     {
       "action" : "projectile",
@@ -137,9 +136,8 @@
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
       "inheritDamageFactor" : 0.0,
-      "delaySteps" : 120
+      "delaySteps" : 140
     },
-
     {
       "action" : "projectile",
       "type" : "caloricsmoke",
@@ -154,7 +152,7 @@
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
       "inheritDamageFactor" : 0.0,
-      "delaySteps" : 150
+      "delaySteps" : 160
     },
     {
       "action" : "projectile",
@@ -162,16 +160,7 @@
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
       "inheritDamageFactor" : 0.0,
-      "delaySteps" : 150
-    },
-
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 180
+      "delaySteps" : 170
     },
     {
       "action" : "projectile",
@@ -187,16 +176,7 @@
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
       "inheritDamageFactor" : 0.0,
-      "delaySteps" : 180
-    },
-
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 210
+      "delaySteps" : 190
     },
     {
       "action" : "projectile",
@@ -204,7 +184,7 @@
       "fuzzAngle" : 180,
       "inheritSpeedFactor" : 0.1,
       "inheritDamageFactor" : 0.0,
-      "delaySteps" : 210
+      "delaySteps" : 200
     },
     {
       "action" : "projectile",
@@ -213,6 +193,30 @@
       "inheritSpeedFactor" : 0.1,
       "inheritDamageFactor" : 0.0,
       "delaySteps" : 210
+    },
+    {
+      "action" : "projectile",
+      "type" : "caloricsmoke",
+      "fuzzAngle" : 180,
+      "inheritSpeedFactor" : 0.1,
+      "inheritDamageFactor" : 0.0,
+      "delaySteps" : 220
+    },
+    {
+      "action" : "projectile",
+      "type" : "caloricsmoke",
+      "fuzzAngle" : 180,
+      "inheritSpeedFactor" : 0.1,
+      "inheritDamageFactor" : 0.0,
+      "delaySteps" : 230
+    },
+    {
+      "action" : "projectile",
+      "type" : "caloricsmoke",
+      "fuzzAngle" : 180,
+      "inheritSpeedFactor" : 0.1,
+      "inheritDamageFactor" : 0.0,
+      "delaySteps" : 240
     }
   ],
   "power" : 50,

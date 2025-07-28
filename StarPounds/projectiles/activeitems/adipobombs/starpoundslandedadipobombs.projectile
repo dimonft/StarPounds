@@ -8,21 +8,41 @@
   "speed" : 0,
   "piercing" : true,
   "initialVelocity" : 0,
-  "timeToLive" : 5,
+  "timeToLive" : 4,
   "bounces" : -1,
   "flippable" : true,
   "orientationLocked" : false,
-
+  "lightColor" : [51, 21, 31],
+  "actionOnCollide" : [
+    {
+      "action" : "sound",
+      "options" : [
+        "/sfx/projectiles/ropehook_impact1.ogg",
+        "/sfx/projectiles/ropehook_impact2.ogg",
+        "/sfx/projectiles/ropehook_impact3.ogg",
+        "/sfx/projectiles/ropehook_impact4.ogg",
+        "/sfx/projectiles/ropehook_impact5.ogg",
+        "/sfx/projectiles/ropehook_impact6.ogg",
+        "/sfx/projectiles/ropehook_impact7.ogg",
+        "/sfx/projectiles/ropehook_impact8.ogg",
+        "/sfx/projectiles/ropehook_impact9.ogg",
+        "/sfx/projectiles/ropehook_impact10.ogg",
+        "/sfx/projectiles/ropehook_impact11.ogg",
+        "/sfx/projectiles/ropehook_impact12.ogg"
+      ]
+    }
+  ],
   "actionOnReap" : [
     {
       "action" : "sound",
-      "options" : [ "/sfx/projectiles/electrical_barrier_break3.ogg" ]
-    },  
+      "options" : [ "/sfx/objects/gasbooster_off.ogg" ]
+    },
     {
       "action" : "config",
-      "file" : "/projectiles/explosions/heavybulletexplosion/heavybulletexplosion.config"
+      "file" : "/projectiles/explosions/regularexplosion2/caloricexplosionadipobombs.config"
     }
   ],
   "damageType" : "NoDamage",
-  "damageKind" : "caloric"
+  "damageKind" : "caloric",
+  "persistentAudio" : "/sfx/objects/gasbooster_loop.ogg"
 }
