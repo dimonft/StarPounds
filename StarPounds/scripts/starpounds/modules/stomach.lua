@@ -102,12 +102,13 @@ function stomach:get()
   -- Don't recalculate multiple times a tick.
   if self.stomach then return self.stomach end
 
-  local capacity = self.data.stomachCapacity * starPounds.getStat("capacity")
-
+  local baseCapacity = self.data.stomachCapacity
   -- Multiply based on size.
   if starPounds.currentSize then
-    capacity = capacity * starPounds.currentSize.stomachMultiplier
+    baseCapacity = baseCapacity * starPounds.currentSize.stomachMultiplier
   end
+
+  local capacity = baseCapacity * starPounds.getStat("capacity")
 
   local totalAmount = 0
   local contents = 0
@@ -137,13 +138,14 @@ function stomach:get()
 
   self.stomach = {
     capacity = capacity,
+    baseCapacity = baseCapacity,
     amount = math.round(totalAmount, 3),
     contents = math.round(contents, 3),
     food = math.round(food, 3),
     belchable = math.round(belchable, 3),
 
     fullness = math.round(contents/capacity, 2),
-    baseFullness = math.round(contents/self.data.stomachCapacity, 2),
+    baseFullness = math.round(contents/baseCapacity, 2),
     interpolatedFullness = math.round(self.stomachLerp/capacity, 2),
     interpolatedContents = math.round(self.stomachLerp, 3)
   }
@@ -419,7 +421,7 @@ function stomach:squelching(dt)
   end
 
   if storage.starPounds.enabled then
-    local fullness = math.max(self.stomach.baseFullness / starPounds.currentSize.stomachMultiplier, self.stomach.fullness)
+    local fullness = math.max(self.stomach.baseFullness, self.stomach.fullness)
     local volume = math.max(self.data.squelchMinimumVolume, math.min(fullness / self.data.squelchMaxVolumeCapacity, 1))
     self.squelchVolume = math.round(volume * self.data.squelchVolume, 2)
   else
