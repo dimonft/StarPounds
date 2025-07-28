@@ -327,8 +327,8 @@ function pred:preyDigested(preyId, items, preyStomach)
     end
   end
 
-  starPounds.feed(digestedEntity.base, digestedEntity.foodType)
-  starPounds.feed(digestedEntity.weight, "preyWeight")
+  starPounds.moduleFunc("stomach", "feed", digestedEntity.base, digestedEntity.foodType)
+  starPounds.moduleFunc("stomach", "feed", digestedEntity.weight, "preyWeight")
   starPounds.events:fire("pred:digestEntity", digestedEntity)
   return true
 end

@@ -914,48 +914,6 @@ starPounds.getDirectives = function(target)
   return directives
 end
 
-starPounds.feed = function(amount, foodType)
-  -- Runs eat, but adapts for player food.
-  -- Use this rather than eat() unless we don't care about the hunger bar for some reason.
-
-  -- Argument sanitisation.
-  amount = math.max(tonumber(amount) or 0, 0)
-  -- Don't do anything if there's no food.
-  if amount == 0 then return end
-  if not storage.starPounds.enabled then
-    if status.isResource("food") then
-      status.giveResource("food", amount)
-    end
-  else
-    starPounds.eat(amount, foodType)
-  end
-end
-
-starPounds.eat = function(amount, foodType)
-  -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return end
-  -- Argument sanitisation.
-  amount = math.max(tonumber(amount) or 0, 0)
-  foodType = foodType and tostring(foodType) or "default"
-  if not starPounds.foods[foodType] then foodType = "default" end
-  -- Don't do anything if there's no food.
-  if amount == 0 then return end
-  -- Food type capacity cap.
-  local maxCapacity = math.huge
-  if starPounds.foods[foodType].maxCapacity then
-    maxCapacity = starPounds.stomach.capacity * (starPounds.foods[foodType].maxCapacity / starPounds.foods[foodType].multipliers.capacity)
-  end
-  -- Stats that affect the amount gained.
-  if starPounds.foods[foodType].amountStats then
-    for _, stat in pairs(starPounds.foods[foodType].amountStats) do
-      amount = math.max(amount * starPounds.getStat(stat), 0)
-    end
-  end
-  -- Insert food into stomach.
-  amount = math.round(amount, 3)
-  storage.starPounds.stomachContents[foodType] = math.min((storage.starPounds.stomachContents[foodType] or 0) + amount, maxCapacity)
-end
-
 starPounds.gainWeight = function(amount, fullAmount)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return 0 end
@@ -1020,8 +978,6 @@ starPounds.messageHandlers = function()
   -- Handlers for affecting the entity.
   message.setHandler("starPounds.belch", simpleHandler(starPounds.belch))
   message.setHandler("starPounds.belchPitch", simpleHandler(starPounds.belchPitch))
-  message.setHandler("starPounds.feed", simpleHandler(starPounds.feed))
-  message.setHandler("starPounds.eat", simpleHandler(starPounds.eat))
   message.setHandler("starPounds.gainWeight", simpleHandler(starPounds.gainWeight))
   message.setHandler("starPounds.loseWeight", simpleHandler(starPounds.loseWeight))
   message.setHandler("starPounds.setWeight", simpleHandler(starPounds.setWeight))

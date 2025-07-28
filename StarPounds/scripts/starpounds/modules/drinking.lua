@@ -88,7 +88,7 @@ function drinking:consumeLiquidsAtPosition(position)
         if consumedLiquid and consumedLiquid[1] and consumedLiquid[2] then
           local liquidName = root.liquidName(consumedLiquid[1])
           for foodType, foodAmount in pairs(starPounds.moduleFunc("liquid", "get", liquidName).food) do
-            starPounds.feed(foodAmount * consumedLiquid[2], foodType)
+            starPounds.moduleFunc("stomach", "feed", foodAmount * consumedLiquid[2], foodType)
           end
           -- Store amounts for particle spawning/sound.
           consumedLiquids[liquidName] = math.min((consumedLiquids[liquidName] or 0) + consumedLiquid[2])

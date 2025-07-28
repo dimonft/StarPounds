@@ -37,7 +37,7 @@ function init()
        table.remove(orderList, itemIndex)
     end
   end
-  starPounds.feed(totalFood)
+  starPounds.moduleFunc("stomach", "feed", totalFood)
   self.order.money = (self.order.money or 0) + eatFoodCost
   self.ateItems = self.totalFood > 0
   if self.totalFood >= 500 then
@@ -87,7 +87,7 @@ function update(dt)
         self.removeChest = true
       end
       npc.beginPrimaryFire()
-      starPounds.feed(itemFood)
+      starPounds.moduleFunc("stomach", "feed", itemFood)
       self.ateOrder = true
     end
     if self.ateCustomer and not starPounds.moduleFunc("pred", "hasPrey", targetEntityId) then

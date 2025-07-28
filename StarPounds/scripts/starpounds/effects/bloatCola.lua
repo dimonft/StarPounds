@@ -41,7 +41,7 @@ function bloatCola:update(dt)
     self.expiring = true
     starPounds.moduleFunc("sound", "setVolume", "fizz", 0, 1)
   end
-  starPounds.feed(self.airAmount * self.fizzMultiplier * dt, "air")
+  starPounds.moduleFunc("stomach", "feed", self.airAmount * self.fizzMultiplier * dt, "air")
 end
 
 function bloatCola:expire()
@@ -55,8 +55,8 @@ end
 
 function bloatCola:shake(duration)
   -- Remove duration for double the air.
-  starPounds.feed(duration * self.airAmount * self.fizzMultiplier * 2, "air")
   self.data.duration = math.max(self.data.duration - duration, 0)
+  starPounds.moduleFunc("stomach", "feed", duration * self.airAmount * self.fizzMultiplier * 2, "air")
   starPounds.moduleFunc("stomach", "rumble", self.volumeMultiplier)
 end
 -- Add the effect.

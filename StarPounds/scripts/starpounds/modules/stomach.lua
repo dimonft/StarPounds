@@ -35,6 +35,8 @@ function stomach:init()
   setmetatable(storage.starPounds.stomachContents, nil)
 
   message.setHandler("starPounds.getStomach", function(_, _, ...) return self:get(...) end)
+  message.setHandler("starPounds.feed", function(_, _, ...) return self:feed(...) end)
+  message.setHandler("starPounds.eat", function(_, _, ...) return self:eat(...) end)
   message.setHandler("starPounds.digest", function(_, _, ...) return self:digest(...) end)
   message.setHandler("starPounds.gurgle", function(_, _, ...) return self:gurgle(...) end)
   message.setHandler("starPounds.rumble", function(_, _, ...) return self:rumble(...) end)
@@ -49,6 +51,48 @@ function stomach:update(dt)
   self:sloshing(dt)
   self:squelching(dt)
   self:interpolateContents(dt)
+end
+
+function stomach:feed(amount, foodType)
+  -- Runs eat, but adapts for player food.
+  -- Use this rather than eat() unless we don't care about the hunger bar for some reason.
+
+  -- Argument sanitisation.
+  amount = math.max(tonumber(amount) or 0, 0)
+  -- Don't do anything if there's no food.
+  if amount == 0 then return end
+  if not storage.starPounds.enabled then
+    if status.isResource("food") then
+      status.giveResource("food", amount)
+    end
+  else
+    self:eat(amount, foodType)
+  end
+end
+
+function stomach:eat(amount, foodType)
+  -- Don't do anything if the mod is disabled.
+  if not storage.starPounds.enabled then return end
+  -- Argument sanitisation.
+  amount = math.max(tonumber(amount) or 0, 0)
+  foodType = foodType and tostring(foodType) or "default"
+  if not starPounds.foods[foodType] then foodType = "default" end
+  -- Don't do anything if there's no food.
+  if amount == 0 then return end
+  -- Food type capacity cap.
+  local maxCapacity = math.huge
+  if starPounds.foods[foodType].maxCapacity then
+    maxCapacity = self.stomach.capacity * (starPounds.foods[foodType].maxCapacity / starPounds.foods[foodType].multipliers.capacity)
+  end
+  -- Stats that affect the amount gained.
+  if starPounds.foods[foodType].amountStats then
+    for _, stat in pairs(starPounds.foods[foodType].amountStats) do
+      amount = math.max(amount * starPounds.getStat(stat), 0)
+    end
+  end
+  -- Insert food into stomach.
+  amount = math.round(amount, 3)
+  storage.starPounds.stomachContents[foodType] = math.min((storage.starPounds.stomachContents[foodType] or 0) + amount, maxCapacity)
 end
 
 function stomach:get()
@@ -135,11 +179,11 @@ function stomach:digest(dt, isGurgle, isBelch)
   isBelch = isGurgle and isBelch
   -- Rumbles. (Outside of the other block, because we still want them to happen without food if the rumble rate is above 0)
   if not starPounds.hasOption("disableRumbles") then
-    if (starPounds.stomach.contents + starPounds.getStat("baseRumbleRate")) > 0 then
+    if (self.stomach.contents + starPounds.getStat("baseRumbleRate")) > 0 then
       if self.rumbleTimer and self.rumbleTimer > 0 then
         -- If the gurgle rate is greater than the rumble rate (and we have food), use that.
-        local gurgleRate = starPounds.stomach.contents > 0 and starPounds.getStat("gurgleRate") or 0
-        local rumbleRate = starPounds.stomach.contents > 0 and starPounds.getStat("rumbleRate") or 0
+        local gurgleRate = self.stomach.contents > 0 and starPounds.getStat("gurgleRate") or 0
+        local rumbleRate = self.stomach.contents > 0 and starPounds.getStat("rumbleRate") or 0
         rumbleRate = math.max(starPounds.getStat("baseRumbleRate"), rumbleRate, gurgleRate)
         self.rumbleTimer = math.max(self.rumbleTimer - (dt * rumbleRate), 0)
       else
@@ -150,7 +194,7 @@ function stomach:digest(dt, isGurgle, isBelch)
   end
 
   -- Don't do anything if stomach is empty.
-  if starPounds.stomach.amount == 0 then
+  if self.stomach.amount == 0 then
     self.digestTimer = 0
     self.voreDigestTimer = 0
     self.gurgleTimer = nil
