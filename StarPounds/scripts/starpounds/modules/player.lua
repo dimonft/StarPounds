@@ -1,6 +1,8 @@
 -- Underscore here since the player table exists.
 local _player = starPounds.module:new("player")
 
+require "/scripts/status.lua"
+
 function _player:init()
   self:setup()
   -- Footstep sound stuff. Initially offset so it lines up nice (hopefully).

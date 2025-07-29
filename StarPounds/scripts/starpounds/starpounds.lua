@@ -2,7 +2,6 @@ require "/scripts/messageutil.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/rect.lua"
-require "/scripts/status.lua"
 
 starPounds = {
   version = root.assetJson("/scripts/starpounds/starpounds.config:version"),
