@@ -14,8 +14,30 @@
   ],
   "actionOnReap" : [
     {
-      "action" : "config",
-      "file" : "/projectiles/explosions/plasmabulletexplosion/plasmabulletexplosion.config"
+      "action" : "loop",
+      "count" : 3,
+      "body" : [{
+        "action" : "particle",
+        "specification" : {
+          "type" : "animated",
+          "animation" : "/animations/smallcloud/smallcaloriccloud.animation",
+          "approach" : [0.5, 0.5],
+          "light" : [51, 21, 31],
+          "timeToLive" : 0.4,
+          "fade": 2,
+          "size": 0.75,
+          "variance" : {
+            "timeToLive" : 0.15,
+            "position" : [0.25, 0.25],
+            "initialVelocity" : [0.5, 0.5],
+            "rotation" : 180
+          }
+        }
+      }]
+    },
+    {
+      "action" : "sound",
+      "options" : [ "/sfx/projectiles/goocluster_pop.ogg" ]
     }
   ],
   "power" : 5.0,

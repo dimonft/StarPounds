@@ -30,24 +30,31 @@
           "mode" : "loop"
         }
       }}},
-      "parts" : { "middlefullbright" : {
-        "properties" : {
-          "centered" : true,
-          "offset" : [0.625, 0.125],
-          "zLevel" : 1,
-          "transformationGroups" : ["weapon"],
-          "fullbright" : true
-        },
-        "partStates" : {
-          "middle" : {
-            "idle" : {
-              "properties" : {
-                "image" : "starpoundsadipobeamlit.png:<frame><paletteSwaps>"
+      "parts" : {
+        "middlefullbright" : {
+          "properties" : {
+            "centered" : true,
+            "offset" : [0.625, 0.125],
+            "zLevel" : 1,
+            "transformationGroups" : ["weapon"],
+            "fullbright" : true
+          },
+          "partStates" : {
+            "middle" : {
+              "idle" : {
+                "properties" : {
+                  "image" : "starpoundsadipobeamlit.png:<frame><paletteSwaps>"
+                }
               }
             }
           }
+        },
+        "muzzleFlash" : {
+          "properties" : {
+            "fullbright" : true
+          }
         }
-      }}
+      }
     },
     "sounds" : {
       "fire" : ["/sfx/gun/plasma_ar4.ogg"],
@@ -72,11 +79,11 @@
     "scripts" : ["/items/active/weapons/ranged/gunfire.lua"],
     "class" : "GunFire",
 
-    "fireTime" : 0.3,
+    "fireTime" : 0.25,
     "baseDps" : 10.5,
     "energyUsage" : 25,
     "projectileCount" : 1,
-    "inaccuracy" : 0.015,
+    "inaccuracy" : 0.025,
 
     "burstCount" : 4,
     "burstTime" : 0.1,
