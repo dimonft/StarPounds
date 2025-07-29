@@ -6,17 +6,10 @@ local uninit_old = uninit or function() end
 function starPoundsInit()
   -- Monsters usually load this from a behaviour script, so we can't just hook into init since it's already run.
   require "/scripts/starpounds/starpounds.lua"
-  storage.starPounds = sb.jsonMerge(starPounds.baseData, storage.starPounds)
-  -- This is stupid, but prevents 'null' data being saved.
-  getmetatable(storage.starPounds).__nils = {}
   -- Used in functions for detection.
   starPounds.type = "monster"
-  -- Delete json metadata so we don't store nils.
-  setmetatable(storage.starPounds, nil)
   -- Base module.
   starPounds.moduleInit("base")
-  -- Versioning.
-  storage.starPounds = starPounds.moduleFunc("versioning", "update", storage.starPounds)
   -- Setup message handlers
   starPounds.messageHandlers()
   -- Reload whenever the entity loads in/beams/etc.

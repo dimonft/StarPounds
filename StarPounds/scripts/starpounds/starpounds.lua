@@ -14,8 +14,7 @@ starPounds = {
   traits = root.assetJson("/scripts/starpounds/starpounds_traits.config:traits"),
   effects = root.assetJson("/scripts/starpounds/starpounds_effects.config:effects"),
   selectableTraits = root.assetJson("/scripts/starpounds/starpounds_traits.config:selectableTraits"),
-  species = root.assetJson("/scripts/starpounds/starpounds_species.config"),
-  baseData = root.assetJson("/scripts/starpounds/starpounds.config:baseData")
+  species = root.assetJson("/scripts/starpounds/starpounds_species.config")
 }
 -- Mod functions
 ----------------------------------------------------------------------------------
@@ -370,7 +369,7 @@ starPounds.setOption = function(option, enable)
   if getmetatable(storage.starPounds.options) then
     getmetatable(storage.starPounds.options).__nils = {}
   end
-  starPounds.backup()
+  starPounds.moduleFunc("data", "backup")
   return storage.starPounds.options[option]
 end
 
@@ -549,7 +548,7 @@ starPounds.parseStats = function()
   end
 
   starPounds.events:fire("main:statChange", "parseStats")
-  starPounds.backup()
+  starPounds.moduleFunc("data", "backup")
 end
 
 starPounds.parseSkills = function()
@@ -844,7 +843,7 @@ starPounds.setAccessory = function(item)
   storage.starPounds.accessory = item and root.createItem(item) or nil
   starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
   starPounds.events:fire("main:statChange", "setAccessory")
-  starPounds.backup()
+  starPounds.moduleFunc("data", "backup")
 end
 
 -- world.entitySpecies can be unreliable on the first tick.
@@ -977,10 +976,8 @@ end
 starPounds.reset = function()
   -- Save accessories.
   local accessory = storage.starPounds.accessory
-  -- Reset to base data.
-  storage.starPounds = root.assetJson("/scripts/starpounds/starpounds.config:baseData")
-  -- Delete json metadata so we don't store nils.
-  setmetatable(storage.starPounds, nil)
+  -- Reset data.
+  starPounds.moduleFunc("data", "reset")
   -- If we set this to true, the enable function sets it back to false.
   -- Means we can keep all the 'get rid of stuff' code in one place.
   storage.starPounds.enabled = true
@@ -1021,12 +1018,6 @@ starPounds.resetConfirm = function()
     end
   end)
   return true
-end
-
-starPounds.backup = function()
-  if starPounds.type == "player" then
-    player.setProperty("starPoundsBackup", storage.starPounds)
-  end
 end
 
 -- Other functions

@@ -2,24 +2,10 @@
 function init()
   -- Load StarPounds.
   require "/scripts/starpounds/starpounds.lua"
-  -- Grab or create the data.
-  local loadBackup = not storage.starPounds
-  storage.starPounds = sb.jsonMerge(starPounds.baseData, storage.starPounds)
-  -- This is stupid, but prevents 'null' data being saved.
-  getmetatable(storage.starPounds).__nils = {}
-  getmetatable ''.starPounds = starPounds
   -- Used in functions for detection.
   starPounds.type = "player"
-  -- Backup storage.
-  if loadBackup then
-    storage.starPounds = sb.jsonMerge(storage.starPounds, player.getProperty("starPoundsBackup", {}))
-  end
-  -- Delete json metadata so we don't store nils.
-  setmetatable(storage.starPounds, nil)
   -- Base module.
   starPounds.moduleInit("base")
-  -- Versioning.
-  storage.starPounds = starPounds.moduleFunc("versioning", "update", storage.starPounds)
   -- Setup message handlers
   starPounds.messageHandlers()
   -- Setup species traits.

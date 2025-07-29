@@ -14,10 +14,6 @@ function size:init()
     self.equippedItem = npc.getItemSlot
     self.giveItem = nullFunction
     speciesData = starPounds.getSpeciesData(npc.species())
-  elseif starPounds.type == "monster" then
-    self.setEquippedItem = nullFunction
-    self.equippedItem = nullFunction
-    self.giveItem = nullFunction
   end
 
   self.canGain = speciesData.weightGain

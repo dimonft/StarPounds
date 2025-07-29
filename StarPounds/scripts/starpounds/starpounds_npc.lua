@@ -7,17 +7,10 @@ function init()
   -- Run old NPC/Monster stuff.
   init_old()
   require "/scripts/starpounds/starpounds.lua"
-  storage.starPounds = sb.jsonMerge(starPounds.baseData, storage.starPounds)
-  -- This is stupid, but prevents 'null' data being saved.
-  getmetatable(storage.starPounds).__nils = {}
   -- Used in functions for detection.
   starPounds.type = "npc"
-  -- Delete json metadata so we don't store nils.
-  setmetatable(storage.starPounds, nil)
   -- Base module.
   starPounds.moduleInit("base")
-  -- Versioning.
-  storage.starPounds = starPounds.moduleFunc("versioning", "update", storage.starPounds)
   -- Setup message handlers
   starPounds.messageHandlers()
   -- Setup species traits.
