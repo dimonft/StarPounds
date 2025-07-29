@@ -49,6 +49,6 @@ end
 
 function uninit()
   starPounds.moduleFunc("pred", "release", nil, true)
+  starPounds.moduleFunc("data", "backup")
   starPounds.moduleUninit()
-  starPounds.backup()
 end
