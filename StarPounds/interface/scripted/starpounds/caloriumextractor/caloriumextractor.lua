@@ -11,7 +11,7 @@ end
 function update()
   updateButtonIcon()
   updateStatusImage()
-  if starPounds.enabled and extracting then
+  if starPounds.isEnabled() and extracting then
     extractTimer = math.max(extractTimer - script.updateDt(), 0)
     local weight = starPounds.getData("weight")
     if canExtract() then
@@ -66,7 +66,7 @@ end
 function canExtract()
   local weight = starPounds.getData("weight")
   local itemCount = (caloriumOutput:item() or {name = "starpoundsliquidcalorium", count = 0}).count
-  local canExtract = starPounds.enabled and not starPounds.hasOption("disableLoss") and weight >= 10 and itemCount < maxStack
+  local canExtract = starPounds.isEnabled() and not starPounds.hasOption("disableLoss") and weight >= 10 and itemCount < maxStack
   return canExtract
 end
 

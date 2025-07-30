@@ -7,6 +7,13 @@ end
 function trackers:update(dt)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
+  -- Progress to next stage.
+  local currentSizeWeight = starPounds.currentSize.weight
+  local nextSizeWeight = starPounds.sizes[starPounds.currentSizeIndex + 1] and starPounds.sizes[starPounds.currentSizeIndex + 1].weight or starPounds.settings.maxWeight
+  if nextSizeWeight ~= starPounds.settings.maxWeight and starPounds.sizes[starPounds.currentSizeIndex + 1].yOffset and starPounds.hasOption("disableSupersize") then
+    nextSizeWeight = starPounds.settings.maxWeight
+  end
+  starPounds.progress = math.round((storage.starPounds.weight - currentSizeWeight)/(nextSizeWeight - currentSizeWeight) * 100)
   -- Don't create if we can't add statuses anyway.
   if status.statPositive("statusImmunity") then return end
   -- Check if statuses don't exist.

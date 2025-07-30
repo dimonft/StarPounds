@@ -2,7 +2,7 @@ require "/scripts/messageutil.lua"
 starPounds = getmetatable ''.starPounds
 
 function init()
-  local buttonIcon = string.format("%s.png", starPounds.enabled and "enabled" or "disabled")
+  local buttonIcon = string.format("%s.png", starPounds.isEnabled() and "enabled" or "disabled")
   enable:setImage(buttonIcon, buttonIcon, buttonIcon.."?border=2;00000000;00000000?crop=2;3;88;22")
 end
 

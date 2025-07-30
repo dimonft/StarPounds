@@ -16,7 +16,7 @@ end
 
 function update(dt)
   if status.uniqueStatusEffectActive("caloriumliquid") then return end
-  if world.entityType(entity.id()) == "npc" or (getmetatable ''.starPounds and getmetatable ''.starPounds.enabled) then
+  if world.entityType(entity.id()) == "npc" or (getmetatable ''.starPounds and getmetatable ''.starPounds.isEnabled()) then
     -- Check promises.
     promises:update()
     self.tickTimer = self.tickTimer - dt

@@ -19,7 +19,7 @@ function update(dt)
   -- Check promises.
   promises:update()
   if mcontroller.liquidPercentage() < self.minimumLiquid then return end
-  if world.entityType(entity.id()) == "npc" or (getmetatable ''.starPounds and getmetatable ''.starPounds.enabled) then
+  if world.entityType(entity.id()) == "npc" or (getmetatable ''.starPounds and getmetatable ''.starPounds.isEnabled()) then
     wasActive = true
     self.tickTimer = self.tickTimer - dt
     if self.tickTimer <= 0 then

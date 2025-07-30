@@ -16,7 +16,7 @@ function init()
 end
 
 function update(dt)
-  if world.entityType(entity.id()) == "npc" or (getmetatable ''.starPounds and getmetatable ''.starPounds.enabled) then
+  if world.entityType(entity.id()) == "npc" or (getmetatable ''.starPounds and getmetatable ''.starPounds.isEnabled()) then
     -- Gain bloatAmount per tickTime, increased by bloatIncrease per tick. (Max: 100 per second)
     self.tickTimer = self.tickTimer - dt
     if self.tickTimer <= 0 then

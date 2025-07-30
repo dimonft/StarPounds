@@ -27,15 +27,6 @@ function _player:update(dt)
   self:footstep(dt)
   -- Landing.
   self:landing()
-  local currentSizeWeight = starPounds.currentSize.weight
-  local nextSizeWeight = starPounds.sizes[starPounds.currentSizeIndex + 1] and starPounds.sizes[starPounds.currentSizeIndex + 1].weight or starPounds.settings.maxWeight
-  if nextSizeWeight ~= starPounds.settings.maxWeight and starPounds.sizes[starPounds.currentSizeIndex + 1].yOffset and starPounds.hasOption("disableSupersize") then
-    nextSizeWeight = starPounds.settings.maxWeight
-  end
-  -- Cross script voodoo witch magic.
-  getmetatable ''.starPounds.progress = math.round((storage.starPounds.weight - currentSizeWeight)/(nextSizeWeight - currentSizeWeight) * 100)
-  getmetatable ''.starPounds.weight = storage.starPounds.weight
-  getmetatable ''.starPounds.enabled = storage.starPounds.enabled
 
   starPounds.swapSlotItem = player.swapSlotItem()
   if starPounds.swapSlotItem and root.itemType(starPounds.swapSlotItem.name) == "consumable" then

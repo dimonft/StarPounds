@@ -4,7 +4,7 @@ require "/scripts/util.lua"
 starPounds = getmetatable ''.starPounds
 
 function init()
-  local buttonIcon = string.format("%s.png", starPounds.enabled and "enabled" or "disabled")
+  local buttonIcon = string.format("%s.png", starPounds.isEnabled() and "enabled" or "disabled")
   enable:setImage(buttonIcon, buttonIcon, buttonIcon.."?border=2;00000000;00000000?crop=2;3;88;22")
   tabs = root.assetJson("/scripts/starpounds/starpounds_effects.config:tabs")
   effects = root.assetJson("/scripts/starpounds/starpounds_effects.config:effects")
@@ -48,7 +48,7 @@ function update()
       if effectData then
         if widgetParent then
           if widgetDuration then
-            widgetDuration:setText((starPounds.enabled and "^lightgray;" or "^darkgray;")..(effectData.duration and timeFormat(effectData.duration) or "--:--"))
+            widgetDuration:setText((starPounds.isEnabled() and "^lightgray;" or "^darkgray;")..(effectData.duration and timeFormat(effectData.duration) or "--:--"))
           end
           if widgetLevels then
             for i=1, math.min(effect.levels or 1, 10) do
@@ -202,7 +202,7 @@ function makeEffectWidget(tab, effectKey, effect)
       id = string.format("%s_%sEffect_duration", tab, effectKey),
       type = "label", position = {22, 6}, size = {112, 9},
       align = "right",
-      text = (starPounds.enabled and "^lightgray;" or "^darkgray;")..(effectData.duration and timeFormat(effectData.duration) or "--:--")
+      text = (starPounds.isEnabled() and "^lightgray;" or "^darkgray;")..(effectData.duration and timeFormat(effectData.duration) or "--:--")
     })
 
     local effectData = starPounds.getEffect(effectKey)
