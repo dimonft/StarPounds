@@ -60,30 +60,8 @@ end
 
 function _npc:setup()
   -- Dummy empty function so we save memory.
-  local function nullFunction() end
   local speciesData = starPounds.getSpeciesData(npc.species())
-  -- Shortcuts to make functions work for NPCs.
-  player = {
-    equippedItem = npc.getItemSlot,
-    setEquippedItem = npc.setItemSlot,
-    isLounging = npc.isLounging,
-    loungingIn = npc.loungingIn,
-    consumeItemWithParameter = function(parameter, value)
-      for _, v in pairs({"chest", "legs", "chestCosmetic", "legsCosmetic"}) do
-        local item = npc.getItemSlot(v)
-        if item and item.parameters and item.parameters[parameter] == value then
-          npc.setItemSlot(v, nil)
-        end
-      end
-    end
-  }
-  local mt = {__index = function () return nullFunction end}
-  setmetatable(player, mt)
-  entity.setDropPool = function(...) return npc.setDropPools({...}) end
-  entity.setDeathParticleBurst = npc.setDeathParticleBurst
-  entity.setDeathSound = nullFunction
   entity.setDamageOnTouch = npc.setDamageOnTouch
-  entity.setDamageSources = nullFunction
   entity.setDamageTeam = npc.setDamageTeam
   entity.weight = speciesData.weight
   entity.foodType = speciesData.foodType
@@ -119,9 +97,8 @@ function die()
   if storage.starPounds.pred then
     storage.starPounds.pred = nil
     setDying({shouldDie = true})
-    entity.setDropPool()
-    entity.setDeathSound()
-    entity.setDeathParticleBurst()
+    npc.setDropPools()
+    npc.setDeathParticleBurst()
     status.setResource("health", 0)
   end
   die_old()

@@ -40,17 +40,8 @@ function _monster:init()
 end
 
 function _monster:setup()
-  -- Dummy empty function so we save memory.
-  local function nullFunction() end
   -- Shortcuts to make functions work for monsters.
-  player = {}
-  local mt = {__index = function () return nullFunction end}
-  setmetatable(player, mt)
-  entity.setDropPool = monster.setDropPool
-  entity.setDeathParticleBurst = monster.setDeathParticleBurst
-  entity.setDeathSound = monster.setDeathSound
   entity.setDamageOnTouch = monster.setDamageOnTouch
-  entity.setDamageSources = monster.setDamageSources
   entity.setDamageTeam = monster.setDamageTeam
   -- Disable stuff monsters don't use
   starPounds.getDirectives = function() return "" end
@@ -117,16 +108,11 @@ end
 local die_old = die or function() end
 local setDying = setDying or function() end
 function die()
+  die_old()
   if storage.starPounds.pred then
     storage.starPounds.pred = nil
-    setDying({shouldDie = true})
-    entity.setDropPool()
-    entity.setDeathSound()
-    entity.setDeathParticleBurst()
-    status.setResource("health", 0)
-    self.deathBehavior = nil
+    world.sendEntityMessage(entity.id(), "despawn")
   end
-  die_old()
 end
 
 starPounds.modules.monster = _monster

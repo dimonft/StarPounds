@@ -156,7 +156,9 @@ function prey:swallowed(pred, options)
     -- Make other entities ignore it.
     entity.setDamageTeam({type = "ghostly", team = storage.starPounds.damageTeam.team})
     entity.setDamageOnTouch(false)
-    entity.setDamageSources()
+    if starPounds.type == "monster" then
+      monster.setDamageSources()
+    end
   end
   -- Make the entity immune to outside damage/invisible, and disable regeneration.
   status.setPersistentEffects("starpoundseaten", {
@@ -403,9 +405,16 @@ function prey:digesting(pred, digestionRate, protectionPierce)
 end
 
 function prey:createDrops(items)
+  local equippedItemFunc = function() return end
+  if starPounds.type == "player" then
+    equippedItemFunc = player.equippedItem
+  elseif starPounds.type == "npc" then
+    equippedItemFunc = npc.getItemSlot
+  end
+
   local items = items or {}
   for _, slot in ipairs({"head", "chest", "legs", "back"}) do
-    local item = player.equippedItem(slot.."Cosmetic") or player.equippedItem(slot)
+    local item = equippedItemFunc(slot.."Cosmetic") or equippedItemFunc(slot)
     if item then
       if (item.parameters and item.parameters.tempSize) then
         item.name = item.parameters.baseName
