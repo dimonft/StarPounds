@@ -1,0 +1,26 @@
+{
+  "itemName" : "starpoundsbloodymary",
+  "rarity" : "Common",
+  "price" : 130,
+  "category" : "drink",
+  "tooltipKind" : "fossil",
+  "inventoryIcon" : "starpoundsbloodymary.png",
+  "description" : "Say its name 3 times in front of a dark mirror and you'll mysteriously wind up drunk.",
+  "shortdescription" : "Bloody Mary",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 330
+    },
+    {
+        "effect" : "maxhealthscalingboostfood",
+        "duration" : 330
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

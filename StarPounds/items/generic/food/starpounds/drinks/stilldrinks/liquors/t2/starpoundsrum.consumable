@@ -1,0 +1,26 @@
+{
+  "itemName" : "starpoundsrum",
+  "rarity" : "Common",
+  "price" : 135,
+  "category" : "drink",
+  "inventoryIcon" : "starpoundsrum.png",
+  "tooltipKind" : "fossil",
+  "description" : "A sweetened liquor popular among Avian pirates. Make sure not to lose sight of it!",
+  "shortdescription" : "Rum",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 400
+    },
+    {
+        "effect" : "maxenergyscalingboostfood",
+        "duration" : 400
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

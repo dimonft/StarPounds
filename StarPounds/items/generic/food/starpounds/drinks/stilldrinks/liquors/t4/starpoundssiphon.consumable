@@ -1,0 +1,33 @@
+{
+  "itemName" : "starpoundssiphon",
+  "rarity" : "Rare",
+  "price" : 200,
+  "category" : "drink",
+  "tooltipKind" : "fossil",
+  "inventoryIcon" : "starpoundssiphon.png",
+  "description" : "Accidentally invented when a Novakid siphoned out their fueltank, this drink has an unusual taste.",
+  "shortdescription" : "Siphon",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 270
+    },
+    {
+        "effect" : "lowgrav",
+        "duration" : 270
+    },
+    {
+        "effect" : "runboostfood",
+        "duration" : 270
+    },
+    "bottlederchiusbloat"
+	
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ],
+  "fuelAmount" : 25  
+}

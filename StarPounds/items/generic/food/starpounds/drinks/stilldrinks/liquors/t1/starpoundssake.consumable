@@ -1,0 +1,26 @@
+{
+  "itemName" : "starpoundssake",
+  "rarity" : "Common",
+  "price" : 80,
+  "category" : "drink",
+  "inventoryIcon" : "starpoundssake.png",
+  "tooltipKind" : "fossil",
+  "description" : "A gentle ricewine popular with Hylotl. Traditionally it was brewed from monks chewing and spitting grains into a vat.",
+  "shortdescription" : "Sake",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 270
+    },
+    {
+        "effect" : "maxhealthscalingboostfood",
+        "duration" : 270
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

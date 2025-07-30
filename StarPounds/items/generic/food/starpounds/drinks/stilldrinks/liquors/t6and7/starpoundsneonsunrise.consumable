@@ -1,0 +1,26 @@
+{
+  "itemName" : "starpoundsneonsunrise",
+  "rarity" : "Rare",
+  "price" : 150,
+  "tooltipKind" : "fossil",
+  "category" : "drink",
+  "inventoryIcon" : "starpoundsneonsunrise.png",
+  "description" : "A neon bubblegum-flavored liqueur popular in all the new trendy bars.",
+  "shortdescription" : "Neon Sunrise",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 360
+    },
+    {
+        "effect" : "runboostfood",
+        "duration" : 360
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

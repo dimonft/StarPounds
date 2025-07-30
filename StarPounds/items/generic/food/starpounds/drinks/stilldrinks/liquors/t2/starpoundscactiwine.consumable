@@ -1,0 +1,26 @@
+{
+  "itemName" : "starpoundscactiwine",
+  "rarity" : "Common",
+  "price" : 100,
+  "category" : "drink",
+  "inventoryIcon" : "starpoundscactiwine.png",
+  "tooltipKind" : "fossil",
+  "description" : "It's the quenchiest!",
+  "shortdescription" : "Cactiwine",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 120
+    },
+    {
+        "effect" : "thorns",
+        "duration" : 120
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

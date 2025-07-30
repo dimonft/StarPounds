@@ -1,0 +1,34 @@
+{
+  "itemName" : "starpoundsvalorale",
+  "rarity" : "Rare",
+  "price" : 500,
+  "tooltipKind" : "fossil",
+  "category" : "drink",
+  "inventoryIcon" : "starpoundsvalorale.png",
+  "description" : "Tradition says this Glitch stout only be served during knighting ceremonies and jousting festivals.",
+  "shortdescription" : "Valorale",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 420
+    },
+    {
+        "effect" : "maxenergyscalingboostfood",
+        "duration" : 420
+    },
+    {
+        "effect" : "maxhealthscalingboostfood",
+        "duration" : 420
+    },
+    {
+        "effect" : "starpoundsphysicalresist",
+        "duration" : 420
+    }
+  ] ],
+  "foodValue": 10,
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

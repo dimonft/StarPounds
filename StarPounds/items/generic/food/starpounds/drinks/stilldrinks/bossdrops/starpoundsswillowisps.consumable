@@ -1,0 +1,34 @@
+{
+  "itemName" : "starpoundsswillowisps",
+  "rarity" : "Legendary",
+  "price" : 5000,
+  "tooltipKind" : "fossil",
+  "category" : "drink",
+  "inventoryIcon" : "starpoundsswillowisps.png",
+  "description" : "A potent liquor brewed from Wispflame. It feels nice and warm in your hands...",
+  "shortdescription" : "Swill o' Wisps",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk100",
+        "duration" : 600
+    },
+    {
+        "effect" : "wisphealprayer",
+        "duration" : 600
+    },
+    {
+        "effect" : "lowgrav",
+        "duration" : 600
+    },
+    {
+        "effect" : "starpoundswispflameglow",
+        "duration" : 600
+    }
+  ] ],
+  "foodValue": 30,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

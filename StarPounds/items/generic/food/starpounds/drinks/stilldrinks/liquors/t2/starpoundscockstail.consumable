@@ -1,0 +1,26 @@
+{
+  "itemName" : "starpoundscockstail",
+  "rarity" : "Common",
+  "price" : 120,
+  "category" : "drink",
+  "tooltipKind" : "fossil",
+  "description" : "So named for the legendary Avian pirate Xeloxal, who used one of his tailfeathers to mix the original drink.",
+  "inventoryIcon" : "starpoundscockstail.png",
+  "shortdescription" : "Cock's Tail",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 150
+    },
+    {
+        "effect" : "jumpboostfood",
+        "duration" : 150
+    }
+  ] ],
+  "foodValue": 18,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

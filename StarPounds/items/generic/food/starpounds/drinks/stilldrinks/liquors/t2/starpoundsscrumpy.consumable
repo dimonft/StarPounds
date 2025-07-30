@@ -1,0 +1,26 @@
+{
+  "itemName" : "starpoundsscrumpy",
+  "rarity" : "Common",
+  "price" : 100,
+  "category" : "drink",
+  "tooltipKind" : "fossil",
+  "inventoryIcon" : "starpoundsscrumpy.png",
+  "description" : "Ay, me bottle o' scrumpy!",
+  "shortdescription" : "Scrumpy",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 330
+    },
+    {
+        "effect" : "maxenergyscalingboostfood",
+        "duration" : 330
+    }
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

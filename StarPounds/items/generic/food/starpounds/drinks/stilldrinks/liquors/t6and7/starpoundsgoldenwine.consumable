@@ -1,0 +1,31 @@
+{
+  "itemName" : "starpoundsgoldenwine",
+  "rarity" : "Legendary",
+  "price" : 1000,
+  "tooltipKind" : "fossil",
+  "category" : "drink",
+  "inventoryIcon" : "starpoundsgoldenwine.png",
+  "description" : "Actually a liqueur, its namesake comes from the enchanted gold flakes suspended within.",
+  "shortdescription" : "Goldenwine",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 420
+    },
+    {
+        "effect" : "rage",
+        "duration" : 420
+    },
+    {
+        "effect" : "weakpoison",
+        "duration" : 15
+    }
+	//Add Midas effect later
+  ] ],
+  "foodValue": 10,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

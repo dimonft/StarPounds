@@ -1,0 +1,30 @@
+{
+  "itemName" : "starpoundscoolantstout",
+  "rarity" : "Uncommon",
+  "price" : 200,
+  "category" : "drink",
+  "inventoryIcon" : "starpoundscoolantstout.png",
+  "tooltipKind" : "fossil",
+  "description" : "A few steps away from industrial coolant, this liquor is quite popular among Glitch!",
+  "shortdescription" : "Coolantstout",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk",
+        "duration" : 360
+    },
+    {
+        "effect" : "fireblock",
+        "duration" : 360
+    },
+    {
+        "effect" : "maxenergyscalingboostfood",
+        "duration" : 360
+    }
+  ] ],
+  "foodValue": 20,  
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

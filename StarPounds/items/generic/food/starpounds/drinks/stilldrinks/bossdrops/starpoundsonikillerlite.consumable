@@ -1,0 +1,38 @@
+{
+  "itemName" : "starpoundsonikillerlite",
+  "rarity" : "Legendary",
+  "price" : 5000,
+  "tooltipKind" : "fossil",
+  "category" : "drink",
+  "inventoryIcon" : "starpoundsonikillerlite.png",
+  "description" : "A mere watered down approximation of the true Onikiller Sake, only slightly less liver-destroyingly potent.",
+  "shortdescription" : "Onikiller Lite",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk100",
+        "duration" : 600
+    },
+    {
+        "effect" : "maxhealthscalingboostfood",
+        "duration" : 600
+    },
+    {
+        "effect" : "rage",
+        "duration" : 600
+    },
+    {
+        "effect" : "starpoundsphysicalresist",
+        "duration" : 600
+    },
+    {
+        "effect" : "weakpoison",
+        "duration" : 15
+    }
+  ] ],
+  "foodValue": 30,
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}

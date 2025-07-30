@@ -1,0 +1,50 @@
+{
+  "itemName" : "starpoundsgargleblaster",
+  "rarity" : "Legendary",
+  "price" : 5000,
+  "tooltipKind" : "fossil",
+  "category" : "drink",
+  "inventoryIcon" : "starpoundsgargleblaster.png",
+  "description" : "Feels like being hit by a lemon wrapped around a gold bar!",
+  "shortdescription" : "Gargle Blaster",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+        "effect" : "starpoundsdrunk100",
+        "duration" : 600
+    },
+    {
+        "effect" : "maxhealthscalingboostfood",
+        "duration" : 600
+    },
+    {
+        "effect" : "maxenergyscalingboostfood",
+        "duration" : 600
+    },
+    {
+        "effect" : "rage",
+        "duration" : 600
+    },
+    {
+        "effect" : "jumpboostfood",
+        "duration" : 600
+    },
+    {
+        "effect" : "runboostfood",
+        "duration" : 600
+    },
+    {
+        "effect" : "regenerationfood",
+        "duration" : 600
+    },
+    {
+        "effect" : "starpoundsphysicalresist",
+        "duration" : 600
+    }
+  ] ],
+  "foodValue": 50,
+  "emitters" : [ "drinking" ],
+  "blockingEffects" : [
+    "starpoundshangover"
+  ]
+}
