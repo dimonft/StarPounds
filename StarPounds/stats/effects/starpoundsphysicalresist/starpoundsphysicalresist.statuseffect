@@ -1,10 +1,10 @@
 {
-  "name" : "starpounds_physicalresist",
+  "name" : "starpoundsphysicalresist",
   "effectConfig" : {},
   "defaultDuration" : 60,
 
   "scripts" : [
-    "starpounds_physicalresist.lua"
+    "starpoundsphysicalresist.lua"
   ],
 
   "label" : "Physical Resistance",

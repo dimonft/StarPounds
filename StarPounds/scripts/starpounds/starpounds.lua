@@ -324,17 +324,6 @@ starPounds.updateStats = function(updateStats)
   mcontroller.controlParameters(starPounds.controlParameters)
 end
 
-starPounds.createStatuses = function()
-  -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return end
-  -- Don't recreate if we can't add statuses anyway.
-  if status.statPositive("statusImmunity") then return end
-  status[((storage.starPounds.pred or not status.resourcePositive("health")) and "set" or "clear").."PersistentEffects"]("starpoundseaten", {
-    {stat = "statusImmunity", effectiveMultiplier = 0}
-  })
-  status[((storage.starPounds.pred or not status.resourcePositive("health")) and "add" or "remove").."EphemeralEffect"]("starpoundseaten")
-end
-
 starPounds.getOptionsMultiplier = function(stat)
   -- Argument sanitisation.
   stat = tostring(stat)

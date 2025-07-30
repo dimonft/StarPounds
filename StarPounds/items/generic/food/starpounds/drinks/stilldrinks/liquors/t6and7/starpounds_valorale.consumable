@@ -22,11 +22,11 @@
         "duration" : 420
     },
     {
-        "effect" : "starpounds_physicalresist",
+        "effect" : "starpoundsphysicalresist",
         "duration" : 420
     }
   ] ],
-  "foodValue": 10,  
+  "foodValue": 10,
   "emitters" : [ "drinking" ],
   "blockingEffects" : [
     "starpoundshangover"
