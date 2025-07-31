@@ -60,8 +60,6 @@ function effects:load(effect)
     if effectConfig.script and not self.effects[effect] then
       require(effectConfig.script)
       _SBLOADED[effectConfig.script] = nil
-      sb.logInfo(sb.print(storage.starPounds.effects))
-      sb.logInfo(sb.print(self.effects))
       util.mergeTable(storage.starPounds.effects[effect], self.effects[effect].data)
       self.effects[effect].data = storage.starPounds.effects[effect]
       self.effects[effect].config = copy(effectConfig.effectConfig)
