@@ -51,7 +51,7 @@ function debug:log()
   local options = (function ()
     local first
     local s = ""
-    for option in pairs(starPounds.getData("options")) do
+    for option in pairs(starPounds.moduleFunc("data", "get", "options")) do
       s = s..(first and ", " or "")..sb.print(option)
       first = true
     end

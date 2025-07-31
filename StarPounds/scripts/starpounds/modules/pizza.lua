@@ -13,7 +13,7 @@ function pizza:boughtPizza()
 end
 
 function pizza:employeeFee()
-  return (starPounds.getData("pizzaEmployeesEaten") or 0) * self.data.employeeFee
+  return (starPounds.moduleFunc("data", "get", "pizzaEmployeesEaten") or 0) * self.data.employeeFee
 end
 
 starPounds.modules.pizza = pizza

@@ -89,7 +89,7 @@ function reset:onClick()
 end
 
 function log:onClick()
-  local data = starPounds.getData() or player.getProperty("starPoundsBackup", {})
+  local data = starPounds.moduleFunc("data", "get") or player.getProperty("starPoundsBackup", {})
   sb.logInfo(sb.print(data))
 end
 

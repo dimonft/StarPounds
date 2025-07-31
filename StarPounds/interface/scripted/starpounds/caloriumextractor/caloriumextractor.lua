@@ -13,7 +13,7 @@ function update()
   updateStatusImage()
   if starPounds.isEnabled() and extracting then
     extractTimer = math.max(extractTimer - script.updateDt(), 0)
-    local weight = starPounds.getData("weight")
+    local weight = starPounds.moduleFunc("data", "get", "weight")
     if canExtract() then
       if extractTimer == 0 then
         local nextWeight = starPounds.sizes[starPounds.currentSizeIndex + 1] and starPounds.sizes[starPounds.currentSizeIndex + 1].weight or starPounds.settings.maxWeight
@@ -64,7 +64,7 @@ function addCalorium(amount)
 end
 
 function canExtract()
-  local weight = starPounds.getData("weight")
+  local weight = starPounds.moduleFunc("data", "get", "weight")
   local itemCount = (caloriumOutput:item() or {name = "starpoundsliquidcalorium", count = 0}).count
   local canExtract = starPounds.isEnabled() and not starPounds.hasOption("disableLoss") and weight >= 10 and itemCount < maxStack
   return canExtract

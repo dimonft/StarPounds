@@ -43,7 +43,7 @@ end
 
 function canRelease()
   local canRelease = false
-  local stomachEntities = starPounds.getData("stomachEntities")
+  local stomachEntities = starPounds.moduleFunc("data", "get", "stomachEntities")
   for preyIndex = #stomachEntities, 1, -1 do
     local prey = stomachEntities[preyIndex]
     if not prey.noRelease then

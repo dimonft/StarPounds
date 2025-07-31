@@ -1,4 +1,4 @@
-local bloatCola = starPounds.effect:new()
+local bloatCola = starPounds.moduleFunc("effects", "new")
 
 function bloatCola:init()
   self.airAmount = self.config.airAmount or 2
@@ -7,7 +7,7 @@ function bloatCola:init()
   self.volumeMultiplier = 1
   self.firstUpdate = false
   self.expiring = false
-  self.baseDuration = starPounds.effects.bloatCola.duration
+  self.baseDuration = starPounds.moduleFunc("effects", "getConfig", "bloatCola").duration
   starPounds.moduleFunc("sound", "stop", "fizz")
 
   self.onSlosh = function(sloshAmount)
@@ -60,4 +60,4 @@ function bloatCola:shake(duration)
   starPounds.moduleFunc("stomach", "rumble", self.volumeMultiplier)
 end
 -- Add the effect.
-starPounds.scriptedEffects.bloatCola = bloatCola
+starPounds.modules.effects.effects.bloatCola = bloatCola

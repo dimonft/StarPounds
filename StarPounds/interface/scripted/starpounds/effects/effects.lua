@@ -6,8 +6,8 @@ starPounds = getmetatable ''.starPounds
 function init()
   local buttonIcon = string.format("%s.png", starPounds.isEnabled() and "enabled" or "disabled")
   enable:setImage(buttonIcon, buttonIcon, buttonIcon.."?border=2;00000000;00000000?crop=2;3;88;22")
-  tabs = root.assetJson("/scripts/starpounds/starpounds_effects.config:tabs")
-  effects = root.assetJson("/scripts/starpounds/starpounds_effects.config:effects")
+  tabs = root.assetJson("/scripts/starpounds/modules/effects.config:tabs")
+  effects = root.assetJson("/scripts/starpounds/modules/effects.config:effects")
 
   isAdmin = admin()
 
@@ -41,7 +41,7 @@ function update()
     listTimer = 0.25
 
     for effectKey, effect in pairs(effects) do
-      local effectData = starPounds.getEffect(effectKey)
+      local effectData = starPounds.moduleFunc("effects", "get", effectKey)
       local widgetParent = _ENV[string.format("active_%sEffect_parent", effectKey)]
       local widgetDuration = _ENV[string.format("active_%sEffect_duration", effectKey)]
       local widgetLevels = _ENV[string.format("active_%sEffect_levels", effectKey)]
@@ -174,7 +174,7 @@ function populateTabs()
   for _, effectKey in ipairs(sortedEffectKeys) do
     local effect = effects[effectKey]
     -- Active effect panel
-    if starPounds.getEffect(effectKey) then
+    if starPounds.moduleFunc("effects", "get", effectKey) then
       panel_active:addChild(makeEffectWidget("active", effectKey, effect))
       _ENV[string.format("active_%sEffect", effectKey)].onClick = function() selectEffect(effectKey, effect) end
     end
@@ -197,7 +197,7 @@ function makeEffectWidget(tab, effectKey, effect)
   }}
 
   if tab == "active" then
-    local effectData = starPounds.getEffect(effectKey)
+    local effectData = starPounds.moduleFunc("effects", "get", effectKey)
     table.insert(effectWidget.children, 3, {
       id = string.format("%s_%sEffect_duration", tab, effectKey),
       type = "label", position = {22, 6}, size = {112, 9},
@@ -205,7 +205,6 @@ function makeEffectWidget(tab, effectKey, effect)
       text = (starPounds.isEnabled() and "^lightgray;" or "^darkgray;")..(effectData.duration and timeFormat(effectData.duration) or "--:--")
     })
 
-    local effectData = starPounds.getEffect(effectKey)
     local levelWidget = { id = string.format("%s_%sEffect_levels", tab, effectKey), type = "layout", position = {7, 21}, size = {128, 5}, spacing = 5, mode = "horizontal", children = {"spacer"}}
     for i=1, math.min(effect.levels or 1, 10) do
       levelWidget.children[i + 1] = { id = string.format("%s_%sEffect_level_%s", tab, effectKey, i), type = "image", noAutoCrop = true, file = string.format("levels.png:%s.%s", effect.type or "default", (effectData.level >= i) and "on" or "off") }
@@ -263,7 +262,7 @@ function setEffectStats(effectKey, effect, level, duration)
   local effectStatValues = jarray()
   local effectStatValueString = ""
 
-  local effectData = starPounds.getEffect(effectKey)
+  local effectData = starPounds.moduleFunc("effects", "get", effectKey)
 
   if effect.stats then
     local level = effectData and effectData.level or effect.levels

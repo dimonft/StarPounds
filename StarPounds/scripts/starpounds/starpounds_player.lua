@@ -20,7 +20,6 @@ function init()
   starPounds.parseStats()
   starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
   starPounds.moduleInit({"entity", "humanoid", "player", "vore"})
-  starPounds.effectInit()
   starPounds.moduleFunc("size", "setWeight", storage.starPounds.weight)
 
   starPounds.events:on("main:statChange", function(trace)
@@ -44,7 +43,6 @@ function update(dt)
   starPounds.moduleUpdate(dt)
   -- Stat/status updating stuff.
   starPounds.updateStats()
-  starPounds.updateEffects(dt)
 end
 
 function uninit()

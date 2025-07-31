@@ -1,6 +1,7 @@
 local data = starPounds.module:new("data")
 
 function data:init()
+  message.setHandler("starPounds.getData", function(_, _, ...) return self:get(...) end)
   self:load()
 end
 
@@ -23,6 +24,11 @@ function data:load()
   end
   -- Versioning.
   storage.starPounds = starPounds.moduleFunc("versioning", "update", storage.starPounds)
+end
+
+function data:get(key)
+  if key then return storage.starPounds[key] end
+  return storage.starPounds
 end
 
 function data:reset()

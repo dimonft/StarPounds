@@ -12,7 +12,6 @@ starPounds = {
   foods = root.assetJson("/scripts/starpounds/starpounds_foods.config"),
   skills = root.assetJson("/scripts/starpounds/starpounds_skills.config:skills"),
   traits = root.assetJson("/scripts/starpounds/starpounds_traits.config:traits"),
-  effects = root.assetJson("/scripts/starpounds/starpounds_effects.config:effects"),
   selectableTraits = root.assetJson("/scripts/starpounds/starpounds_traits.config:selectableTraits"),
   species = root.assetJson("/scripts/starpounds/starpounds_species.config")
 }
@@ -20,11 +19,6 @@ starPounds = {
 ----------------------------------------------------------------------------------
 starPounds.isEnabled = function()
   return storage.starPounds.enabled
-end
-
-starPounds.getData = function(key)
-  if key then return storage.starPounds[key] end
-  return storage.starPounds
 end
 
 -- Runs a function in a module. Same as calling directly, but makes sure it exists.
@@ -503,7 +497,7 @@ starPounds.parseStats = function()
   -- Effect stats
   starPounds.effectStats = {}
   for effectName, effectData in pairs(storage.starPounds.effects) do
-    local effectConfig = starPounds.effects[effectName]
+    local effectConfig = starPounds.moduleFunc("effects", "getConfig", effectName)
     if effectConfig then
       for _, stat in ipairs(effectConfig.stats or {}) do
         starPounds.effectStats[stat[1]] = starPounds.effectStats[stat[1]] or {0, 1}
@@ -610,154 +604,6 @@ end
 starPounds.resetTrait = function()
   storage.starPounds.trait = nil
   -- Refresh stats.
-  starPounds.parseStats()
-end
-
-starPounds.effect = setmetatable({}, { __index = starPounds.module })
-function starPounds.effect:new()
-  -- Effects are effectively just timed modules.
-  local newEffect = starPounds.module:new("effect")
-  setmetatable(newEffect, { __index = self })
-  return newEffect
-end
-
-function starPounds.effect:apply() end -- Runs whenever the effect gets applied, or reapplied.
-function starPounds.effect:expire() end -- Runs whenever the effect times out, or gets removed.
-
-starPounds.updateEffects = function(dt)
-  -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return end
-  starPounds.effectTimer = math.max((starPounds.effectTimer or 0) - dt, 0)
-  -- Update effect durations.
-  if starPounds.effectTimer == 0 then
-    for effectName, effect in pairs(storage.starPounds.effects) do
-      local effectData = storage.starPounds.effects[effectName]
-      if effectData.duration then
-        effectData.duration = math.max(effectData.duration - starPounds.settings.effectTimer, 0)
-        if effectData.duration == 0 then
-          local effectConfig = starPounds.effects[effectName]
-          if effectConfig.expirePerLevel and (effectData.level > 1) then
-            effectData.level = effectData.level - 1
-            effectData.duration = effectConfig.duration
-            starPounds.parseStats()
-          else
-            starPounds.removeEffect(effectName)
-          end
-        end
-      end
-    end
-    starPounds.effectTimer = starPounds.settings.effectTimer
-  end
-end
-
-starPounds.loadScriptedEffect = function(effect)
-  -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return end
-  -- Argument sanitisation.
-  effect = tostring(effect)
-  local effectConfig = starPounds.effects[effect]
-  if effectConfig then
-    if effectConfig.script and not starPounds.scriptedEffects[effect] then
-      require(effectConfig.script)
-      _SBLOADED[effectConfig.script] = nil
-      util.mergeTable(storage.starPounds.effects[effect], starPounds.scriptedEffects[effect].data)
-      starPounds.scriptedEffects[effect].data = storage.starPounds.effects[effect]
-      starPounds.scriptedEffects[effect].config = copy(effectConfig.effectConfig)
-      starPounds.scriptedEffects[effect]:moduleInit()
-      starPounds.modules[string.format("effect_%s", effect)] = starPounds.scriptedEffects[effect]
-      starPounds.modules[string.format("effect_%s", effect)]:setUpdateDelta(effectConfig.scriptDelta or 1)
-    end
-  end
-end
-
-starPounds.effectInit = function()
-  starPounds.scriptedEffects = {}
-  for effect in pairs(storage.starPounds.effects) do
-    starPounds.loadScriptedEffect(effect)
-  end
-end
-
-starPounds.addEffect = function(effect, duration, level)
-  -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return end
-  -- Argument sanitisation.
-  effect = tostring(effect)
-  local effectConfig = starPounds.effects[effect]
-  local effectData = storage.starPounds.effects[effect] or {}
-  if effectConfig then
-    duration = tonumber(duration) or effectConfig.duration
-    level = tonumber(level) or 1
-    -- Negative durations become infinite.
-    if duration < 0 then duration = nil end
-    if effectConfig.particle then
-      local spec = starPounds.settings.particleTemplates.effect
-      world.spawnProjectile("invisibleprojectile", vec2.add(starPounds.mcontroller.position, mcontroller.isNullColliding() and 0 or vec2.div(starPounds.mcontroller.velocity, 60)), entity.id(), {0,0}, true, {
-        damageKind = "hidden",
-        universalDamage = false,
-        onlyHitTerrain = true,
-        timeToLive = 5/60,
-        periodicActions = {
-          { action = "loop", time = 0, ["repeat"] = false, count = 5, body = {
-            { action = "particle", specification = spec },
-            { action = "particle", specification = sb.jsonMerge(spec, {layer = "front"}) }
-          }}
-        }
-      })
-      starPounds.moduleFunc("sound", "play", "digest", 0.5, (math.random(120,150)/100))
-    end
-    effectData.duration = duration and math.max(effectData.duration or 0, duration) or nil
-    effectData.level = math.min((effectData.level or 0) + level, effectConfig.levels or 1)
-    storage.starPounds.effects[effect] = effectData
-    if not (effectConfig.ephemeral or effectConfig.hidden) then
-      storage.starPounds.discoveredEffects[effect] = true
-    end
-    -- Scripted effects.
-    if effectConfig.script then
-      starPounds.loadScriptedEffect(effect)
-      starPounds.scriptedEffects[effect]:apply()
-    end
-
-    starPounds.parseStats()
-    return true
-  end
-  return false
-end
-
-starPounds.removeEffect = function(effect)
-  -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return end
-  -- Argument sanitisation.
-  effect = tostring(effect)
-  if storage.starPounds.effects[effect] then
-    storage.starPounds.effects[effect] = nil
-    starPounds.parseStats()
-    if starPounds.scriptedEffects[effect] then
-      starPounds.scriptedEffects[effect]:expire()
-      starPounds.scriptedEffects[effect] = nil
-      starPounds.modules[string.format("effect_%s", effect)] = nil
-    end
-    return true
-  end
-  return false
-end
-
-starPounds.getEffect = function(effect)
-  -- Return empty if the mod is disabled.
-  --if not storage.starPounds.enabled then return end
-  -- Argument sanitisation.
-  effect = tostring(effect)
-  return storage.starPounds.effects[effect]
-end
-
-starPounds.hasDiscoveredEffect = function(effect)
-  -- Argument sanitisation.
-  effect = tostring(effect)
-  return storage.starPounds.discoveredEffects[effect] ~= nil
-end
-
-starPounds.resetEffects = function()
-  storage.starPounds.effects = {}
-  storage.starPounds.discoveredEffects = {}
   starPounds.parseStats()
 end
 
@@ -904,8 +750,7 @@ end
 starPounds.messageHandlers = function()
   -- Handler for enabling the mod.
   message.setHandler("starPounds.toggleEnable", localHandler(starPounds.toggleEnable))
-  -- Handler for grabbing data.
-  message.setHandler("starPounds.getData", simpleHandler(starPounds.getData))
+  -- Handlers for grabbing data.
   message.setHandler("starPounds.isEnabled", simpleHandler(starPounds.isEnabled))
   message.setHandler("starPounds.getDirectives", simpleHandler(starPounds.getDirectives))
   message.setHandler("starPounds.getVisualSpecies", simpleHandler(starPounds.getVisualSpecies))
@@ -915,17 +760,12 @@ starPounds.messageHandlers = function()
   message.setHandler("starPounds.upgradeSkill", simpleHandler(starPounds.upgradeSkill))
   message.setHandler("starPounds.getStat", simpleHandler(starPounds.getStat))
   message.setHandler("starPounds.parseStats", simpleHandler(starPounds.parseStats))
-  message.setHandler("starPounds.parseStatusEffectStats", simpleHandler(starPounds.parseStatusEffectStats))
   message.setHandler("starPounds.getSkillLevel", simpleHandler(starPounds.getSkillLevel))
   message.setHandler("starPounds.hasSkill", simpleHandler(starPounds.hasSkill))
   message.setHandler("starPounds.getAccessory", simpleHandler(starPounds.getAccessory))
   message.setHandler("starPounds.getAccessoryModifiers", simpleHandler(starPounds.getAccessoryModifiers))
   message.setHandler("starPounds.getTrait", simpleHandler(starPounds.getTrait))
   message.setHandler("starPounds.setTrait", localHandler(starPounds.setTrait))
-  message.setHandler("starPounds.addEffect", simpleHandler(starPounds.addEffect))
-  message.setHandler("starPounds.removeEffect", simpleHandler(starPounds.removeEffect))
-  message.setHandler("starPounds.getEffect", localHandler(starPounds.getEffect))
-  message.setHandler("starPounds.hasDiscoveredEffect", localHandler(starPounds.hasDiscoveredEffect))
   -- Handlers for affecting the entity.
   message.setHandler("starPounds.belch", simpleHandler(starPounds.belch))
   message.setHandler("starPounds.belchPitch", simpleHandler(starPounds.belchPitch))
@@ -933,7 +773,6 @@ starPounds.messageHandlers = function()
   message.setHandler("starPounds.reset", localHandler(starPounds.reset))
   message.setHandler("starPounds.resetConfirm", localHandler(starPounds.reset))
   message.setHandler("starPounds.resetTrait", localHandler(starPounds.resetTrait))
-  message.setHandler("starPounds.resetEffects", localHandler(starPounds.resetEffects))
   message.setHandler("starPounds.setResource", localHandler(status.setResource))
 end
 
