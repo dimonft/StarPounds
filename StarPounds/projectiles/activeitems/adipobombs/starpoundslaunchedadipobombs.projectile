@@ -1,7 +1,6 @@
 {
   "projectileName" : "starpoundslaunchedadipobombs",
   "physics" : "grenade",
-  "bounces" : 0,
   "damageKindImage" : "icon.png",
   "image" : "starpoundslaunchedadipobombs.png",
   "animationCycle" : 0.5,
@@ -17,209 +16,28 @@
       "inheritDamageFactor" : 1,
       "inheritSpeedFactor" : 0,
       "angleAdjust" : 0
-    },
-
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 10
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 20
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 30
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 40
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 50
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 60
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 70
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 80
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 90
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 100
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 110
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 120
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 130
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 140
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 150
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 160
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 170
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 180
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 190
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 200
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 210
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 220
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 230
-    },
-    {
-      "action" : "projectile",
-      "type" : "caloricsmoke",
-      "fuzzAngle" : 180,
-      "inheritSpeedFactor" : 0.1,
-      "inheritDamageFactor" : 0.0,
-      "delaySteps" : 240
     }
   ],
-  "power" : 50,
+  "actionOnHit": [
+    {
+      "action" : "sound",
+      "options" : [
+        "/sfx/projectiles/ropehook_impact1.ogg",
+        "/sfx/projectiles/ropehook_impact2.ogg",
+        "/sfx/projectiles/ropehook_impact3.ogg",
+        "/sfx/projectiles/ropehook_impact4.ogg",
+        "/sfx/projectiles/ropehook_impact5.ogg",
+        "/sfx/projectiles/ropehook_impact6.ogg",
+        "/sfx/projectiles/ropehook_impact7.ogg",
+        "/sfx/projectiles/ropehook_impact8.ogg",
+        "/sfx/projectiles/ropehook_impact9.ogg",
+        "/sfx/projectiles/ropehook_impact10.ogg",
+        "/sfx/projectiles/ropehook_impact11.ogg",
+        "/sfx/projectiles/ropehook_impact12.ogg"
+      ]
+    }
+  ],
+  "power" : 0,
   "damageType" : "NoDamage",
   "damageKind" : "caloric"
 }

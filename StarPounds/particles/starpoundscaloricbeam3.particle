@@ -1,0 +1,26 @@
+{
+  "kind" : "starpoundscaloricbeam3",
+  "definition" : {
+    "type" : "ember",
+    "color" : [255, 149, 183, 128],
+    "position" : [0, 0],
+    "finalVelocity" : [0, 0],
+    "approach" : [15, 15],
+    "collidesForeground" : true,
+    "fullbright" : true,
+    "timeToLive" : 0.05,
+    "destructionAction" : "shrink",
+    "destructionTime" : 0.1,
+    "size" : 1.5,
+    "fade": 5,
+    "layer" : "middle",
+    "trail": true,
+    "variance" : {
+      "size" : 0.25,
+      "timeToLive" : 0.05,
+      "initialVelocity" : [15, 15],
+      "rotation" : 180
+    },
+    "light" : [48, 2, 41]
+  }
+}

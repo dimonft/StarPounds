@@ -9,31 +9,20 @@
   "flippable" : true,
 
   "statusEffects" : [
-    {"effect": "starpoundsfood_bloat", "duration": 10},
-    {"effect": "starpoundsfood_fat", "duration": 10}
+    {"effect": "starpoundsfood_bloat", "duration": 5},
+    {"effect": "starpoundsfood_fat", "duration": 15}
   ],
   "actionOnReap" : [
     {
       "action" : "loop",
-      "count" : 3,
-      "body" : [{
-        "action" : "particle",
-        "specification" : {
-          "type" : "animated",
-          "animation" : "/animations/smallcloud/smallcaloriccloud.animation",
-          "approach" : [0.5, 0.5],
-          "light" : [51, 21, 31],
-          "timeToLive" : 0.4,
-          "fade": 2,
-          "size": 0.75,
-          "variance" : {
-            "timeToLive" : 0.15,
-            "position" : [0.25, 0.25],
-            "initialVelocity" : [0.5, 0.5],
-            "rotation" : 180
-          }
-        }
-      }]
+      "count" : 5,
+      "body" : [
+        {"action" : "option", "options" : [
+          { "action" : "particle", "specification" : "starpoundscaloricbeam1" },
+          { "action" : "particle", "specification" : "starpoundscaloricbeam2" },
+          { "action" : "particle", "specification" : "starpoundscaloricbeam3" }
+        ]}
+      ]
     },
     {
       "action" : "sound",
