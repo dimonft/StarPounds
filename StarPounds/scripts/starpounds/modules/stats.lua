@@ -192,7 +192,7 @@ function stats:accessoryMods(stat)
   stat = stat and tostring(stat) or nil
   if not stat then
     self.accessoryModifiers = {}
-    local accessory = starPounds.getAccessory()
+    local accessory = starPounds.moduleFunc("accessories", "get")
     if accessory then
       for _, stat in pairs(configParameter(accessory, "stats", {})) do
         if self.data.stats[stat.name] then

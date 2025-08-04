@@ -29,10 +29,10 @@ function init()
   buildAccessoryFunctions()
 
   statListener = function()
-    accessory:setItem(starPounds.getAccessory())
+    accessory:setItem(starPounds.moduleFunc("accessories", "get"))
     accessoryChanged()
   end
-  starPounds.events:on("main:statChange", statListener)
+  starPounds.events:on("stats:calculate", statListener)
 end
 
 function update()
@@ -76,7 +76,7 @@ function update()
   end
 
   if starPounds.optionChanged then
-    accessory:setItem(starPounds.getAccessory())
+    accessory:setItem(starPounds.moduleFunc("accessories", "get"))
     accessoryChanged()
   end
 
@@ -92,7 +92,7 @@ function update()
 end
 
 function uninit()
-  starPounds.events:off("main:statChange", statListener)
+  starPounds.events:off("stats:calculate", statListener)
 end
 
 function buildTabs()
@@ -434,9 +434,9 @@ end
 
 function buildAccessoryFunctions()
     -- Pop out bad items.
-  local item = starPounds.getAccessory() and root.createItem(starPounds.getAccessory()) or nil
+  local item = starPounds.moduleFunc("accessories", "get") and root.createItem(starPounds.moduleFunc("accessories", "get")) or nil
   if item and not accessory:acceptsItem(item) then
-    starPounds.setAccessory(nil)
+    starPounds.moduleFunc("accessories", "set", nil)
     player.giveItem(item)
   end
 
@@ -449,7 +449,7 @@ function buildAccessoryFunctions()
   end
 
   function accessory:onItemModified()
-    starPounds.setAccessory(accessory:item())
+    starPounds.moduleFunc("accessories", "set", accessory:item())
     accessoryChanged()
   end
 
@@ -463,7 +463,7 @@ function buildAccessoryFunctions()
   end
 
   function updateAccessoryGlyph()
-    local currentAccessory = starPounds.getAccessory()
+    local currentAccessory = starPounds.moduleFunc("accessories", "get")
     if currentAccessory then
       local accessoryType = configParameter(currentAccessory, "accessoryType")
       for index, glyphType in ipairs(glyphs) do
@@ -478,7 +478,7 @@ function buildAccessoryFunctions()
     accessory:queueRedraw()
   end
 
-  accessory:setItem(starPounds.getAccessory())
+  accessory:setItem(starPounds.moduleFunc("accessories", "get"))
   accessoryChanged()
 end
 

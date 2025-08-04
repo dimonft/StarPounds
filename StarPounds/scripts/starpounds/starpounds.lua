@@ -372,22 +372,6 @@ starPounds.resetTrait = function()
   starPounds.events:fire("stats:calculate", "resetTrait")
 end
 
-starPounds.getAccessory = function()
-  if storage.starPounds.accessory then
-    return root.createItem(storage.starPounds.accessory)
-  end
-end
-
-starPounds.setAccessory = function(item)
-  -- Argument sanitisation.
-  if item and type(item) ~= "table" then
-    item = tostring(item)
-  end
-  storage.starPounds.accessory = item and root.createItem(item) or nil
-  starPounds.events:fire("stats:calculate", "setAccessory")
-  starPounds.moduleFunc("data", "backup")
-end
-
 -- world.entitySpecies can be unreliable on the first tick.
 starPounds.getSpecies = function()
   if storage.starPounds.overrideSpecies then return storage.starPounds.overrideSpecies end
@@ -467,7 +451,6 @@ starPounds.messageHandlers = function()
   message.setHandler("starPounds.upgradeSkill", simpleHandler(starPounds.upgradeSkill))
   message.setHandler("starPounds.getSkillLevel", simpleHandler(starPounds.getSkillLevel))
   message.setHandler("starPounds.hasSkill", simpleHandler(starPounds.hasSkill))
-  message.setHandler("starPounds.getAccessory", simpleHandler(starPounds.getAccessory))
   message.setHandler("starPounds.getTrait", simpleHandler(starPounds.getTrait))
   message.setHandler("starPounds.setTrait", localHandler(starPounds.setTrait))
   -- Handlers for affecting the entity.

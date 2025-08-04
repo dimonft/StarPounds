@@ -215,7 +215,7 @@ function activate()
   activate_old()
 
   starPounds.events:fire("stats:calculate", "tech:sphereActivate")
-  starPounds.events:on("main:statChange", self.statListener)
+  starPounds.events:on("stats:calculate", self.statListener)
 
   status.setPersistentEffects("starpoundsthrogsphere", {{stat = "grit", amount = 1}, {stat = "physicalResistance", amount = math.min(starPounds.getStat("throgSphereArmor") * (starPounds.currentSizeIndex - 1)/3, starPounds.getStat("throgSphereArmor"))}})
 end
@@ -229,7 +229,7 @@ function deactivate()
   animator.stopAllSounds("loop")
   deactivate_old()
 
-  starPounds.events:off("main:statChange", self.statListener)
+  starPounds.events:off("stats:calculate", self.statListener)
   starPounds.events:fire("stats:calculate", "tech:sphereDeactivate")
 
   for _, projectile in pairs(self.projectiles) do

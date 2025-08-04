@@ -12,11 +12,11 @@ end
 function activate(fireMode, shiftHeld)
   local starPounds = getmetatable ''.starPounds
   if starPounds then
-    local currentAccessory = starPounds.getAccessory()
+    local currentAccessory = starPounds.moduleFunc("accessories", "get")
     if currentAccessory then
       player.giveItem(currentAccessory)
     end
-    starPounds.setAccessory(player[activeItem.hand().."HandItem"]())
+    starPounds.moduleFunc("accessories", "set", player[activeItem.hand().."HandItem"]())
     if starPounds.accessoryChanged then
       starPounds.accessoryChanged(self.accessoryType)
     end
