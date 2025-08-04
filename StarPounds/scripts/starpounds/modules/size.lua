@@ -39,6 +39,9 @@ function size:init()
   self.slots[#self.slots + 1] = {"chestCosmetic", {itemType = "chest", default = true}}
   self.slots[#self.slots + 1] = {"legsCosmetic", {itemType = "legs", default = true}}
 
+  -- Just in case the data is out of range.
+  self:setWeight(storage.starPounds.weight)
+
   message.setHandler("starPounds.gainWeight", function(_, _, ...) return self:gainWeight(...) end)
   message.setHandler("starPounds.loseWeight", function(_, _, ...) return self:loseWeight(...) end)
   message.setHandler("starPounds.setWeight", function(_, _, ...) return self:setWeight(...) end)
@@ -56,7 +59,7 @@ function size:update(dt)
   if starPounds.currentSizeIndex ~= self.oldSizeIndex then
     starPounds.events:fire("sizes:changed", starPounds.currentSizeIndex - (self.oldSizeIndex or 0))
     -- Force stat update.
-    starPounds.events:fire("main:statChange", "sizes:changed")
+    starPounds.events:fire("stats:calculate", "sizes:changed")
     -- Don't play the sound on the first load.
     if self.oldSizeIndex then
       -- Play sound to indicate size change.
@@ -66,7 +69,7 @@ function size:update(dt)
     starPounds.moduleFunc("trackers", "clearStatuses")
     starPounds.moduleFunc("trackers", "createStatuses")
   elseif starPounds.weightMultiplier ~= self.oldWeightMultiplier then
-    starPounds.events:fire("main:statChange", "sizes:weightMultChanged")
+    starPounds.events:fire("stats:calculate", "sizes:weightMultChanged")
   end
 
   self.oldSizeIndex = starPounds.currentSizeIndex
@@ -75,9 +78,9 @@ function size:update(dt)
   self:cursorCheck()
   self:trackVehicleCap()
   self:equip(self:equipmentConfig(starPounds.currentSizeIndex))
+
+  self:updateStats()
 end
-
-
 
 function size:gainWeight(amount, fullAmount)
   -- Don't do anything if the mod is disabled.
@@ -153,6 +156,139 @@ function size:weightMultiplier()
   -- NPCs just use the base size weight so we don't screw up their movement every time the mult changes.
   local weight = starPounds.type == "player" and storage.starPounds.weight or starPounds.currentSize.weight
   return storage.starPounds.enabled and math.round(1 + weight/entity.weight, 1) or 1
+end
+
+function size:updateStats(forceUpdate)
+  -- Don't do anything if the mod is disabled.
+  if not storage.starPounds.enabled then return end
+  -- Give the entity hitbox, bonus stats, and effects based on fatness.
+  local size = starPounds.currentSize
+  local sizeIndex = starPounds.currentSizeIndex
+  if forceUpdate then
+    -- Shouldn't activate at base size, so indexes are reduced by one.
+    local bonusEffectiveness = self:effectScaling()
+    local applyImmunity = self:effectActivated()
+    local gritReduction = status.stat("activeMovementAbilities") <= 1 and -((starPounds.weightMultiplier - 1) * math.max(0, 1 - starPounds.getStat("knockbackResistance"))) or 0
+    local persistentEffects = {
+      {stat = "maxHealth", baseMultiplier = 1 + math.round((size.healthMultiplier - 1) * starPounds.getStat("health"), 2)},
+      {stat = "foodDelta", effectiveMultiplier = ((starPounds.stomach.food > 0) or starPounds.hasOption("disableHunger")) and 0 or math.round(starPounds.getStat("hunger"), 2)},
+      {stat = "grit", amount = gritReduction},
+      {stat = "shieldHealth", effectiveMultiplier = 1 + starPounds.getStat("shieldHealth") * bonusEffectiveness},
+      {stat = "knockbackThreshold", effectiveMultiplier = 1 - gritReduction},
+      {stat = "fallDamageMultiplier", effectiveMultiplier = size.healthMultiplier * (1 - starPounds.getStat("fallDamageResistance"))},
+      {stat = "iceStatusImmunity", amount = applyImmunity and starPounds.getSkillLevel("iceImmunity") or 0},
+      {stat = "poisonStatusImmunity", amount = applyImmunity and starPounds.getSkillLevel("poisonImmunity") or 0},
+      {stat = "iceResistance", amount = starPounds.getStat("iceResistance") * bonusEffectiveness},
+      {stat = "poisonResistance", amount = starPounds.getStat("poisonResistance") * bonusEffectiveness}
+    }
+    -- Probably not optimal, but don't apply effects if they do nothing.
+    local filteredPersistentEffects = jarray()
+    for i, effect in ipairs(persistentEffects) do
+      local skip = (
+        effect.baseMultiplier and effect.baseMultiplier == 1) or (
+        effect.effectiveMultiplier and effect.effectiveMultiplier == 1) or (
+        effect.amount and effect.amount == 0
+      )
+      if not skip then filteredPersistentEffects[#filteredPersistentEffects + 1] = effect end
+    end
+    status.setPersistentEffects("starpounds", filteredPersistentEffects)
+  end
+
+  -- Check if the entity is using a morphball (Tech patch bumps this number for the morphball).
+  if status.stat("activeMovementAbilities") > 1 then return end
+
+  if not baseParameters then baseParameters = mcontroller.baseParameters() end
+  local parameters = baseParameters
+
+  if forceUpdate or not (self.controlModifiers and self.controlParameters) then
+    local movement = starPounds.getStat("movement")
+    starPounds.movementMultiplier = size.movementMultiplier
+    -- If we have the anti-immobile skill, use double the movement penalty of blob instead.
+    local isImmobile = starPounds.movementMultiplier == 0
+    if isImmobile and starPounds.hasSkill("preventImmobile") then
+      starPounds.movementMultiplier = starPounds.sizes[sizeIndex - 1].movementMultiplier ^ 2
+    end
+    -- Movement stat starts at 0.
+    -- Every +1 halves the penalty, every -1 doubles it (multiplicatively).
+    if starPounds.movementMultiplier > 0 then
+      if movement <= 0 then
+        starPounds.movementMultiplier = starPounds.movementMultiplier ^ (1 - movement)
+      else
+        starPounds.movementMultiplier = 1 - ((1 - starPounds.movementMultiplier) / (2 ^ movement))
+      end
+    end
+    -- Jump/Swim math applies after the movement stat calcuation.
+    if starPounds.movementMultiplier <= 0 then
+      starPounds.movementMultiplier = 0
+      starPounds.jumpModifier = starPounds.settings.minimumJumpMultiplier
+      starPounds.swimModifier = starPounds.settings.minimumSwimMultiplier
+    else
+      starPounds.jumpModifier = math.max(starPounds.settings.minimumJumpMultiplier, 1 - ((1 - starPounds.movementMultiplier) * starPounds.getStat("jumpPenalty")))
+      starPounds.swimModifier = math.max(starPounds.settings.minimumSwimMultiplier, 1 - ((1 - starPounds.movementMultiplier) * starPounds.getStat("swimPenalty")))
+    end
+
+
+    local updateModifiers = false
+    for _, value in pairs({"movementMultiplier", "jumpModifier", "swimModifier"}) do
+      if starPounds[value] ~= starPounds[value.."Old"] then
+        starPounds[value.."Old"] = starPounds[value]
+        updateModifiers = true
+      end
+    end
+
+    local movementMultiplier = starPounds.movementMultiplier
+    local weightMultiplier = starPounds.weightMultiplier
+
+    if updateModifiers then
+      self.controlModifiers = weightMultiplier == 1 and {} or {
+        groundMovementModifier = movementMultiplier,
+        liquidMovementModifier = starPounds.swimModifier,
+        speedModifier = movementMultiplier,
+        airJumpModifier = starPounds.jumpModifier,
+        liquidJumpModifier = starPounds.swimModifier
+      }
+      -- Silly, but better than updating modifiers every tick.
+      self.controlModifiersAlt = (movementMultiplier < starPounds.settings.minimumAltSpeedMultiplier) and sb.jsonMerge(self.controlModifiers, {
+        speedModifier = starPounds.settings.minimumAltSpeedMultiplier
+      }) or nil
+    end
+
+    self.controlParameters = weightMultiplier == 1 and {} or {
+      mass = parameters.mass * weightMultiplier,
+      airForce = parameters.airForce * weightMultiplier,
+      groundForce = parameters.groundForce * weightMultiplier,
+      airFriction = parameters.airFriction * weightMultiplier,
+      liquidBuoyancy = parameters.liquidBuoyancy + math.min((weightMultiplier - 1) * 0.01, 0.95),
+      liquidForce = parameters.liquidForce * weightMultiplier,
+      liquidFriction = parameters.liquidFriction * weightMultiplier,
+      normalGroundFriction = parameters.normalGroundFriction * weightMultiplier,
+      ambulatingGroundFriction = parameters.ambulatingGroundFriction * weightMultiplier,
+      airJumpProfile = {jumpControlForce = parameters.airJumpProfile.jumpControlForce * weightMultiplier},
+      liquidJumpProfile = {jumpControlForce = parameters.liquidJumpProfile.jumpControlForce * weightMultiplier}
+    }
+    -- Apply hitbox if we don't have the disable option checked, or we're a size that modifies our height.
+    if size.yOffset or not starPounds.hasOption("disableHitbox") then
+      self.controlParameters = sb.jsonMerge(self.controlParameters, (size.controlParameters[starPounds.getVisualSpecies()] or size.controlParameters.default))
+    end
+  end
+  mcontroller.controlModifiers((not self.controlModifiersAlt or starPounds.mcontroller.groundMovement) and self.controlModifiers or self.controlModifiersAlt)
+  mcontroller.controlParameters(self.controlParameters)
+end
+
+function size:scalingSize()
+  return self.data.scalingSize
+end
+
+function size:activationSize()
+  return self.data.activationSize
+end
+
+function size:effectScaling()
+  return math.min(1, (self:sizeIndex() - 1) / (self.data.scalingSize - 1))
+end
+
+function size:effectActivated()
+  return self:sizeIndex() >= self.data.activationSize
 end
 
 function size:getVariant(size)

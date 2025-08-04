@@ -23,14 +23,7 @@ function init()
   starPounds.statCache = {}
   starPounds.statCacheTimer = starPounds.settings.statCacheTimer
   starPounds.parseSkills()
-  starPounds.parseStats()
-  starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
   starPounds.moduleInit({"entity", "humanoid", "npc", "vore"})
-  starPounds.moduleFunc("size", "setWeight", storage.starPounds.weight)
-
-  starPounds.events:on("main:statChange", function(trace)
-    starPounds.updateStats(true)
-  end)
 end
 
 function update(dt)
@@ -38,16 +31,8 @@ function update(dt)
   update_old(dt)
   -- Check promises.
   promises:update()
-  -- Reset stat cache.
-  starPounds.statCacheTimer = math.max(starPounds.statCacheTimer - dt, 0)
-  if starPounds.statCacheTimer == 0 then
-    starPounds.statCache = {}
-    starPounds.statCacheTimer = starPounds.settings.statCacheTimer
-  end
   -- Modules.
   starPounds.moduleUpdate(dt)
-  -- Stat/status updating stuff.
-  starPounds.updateStats()
   -- Dumb, but fixes the vanilla issue where stunned NPCs don't realise they're dead.
   -- Might make this separate fix later.
   self.die = self.die or (self.shouldDie and not status.resourcePositive("health")) or self.forceDie

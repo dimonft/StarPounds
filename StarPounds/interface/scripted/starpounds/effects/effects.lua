@@ -268,7 +268,7 @@ function setEffectStats(effectKey, effect, level, duration)
     local level = effectData and effectData.level or effect.levels
     for _, stat in ipairs(effect.stats) do
       local statString = ""
-      local modStat = starPounds.stats[stat[1]]
+      local modStat = starPounds.moduleFunc("stats", "getRaw", stat[1])
       local amount = stat[3] + (stat[4] or 0) * (level - 1)
       if stat[2] == "mult" then
         local negative = (modStat.negative and amount > 1) or (not modStat.negative and amount < 1)
@@ -288,7 +288,7 @@ function setEffectStats(effectKey, effect, level, duration)
       effectStatValues[#effectStatValues + 1] = ""
       local weight = 0
       for _, stat in ipairs(effect.stats) do
-        local modStat = starPounds.stats[stat[1]]
+        local modStat = starPounds.moduleFunc("stats", "getRaw", stat[1])
         local negative = modStat.negative
         local amount = stat[3] + (stat[4] or 0) * (level - 1)
         if stat[2] == "sub" then negative = not negative end
@@ -325,7 +325,7 @@ function setAccessoryStats(item)
   if item.parameters.stats then
     for _, stat in ipairs(item.parameters.stats) do
       local statString = ""
-      local modStat = starPounds.stats[stat.name]
+      local modStat = starPounds.moduleFunc("stats", "getRaw", stat.name)
       local amount = stat.modifier or 0
       local negative = (modStat.negative and amount > 0) or (not modStat.negative and amount < 0)
       statString = string.format("%s%s%s", negative and "^red;" or "^green;", ((not modStat.invertDescriptor and amount >= 0) or (modStat.invertDescriptor and amount < 0)) and "+" or "-", string.format("%.2f", math.abs(modStat.flat and amount or (amount * 100))):gsub("%.?0+$", "")..(modStat.flat and "" or "%"))
@@ -340,7 +340,7 @@ function setAccessoryStats(item)
       effectStatValues[#effectStatValues + 1] = ""
       local weight = 0
       for _, stat in ipairs(item.parameters.stats) do
-        local modStat = starPounds.stats[stat.name]
+        local modStat = starPounds.moduleFunc("stats", "getRaw", stat.name)
         local amount = stat.modifier or 0
         local negative = modStat.negative
         amount = amount * modStat.weight

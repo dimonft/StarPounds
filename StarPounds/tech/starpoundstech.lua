@@ -15,7 +15,7 @@ function init()
     function activate()
       activate_old()
       status.setPersistentEffects("movementAbility", {{stat = "activeMovementAbilities", amount = 2}})
-      if starPounds then starPounds.events:fire("main:statChange", "tech:sphereActivate") end
+      if starPounds then starPounds.events:fire("stats:calculate", "tech:sphereActivate") end
     end
 
     function deactivate()

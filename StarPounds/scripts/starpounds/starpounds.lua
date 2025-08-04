@@ -8,7 +8,6 @@ starPounds = {
   settings = root.assetJson("/scripts/starpounds/starpounds.config:settings"),
   sizes = root.assetJson("/scripts/starpounds/starpounds_sizes.config:sizes"),
   options = root.assetJson("/scripts/starpounds/starpounds_options.config:options"),
-  stats = root.assetJson("/scripts/starpounds/starpounds_stats.config"),
   foods = root.assetJson("/scripts/starpounds/starpounds_foods.config"),
   skills = root.assetJson("/scripts/starpounds/starpounds_skills.config:skills"),
   traits = root.assetJson("/scripts/starpounds/starpounds_traits.config:traits"),
@@ -201,141 +200,6 @@ starPounds.spawnMouthProjectile = function(actions, count)
   })
 end
 
-starPounds.updateStats = function(updateStats)
-  -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return end
-  -- Give the entity hitbox, bonus stats, and effects based on fatness.
-  local size = starPounds.currentSize
-  local sizeIndex = starPounds.currentSizeIndex
-  if updateStats then
-    -- Shouldn't activate at base size, so indexes are reduced by one.
-    local bonusEffectiveness = math.min(1, (sizeIndex - 1) / (starPounds.settings.scalingSize - 1))
-    local applyImmunity = starPounds.currentSizeIndex >= starPounds.settings.activationSize
-    local gritReduction = status.stat("activeMovementAbilities") <= 1 and -((starPounds.weightMultiplier - 1) * math.max(0, 1 - starPounds.getStat("knockbackResistance"))) or 0
-    local persistentEffects = {
-      {stat = "maxHealth", baseMultiplier = 1 + math.round((size.healthMultiplier - 1) * starPounds.getStat("health"), 2)},
-      {stat = "foodDelta", effectiveMultiplier = ((starPounds.stomach.food > 0) or starPounds.hasOption("disableHunger")) and 0 or math.round(starPounds.getStat("hunger"), 2)},
-      {stat = "grit", amount = gritReduction},
-      {stat = "shieldHealth", effectiveMultiplier = 1 + starPounds.getStat("shieldHealth") * bonusEffectiveness},
-      {stat = "knockbackThreshold", effectiveMultiplier = 1 - gritReduction},
-      {stat = "fallDamageMultiplier", effectiveMultiplier = size.healthMultiplier * (1 - starPounds.getStat("fallDamageResistance"))},
-      {stat = "iceStatusImmunity", amount = applyImmunity and starPounds.getSkillLevel("iceImmunity") or 0},
-      {stat = "poisonStatusImmunity", amount = applyImmunity and starPounds.getSkillLevel("poisonImmunity") or 0},
-      {stat = "iceResistance", amount = starPounds.getStat("iceResistance") * bonusEffectiveness},
-      {stat = "poisonResistance", amount = starPounds.getStat("poisonResistance") * bonusEffectiveness}
-    }
-    -- Probably not optimal, but don't apply effects if they do nothing.
-    local filteredPersistentEffects = jarray()
-    for i, effect in ipairs(persistentEffects) do
-      local skip = (
-        effect.baseMultiplier and effect.baseMultiplier == 1) or (
-        effect.effectiveMultiplier and effect.effectiveMultiplier == 1) or (
-        effect.amount and effect.amount == 0
-      )
-      if not skip then filteredPersistentEffects[#filteredPersistentEffects + 1] = effect end
-    end
-    status.setPersistentEffects("starpounds", filteredPersistentEffects)
-  end
-
-  -- Check if the entity is using a morphball (Tech patch bumps this number for the morphball).
-  if status.stat("activeMovementAbilities") > 1 then return end
-
-  if not baseParameters then baseParameters = mcontroller.baseParameters() end
-  local parameters = baseParameters
-
-  if updateStats or not (starPounds.controlModifiers and starPounds.controlParameters) then
-    local movement = starPounds.getStat("movement")
-    starPounds.movementMultiplier = size.movementMultiplier
-    -- If we have the anti-immobile skill, use double the movement penalty of blob instead.
-    local isImmobile = starPounds.movementMultiplier == 0
-    if isImmobile and starPounds.hasSkill("preventImmobile") then
-      starPounds.movementMultiplier = starPounds.sizes[sizeIndex - 1].movementMultiplier ^ 2
-    end
-    -- Movement stat starts at 0.
-    -- Every +1 halves the penalty, every -1 doubles it (muliplicatively).
-    if starPounds.movementMultiplier > 0 then
-      if movement <= 0 then
-        starPounds.movementMultiplier = starPounds.movementMultiplier ^ (1 - movement)
-      else
-        starPounds.movementMultiplier = 1 - ((1 - starPounds.movementMultiplier) / (2 ^ movement))
-      end
-    end
-    -- Jump/Swim math applies after the movement stat calcuation.
-    if starPounds.movementMultiplier <= 0 then
-      starPounds.movementMultiplier = 0
-      starPounds.jumpModifier = starPounds.settings.minimumJumpMultiplier
-      starPounds.swimModifier = starPounds.settings.minimumSwimMultiplier
-    else
-      starPounds.jumpModifier = math.max(starPounds.settings.minimumJumpMultiplier, 1 - ((1 - starPounds.movementMultiplier) * starPounds.getStat("jumpPenalty")))
-      starPounds.swimModifier = math.max(starPounds.settings.minimumSwimMultiplier, 1 - ((1 - starPounds.movementMultiplier) * starPounds.getStat("swimPenalty")))
-    end
-
-
-    local updateModifiers = false
-    for _, value in pairs({"movementMultiplier", "jumpModifier", "swimModifier"}) do
-      if starPounds[value] ~= starPounds[value.."Old"] then
-        starPounds[value.."Old"] = starPounds[value]
-        updateModifiers = true
-      end
-    end
-
-    local movementMultiplier = starPounds.movementMultiplier
-    local weightMultiplier = starPounds.weightMultiplier
-
-    if updateModifiers then
-      starPounds.controlModifiers = weightMultiplier == 1 and {} or {
-        groundMovementModifier = movementMultiplier,
-        liquidMovementModifier = starPounds.swimModifier,
-        speedModifier = movementMultiplier,
-        airJumpModifier = starPounds.jumpModifier,
-        liquidJumpModifier = starPounds.swimModifier
-      }
-      -- Silly, but better than updating modifiers every tick.
-      starPounds.controlModifiersAlt = (movementMultiplier < starPounds.settings.minimumAltSpeedMultiplier) and sb.jsonMerge(starPounds.controlModifiers, {
-        speedModifier = starPounds.settings.minimumAltSpeedMultiplier
-      }) or nil
-    end
-
-    starPounds.controlParameters = weightMultiplier == 1 and {} or {
-      mass = parameters.mass * weightMultiplier,
-      airForce = parameters.airForce * weightMultiplier,
-      groundForce = parameters.groundForce * weightMultiplier,
-      airFriction = parameters.airFriction * weightMultiplier,
-      liquidBuoyancy = parameters.liquidBuoyancy + math.min((weightMultiplier - 1) * 0.01, 0.95),
-      liquidForce = parameters.liquidForce * weightMultiplier,
-      liquidFriction = parameters.liquidFriction * weightMultiplier,
-      normalGroundFriction = parameters.normalGroundFriction * weightMultiplier,
-      ambulatingGroundFriction = parameters.ambulatingGroundFriction * weightMultiplier,
-      airJumpProfile = {jumpControlForce = parameters.airJumpProfile.jumpControlForce * weightMultiplier},
-      liquidJumpProfile = {jumpControlForce = parameters.liquidJumpProfile.jumpControlForce * weightMultiplier}
-    }
-    -- Apply hitbox if we don't have the disable option checked, or we're a size that modifies our height.
-    if size.yOffset or not starPounds.hasOption("disableHitbox") then
-      starPounds.controlParameters = sb.jsonMerge(starPounds.controlParameters, (size.controlParameters[starPounds.getVisualSpecies()] or size.controlParameters.default))
-    end
-  end
-  mcontroller.controlModifiers((not starPounds.controlModifiersAlt or starPounds.mcontroller.groundMovement) and starPounds.controlModifiers or starPounds.controlModifiersAlt)
-  mcontroller.controlParameters(starPounds.controlParameters)
-end
-
-starPounds.getOptionsMultiplier = function(stat)
-  -- Argument sanitisation.
-  stat = tostring(stat)
-  return (starPounds.optionStats[stat] or {0, 1})[2]
-end
-
-starPounds.getOptionsBonus = function(stat)
-  -- Argument sanitisation.
-  stat = tostring(stat)
-  return (starPounds.optionStats[stat] or {0, 1})[1]
-end
-
-starPounds.getOptionsOverride = function(stat)
-  -- Argument sanitisation.
-  stat = tostring(stat)
-  return (starPounds.optionStats[stat] or {0, 1})[3]
-end
-
 starPounds.hasOption = function(option)
   -- Argument sanitisation.
   option = tostring(option)
@@ -346,39 +210,13 @@ starPounds.setOption = function(option, enable)
   -- Argument sanitisation.
   option = tostring(option)
   storage.starPounds.options[option] = enable and true or nil
-  starPounds.parseStats()
-  starPounds.events:fire("main:statChange", "setOption")
+  starPounds.events:fire("stats:calculate", "setOption")
   -- This is stupid, but prevents 'null' data being saved.
   if getmetatable(storage.starPounds.options) then
     getmetatable(storage.starPounds.options).__nils = {}
   end
   starPounds.moduleFunc("data", "backup")
   return storage.starPounds.options[option]
-end
-
-starPounds.getStat = function(stat)
-  -- Argument sanitisation.
-  stat = tostring(stat)
-  if not starPounds.stats[stat] then return 0 end
-  -- Only recalculate per tick, otherwise use the cached value. (starPounds.statCache gets reset every tick)
-  if not starPounds.statCache[stat] then
-    -- Default amount (or 1, so we can boost stats that start at 0), modified by accessory values.
-    local accessoryBonus = (starPounds.stats[stat].base ~= 0 and starPounds.stats[stat].base or 1) * starPounds.getAccessoryModifiers(stat)
-    -- Base stat + Skill bonuses + Accessory bonuses.
-    local statAmount = starPounds.stats[stat].base + starPounds.getSkillBonus(stat) + accessoryBonus
-    -- Trait multiplier and effect multiplier.
-    statAmount = statAmount * starPounds.getTraitMultiplier(stat) * starPounds.getEffectMultiplier(stat)
-    -- Trait bonus and effect bonus
-    statAmount = statAmount + starPounds.getTraitBonus(stat) + starPounds.getEffectBonus(stat)
-    -- Status effect multipliers and bonuses.
-    statAmount = statAmount * starPounds.getStatusEffectMultiplier(stat) + starPounds.getStatusEffectBonus(stat)
-    -- Option multipliers, bonuses, and overrides.
-    statAmount = starPounds.getOptionsOverride(stat) or (statAmount * starPounds.getOptionsMultiplier(stat) + starPounds.getOptionsBonus(stat))
-    -- Cap the stat between 0 and it's maxValue.
-    starPounds.statCache[stat] = math.max(math.min(statAmount, starPounds.stats[stat].maxValue or math.huge), starPounds.stats[stat].minValue or 0)
-  end
-
-  return starPounds.statCache[stat]
 end
 
 starPounds.getSkillUnlockedLevel = function(skill)
@@ -424,8 +262,7 @@ starPounds.upgradeSkill = function(skill, cost)
   storage.starPounds.experience = math.round(experienceProgress * experienceConfig.experienceAmount * (1 + storage.starPounds.level * experienceConfig.experienceIncrement))
   starPounds.moduleFunc("experience", "add")
   starPounds.parseSkills()
-  starPounds.parseStats()
-  starPounds.events:fire("main:statChange", "upgradeSkill")
+  starPounds.events:fire("stats:calculate", "upgradeSkill")
 end
 
 starPounds.forceUnlockSkill = function(skill, level)
@@ -441,10 +278,9 @@ starPounds.forceUnlockSkill = function(skill, level)
     storage.starPounds.skills[skill][2] = math.max(level, starPounds.getSkillUnlockedLevel(skill))
   end
   starPounds.parseSkills()
-  starPounds.parseStats()
   -- Update stats if we're already up and running.
   if starPounds.currentSize then
-    starPounds.events:fire("main:statChange", "forceUnlockSkill")
+    starPounds.events:fire("stats:calculate", "forceUnlockSkill")
   end
 end
 
@@ -460,78 +296,7 @@ starPounds.setSkill = function(skill, level)
     storage.starPounds.skills[skill][1] = math.max(math.min(level, starPounds.getSkillUnlockedLevel(skill)), 0)
   end
   starPounds.parseSkills()
-  starPounds.parseStats()
-  starPounds.events:fire("main:statChange", "setSkill")
-end
-
-starPounds.parseStats = function()
-  -- Skill stats
-  storage.starPounds.stats = {}
-  for skillName in pairs(storage.starPounds.skills) do
-    local skill = starPounds.skills[skillName]
-    if skill.type == "addStat" then
-      storage.starPounds.stats[skill.stat] = (storage.starPounds.stats[skill.stat] or 0) + (skill.amount * starPounds.getSkillLevel(skillName))
-    elseif skill.type == "subtractStat" then
-      storage.starPounds.stats[skill.stat] = (storage.starPounds.stats[skill.stat] or 0) - (skill.amount * starPounds.getSkillLevel(skillName))
-    end
-    if storage.starPounds.stats[skill.stat] == 0 then
-      storage.starPounds.stats[skill.stat] = nil
-    end
-  end
-  -- Trait Stats
-  starPounds.traitStats = {}
-  local selectedTrait = starPounds.traits[starPounds.getTrait() or "default"]
-  local speciesTrait = starPounds.traits[starPounds.getSpecies()] or starPounds.traits.default
-  for _, trait in ipairs({speciesTrait, selectedTrait}) do
-    for _, stat in ipairs(trait.stats or {}) do
-      starPounds.traitStats[stat[1]] = starPounds.traitStats[stat[1]] or {0, 1}
-      if stat[2] == "add" then
-        starPounds.traitStats[stat[1]][1] = starPounds.traitStats[stat[1]][1] + stat[3]
-      elseif stat[2] == "sub" then
-        starPounds.traitStats[stat[1]][1] = starPounds.traitStats[stat[1]][1] - stat[3]
-      elseif stat[2] == "mult" then
-        starPounds.traitStats[stat[1]][2] = starPounds.traitStats[stat[1]][2] * stat[3]
-      end
-    end
-  end
-  -- Effect stats
-  starPounds.effectStats = {}
-  for effectName, effectData in pairs(storage.starPounds.effects) do
-    local effectConfig = starPounds.moduleFunc("effects", "getConfig", effectName)
-    if effectConfig then
-      for _, stat in ipairs(effectConfig.stats or {}) do
-        starPounds.effectStats[stat[1]] = starPounds.effectStats[stat[1]] or {0, 1}
-        if stat[2] == "add" then
-          starPounds.effectStats[stat[1]][1] = starPounds.effectStats[stat[1]][1] + stat[3] + (effectData.level - 1) * (stat[4] or 0)
-        elseif stat[2] == "sub" then
-          starPounds.effectStats[stat[1]][1] = starPounds.effectStats[stat[1]][1] - (stat[3] + (effectData.level - 1) * (stat[4] or 0))
-        elseif stat[2] == "mult" then
-          starPounds.effectStats[stat[1]][2] = starPounds.effectStats[stat[1]][2] * stat[3] + (effectData.level - 1) * (stat[4] or 0)
-        end
-      end
-    end
-  end
-  -- Options stats
-  starPounds.optionStats = {}
-  for _, optionConfig in ipairs(starPounds.options) do
-    if starPounds.hasOption(optionConfig.name) then
-      for _, stat in ipairs(optionConfig.stats or {}) do
-        starPounds.optionStats[stat[1]] = starPounds.optionStats[stat[1]] or {0, 1}
-        if stat[2] == "add" then
-          starPounds.optionStats[stat[1]][1] = starPounds.optionStats[stat[1]][1] + stat[3]
-        elseif stat[2] == "sub" then
-          starPounds.optionStats[stat[1]][1] = starPounds.optionStats[stat[1]][1] - stat[3]
-        elseif stat[2] == "mult" then
-          starPounds.optionStats[stat[1]][2] = starPounds.optionStats[stat[1]][2] * stat[3]
-        elseif stat[2] == "override" then
-          starPounds.optionStats[stat[1]][3] = stat[3]
-        end
-      end
-    end
-  end
-
-  starPounds.events:fire("main:statChange", "parseStats")
-  starPounds.moduleFunc("data", "backup")
+  starPounds.events:fire("stats:calculate", "setSkill")
 end
 
 starPounds.parseSkills = function()
@@ -596,7 +361,7 @@ starPounds.setTrait = function(trait)
     end
   end
   -- Refresh stats.
-  starPounds.parseStats()
+  starPounds.events:fire("stats:calculate", "setTrait")
   -- Set the trait successfully.
   return true
 end
@@ -604,69 +369,12 @@ end
 starPounds.resetTrait = function()
   storage.starPounds.trait = nil
   -- Refresh stats.
-  starPounds.parseStats()
-end
-
-starPounds.getSkillBonus = function(stat)
-  -- Argument sanitisation.
-  stat = tostring(stat)
-  return (storage.starPounds.stats[stat] or 0)
-end
-
-starPounds.getTraitMultiplier = function(stat)
-  -- Argument sanitisation.
-  stat = tostring(stat)
-  return (starPounds.traitStats[stat] or {0, 1})[2]
-end
-
-starPounds.getTraitBonus = function(stat)
-  -- Argument sanitisation.
-  stat = tostring(stat)
-  return (starPounds.traitStats[stat] or {0, 1})[1]
-end
-
-starPounds.getEffectMultiplier = function(stat)
-  -- Argument sanitisation.
-  stat = tostring(stat)
-  return (starPounds.effectStats[stat] or {0, 1})[2]
-end
-
-starPounds.getEffectBonus = function(stat)
-  -- Argument sanitisation.
-  stat = tostring(stat)
-  return (starPounds.effectStats[stat] or {0, 1})[1]
-end
-
-starPounds.getStatusEffectMultiplier = function(stat)
-  return 1
-end
-
-starPounds.getStatusEffectBonus = function(stat)
-  return 0
+  starPounds.events:fire("stats:calculate", "resetTrait")
 end
 
 starPounds.getAccessory = function()
   if storage.starPounds.accessory then
     return root.createItem(storage.starPounds.accessory)
-  end
-end
-
-starPounds.getAccessoryModifiers = function(stat)
-  -- Argument sanitisation.
-  stat = stat and tostring(stat) or nil
-  if not stat then
-    local accessoryModifiers = {}
-    local accessory = starPounds.getAccessory()
-    if accessory then
-      for _, stat in pairs(configParameter(accessory, "stats", {})) do
-        if starPounds.stats[stat.name] then
-          accessoryModifiers[stat.name] = math.round((accessoryModifiers[stat.name] or 0) + stat.modifier, 3)
-        end
-      end
-    end
-    return accessoryModifiers
-  else
-    return starPounds.accessoryModifiers[stat] or 0
   end
 end
 
@@ -676,8 +384,7 @@ starPounds.setAccessory = function(item)
     item = tostring(item)
   end
   storage.starPounds.accessory = item and root.createItem(item) or nil
-  starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
-  starPounds.events:fire("main:statChange", "setAccessory")
+  starPounds.events:fire("stats:calculate", "setAccessory")
   starPounds.moduleFunc("data", "backup")
 end
 
@@ -758,12 +465,9 @@ starPounds.messageHandlers = function()
   message.setHandler("starPounds.hasOption", simpleHandler(starPounds.hasOption))
   message.setHandler("starPounds.setOption", localHandler(starPounds.setOption))
   message.setHandler("starPounds.upgradeSkill", simpleHandler(starPounds.upgradeSkill))
-  message.setHandler("starPounds.getStat", simpleHandler(starPounds.getStat))
-  message.setHandler("starPounds.parseStats", simpleHandler(starPounds.parseStats))
   message.setHandler("starPounds.getSkillLevel", simpleHandler(starPounds.getSkillLevel))
   message.setHandler("starPounds.hasSkill", simpleHandler(starPounds.hasSkill))
   message.setHandler("starPounds.getAccessory", simpleHandler(starPounds.getAccessory))
-  message.setHandler("starPounds.getAccessoryModifiers", simpleHandler(starPounds.getAccessoryModifiers))
   message.setHandler("starPounds.getTrait", simpleHandler(starPounds.getTrait))
   message.setHandler("starPounds.setTrait", localHandler(starPounds.setTrait))
   -- Handlers for affecting the entity.
@@ -785,7 +489,7 @@ starPounds.toggleEnable = function()
   storage.starPounds.enabled = not storage.starPounds.enabled
   -- Make sure the movement penalty stuff gets reset as well.
   starPounds.parseSkills()
-  starPounds.events:fire("main:statChange", "toggleEnable")
+  starPounds.events:fire("stats:calculate", "toggleEnable")
   if not storage.starPounds.enabled then
     starPounds.moduleUninit()
     starPounds.movementMultiplier = 1

@@ -36,7 +36,6 @@ function _monster:init()
   end))
   self:setup()
   starPounds.parseSkills()
-  starPounds.parseStats()
 end
 
 function _monster:setup()

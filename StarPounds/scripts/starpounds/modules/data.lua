@@ -47,4 +47,8 @@ function data:backup()
   end
 end
 
+function data:uninit()
+  self:backup()
+end
+
 starPounds.modules.data = data

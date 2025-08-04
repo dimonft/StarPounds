@@ -612,4 +612,12 @@ function pred:belchParticles(prey, essence)
   starPounds.spawnMouthProjectile(particles, 5)
 end
 
+function pred:uninit()
+  -- Players assume things get digested if they disappear (even if the entity crashes).
+  -- Releasing them on uninit stops that behaviour since the prey entity id will change.
+  if starPounds.type == "player" then
+    starPounds.moduleFunc("pred", "release", nil, true)
+  end
+end
+
 starPounds.modules.pred = pred

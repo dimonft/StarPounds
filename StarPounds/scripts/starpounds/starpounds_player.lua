@@ -14,39 +14,17 @@ function init()
     starPounds.forceUnlockSkill(skill[1], skill[2])
   end
   -- Reload whenever the entity loads in/beams/etc.
-  starPounds.statCache = {}
-  starPounds.statCacheTimer = starPounds.settings.statCacheTimer
   starPounds.parseSkills()
-  starPounds.parseStats()
-  starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
   starPounds.moduleInit({"entity", "humanoid", "player", "vore"})
-  starPounds.moduleFunc("size", "setWeight", storage.starPounds.weight)
-
-  starPounds.events:on("main:statChange", function(trace)
-    -- Kill the cache, and force an update to stats.
-    starPounds.statCacheTimer = 0
-    starPounds.statCache = {}
-    starPounds.updateStats(true)
-  end)
 end
 
 function update(dt)
   -- Check promises.
   promises:update()
-  -- Reset stat cache.
-  starPounds.statCacheTimer = math.max(starPounds.statCacheTimer - dt, 0)
-  if starPounds.statCacheTimer == 0 then
-    starPounds.statCache = {}
-    starPounds.statCacheTimer = starPounds.settings.statCacheTimer
-  end
   -- Modules.
   starPounds.moduleUpdate(dt)
-  -- Stat/status updating stuff.
-  starPounds.updateStats()
 end
 
 function uninit()
-  starPounds.moduleFunc("pred", "release", nil, true)
-  starPounds.moduleFunc("data", "backup")
   starPounds.moduleUninit()
 end

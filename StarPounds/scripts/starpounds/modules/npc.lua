@@ -30,7 +30,6 @@ function _npc:init()
   end
   self:setup()
   starPounds.parseSkills()
-  starPounds.parseStats()
   -- Triggers aggro.
   message.setHandler("starPounds.notifyDamage", simpleHandler(damage))
   message.setHandler("starPounds.notifyDamage", simpleHandler(function(args)

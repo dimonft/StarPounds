@@ -13,17 +13,9 @@ function starPoundsInit()
   -- Setup message handlers
   starPounds.messageHandlers()
   -- Reload whenever the entity loads in/beams/etc.
-  starPounds.statCache = {}
-  starPounds.statCacheTimer = starPounds.settings.statCacheTimer
   starPounds.parseSkills()
-  starPounds.parseStats()
-  starPounds.accessoryModifiers = starPounds.getAccessoryModifiers()
   starPounds.moduleInit({"entity", "monster", "vore"})
   starPounds.weightMultiplier = 1
-
-  starPounds.events:on("main:statChange", function(trace)
-    starPounds.updateStats(true)
-  end)
 end
 
 -- Dirty.
@@ -41,12 +33,6 @@ function update(dt)
   update_old(dt)
   -- Check promises.
   promises:update()
-  -- Reset stat cache.
-  starPounds.statCacheTimer = math.max(starPounds.statCacheTimer - dt, 0)
-  if starPounds.statCacheTimer == 0 then
-    starPounds.statCache = {}
-    starPounds.statCacheTimer = starPounds.settings.statCacheTimer
-  end
   -- Modules.
   starPounds.moduleUpdate(dt)
 end

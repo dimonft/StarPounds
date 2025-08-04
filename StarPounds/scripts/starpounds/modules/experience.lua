@@ -55,7 +55,7 @@ end
 
 function experience:hungerPenalty()
   if starPounds.hasOption("disableHunger") then
-    return math.max((starPounds.getStat("hunger") - starPounds.stats.hunger.base) * 0.2, 0)
+    return math.max((starPounds.getStat("hunger") - starPounds.moduleFunc("stats", "getRaw", "hunger").base) * 0.2, 0)
   end
 
   return 0

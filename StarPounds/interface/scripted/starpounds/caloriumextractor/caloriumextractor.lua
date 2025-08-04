@@ -24,7 +24,7 @@ function update()
         local chance = starPounds.caloriumExtractTracker / effectTarget
         if (chance > math.random()) then
           starPounds.caloriumExtractTracker = starPounds.caloriumExtractTracker - effectTarget
-          starPounds.addEffect("caloriumExtractor")
+          starPounds.moduleFunc("effects", "add", "caloriumExtractor")
         end
 
         addCalorium(converted)

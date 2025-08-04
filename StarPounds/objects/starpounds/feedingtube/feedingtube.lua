@@ -6,7 +6,6 @@ function init()
   self.collectTimer = 0
   self.liquidAmount = 1
   self.capacity = config.getParameter("capacity", 1000)
-  self.maxWeight = root.assetJson("/scripts/starpounds/starpounds.config:settings.maxWeight")
   self.liquids = root.assetJson("/scripts/starpounds/modules/liquid.config:liquids")
   self.pickupBounds = rect.pad(object.boundBox(), -1)
 

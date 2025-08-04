@@ -4,7 +4,7 @@ require "/scripts/versioningutils.lua"
 require "/scripts/staticrandom.lua"
 
 function build(directory, config, parameters, level, seed)
-  local stats = root.assetJson("/scripts/starpounds/starpounds_stats.config")
+  local stats = root.assetJson("/scripts/starpounds/modules/stats.config:stats")
 
   local configParameter = function(keyName, defaultValue)
     if parameters[keyName] ~= nil then

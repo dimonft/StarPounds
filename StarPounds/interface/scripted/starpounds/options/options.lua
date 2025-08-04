@@ -6,7 +6,7 @@ function init()
   local buttonIcon = string.format("%s.png", starPounds.isEnabled() and "enabled" or "disabled")
   enable:setImage(buttonIcon, buttonIcon, buttonIcon.."?border=2;00000000;00000000?crop=2;3;88;22")
   options = starPounds.options
-  stats = root.assetJson("/scripts/starpounds/starpounds_stats.config")
+  stats = root.assetJson("/scripts/starpounds/modules/stats.config:stats")
   tabs = root.assetJson("/scripts/starpounds/starpounds_options.config:tabs")
   tabs[#tabs + 1] = {
     id = "miscellaneous",
@@ -51,7 +51,7 @@ function populateOptions()
     if option.stats and not option.hideStats then
       for _, stat in ipairs(option.stats) do
         local statString = ""
-        local modStat = starPounds.stats[stat[1]]
+        local modStat = starPounds.moduleFunc("stats", "getRaw", stat[1])
         local amount = stat[3]
         if stat[2] == "mult" then
           local negative = (modStat.negative and amount > 1) or (not modStat.negative and amount < 1)

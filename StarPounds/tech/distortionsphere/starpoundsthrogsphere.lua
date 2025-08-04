@@ -23,9 +23,7 @@ function init()
     if self.active then
       self.lastScale = nil
       self.force = (starPounds and starPounds.getStat("throgSphereForce") or 0)
-      local scalingSize = starPounds.settings.scalingSize - 1
-      local sizeIndex = starPounds.currentSizeIndex - 1
-      local protection = self.shrunk and 0 or math.min(starPounds.getStat("throgSphereArmor") * (sizeIndex/scalingSize), starPounds.getStat("throgSphereArmor"))
+      local protection = self.shrunk and 0 or math.min(starPounds.getStat("throgSphereArmor") * starPounds.moduleFunc("size", "effectScaling"), starPounds.getStat("throgSphereArmor"))
       status.setPersistentEffects("starpoundsthrogsphere", {{stat = "grit", amount = 1}, {stat = "physicalResistance", amount = protection}})
     end
   end
@@ -63,9 +61,7 @@ function update(args)
     animator.scaleTransformationGroup("ballScale", self.scale)
 
     if self.active then
-      local scalingSize = starPounds.settings.scalingSize - 1
-      local sizeIndex = starPounds.currentSizeIndex - 1
-      local protection = self.shrunk and 0 or math.min(starPounds.getStat("throgSphereArmor") * (sizeIndex/scalingSize), starPounds.getStat("throgSphereArmor"))
+      local protection = self.shrunk and 0 or math.min(starPounds.getStat("throgSphereArmor") * starPounds.moduleFunc("size", "effectScaling"), starPounds.getStat("throgSphereArmor"))
       status.setPersistentEffects("starpoundsthrogsphere", {{stat = "grit", amount = 1}, {stat = "physicalResistance", amount = protection}})
     end
 
@@ -218,7 +214,7 @@ function activate()
   animator.setSoundVolume("loop", 0)
   activate_old()
 
-  starPounds.events:fire("main:statChange", "tech:sphereActivate")
+  starPounds.events:fire("stats:calculate", "tech:sphereActivate")
   starPounds.events:on("main:statChange", self.statListener)
 
   status.setPersistentEffects("starpoundsthrogsphere", {{stat = "grit", amount = 1}, {stat = "physicalResistance", amount = math.min(starPounds.getStat("throgSphereArmor") * (starPounds.currentSizeIndex - 1)/3, starPounds.getStat("throgSphereArmor"))}})
@@ -234,7 +230,7 @@ function deactivate()
   deactivate_old()
 
   starPounds.events:off("main:statChange", self.statListener)
-  starPounds.events:fire("main:statChange", "tech:sphereDeactivate")
+  starPounds.events:fire("stats:calculate", "tech:sphereDeactivate")
 
   for _, projectile in pairs(self.projectiles) do
     if world.entityExists(projectile) then

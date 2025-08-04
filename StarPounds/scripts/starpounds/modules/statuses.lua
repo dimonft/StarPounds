@@ -53,7 +53,7 @@ function statuses:updateStats()
     end
   end
   -- Fire stat change event.
-  starPounds.events:fire("main:statChange", "statuses:updatedStats")
+  starPounds.events:fire("stats:calculate", "statuses:updatedStats")
 end
 
 -- Overwrite stub functions.

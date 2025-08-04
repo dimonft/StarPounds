@@ -427,7 +427,7 @@ function selectSkill(skill)
     descriptionTitle:setText("^shadow;"..skill.pretty)
     descriptionIcon:setFile(string.format("icons/skills/%s.png", skill.icon or skill.name))
     descriptionIcon:queueRedraw()
-    descriptionText:setText(skill.description:gsub("<activationSize>", starPounds.sizes[starPounds.settings.activationSize].size:gsub("^%l", string.upper)))
+    descriptionText:setText(skill.description:gsub("<activationSize>", starPounds.sizes[starPounds.moduleFunc("size", "activationSize")].size:gsub("^%l", string.upper)))
 
     local currentLevel = starPounds.getSkillLevel(skill.name)
     local unlockedLevel = starPounds.getSkillUnlockedLevel(skill.name)
@@ -450,30 +450,30 @@ function selectSkill(skill)
 
     if skill.type == "addStat" or skill.type == "subtractStat" then
       infoPanel:setVisible(true)
-      local stat = starPounds.stats[skill.stat]
-      local baseAmount = starPounds.stats[skill.stat].base
-      local textColour = starPounds.stats[skill.stat].colour or skill.colour
+      local stat = starPounds.moduleFunc("stats", "getRaw", skill.stat)
+      local baseAmount = stat.base
+      local textColour = stat.colour or skill.colour
 
       local nextAmount = baseAmount + skill.amount * (skill.type == "addStat" and 1 or -1)
       local nextIncrease = math.floor(0.5 + ((stat.flat and 1 or 100) * (nextAmount - baseAmount)) * 100)/100
-      local nextAmount = (starPounds.stats[skill.stat].invertDescriptor and (nextIncrease * -1) or nextIncrease)
+      local nextAmount = (stat.invertDescriptor and (nextIncrease * -1) or nextIncrease)
       local nextString = currentLevel == skill.levels and "" or string.format("%s%.2f", nextAmount > 0 and "+" or "", nextAmount):gsub("%.?0+$", "")..(stat.flat and "" or "%")
 
-      local bonus = starPounds.getSkillBonus(skill.stat)
-      local totalAmount = (bonus ~= 0 and (starPounds.stats[skill.stat].invertDescriptor and (bonus * -1) or bonus) or 0) + starPounds.stats[skill.stat].base
+      local bonus = starPounds.moduleFunc("stats", "skillBonus", skill.stat)
+      local totalAmount = (bonus ~= 0 and (stat.invertDescriptor and (bonus * -1) or bonus) or 0) + stat.base
       local totalIncrease = math.floor(0.5 + ((stat.flat and 1 or 100) * totalAmount) * 100)/100
       local amount = totalIncrease
       local amountString = string.format("%.2f", amount):gsub("%.?0+$", "")..(stat.flat and "" or "%")
 
-      if starPounds.stats[skill.stat].normalizeBase then
+      if stat.normalizeBase then
         nextAmount = baseAmount + skill.amount * (skill.type == "addStat" and 1 or -1)
         nextIncrease = math.floor(0.5 + ((stat.flat and 1 or 100) * (nextAmount - baseAmount)/(baseAmount > 0 and baseAmount or 1)) * 100)/100
-        nextAmount = (starPounds.stats[skill.stat].invertDescriptor and (nextIncrease * -1) or nextIncrease)
+        nextAmount = (stat.invertDescriptor and (nextIncrease * -1) or nextIncrease)
         nextString = currentLevel == skill.levels and "" or string.format("%s%.2f", nextAmount > 0 and "+" or "", nextAmount):gsub("%.?0+$", "")..(stat.flat and "" or "%")
 
 
         totalIncrease = math.floor(0.5 + ((stat.flat and 1 or 100) * totalAmount/(baseAmount > 0 and baseAmount or 1)) * 100)/100
-        amount = totalIncrease ~= 0 and (starPounds.stats[skill.stat].invertDescriptor and (totalIncrease * -1) or totalIncrease) or 0
+        amount = totalIncrease ~= 0 and (stat.invertDescriptor and (totalIncrease * -1) or totalIncrease) or 0
         amountString = string.format("%.2f", amount):gsub("%.?0+$", "")..(stat.flat and "" or "%")
       end
 
@@ -482,11 +482,11 @@ function selectSkill(skill)
       end
 
       infoCurrent:setText(
-        string.format("^#%s;%s^reset; \n^clear;%s^reset; %s ^gray;%s", textColour, starPounds.stats[skill.stat].pretty:gsub("(%a)([%w_']*)", tchelper), nextString, amountString, nextString)
+        string.format("^#%s;%s^reset; \n^clear;%s^reset; %s ^gray;%s", textColour, stat.pretty:gsub("(%a)([%w_']*)", tchelper), nextString, amountString, nextString)
       )
-      statInfo.toolTip = starPounds.stats[skill.stat].description
-      if starPounds.stats[skill.stat].scaling then
-        statInfo.toolTip = statInfo.toolTip.."\n^gray,set;This stat scales until ^#00ebce;"..starPounds.sizes[starPounds.settings.scalingSize].size:gsub("^%l", string.upper).."^reset;."
+      statInfo.toolTip = stat.description
+      if stat.scaling then
+        statInfo.toolTip = statInfo.toolTip.."\n^gray,set;This stat scales until ^#00ebce;"..starPounds.sizes[starPounds.moduleFunc("size", "scalingSize")].size:gsub("^%l", string.upper).."^reset;."
       end
     end
 

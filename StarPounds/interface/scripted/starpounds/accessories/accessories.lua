@@ -4,7 +4,7 @@ starPounds = getmetatable ''.starPounds
 function init()
   local buttonIcon = string.format("%s.png", starPounds.isEnabled() and "enabled" or "disabled")
   enable:setImage(buttonIcon, buttonIcon, buttonIcon.."?border=2;00000000;00000000?crop=2;3;88;22")
-  stats = root.assetJson("/scripts/starpounds/starpounds_stats.config")
+  stats = root.assetJson("/scripts/starpounds/modules/stats.config:stats")
   if starPounds then
     -- Pop out bad items.
     for _,v in ipairs({"pendant", "ring", "trinket"}) do
