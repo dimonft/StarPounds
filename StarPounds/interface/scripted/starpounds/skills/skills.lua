@@ -6,9 +6,9 @@ starPounds = getmetatable ''.starPounds
 function init()
   local buttonIcon = string.format("%s.png", starPounds.isEnabled() and "enabled" or "disabled")
   enable:setImage(buttonIcon, buttonIcon, buttonIcon.."?border=2;00000000;00000000?crop=2;3;88;22")
-  skills = root.assetJson("/scripts/starpounds/starpounds_skills.config:skills")
+  skills = root.assetJson("/scripts/starpounds/modules/skills.config:skills")
+  tabs = root.assetJson("/scripts/starpounds/modules/skills.config:tabs")
   traits = root.assetJson("/scripts/starpounds/starpounds_traits.config:traits")
-  tabs = root.assetJson("/scripts/starpounds/starpounds_skills.config:tabs")
   tabNames = {}
 
   if metagui.inputData.tabs then
@@ -242,7 +242,7 @@ function buildTraitPreview(traitType, trait)
     _ENV[traitType.."TraitSkills"].children[slotPosition].hideRarity = true
     slotPosition = slotPosition + 1
     if traitType ~= "species" then
-      local currentSkillLevel = starPounds.getSkillLevel(skill[1])
+      local currentSkillLevel = starPounds.moduleFunc("skills", "level", skill[1])
       local targetLevel = skill[2] or 1
       local cost = skills[skill[1]].cost
       for i = 1, targetLevel do
