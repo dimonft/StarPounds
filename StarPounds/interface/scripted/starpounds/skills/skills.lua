@@ -133,7 +133,7 @@ end
 function unlockAll:onClick()
   for skillName, skill in pairs(skills) do
     if not (skill.internal or skill.hidden) then
-      starPounds.forceUnlockSkill(skillName, skill.levels or 1)
+      starPounds.moduleFunc("skills", "forceUnlock", skillName, skill.levels or 1)
     end
   end
   checkSkills()
