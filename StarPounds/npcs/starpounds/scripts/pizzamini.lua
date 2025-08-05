@@ -40,9 +40,9 @@ function init()
   starPounds.moduleFunc("stomach", "feed", totalFood)
   self.order.money = (self.order.money or 0) + eatFoodCost
   self.ateItems = self.totalFood > 0
-  if self.totalFood >= 500 then
-    self.removeChest = true
-  end
+
+  starPounds.moduleFunc("stomach", "feed", self.totalFood)
+  starPounds.moduleFunc("size", "update", 0)
 end
 
 function update(dt)
@@ -52,8 +52,8 @@ function update(dt)
   self.removeChest = self.removeChest or self.ateEntity
   if starPounds.currentVariant and not storage.removedChest and self.removeChest then
     storage.removedChest = true
-
     npc.setItemSlot("chestCosmetic")
+    starPounds.moduleFunc("size", "update", dt)
     if self.ateEntity or self.ateOrder then
       starPounds.moduleFunc("sound", "play", "clothingrip", 0.75)
     end
@@ -80,14 +80,15 @@ function update(dt)
   if self.eatOrder then
     self.eatTime = math.max(self.eatTime - dt, 0)
     if not self.ateOrder and self.eatTime == 0 then
+      local foodAmount = 0
       for itemName, itemCount in pairs(self.order) do
-        self.totalFood = self.totalFood + (root.itemConfig(itemName).config.foodValue or 0) * itemCount
+        foodAmount = foodAmount + (root.itemConfig(itemName).config.foodValue or 0) * itemCount
       end
-      if self.totalFood >= 250 then
+      if foodAmount >= 250 then
         self.removeChest = true
       end
       npc.beginPrimaryFire()
-      starPounds.moduleFunc("stomach", "feed", itemFood)
+      starPounds.moduleFunc("stomach", "feed", foodAmount)
       self.ateOrder = true
     end
     if self.ateCustomer and not starPounds.moduleFunc("pred", "hasPrey", targetEntityId) then
@@ -106,7 +107,7 @@ function update(dt)
   if self.ateOrder then
     self.voreBelchTime = math.max(self.voreBelchTime - dt, 0)
     if not self.belched and self.voreBelchTime == 0 then
-      starPounds.belch(0.75, starPounds.belchPitch(0.8))
+      starPounds.moduleFunc("belch", "belch",0.75, starPounds.moduleFunc("belch", "pitch",0.8))
       npc.emote("oh")
       self.belched = true
     end

@@ -114,77 +114,6 @@ function starPounds.module:init() end -- Runs whenever the target loads in, or t
 function starPounds.module:update(dt) end -- Update loop.
 function starPounds.module:uninit() end -- Runs whenever the target unloads, or the mod gets disabled.
 
-starPounds.belch = function(volume, pitch, addMomentum)
-  -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return end
-  -- Argument sanitisation.
-  volume = tonumber(volume) or 1
-  pitch = tonumber(pitch) or 1
-  if addMomentum == nil then addMomentum = true end
-  -- Skip if belches are disabled.
-  if starPounds.hasOption("disableBelches") then return end
-  local distortionSphere = status.stat("activeMovementAbilities") > 1
-  if status.stat("activeMovementAbilities") > 1 then
-    volume = volume * 0.5
-    starPounds.moduleFunc("sound", "play", "belch", volume, pitch)
-    return
-  end
-  starPounds.moduleFunc("sound", "play", "belch", volume, pitch)
-  -- 7.5 (Rounded to 8) to 10 particles, decreased or increased by up to 2x, -5
-  -- Ends up yielding around 10 - 15 particles if the belch is very loud and deep, 3 - 5 at normal volume and pitch, and none if it's half volume or twice as high pitch.
-  local volumeMultiplier = math.max(math.min(volume, 1.5), 0)
-  local pitchMultiplier = 1/math.max(pitch, 2/3)
-  local particleCount = starPounds.hasOption("disableBelchParticles") and 0 or math.round(math.max(math.random(75, 100) * 0.1 * pitchMultiplier * volumeMultiplier - 5, 0))
-  -- Belches give momentum in zero g based on the particle count, because why not.
-  if addMomentum and starPounds.mcontroller.zeroG then
-    mcontroller.addMomentum({-0.5 * starPounds.mcontroller.facingDirection * (0.5 + starPounds.weightMultiplier * 0.5) * particleCount, 0})
-  end
-  -- Alert nearby enemies.
-  local targets = world.entityQuery(starPounds.mcontroller.position, starPounds.settings.belchAlertRadius * volume, { includedTypes = {"npc", "monster"} })
-  for _, target in pairs(targets) do
-    if world.entityAggressive(target) and world.entityCanDamage(target, entity.id()) then
-      world.sendEntityMessage(target, "starPounds.notifyDamage", {sourceId = entity.id()})
-    end
-  end
-  -- Skip if we're not doing particles.
-  if particleCount == 0 then return end
-    -- Create a belch particle with gravity.
-    local particle = {}
-    local gravity = world.gravity(starPounds.mcontroller.mouthPosition)
-    local friction = world.breathable(starPounds.mcontroller.mouthPosition) or world.liquidAt(starPounds.mcontroller.mouthPosition)
-    particle.initialVelocity = {0, gravity/62.5}
-    particle.finalVelocity = {0, -gravity}
-    particle.approach = {friction and 5 or 0, gravity}
-
-    starPounds.spawnMouthProjectile({{
-      action = "particle", specification = starPounds.makeBelchParticle(particle)
-    }}, particleCount)
-end
-
-function starPounds.makeBelchParticle(override)
-  local facing = starPounds.mcontroller.facingDirection
-  local velocity = vec2.add(starPounds.mcontroller.velocity, {7 * facing, 0})
-  local particle = sb.jsonMerge(starPounds.settings.particleTemplates.belch, override or {})
-  -- Flip particles and add extra velocity based on direction.
-  particle.initialVelocity = vec2.add(vec2.mul(particle.initialVelocity or {0, 0}, {facing, 1}), velocity)
-  particle.finalVelocity = vec2.mul(particle.finalVelocity or {0, 0}, {facing, 1})
-
-  return particle
-end
-
-starPounds.belchPitch = function(multiplier)
-  multiplier = tonumber(multiplier) or 1
-  local pitch = util.randomInRange(starPounds.settings.belchPitch)
-  if not starPounds.hasOption("genderlessBelches") then
-    local gender = world.entityGender(entity.id())
-    if gender then
-      pitch = pitch + (starPounds.settings.belchGenderModifiers[gender] or 0)
-    end
-  end
-  pitch = math.round(pitch * multiplier, 2)
-  return pitch
-end
-
 starPounds.spawnMouthProjectile = function(actions, count)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
@@ -453,9 +382,6 @@ starPounds.messageHandlers = function()
   message.setHandler("starPounds.hasSkill", simpleHandler(starPounds.hasSkill))
   message.setHandler("starPounds.getTrait", simpleHandler(starPounds.getTrait))
   message.setHandler("starPounds.setTrait", localHandler(starPounds.setTrait))
-  -- Handlers for affecting the entity.
-  message.setHandler("starPounds.belch", simpleHandler(starPounds.belch))
-  message.setHandler("starPounds.belchPitch", simpleHandler(starPounds.belchPitch))
   -- Interface/debug stuff.
   message.setHandler("starPounds.reset", localHandler(starPounds.reset))
   message.setHandler("starPounds.resetConfirm", localHandler(starPounds.reset))

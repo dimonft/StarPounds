@@ -53,7 +53,7 @@ function drinking:drink()
       -- Gets up to 25% deeper depending on how many 'sips' over 10 were taken.
       local belchVolume = 0.75
       local belchPitch = 1 - (self.drinkCounter - 1) * 0.25
-      starPounds.belch(belchVolume, starPounds.belchPitch(belchPitch))
+      starPounds.moduleFunc("belch", "belch",belchVolume, starPounds.moduleFunc("belch", "pitch",belchPitch))
     end
     self.drinkCounter = 0
   end
