@@ -339,7 +339,7 @@ function stomach:gurgle(noDigest)
       local belchMultiplier = math.min(self.stomach.belchable/1000, 0.25)
       local belchVolume = 0.5 + belchMultiplier
       local belchPitch = 1 - belchMultiplier
-      starPounds.moduleFunc("belch", "belch",belchMultiplier, starPounds.moduleFunc("belch", "pitch",belchPitch))
+      starPounds.moduleFunc("belch", "belch", belchVolume, starPounds.moduleFunc("belch", "pitch", belchPitch))
     end
     self:digest(seconds, true, isBelch)
   end
@@ -486,7 +486,7 @@ end
 function stomach:spawnBelchParticles(particles, count)
   local actions = {}
   for _, particle in pairs(particles) do
-    actions[#actions + 1] = {action = "particle", specification = starPounds.makeBelchParticle(particle)}
+    actions[#actions + 1] = {action = "particle", specification = starPounds.moduleFunc("belch", "particle", particle)}
   end
   starPounds.spawnMouthProjectile(actions, count)
 end

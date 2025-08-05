@@ -107,7 +107,7 @@ function update(dt)
   if self.ateOrder then
     self.voreBelchTime = math.max(self.voreBelchTime - dt, 0)
     if not self.belched and self.voreBelchTime == 0 then
-      starPounds.moduleFunc("belch", "belch",0.75, starPounds.moduleFunc("belch", "pitch",0.8))
+      starPounds.moduleFunc("belch", "belch", 0.75, starPounds.moduleFunc("belch", "pitch", 0.8))
       npc.emote("oh")
       self.belched = true
     end

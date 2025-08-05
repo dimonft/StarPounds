@@ -56,7 +56,7 @@ function oSB:belchBind()
   if input.bindDown("starpounds", "belch") then
     local belchVolume = 0.75
     local addMomentum = false
-    starPounds.moduleFunc("belch", "belch",belchVolume, starPounds.moduleFunc("belch", "pitch"), addMomentum)
+    starPounds.moduleFunc("belch", "belch", belchVolume, starPounds.moduleFunc("belch", "pitch"), addMomentum)
   end
 end
 -- Eat/Regurgitate entities.
