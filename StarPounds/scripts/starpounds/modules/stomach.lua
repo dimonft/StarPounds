@@ -9,7 +9,6 @@ function stomach:init()
   message.setHandler("starPounds.rumble", function(_, _, ...) return self:rumble(...) end)
   message.setHandler("starPounds.resetStomach", localHandler(self.reset))
 
-  self.stomachLerp = 0
   -- Timers.
   self.digestTimer = 0
   self.gurgleTimer = nil
@@ -39,6 +38,8 @@ function stomach:init()
   }
 
   starPounds.stomach = self:get()
+  -- Assume the lerp is the same as the contents on load.
+  self.stomachLerp = self.stomach.contents
   -- Delete json metadata so we don't store nils.
   setmetatable(storage.starPounds.stomach, nil)
 
@@ -146,8 +147,8 @@ function stomach:get()
 
     fullness = math.round(contents/capacity, 2),
     baseFullness = math.round(contents/baseCapacity, 2),
-    interpolatedFullness = math.round(self.stomachLerp/capacity, 2),
-    interpolatedContents = math.round(self.stomachLerp, 3)
+    interpolatedFullness = math.round((self.stomachLerp or contents)/capacity, 2),
+    interpolatedContents = math.round((self.stomachLerp or contents), 3)
   }
 
   return self.stomach
