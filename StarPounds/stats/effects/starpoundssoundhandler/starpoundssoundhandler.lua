@@ -12,11 +12,11 @@ function update(dt)
   effect.modifyDuration(dt)
   -- Secret c:
   local starPounds = getmetatable ''.starPounds
-  if secret and not starPounds.hasSkill("secret") then
+  if secret and not starPounds.moduleFunc("skills", "has", "secret") then
     effect.expire()
   end
   if starPounds and not secret then
-    secret = starPounds.hasSkill("secret")
+    secret = starPounds.moduleFunc("skills", "has", "secret")
   end
 end
 

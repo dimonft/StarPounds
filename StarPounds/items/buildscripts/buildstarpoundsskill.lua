@@ -1,5 +1,5 @@
 function build(directory, config, parameters, level, seed)
-  local skills = root.assetJson("/scripts/starpounds/starpounds_skills.config:skills")
+  local skills = root.assetJson("/scripts/starpounds/modules/skills.config:skills")
   if skills[parameters.skill] then
     local skillName = parameters.skill
     local skillLevel = parameters.level or 1

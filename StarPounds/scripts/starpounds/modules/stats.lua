@@ -5,13 +5,13 @@ function stats:init()
 
   self.cache = {}
 
+  self.skills = starPounds.moduleFunc("skills", "getSkillList")
   self.skillStats = {}
   self.traitStats = {}
   self.effectStats = {}
   self.optionStats = {}
   self.accessoryModifiers = {}
 
-  starPounds.parseSkills()
   self:calculate()
 
   starPounds.events:on("stats:calculate", function(trace) -- Trace shows you where the 'change' is coming from.
@@ -65,11 +65,11 @@ function stats:calculate()
   -- Skill stats.
   self.skillStats = {}
   for skillName in pairs(storage.starPounds.skills) do
-    local skill = starPounds.skills[skillName]
+    local skill = self.skills[skillName]
     if skill.type == "addStat" then
-      self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) + (skill.amount * starPounds.getSkillLevel(skillName))
+      self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) + (skill.amount * starPounds.moduleFunc("skills", "level", skillName))
     elseif skill.type == "subtractStat" then
-      self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) - (skill.amount * starPounds.getSkillLevel(skillName))
+      self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) - (skill.amount * starPounds.moduleFunc("skills", "level", skillName))
     end
     if self.skillStats[skill.stat] == 0 then
       self.skillStats[skill.stat] = nil

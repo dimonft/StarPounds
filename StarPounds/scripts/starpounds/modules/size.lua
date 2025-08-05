@@ -118,7 +118,7 @@ function size:setWeight(amount)
   amount = math.max(tonumber(amount) or 0, 0)
   -- Set weight, rounded to 4 decimals.
   amount = math.round(amount, 4)
-  storage.starPounds.weight = math.max(math.min(amount, starPounds.settings.maxWeight), starPounds.sizes[(starPounds.getSkillLevel("minimumSize") + 1)].weight)
+  storage.starPounds.weight = math.max(math.min(amount, starPounds.settings.maxWeight), starPounds.sizes[(starPounds.moduleFunc("skills", "level", "minimumSize") + 1)].weight)
 end
 
 function size:get(weight)
@@ -179,8 +179,8 @@ function size:updateStats(forceUpdate)
       {stat = "shieldHealth", effectiveMultiplier = 1 + starPounds.getStat("shieldHealth") * bonusEffectiveness},
       {stat = "knockbackThreshold", effectiveMultiplier = 1 - gritReduction},
       {stat = "fallDamageMultiplier", effectiveMultiplier = size.healthMultiplier * (1 - starPounds.getStat("fallDamageResistance"))},
-      {stat = "iceStatusImmunity", amount = applyImmunity and starPounds.getSkillLevel("iceImmunity") or 0},
-      {stat = "poisonStatusImmunity", amount = applyImmunity and starPounds.getSkillLevel("poisonImmunity") or 0},
+      {stat = "iceStatusImmunity", amount = applyImmunity and starPounds.moduleFunc("skills", "level", "iceImmunity") or 0},
+      {stat = "poisonStatusImmunity", amount = applyImmunity and starPounds.moduleFunc("skills", "level", "poisonImmunity") or 0},
       {stat = "iceResistance", amount = starPounds.getStat("iceResistance") * bonusEffectiveness},
       {stat = "poisonResistance", amount = starPounds.getStat("poisonResistance") * bonusEffectiveness}
     }
@@ -208,7 +208,7 @@ function size:updateStats(forceUpdate)
     starPounds.movementMultiplier = size.movementMultiplier
     -- If we have the anti-immobile skill, use double the movement penalty of blob instead.
     local isImmobile = starPounds.movementMultiplier == 0
-    if isImmobile and starPounds.hasSkill("preventImmobile") then
+    if isImmobile and starPounds.moduleFunc("skills", "has", "preventImmobile") then
       starPounds.movementMultiplier = starPounds.sizes[sizeIndex - 1].movementMultiplier ^ 2
     end
     -- Movement stat starts at 0.
@@ -389,7 +389,7 @@ end
 function size:equip(equipConfig)
   if not self.canGain then return end
   -- Immobile sizes looks like blob with the mobility skill.
-  if starPounds.hasSkill("preventImmobile") then
+  if starPounds.moduleFunc("skills", "has", "preventImmobile") then
     if equipConfig.chest == "immobile" then
       equipConfig.chest = "blob"
       equipConfig.legs = "blob"
@@ -547,7 +547,7 @@ function size:cursorCheck()
 end
 
 function size.reset()
-  storage.starPounds.weight = starPounds.sizes[(starPounds.getSkillLevel("minimumSize") + 1)].weight
+  storage.starPounds.weight = starPounds.sizes[(starPounds.moduleFunc("skills", "level", "minimumSize") + 1)].weight
   return true
 end
 

@@ -16,11 +16,11 @@ function hunger:update(dt)
   -- Check if the player is starving.
   self.isStarving = status.uniqueStatusEffectActive("starving")
   -- Check upgrade for preventing starving and they have weight loss enabled.
-  if starPounds.hasSkill("preventStarving") and not starPounds.hasOption("disableLoss") then
+  if starPounds.moduleFunc("skills", "has", "preventStarving") and not starPounds.hasOption("disableLoss") then
     -- 1% more than the food delta.
     if self.isStarving then
       local foodDelta = math.max(status.stat("foodDelta") * -1, 0) * dt
-      local availableWeight = storage.starPounds.weight - starPounds.sizes[starPounds.getSkillLevel("minimumSize") + 1].weight
+      local availableWeight = storage.starPounds.weight - starPounds.sizes[starPounds.moduleFunc("skills", "level", "minimumSize") + 1].weight
       if availableWeight > 0 then
         self.isStarving = false
         local lossMultiplier = math.max(1, 1/math.max(0.01, (starPounds.getStat("foodValue") * starPounds.getStat("absorption"))))
@@ -30,7 +30,7 @@ function hunger:update(dt)
     end
   end
   -- Apply wellfed if over capacity.
-  if starPounds.stomach.interpolatedFullness >= self.baseThreshold and not starPounds.hasSkill("wellfedProtection") then
+  if starPounds.stomach.interpolatedFullness >= self.baseThreshold and not starPounds.moduleFunc("skills", "has", "wellfedProtection") then
     self:applyStatus()
   elseif starPounds.stomach.fullness >= self.skillThreshold then
     self:applyStatus()

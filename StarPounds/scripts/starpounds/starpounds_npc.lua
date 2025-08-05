@@ -17,10 +17,9 @@ function init()
   storage.starPounds.overrideSpecies = config.getParameter("starPounds_overrideSpecies")
   local speciesTrait = starPounds.traits[starPounds.getSpecies()] or starPounds.traits.default
   for _, skill in ipairs(speciesTrait.skills or jarray()) do
-    starPounds.forceUnlockSkill(skill[1], skill[2])
+    starPounds.moduleFunc("skills", "forceUnlock", skill[1], skill[2])
   end
   -- Reload whenever the entity loads in/beams/etc.
-  starPounds.parseSkills()
   starPounds.moduleInit({"entity", "humanoid", "npc", "vore"})
 end
 

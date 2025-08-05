@@ -365,8 +365,8 @@ function makeSkillWidget(skill)
   }
   -- Under skill level for multilevel skills.
   if skill.levels > 1 then
-    local level = starPounds.getSkillUnlockedLevel(skill.name)
-    local currentLevel = starPounds.getSkillLevel(skill.name)
+    local level = starPounds.moduleFunc("skills", "unlockedLevel", skill.name)
+    local currentLevel = starPounds.moduleFunc("skills", "level", skill.name)
     if currentLevel < level then
       level = string.format("^#ffaaaa;%s^reset;", currentLevel)
     end
@@ -429,8 +429,8 @@ function selectSkill(skill)
     descriptionIcon:queueRedraw()
     descriptionText:setText(skill.description:gsub("<activationSize>", starPounds.sizes[starPounds.moduleFunc("size", "activationSize")].size:gsub("^%l", string.upper)))
 
-    local currentLevel = starPounds.getSkillLevel(skill.name)
-    local unlockedLevel = starPounds.getSkillUnlockedLevel(skill.name)
+    local currentLevel = starPounds.moduleFunc("skills", "level", skill.name)
+    local unlockedLevel = starPounds.moduleFunc("skills", "unlockedLevel", skill.name)
     local nextLevel = math.min(unlockedLevel + 1, skill.levels)
     local skillItems = getSkillItems(skill)
     local hasItems = hasSkillItems(skill)
@@ -578,8 +578,8 @@ function checkSkills()
       _ENV[string.format("%sSkill_locked", skill.name)]:setVisible(false)
       -- Under skill level for multilevel skills.
       if skill.levels > 1 then
-        local level = starPounds.getSkillUnlockedLevel(skill.name)
-        local currentLevel = starPounds.getSkillLevel(skill.name)
+        local level = starPounds.moduleFunc("skills", "unlockedLevel", skill.name)
+        local currentLevel = starPounds.moduleFunc("skills", "level", skill.name)
         if currentLevel < level then
           level = string.format("^#ffaaaa;%s^reset;", currentLevel)
         end
@@ -606,7 +606,7 @@ function checkSkills()
         end
 
         for requirement, requirementLevel in pairs(skill.requirements) do
-          local hasRequirement = starPounds.getSkillUnlockedLevel(requirement) >= requirementLevel
+          local hasRequirement = starPounds.moduleFunc("skills", "unlockedLevel", requirement) >= requirementLevel
           local name = skills[requirement].pretty:gsub("%^.-;", "")
           local requirementTab = ""
 
@@ -614,9 +614,9 @@ function checkSkills()
             requirementTab = " ^darkgray;- "..tabNames[skills[requirement].tab].."^reset;"
           end
 
-          if starPounds.getSkillUnlockedLevel(requirement) == 0 then
+          if starPounds.moduleFunc("skills", "unlockedLevel", requirement) == 0 then
             for requirement, requirementLevel in pairs(skills[requirement].requirements or {}) do
-              if not (starPounds.getSkillUnlockedLevel(requirement) >= requirementLevel) then
+              if not (starPounds.moduleFunc("skills", "unlockedLevel", requirement) >= requirementLevel) then
                 name = name:lower():gsub("[a-z]",
                   {a="", b="", c="", d="", e="", f="", g="", h="", i="", j="", k="", l="", m="", n="", o="", p="", q="", r="", s="", t="", u="", v="", w="", x="", y="", z=""}
                 )
@@ -633,14 +633,14 @@ function checkSkills()
         end
 
         if selectedSkill and selectedSkill.name == skill.name then
-          if not (hasRequirements or isAdmin or starPounds.hasSkill(skill.name)) then
+          if not (hasRequirements or isAdmin or starPounds.moduleFunc("skills", "has", skill.name)) then
             resetInfoPanel()
           end
         end
-        _ENV[string.format("%sSkill_locked", skill.name)]:setVisible(not ((enableUpgrades and hasRequirements) or isAdmin or starPounds.getSkillUnlockedLevel(skill.name) > 0))
+        _ENV[string.format("%sSkill_locked", skill.name)]:setVisible(not ((enableUpgrades and hasRequirements) or isAdmin or starPounds.moduleFunc("skills", "unlockedLevel", skill.name) > 0))
         _ENV[string.format("%sSkill_locked", skill.name)].toolTip = requirements
       end
-      _ENV[string.format("%sSkill_check", skill.name)]:setVisible(starPounds.getSkillUnlockedLevel(skill.name) == skill.levels)
+      _ENV[string.format("%sSkill_check", skill.name)]:setVisible(starPounds.moduleFunc("skills", "unlockedLevel", skill.name) == skill.levels)
     end
   end
 end
@@ -667,11 +667,11 @@ function resetInfoPanel()
 end
 
 function unlockButton:onClick()
-  local experienceLevel = math.min((starPounds.getSkillUnlockedLevel(selectedSkill.name)) + 1, selectedSkill.levels) - 1
+  local experienceLevel = math.min((starPounds.moduleFunc("skills", "unlockedLevel", selectedSkill.name)) + 1, selectedSkill.levels) - 1
   local experienceCost = math.min(selectedSkill.cost.base + selectedSkill.cost.increase * experienceLevel, selectedSkill.cost.max)
   local canUpgrade = isAdmin or (hasSkillItems(selectedSkill) and starPounds.level >= experienceCost)
   selectSkill(selectedSkill)
-  if starPounds.getSkillUnlockedLevel(selectedSkill.name) == selectedSkill.levels or not canUpgrade or not enableUpgrades then
+  if starPounds.moduleFunc("skills", "unlockedLevel", selectedSkill.name) == selectedSkill.levels or not canUpgrade or not enableUpgrades then
     widget.playSound("/sfx/interface/clickon_error.ogg")
     return
   end
@@ -684,9 +684,9 @@ function unlockButton:onClick()
       end
     end
   end
-  starPounds.upgradeSkill(selectedSkill.name, isAdmin and 0 or experienceCost)
-  local level = starPounds.getSkillUnlockedLevel(selectedSkill.name)
-  local currentLevel = starPounds.getSkillLevel(selectedSkill.name)
+  starPounds.moduleFunc("skills", "upgrade", selectedSkill.name, isAdmin and 0 or experienceCost)
+  local level = starPounds.moduleFunc("skills", "unlockedLevel", selectedSkill.name)
+  local currentLevel = starPounds.moduleFunc("skills", "level", selectedSkill.name)
   if currentLevel < level then
     level = string.format("^#ffaaaa;%s^reset;", currentLevel)
   end
@@ -699,7 +699,7 @@ function unlockButton:onClick()
 end
 
 function getSkillItems(skill)
-  local unlockedLevel = starPounds.getSkillUnlockedLevel(skill.name)
+  local unlockedLevel = starPounds.moduleFunc("skills", "unlockedLevel", skill.name)
   local nextLevel = math.min(unlockedLevel + 1, skill.levels)
   local skillItems = jarray()
 
@@ -730,9 +730,9 @@ function hasSkillItems(skill)
 end
 
 function unlockIncrease:onClick()
-  starPounds.setSkill(selectedSkill.name, metagui.checkShift() and starPounds.getSkillUnlockedLevel(selectedSkill.name) or (starPounds.getSkillLevel(selectedSkill.name) + 1))
-  local level = starPounds.getSkillUnlockedLevel(selectedSkill.name)
-  local currentLevel = starPounds.getSkillLevel(selectedSkill.name)
+  starPounds.moduleFunc("skills", "set", selectedSkill.name, metagui.checkShift() and starPounds.moduleFunc("skills", "unlockedLevel", selectedSkill.name) or (starPounds.moduleFunc("skills", "level", selectedSkill.name) + 1))
+  local level = starPounds.moduleFunc("skills", "unlockedLevel", selectedSkill.name)
+  local currentLevel = starPounds.moduleFunc("skills", "level", selectedSkill.name)
   if currentLevel < level then
     level = string.format("^#ffaaaa;%s^reset;", currentLevel)
   end
@@ -742,9 +742,9 @@ function unlockIncrease:onClick()
 end
 
 function unlockDecrease:onClick()
-  starPounds.setSkill(selectedSkill.name, metagui.checkShift() and 0 or (starPounds.getSkillLevel(selectedSkill.name) - 1))
-  local level = starPounds.getSkillUnlockedLevel(selectedSkill.name)
-  local currentLevel = starPounds.getSkillLevel(selectedSkill.name)
+  starPounds.moduleFunc("skills", "set", selectedSkill.name, metagui.checkShift() and 0 or (starPounds.moduleFunc("skills", "level", selectedSkill.name) - 1))
+  local level = starPounds.moduleFunc("skills", "unlockedLevel", selectedSkill.name)
+  local currentLevel = starPounds.moduleFunc("skills", "level", selectedSkill.name)
   if currentLevel < level then
     level = string.format("^#ffaaaa;%s^reset;", currentLevel)
   end
@@ -753,8 +753,8 @@ function unlockDecrease:onClick()
 end
 
 function unlockToggle:onClick()
-  if starPounds.getSkillUnlockedLevel(selectedSkill.name) > 0 then
-    starPounds.setSkill(selectedSkill.name, (starPounds.getSkillLevel(selectedSkill.name) == 0) and 1 or 0)
+  if starPounds.moduleFunc("skills", "unlockedLevel", selectedSkill.name) > 0 then
+    starPounds.moduleFunc("skills", "set", selectedSkill.name, (starPounds.moduleFunc("skills", "level", selectedSkill.name) == 0) and 1 or 0)
     selectSkill(selectedSkill)
   end
 end

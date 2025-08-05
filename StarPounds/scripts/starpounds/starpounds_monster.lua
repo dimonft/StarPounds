@@ -13,7 +13,6 @@ function starPoundsInit()
   -- Setup message handlers
   starPounds.messageHandlers()
   -- Reload whenever the entity loads in/beams/etc.
-  starPounds.parseSkills()
   starPounds.moduleInit({"entity", "monster", "vore"})
 end
 

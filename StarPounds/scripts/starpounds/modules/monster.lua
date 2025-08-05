@@ -35,7 +35,7 @@ function _monster:init()
     _ENV.self.board:setEntity("damageSource", args.sourceId)
   end))
   self:setup()
-  starPounds.parseSkills()
+  starPounds.moduleFunc("skills", "parse")
 end
 
 function _monster:setup()

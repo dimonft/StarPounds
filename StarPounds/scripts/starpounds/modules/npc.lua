@@ -31,7 +31,7 @@ function _npc:init()
     starPounds.moduleFunc("size", "setWeight", 0)
   end
   self:setup()
-  starPounds.parseSkills()
+  starPounds.moduleFunc("skills", "parse")
   -- Triggers aggro.
   message.setHandler("starPounds.notifyDamage", simpleHandler(damage))
   message.setHandler("starPounds.notifyDamage", simpleHandler(function(args)

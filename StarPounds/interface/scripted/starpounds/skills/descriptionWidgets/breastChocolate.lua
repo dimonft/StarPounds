@@ -1,4 +1,4 @@
 descriptionFunctions.breastChocolate = descriptionFunctions.breastChocolate or function(id)
   starPounds.moduleFunc("breasts", "setMilkType", "starpoundschocolateliquid")
-  starPounds.upgradeSkill("breastMilk", 0)
+  starPounds.moduleFunc("skills", "upgrade", "breastMilk", 0)
 end

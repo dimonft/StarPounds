@@ -34,7 +34,7 @@ function update(args)
   local weightMultiplier = self.shrunk and 1 or 1 + math.floor(0.5 + (starPounds.currentSize or {weight = 0}).weight/1.2)/100
   self.scale = self.shrunk and 1 or math.min(math.floor(0.5 + 10 * weightMultiplier ^ (1/3)) * 0.1, self.sizeCap)
 
-  if not self.active and not args.moves["run"] and starPounds.hasSkill("throgSphereShrink") then
+  if not self.active and not args.moves["run"] and starPounds.moduleFunc("skills", "has", "throgSphereShrink") then
     self.shrunk = true
   elseif not self.active then
     self.shrunk = false

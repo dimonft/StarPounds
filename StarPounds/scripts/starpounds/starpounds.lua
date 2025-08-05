@@ -9,7 +9,6 @@ starPounds = {
   sizes = root.assetJson("/scripts/starpounds/starpounds_sizes.config:sizes"),
   options = root.assetJson("/scripts/starpounds/starpounds_options.config:options"),
   foods = root.assetJson("/scripts/starpounds/starpounds_foods.config"),
-  skills = root.assetJson("/scripts/starpounds/starpounds_skills.config:skills"),
   traits = root.assetJson("/scripts/starpounds/starpounds_traits.config:traits"),
   selectableTraits = root.assetJson("/scripts/starpounds/starpounds_traits.config:selectableTraits"),
   species = root.assetJson("/scripts/starpounds/starpounds_species.config")
@@ -148,101 +147,6 @@ starPounds.setOption = function(option, enable)
   return storage.starPounds.options[option]
 end
 
-starPounds.getSkillUnlockedLevel = function(skill)
-  -- Argument sanitisation.
-  skill = tostring(skill)
-  return math.min(storage.starPounds.skills[skill] and storage.starPounds.skills[skill][2] or 0, starPounds.skills[skill] and (starPounds.skills[skill].levels or 1) or 0)
-end
-
-starPounds.hasUnlockedSkill = function(skill, level)
-  -- Argument sanitisation.
-  skill = tostring(skill)
-  level = tonumber(level) or 1
-  return (starPounds.getSkillUnlockedLevel(skill) >= level)
-end
-
-starPounds.getSkillLevel = function(skill)
-  -- Argument sanitisation.
-  skill = tostring(skill)
-  return math.min(storage.starPounds.skills[skill] and storage.starPounds.skills[skill][1] or 0, starPounds.skills[skill] and (starPounds.skills[skill].levels or 1) or 0)
-end
-
-starPounds.hasSkill = function(skill, level)
-  -- Argument sanitisation.
-  skill = tostring(skill)
-  level = tonumber(level) or 1
-  -- Legacy mode disables skills.
-  return (starPounds.getSkillLevel(skill) >= level) and not starPounds.hasOption("legacyMode")
-end
-
-starPounds.upgradeSkill = function(skill, cost)
-  -- Argument sanitisation.
-  skill = tostring(skill)
-  cost = tonumber(cost) or 0
-  storage.starPounds.skills[skill] = storage.starPounds.skills[skill] or jarray()
-  if starPounds.getSkillUnlockedLevel(skill) == starPounds.getSkillLevel(skill) then
-    storage.starPounds.skills[skill][1] = math.min(starPounds.getSkillUnlockedLevel(skill) + 1, starPounds.skills[skill].levels or 1)
-  end
-  storage.starPounds.skills[skill][2] = math.min(starPounds.getSkillUnlockedLevel(skill) + 1, starPounds.skills[skill].levels or 1)
-
-  local experienceConfig = starPounds.moduleFunc("experience", "config")
-  local experienceProgress = storage.starPounds.experience.amount/(experienceConfig.experienceAmount * (1 + storage.starPounds.experience.level * experienceConfig.experienceIncrement))
-  storage.starPounds.experience.level = math.max(storage.starPounds.experience.level - math.round(cost), 0)
-  storage.starPounds.experience.amount = math.round(experienceProgress * experienceConfig.experienceAmount * (1 + storage.starPounds.experience.level * experienceConfig.experienceIncrement))
-  starPounds.moduleFunc("experience", "add")
-  starPounds.parseSkills()
-  starPounds.events:fire("stats:calculate", "upgradeSkill")
-end
-
-starPounds.forceUnlockSkill = function(skill, level)
-  -- Argument sanitisation.
-  skill = tostring(skill)
-  level = tonumber(level)
-  -- Need a level to do anything here.
-  if not level then return end
-  -- If we're forcing the skill, also increase the unlocked level (and initialise it).
-  if starPounds.skills[skill] then
-    storage.starPounds.skills[skill] = storage.starPounds.skills[skill] or jarray()
-    storage.starPounds.skills[skill][1] = math.max(level, starPounds.getSkillLevel(skill))
-    storage.starPounds.skills[skill][2] = math.max(level, starPounds.getSkillUnlockedLevel(skill))
-  end
-  starPounds.parseSkills()
-  -- Update stats if we're already up and running.
-  if starPounds.currentSize then
-    starPounds.events:fire("stats:calculate", "forceUnlockSkill")
-  end
-end
-
-starPounds.setSkill = function(skill, level)
-  -- Argument sanitisation.
-  skill = tostring(skill)
-  level = tonumber(level)
-  -- Need a level to do anything here.
-  if not level then return end
-  -- Skip if there's no such skill.
-  if not storage.starPounds.skills[skill] then return end
-  if starPounds.getSkillUnlockedLevel(skill) > 0 then
-    storage.starPounds.skills[skill][1] = math.max(math.min(level, starPounds.getSkillUnlockedLevel(skill)), 0)
-  end
-  starPounds.parseSkills()
-  starPounds.events:fire("stats:calculate", "setSkill")
-end
-
-starPounds.parseSkills = function()
-  for skill in pairs(storage.starPounds.skills) do
-    -- Remove the skill if it doesn't exist.
-    if not starPounds.skills[skill] then
-      storage.starPounds.skills[skill] = nil
-    else
-      -- Cap skills at their maximum possible level.
-      storage.starPounds.skills[skill][2] = math.min(starPounds.skills[skill].levels or 1, storage.starPounds.skills[skill][2])
-      storage.starPounds.skills[skill][1] = math.min(storage.starPounds.skills[skill][1], storage.starPounds.skills[skill][2])
-    end
-  end
-  -- This is stupid, but prevents 'null' data being saved.
-  getmetatable(storage.starPounds.skills).__nils = {}
-end
-
 starPounds.getTrait = function()
   -- Reset the trait if it doesn't exist.
   local trait = storage.starPounds.trait
@@ -273,7 +177,7 @@ starPounds.setTrait = function(trait)
   setmetatable(selectedTrait, mt)
   -- Unlock trait skills.
   for _, skill in ipairs(selectedTrait.skills or jarray()) do
-    starPounds.forceUnlockSkill(skill[1], skill[2])
+    starPounds.moduleFunc("skills", "forceUnlock", skill[1], skill[2])
   end
   -- Set trait starting values. Done a bit weirdly so it still applies when the mod is off.
   storage.starPounds.weight = math.max(storage.starPounds.weight, selectedTrait.weight)
@@ -374,12 +278,9 @@ starPounds.messageHandlers = function()
   message.setHandler("starPounds.isEnabled", simpleHandler(starPounds.isEnabled))
   message.setHandler("starPounds.getDirectives", simpleHandler(starPounds.getDirectives))
   message.setHandler("starPounds.getVisualSpecies", simpleHandler(starPounds.getVisualSpecies))
-  -- Handlers for skills/stats/options
+  -- Handlers for traits/options
   message.setHandler("starPounds.hasOption", simpleHandler(starPounds.hasOption))
   message.setHandler("starPounds.setOption", localHandler(starPounds.setOption))
-  message.setHandler("starPounds.upgradeSkill", simpleHandler(starPounds.upgradeSkill))
-  message.setHandler("starPounds.getSkillLevel", simpleHandler(starPounds.getSkillLevel))
-  message.setHandler("starPounds.hasSkill", simpleHandler(starPounds.hasSkill))
   message.setHandler("starPounds.getTrait", simpleHandler(starPounds.getTrait))
   message.setHandler("starPounds.setTrait", localHandler(starPounds.setTrait))
   -- Interface/debug stuff.
@@ -397,7 +298,7 @@ starPounds.toggleEnable = function()
   -- Do a barrel roll (just flip the boolean).
   storage.starPounds.enabled = not storage.starPounds.enabled
   -- Make sure the movement penalty stuff gets reset as well.
-  starPounds.parseSkills()
+  starPounds.moduleFunc("skills", "parse")
   starPounds.events:fire("stats:calculate", "toggleEnable")
   if not storage.starPounds.enabled then
     starPounds.moduleUninit()
@@ -444,7 +345,7 @@ starPounds.reset = function()
   else
     local speciesTrait = starPounds.traits[starPounds.getSpecies()] or starPounds.traits.default
     for _, skill in ipairs(speciesTrait.skills or jarray()) do
-      starPounds.forceUnlockSkill(skill[1], skill[2])
+      starPounds.moduleFunc("skills", "forceUnlock", skill[1], skill[2])
     end
   end
   return true

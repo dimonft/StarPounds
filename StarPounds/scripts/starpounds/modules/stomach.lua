@@ -365,7 +365,7 @@ function stomach:sloshing(dt)
   -- Skip if nothing in stomach.
   if self.stomach.amount == 0 then return end
   -- Check for skill.
-  if not starPounds.hasSkill("sloshing") then return end
+  if not starPounds.moduleFunc("skills", "has", "sloshing") then return end
   -- Only works with energy.
   if status.isResource("energy") and status.resourceLocked("energy") then return end
   self.sloshTimer = math.max(self.sloshTimer - dt, 0)

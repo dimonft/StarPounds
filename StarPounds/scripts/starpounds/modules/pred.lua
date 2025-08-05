@@ -70,10 +70,10 @@ function pred:eat(preyId, options, check)
   -- Don't do anything if pred is disabled.
   if starPounds.hasOption("disablePred") then return false end
   -- Need the upgrades for parts of the skill to work.
-  local canVoreCritter = starPounds.hasSkill("voreCritter")
-  local canVoreMonster = starPounds.hasSkill("voreMonster")
-  local canVoreHumanoid = starPounds.hasSkill("voreHumanoid")
-  local canVoreFriendly = options.ignoreSkills or starPounds.hasSkill("voreFriendly")
+  local canVoreCritter = starPounds.moduleFunc("skills", "has", "voreCritter")
+  local canVoreMonster = starPounds.moduleFunc("skills", "has", "voreMonster")
+  local canVoreHumanoid = starPounds.moduleFunc("skills", "has", "voreHumanoid")
+  local canVoreFriendly = options.ignoreSkills or starPounds.moduleFunc("skills", "has", "voreFriendly")
   -- Skip if we can't eat anything at all.
   if not (
     canVoreCritter or
@@ -88,7 +88,7 @@ function pred:eat(preyId, options, check)
   -- Don't do anything if eaten.
   if storage.starPounds.pred then return false end
   -- Can only eat if you're below capacity.
-  if starPounds.stomach.fullness >= starPounds.settings.thresholds.strain.starpoundsstomach and not starPounds.hasSkill("wellfedProtection") and not options.ignoreCapacity then
+  if starPounds.stomach.fullness >= starPounds.settings.thresholds.strain.starpoundsstomach and not starPounds.moduleFunc("skills", "has", "wellfedProtection") and not options.ignoreCapacity then
     return false
   elseif starPounds.stomach.fullness >= starPounds.settings.thresholds.strain.starpoundsstomach3 and not options.ignoreCapacity then
     return false
@@ -408,7 +408,7 @@ function pred:release(preyId, releaseAll)
   preyId = tonumber(preyId)
   -- Delete the entity's entry in the stomach.
   local releasedEntity = nil
-  local statusEffect = starPounds.hasSkill("regurgitateSlimeStatus") and "starpoundsslimyupgrade" or nil
+  local statusEffect = starPounds.moduleFunc("skills", "has", "regurgitateSlimeStatus") and "starpoundsslimyupgrade" or nil
   if releaseAll then
     releasedEntity = storage.starPounds.stomachEntities[1]
     for preyIndex, prey in ipairs(storage.starPounds.stomachEntities) do
@@ -595,7 +595,7 @@ function pred:belchParticles(prey, essence)
     particles[#particles + 1] = sb.jsonMerge(particles[1], {specification = {color = {0, 140, 217}, fullbright = true, collidesLiquid = false, timeToLive = 0.5}})
   end
   -- Add monster to collection if we have the skill.
-  if starPounds.hasSkill("voreCollection") and (prey.type == "creature") and prey.typeName then
+  if starPounds.moduleFunc("skills", "has", "voreCollection") and (prey.type == "creature") and prey.typeName then
     local collectables = root.monsterParameters(prey.typeName).captureCollectables or {}
     for collection, collectable in pairs(collectables) do
       world.sendEntityMessage(entity.id(), "addCollectable", collection, collectable)

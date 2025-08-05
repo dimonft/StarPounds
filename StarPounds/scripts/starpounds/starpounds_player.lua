@@ -11,10 +11,9 @@ function init()
   -- Setup species traits.
   local speciesTrait = starPounds.traits[starPounds.getSpecies()] or starPounds.traits.default
   for _, skill in ipairs(speciesTrait.skills or jarray()) do
-    starPounds.forceUnlockSkill(skill[1], skill[2])
+    starPounds.moduleFunc("skills", "forceUnlock", skill[1], skill[2])
   end
   -- Reload whenever the entity loads in/beams/etc.
-  starPounds.parseSkills()
   starPounds.moduleInit({"entity", "humanoid", "player", "vore"})
 end
 
