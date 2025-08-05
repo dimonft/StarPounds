@@ -3,13 +3,13 @@ local experience = starPounds.module:new("experience")
 function experience:init()
   message.setHandler("starPounds.addExperience", function(_, _, ...) return self:add(...) end)
 
-  starPounds.level = storage.starPounds.level
-  starPounds.experience = storage.starPounds.experience
+  starPounds.level = storage.starPounds.experience.level
+  starPounds.experience = storage.starPounds.experience.amount
 end
 
 function experience:update(dt)
-  starPounds.level = storage.starPounds.level
-  starPounds.experience = storage.starPounds.experience
+  starPounds.level = storage.starPounds.experience.level
+  starPounds.experience = storage.starPounds.experience.amount
 end
 
 function experience:add(amount, multiplier, isLevel)
@@ -25,17 +25,17 @@ function experience:add(amount, multiplier, isLevel)
     return
   end
 
-  local levelModifier = 1 + storage.starPounds.level * self.data.experienceIncrement
+  local levelModifier = 1 + storage.starPounds.experience.level * self.data.experienceIncrement
   local amount = math.round((amount or 0) * multiplier)
-  local amountRequired = math.round(self.data.experienceAmount * levelModifier - storage.starPounds.experience)
+  local amountRequired = math.round(self.data.experienceAmount * levelModifier - storage.starPounds.experience.amount)
   if amount < amountRequired then
-    storage.starPounds.experience = math.round(storage.starPounds.experience + amount)
-  elseif storage.starPounds.level >= self.data.maxLevel then
-    storage.starPounds.level = self.data.maxLevel
-    storage.starPounds.experience = self.data.experienceAmount * levelModifier
+    storage.starPounds.experience.amount = math.round(storage.starPounds.experience.amount + amount)
+  elseif storage.starPounds.experience.level >= self.data.maxLevel then
+    storage.starPounds.experience.level = self.data.maxLevel
+    storage.starPounds.experience.amount = self.data.experienceAmount * levelModifier
   else
     amount = amount - amountRequired
-    storage.starPounds.experience = 0
+    storage.starPounds.experience.amount = 0
     self:add(amount, 1)
     self:addLevel(1)
   end
@@ -50,7 +50,7 @@ end
 
 function experience:addLevel(amount)
   amount = math.round(math.max(tonumber(amount) or 0, 0))
-  storage.starPounds.level = math.min(storage.starPounds.level + amount, self.data.maxLevel)
+  storage.starPounds.experience.level = math.min(storage.starPounds.experience.level + amount, self.data.maxLevel)
 end
 
 function experience:hungerPenalty()

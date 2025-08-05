@@ -7,14 +7,14 @@ end
 
 function data:load()
   -- Load player backup data if it exists, but we have no storage. (e.g. from a script crash)
-  if starPounds.type == "player" then
-    loadBackup = not storage.starPounds
-    -- Backup storage.
-    if loadBackup then
-      storage.starPounds = player.getProperty("starPoundsBackup", {})
-    end
+  if starPounds.type == "player" and not storage.starPounds then
+    storage.starPounds = player.getProperty("starPoundsBackup")
   end
-  -- Merge base data on top.
+  -- Set version to 0 if it's not in the data. Prevents it getting overwritten by the base data so we can still apply versioning.
+  if storage.starPounds and not storage.starPounds.version then
+    storage.starPounds.version = 0
+  end
+  -- Merge entity data on top of base data.
   storage.starPounds = sb.jsonMerge(self.data.data, storage.starPounds)
   -- jsonMerge turns it into a jobject, which has metadata for storing nils.
   setmetatable(storage.starPounds, nil)

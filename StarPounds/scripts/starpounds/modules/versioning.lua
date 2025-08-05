@@ -2,10 +2,27 @@ local versioning = starPounds.module:new("versioning")
 
 -- Should probably split this up into several lua files, but it's whatever.
 versioning.versions = {
-  --[1] = function(data)
-
-  --  return data
-  --end,
+  [1] = function(data)
+    sb.logInfo(sb.print(data))
+    -- Rename stomach variable.
+    data.stomach = data.stomachContents or {}
+    data.stomachContents = nil
+    data.stomachLerp = nil
+    -- New milk format.
+    local milkAmount = tonumber(data.breasts) or 0
+    local milkType = data.breastType or "milk"
+    data.breastType = nil
+    data.breasts = {type = milkType, amount = milkAmount}
+    -- New experience format.
+    local level = tonumber(data.level) or 0
+    local amount = tonumber(data.experience) or 0
+    data.level = nil
+    data.experience = {level = level, amount = amount}
+    -- No more stat saving.
+    data.stats = nil
+    sb.logInfo(sb.print(data))
+    return data
+  end
 }
 
 function versioning:update(data)

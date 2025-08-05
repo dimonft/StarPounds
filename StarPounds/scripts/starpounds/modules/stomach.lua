@@ -32,7 +32,7 @@ function stomach:init()
 
   starPounds.stomach = self:get()
   -- Delete json metadata so we don't store nils.
-  setmetatable(storage.starPounds.stomachContents, nil)
+  setmetatable(storage.starPounds.stomach, nil)
 
   message.setHandler("starPounds.getStomach", function(_, _, ...) return self:get(...) end)
   message.setHandler("starPounds.feed", function(_, _, ...) return self:feed(...) end)
@@ -93,7 +93,7 @@ function stomach:eat(amount, foodType)
   end
   -- Insert food into stomach.
   amount = math.round(amount, 3)
-  storage.starPounds.stomachContents[foodType] = math.min((storage.starPounds.stomachContents[foodType] or 0) + amount, maxCapacity)
+  storage.starPounds.stomach[foodType] = math.min((storage.starPounds.stomach[foodType] or 0) + amount, maxCapacity)
 end
 
 function stomach:get()
@@ -115,7 +115,7 @@ function stomach:get()
   local food = 0
   local belchable = 0
 
-  for foodType, amount in pairs(storage.starPounds.stomachContents) do
+  for foodType, amount in pairs(storage.starPounds.stomach) do
     if starPounds.foods[foodType] and (amount > 0) then
       local foodType = sb.jsonMerge(starPounds.foods.default, starPounds.foods[foodType])
       totalAmount = totalAmount + amount
@@ -125,7 +125,7 @@ function stomach:get()
         belchable = belchable + amount
       end
     else
-      storage.starPounds.stomachContents[foodType] = nil
+      storage.starPounds.stomach[foodType] = nil
     end
   end
 
@@ -254,8 +254,8 @@ function stomach:digest(dt, isGurgle, isBelch)
 
     local digestionStatCache = {}
     -- Iterate through food types
-    for foodType, amount in pairs(storage.starPounds.stomachContents) do
-      if starPounds.foods[foodType] and (storage.starPounds.stomachContents[foodType] > 0) then
+    for foodType, amount in pairs(storage.starPounds.stomach) do
+      if starPounds.foods[foodType] and (storage.starPounds.stomach[foodType] > 0) then
         local foodConfig = starPounds.foods[foodType]
         local ratio = 1
         if self.stomach.contents > 0 and not foodConfig.ignoreCapacity then
@@ -279,7 +279,7 @@ function stomach:digest(dt, isGurgle, isBelch)
         end
         local digestAmount = math.min(amount, math.round(digestionRate * ratio * seconds * (foodConfig.digestionRate + amount * foodConfig.percentDigestionRate), 4))
         self.digestionExperience = self.digestionExperience + digestAmount * foodConfig.multipliers.experience
-        storage.starPounds.stomachContents[foodType] = math.round(math.max(amount - digestAmount, 0), 3)
+        storage.starPounds.stomach[foodType] = math.round(math.max(amount - digestAmount, 0), 3)
         -- Add food.
         if status.isResource("food") and (foodConfig.multipliers.food > 0) then
           local foodAmount = math.min(maxFood - status.resource("food"), digestAmount)
@@ -491,7 +491,7 @@ function stomach:spawnBelchParticles(particles, count)
 end
 
 function stomach.reset()
-  storage.starPounds.stomachContents = {}
+  storage.starPounds.stomach = {}
   storage.starPounds.stomachEntities = jarray()
   return true
 end

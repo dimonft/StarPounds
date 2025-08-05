@@ -257,9 +257,9 @@ starPounds.upgradeSkill = function(skill, cost)
   storage.starPounds.skills[skill][2] = math.min(starPounds.getSkillUnlockedLevel(skill) + 1, starPounds.skills[skill].levels or 1)
 
   local experienceConfig = starPounds.moduleFunc("experience", "config")
-  local experienceProgress = storage.starPounds.experience/(experienceConfig.experienceAmount * (1 + storage.starPounds.level * experienceConfig.experienceIncrement))
-  storage.starPounds.level = math.max(storage.starPounds.level - math.round(cost), 0)
-  storage.starPounds.experience = math.round(experienceProgress * experienceConfig.experienceAmount * (1 + storage.starPounds.level * experienceConfig.experienceIncrement))
+  local experienceProgress = storage.starPounds.experience.amount/(experienceConfig.experienceAmount * (1 + storage.starPounds.experience.level * experienceConfig.experienceIncrement))
+  storage.starPounds.experience.level = math.max(storage.starPounds.experience.level - math.round(cost), 0)
+  storage.starPounds.experience.amount = math.round(experienceProgress * experienceConfig.experienceAmount * (1 + storage.starPounds.experience.level * experienceConfig.experienceIncrement))
   starPounds.moduleFunc("experience", "add")
   starPounds.parseSkills()
   starPounds.events:fire("stats:calculate", "upgradeSkill")
@@ -350,10 +350,10 @@ starPounds.setTrait = function(trait)
   storage.starPounds.weight = math.max(storage.starPounds.weight, selectedTrait.weight)
   starPounds.moduleFunc("size", "setWeight", storage.starPounds.weight)
   -- Give trait milk
-  storage.starPounds.breasts = math.max(storage.starPounds.breasts, selectedTrait.breasts)
-  starPounds.moduleFunc("breasts", "setMilk", storage.starPounds.breasts)
+  storage.starPounds.breasts.amount = math.max(storage.starPounds.breasts.amount, selectedTrait.breasts)
+  starPounds.moduleFunc("breasts", "setMilk", storage.starPounds.breasts.amount)
   -- Give trait experience.
-  storage.starPounds.level = storage.starPounds.level + selectedTrait.experience
+  storage.starPounds.experience.level = storage.starPounds.experience.level + selectedTrait.experience
   -- Give trait items to players.
   if starPounds.type == "player" then
     for _, item in ipairs(selectedTrait.items) do

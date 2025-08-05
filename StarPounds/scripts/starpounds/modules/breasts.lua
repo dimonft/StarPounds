@@ -25,7 +25,7 @@ function breasts:update(dt)
   if self.breasts.contents > self.breasts.capacity then
     if starPounds.hasOption("disableLeaking") then
       if not starPounds.hasOption("disableMilkGain") then
-        storage.starPounds.breasts = self.breasts.capacity
+        storage.starPounds.breasts.amount = self.breasts.capacity
       end
       return
     end
@@ -42,13 +42,13 @@ end
 function breasts:get()
   local breastCapacity = self.data.breastCapacity * starPounds.getStat("breastCapacity")
   if starPounds.hasOption("disableLeaking") then
-    storage.starPounds.breasts = math.min(storage.starPounds.breasts, breastCapacity)
+    storage.starPounds.breasts.amount = math.min(storage.starPounds.breasts.amount, breastCapacity)
   end
-  local breastContents = storage.starPounds.breasts
+  local breastContents = storage.starPounds.breasts.amount
 
   return {
     capacity = breastCapacity,
-    type = storage.starPounds.breastType or "milk",
+    type = storage.starPounds.breasts.type or "milk",
     contents = math.round(breastContents, 4),
     fullness = math.round(breastContents/breastCapacity, 4)
   }
@@ -84,12 +84,12 @@ function breasts:setMilkType(liquidType)
   -- Argument sanitisation.
   liquidType = tostring(liquidType)
   -- Skip if it's the same type of milk.
-  if liquidType == storage.starPounds.breastType then return end
+  if liquidType == storage.starPounds.breasts.type then return end
   -- Only allow liquids we have values for.
   local currentFood = starPounds.moduleFunc("liquid", "getFood", self.breasts.type)
   local newFood = starPounds.moduleFunc("liquid", "getFood", liquidType)
   local convertRatio = currentFood/newFood
-  storage.starPounds.breastType = liquidType
+  storage.starPounds.breasts.type = liquidType
   self:setMilk(self.breasts.contents * convertRatio)
 end
 
@@ -119,7 +119,7 @@ function breasts:setMilk(amount)
   amount = math.max(tonumber(amount) or 0, 0)
   -- Set milk, rounded to 4 decimals.
   amount = math.round(amount, 4)
-  storage.starPounds.breasts = amount
+  storage.starPounds.breasts.amount = amount
 end
 
 function breasts:gainMilk(amount)
@@ -130,7 +130,7 @@ function breasts:gainMilk(amount)
   -- Set milk, rounded to 4 decimals.
   if starPounds.hasOption("disableMilkGain") then return end
   amount = math.max(math.round(math.min(amount, (self.breasts.capacity * (starPounds.hasOption("disableLeaking") and 1 or 1.1)) - self.breasts.contents), 4), 0)
-  storage.starPounds.breasts = math.round(storage.starPounds.breasts + amount, 4)
+  storage.starPounds.breasts.amount = math.round(storage.starPounds.breasts.amount + amount, 4)
 end
 
 function breasts:loseMilk(amount)
@@ -139,13 +139,13 @@ function breasts:loseMilk(amount)
   -- Argument sanitisation.
   amount = math.max(tonumber(amount) or 0, 0)
   -- Decrease milk by amount (min: 0)
-  amount = math.min(amount, storage.starPounds.breasts)
-  storage.starPounds.breasts = math.max(0, math.round(storage.starPounds.breasts - amount, 4))
+  amount = math.min(amount, storage.starPounds.breasts.amount)
+  storage.starPounds.breasts.amount = math.max(0, math.round(storage.starPounds.breasts.amount - amount, 4))
   return amount
 end
 
 function breasts.reset()
-  storage.starPounds.breasts = 0
+  storage.starPounds.breasts.amount = 0
   return true
 end
 

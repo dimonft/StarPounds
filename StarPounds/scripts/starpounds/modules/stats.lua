@@ -3,6 +3,7 @@ local stats = starPounds.module:new("stats")
 function stats:init()
   self.cache = {}
 
+  self.skillStats = {}
   self.traitStats = {}
   self.effectStats = {}
   self.optionStats = {}
@@ -61,16 +62,16 @@ end
 
 function stats:calculate()
   -- Skill stats.
-  storage.starPounds.stats = {}
+  self.skillStats = {}
   for skillName in pairs(storage.starPounds.skills) do
     local skill = starPounds.skills[skillName]
     if skill.type == "addStat" then
-      storage.starPounds.stats[skill.stat] = (storage.starPounds.stats[skill.stat] or 0) + (skill.amount * starPounds.getSkillLevel(skillName))
+      self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) + (skill.amount * starPounds.getSkillLevel(skillName))
     elseif skill.type == "subtractStat" then
-      storage.starPounds.stats[skill.stat] = (storage.starPounds.stats[skill.stat] or 0) - (skill.amount * starPounds.getSkillLevel(skillName))
+      self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) - (skill.amount * starPounds.getSkillLevel(skillName))
     end
-    if storage.starPounds.stats[skill.stat] == 0 then
-      storage.starPounds.stats[skill.stat] = nil
+    if self.skillStats[skill.stat] == 0 then
+      self.skillStats[skill.stat] = nil
     end
   end
   -- Trait Stats.
@@ -134,7 +135,7 @@ end
 function stats:skillBonus(stat)
   -- Argument sanitisation.
   stat = tostring(stat)
-  return (storage.starPounds.stats[stat] or 0)
+  return (self.skillStats[stat] or 0)
 end
 -- Traits -------------------------------------------------------
 function stats:traitMult(stat)

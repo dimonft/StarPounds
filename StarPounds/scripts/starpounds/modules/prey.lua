@@ -362,6 +362,17 @@ function prey:digesting(pred, digestionRate, protectionPierce)
   status.overConsumeResource("health", amount)
   if not status.resourcePositive("health") then
     world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyDigested", entity.id(), self:createDrops(self.options.items), storage.starPounds.stomachEntities)
+    -- Transfer over stomach contents.
+    for foodType, amount in pairs(storage.starPounds.stomach) do
+      world.sendEntityMessage(storage.starPounds.pred, "starPounds.feed", amount, foodType)
+    end
+    -- Transfer over breast contents.
+    local breastContents = starPounds.moduleFunc("breasts", "get")
+    if breastContents then
+      for foodType, amount in pairs(starPounds.moduleFunc("liquid", "get", breastContents.type).food) do
+        world.sendEntityMessage(storage.starPounds.pred, "starPounds.feed", breastContents.contents * amount, foodType)
+      end
+    end
     -- Player stuff.
     if starPounds.type == "player" then
       if starPounds.hasOption("spectatePred") then

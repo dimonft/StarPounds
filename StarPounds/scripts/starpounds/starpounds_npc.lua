@@ -1,4 +1,4 @@
--- Old functions. (we call these in functons we replace)
+-- Old functions.
 local init_old = init or function() end
 local update_old = update or function(dt) end
 local uninit_old = uninit or function() end
