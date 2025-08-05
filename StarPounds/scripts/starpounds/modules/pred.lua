@@ -187,11 +187,15 @@ function pred:eat(preyId, options, check)
     end
     -- Swallow sound.
     if not (options.noSound or options.noSwallowSound) then
-      starPounds.moduleFunc("sound", "play", "swallow", 1 + math.random(0, 10)/100, 1)
+      starPounds.moduleFunc("sound", "play", "swallow", 1 + math.random(0, 10)/100)
     end
     -- Stomach sound.
     if not (options.noSound or options.noDigestSound) then
       starPounds.moduleFunc("sound", "play", "digest", 1, 0.75)
+    end
+    -- Squelch sound.
+    if not (options.noSound or starPounds.hasOption("disableSquelchSounds")) and options.playSquelchSound then
+      starPounds.moduleFunc("sound", "play", "voreSquelch", 1.25 + math.random(0, 10)/100, 1.25)
     end
 
     starPounds.events:fire("pred:eatEntity", preyConfig)
