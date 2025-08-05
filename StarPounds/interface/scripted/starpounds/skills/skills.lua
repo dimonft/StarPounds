@@ -264,15 +264,15 @@ function buildTraitPreview(traitType, trait)
   local traitStatValueString = ""
 
   if trait.weight then
-    traitStats[#traitStats + 1] = string.format("^#%s;Starting Weight:", starPounds.stats.absorption.colour)
+    traitStats[#traitStats + 1] = string.format("^#%s;Starting Weight:", starPounds.moduleFunc("stats", "getRaw", "absorption").colour)
     traitStatValues[#traitStatValues + 1] = string.format("%slb", trait.weight)
   end
   if trait.breasts then
-    traitStats[#traitStats + 1] = string.format("^#%s;Starting Milk:", starPounds.stats.breastProduction.colour)
+    traitStats[#traitStats + 1] = string.format("^#%s;Starting Milk:", starPounds.moduleFunc("stats", "getRaw", "breastProduction").colour)
     traitStatValues[#traitStatValues + 1] = tostring(trait.breasts)
   end
   if trait.experience + trait.refundExperience > 0 then
-    traitStats[#traitStats + 1] = string.format("^#%s;Starting XP:", starPounds.stats.experienceMultiplier.colour)
+    traitStats[#traitStats + 1] = string.format("^#%s;Starting XP:", starPounds.moduleFunc("stats", "getRaw", "experienceMultiplier").colour)
     traitStatValues[#traitStatValues + 1] = tostring(trait.experience + trait.refundExperience)
   end
 
@@ -285,7 +285,7 @@ function buildTraitPreview(traitType, trait)
   if trait.stats then
     for _, stat in ipairs(trait.stats) do
       local statString = ""
-      local modStat = starPounds.stats[stat[1]]
+      local modStat = starPounds.moduleFunc("stats", "getRaw", stat[1])
       if stat[2] == "mult" then
         local negative = (modStat.negative and stat[3] > 1) or (not modStat.negative and stat[3] < 1)
         statString = string.format("%sx%s", negative and "^red;" or "^green;", string.format("%.2f", (modStat.invertDescriptor and (1/stat[3]) or stat[3])):gsub("%.?0+$", ""))
@@ -304,7 +304,7 @@ function buildTraitPreview(traitType, trait)
       traitStatValues[#traitStatValues + 1] = ""
       local weight = 0
       for _, stat in ipairs(trait.stats) do
-        local modStat = starPounds.stats[stat[1]]
+        local modStat = starPounds.moduleFunc("stats", "getRaw", stat[1])
         local negative = modStat.negative
         local amount = stat[3]
         if stat[2] == "sub" then negative = not negative end
