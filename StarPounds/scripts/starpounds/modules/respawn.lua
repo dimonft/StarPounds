@@ -13,7 +13,7 @@ function respawn:uninit()
     starPounds.moduleFunc("size", "loseWeight", weightCost)
     -- Reset stomach/breasts.
     starPounds.moduleFunc("stomach", "reset")
-    starPounds.resetBreasts("breasts", "reset")
+    starPounds.moduleFunc("breasts", "reset")
   end
 end
 

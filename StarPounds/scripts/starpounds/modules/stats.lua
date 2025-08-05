@@ -92,7 +92,7 @@ function stats:calculate()
   end
   -- Effect stats.
   self.effectStats = {}
-  for effectName, effectData in pairs(storage.starPounds.effects) do
+  for effectName, effectData in pairs(storage.starPounds.effects.active) do
     local effectConfig = starPounds.moduleFunc("effects", "getConfig", effectName)
     if effectConfig then
       for _, stat in ipairs(effectConfig.stats or {}) do

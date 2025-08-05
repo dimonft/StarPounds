@@ -5,19 +5,28 @@ versioning.versions = {
   [1] = function(data)
     sb.logInfo(sb.print(data))
     -- Rename stomach variable.
-    data.stomach = data.stomachContents or {}
+    local stomachContents = data.stomachContents
     data.stomachContents = nil
     data.stomachLerp = nil
+    data.stomach = stomachContents or {}
     -- New milk format.
     local milkAmount = tonumber(data.breasts) or 0
     local milkType = data.breastType or "milk"
     data.breastType = nil
+
     data.breasts = {type = milkType, amount = milkAmount}
     -- New experience format.
     local level = tonumber(data.level) or 0
     local amount = tonumber(data.experience) or 0
     data.level = nil
+
     data.experience = {level = level, amount = amount}
+    -- New effect format.
+    local activeEffects = data.effects or {}
+    local discoveredEffects = data.discoveredEffects or {}
+    data.discoveredEffects = nil
+
+    data.effects = {active = activeEffects, discovered = discoveredEffects}
     -- No more stat saving.
     data.stats = nil
     sb.logInfo(sb.print(data))

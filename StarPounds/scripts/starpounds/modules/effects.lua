@@ -8,7 +8,7 @@ function effects:init()
   message.setHandler("starPounds.resetEffects", localHandler(self.reset))
 
   self.effects = {}
-  for effect in pairs(storage.starPounds.effects) do
+  for effect in pairs(storage.starPounds.effects.active) do
     self:load(effect)
   end
 end
@@ -32,8 +32,8 @@ function effects:update(dt)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
   -- Update effect durations.
-  for effectName, effect in pairs(storage.starPounds.effects) do
-    local effectData = storage.starPounds.effects[effectName]
+  for effectName, effect in pairs(storage.starPounds.effects.active) do
+    local effectData = storage.starPounds.effects.active[effectName]
     if effectData.duration then
       effectData.duration = math.max(effectData.duration - dt, 0)
       if effectData.duration == 0 then
@@ -60,8 +60,8 @@ function effects:load(effect)
     if effectConfig.script and not self.effects[effect] then
       require(effectConfig.script)
       _SBLOADED[effectConfig.script] = nil
-      util.mergeTable(storage.starPounds.effects[effect], self.effects[effect].data)
-      self.effects[effect].data = storage.starPounds.effects[effect]
+      util.mergeTable(storage.starPounds.effects.active[effect], self.effects[effect].data)
+      self.effects[effect].data = storage.starPounds.effects.active[effect]
       self.effects[effect].config = copy(effectConfig.effectConfig)
       self.effects[effect]:moduleInit()
       starPounds.modules[string.format("effect_%s", effect)] = self.effects[effect]
@@ -76,7 +76,7 @@ function effects:add(effect, duration, level)
   -- Argument sanitisation.
   effect = tostring(effect)
   local effectConfig = self.data.effects[effect]
-  local effectData = storage.starPounds.effects[effect] or {}
+  local effectData = storage.starPounds.effects.active[effect] or {}
   if effectConfig then
     duration = tonumber(duration) or effectConfig.duration
     level = tonumber(level) or 1
@@ -100,9 +100,9 @@ function effects:add(effect, duration, level)
     end
     effectData.duration = duration and math.max(effectData.duration or 0, duration) or nil
     effectData.level = math.min((effectData.level or 0) + level, effectConfig.levels or 1)
-    storage.starPounds.effects[effect] = effectData
+    storage.starPounds.effects.active[effect] = effectData
     if not (effectConfig.ephemeral or effectConfig.hidden) then
-      storage.starPounds.discoveredEffects[effect] = true
+      storage.starPounds.effects.discovered[effect] = true
     end
     -- Scripted effects.
     if effectConfig.script then
@@ -121,8 +121,8 @@ function effects:remove(effect)
   if not storage.starPounds.enabled then return end
   -- Argument sanitisation.
   effect = tostring(effect)
-  if storage.starPounds.effects[effect] then
-    storage.starPounds.effects[effect] = nil
+  if storage.starPounds.effects.active[effect] then
+    storage.starPounds.effects.active[effect] = nil
     starPounds.events:fire("stats:calculate", "effectRemove")
     if self.effects[effect] then
       self.effects[effect]:expire()
@@ -139,7 +139,7 @@ function effects:get(effect)
   --if not storage.starPounds.enabled then return end
   -- Argument sanitisation.
   effect = tostring(effect)
-  return storage.starPounds.effects[effect]
+  return storage.starPounds.effects.active[effect]
 end
 
 function effects:getConfig(effect)
@@ -151,12 +151,12 @@ end
 function effects:hasDiscovered(effect)
   -- Argument sanitisation.
   effect = tostring(effect)
-  return storage.starPounds.discoveredEffects[effect] ~= nil
+  return storage.starPounds.effects.discovered[effect] ~= nil
 end
 
 function effects.reset()
-  storage.starPounds.effects = {}
-  storage.starPounds.discoveredEffects = {}
+  storage.starPounds.effects.active = {}
+  storage.starPounds.effects.discovered = {}
   starPounds.events:fire("stats:calculate", "effectReset")
 end
 
