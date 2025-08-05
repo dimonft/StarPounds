@@ -3,7 +3,6 @@ local versioning = starPounds.module:new("versioning")
 -- Should probably split this up into several lua files, but it's whatever.
 versioning.versions = {
   [1] = function(data)
-    sb.logInfo(sb.print(data))
     -- Rename stomach variable.
     local stomachContents = data.stomachContents
     data.stomachContents = nil
@@ -35,7 +34,7 @@ versioning.versions = {
     data.traitStats = nil
     data.accessories = nil
     data.bloat = nil
-    sb.logInfo(sb.print(data))
+
     return data
   end
 }
