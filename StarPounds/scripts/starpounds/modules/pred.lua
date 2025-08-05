@@ -463,8 +463,6 @@ function pred:preyCheck(dt)
   for preyIndex, prey in ipairs(storage.starPounds.stomachEntities) do
     if world.entityExists(prey.id, true) then
       newStomach[#newStomach + 1] = prey
-    elseif (starPounds.type == "player") and (prey.world == player.worldId()) then
-      self:preyDigested(prey.id)
     end
   end
   storage.starPounds.stomachEntities = newStomach
@@ -610,14 +608,6 @@ function pred:belchParticles(prey, essence)
   end
 
   starPounds.spawnMouthProjectile(particles, 5)
-end
-
-function pred:uninit()
-  -- Players assume things get digested if they disappear (even if the entity crashes).
-  -- Releasing them on uninit stops that behaviour since the prey entity id will change.
-  if starPounds.type == "player" then
-    starPounds.moduleFunc("pred", "release", nil, true)
-  end
 end
 
 starPounds.modules.pred = pred
