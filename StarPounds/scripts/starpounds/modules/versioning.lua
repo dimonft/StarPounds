@@ -22,13 +22,19 @@ versioning.versions = {
 
     data.experience = {level = level, amount = amount}
     -- New effect format.
-    local activeEffects = data.effects or {}
+    local activeEffects = {}
     local discoveredEffects = data.discoveredEffects or {}
     data.discoveredEffects = nil
 
     data.effects = {active = activeEffects, discovered = discoveredEffects}
     -- No more stat saving.
     data.stats = nil
+    -- Other old values to prune.
+    data.optionMultipliers = nil
+    data.optionOverrides = nil
+    data.traitStats = nil
+    data.accessories = nil
+    data.bloat = nil
     sb.logInfo(sb.print(data))
     return data
   end

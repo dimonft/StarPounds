@@ -11,6 +11,7 @@ function stats:init()
   self.optionStats = {}
   self.accessoryModifiers = {}
 
+  starPounds.parseSkills()
   self:calculate()
 
   starPounds.events:on("stats:calculate", function(trace) -- Trace shows you where the 'change' is coming from.
