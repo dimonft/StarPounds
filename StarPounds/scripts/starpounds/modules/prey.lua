@@ -18,6 +18,12 @@ function prey:init()
   self.voreCooldown = 0
   self.options = {}
   self.heartbeat = self.data.heartbeat
+
+  -- Just in case of reloads.
+  if storage.starPounds.preyTech then
+    self.oldTech = storage.starPounds.preyTech
+    storage.starPounds.preyTech = nil
+  end
 end
 
 function prey:update(dt)
@@ -218,7 +224,7 @@ function prey:playerStruggle(dt)
     mcontroller.translate(vec2.lerp(10 * dt, {0, 0}, distance))
   end
   -- No air.
-  if not (starPounds.hasOption("disablePreyDigestion") or starPounds.hasOption("disablePreyBreathLoss")) and (not status.statPositive("breathProtection")) and world.breathable(world.entityMouthPosition(entity.id())) then
+  if not (storage.starPounds.spectatingPred or starPounds.hasOption("disablePreyDigestion") or starPounds.hasOption("disablePreyBreathLoss")) and (not status.statPositive("breathProtection")) and world.breathable(world.entityMouthPosition(entity.id())) then
     status.modifyResource("breath", -(status.stat("breathDepletionRate") * self.data.playerBreathMultiplier + status.stat("breathRegenerationRate")) * dt)
   end
 end
@@ -383,7 +389,7 @@ function prey:digesting(pred, digestionRate, protectionPierce)
           player.unequipTech("starpoundseaten_"..v)
           player.makeTechUnavailable("starpoundseaten_"..v)
         end
-        for _,v in pairs(starPounds.oldTech or {}) do
+        for _,v in pairs(self.oldTech or {}) do
           player.equipTech(v)
         end
       end
@@ -458,6 +464,12 @@ function prey.notifyDamage(predId)
   elseif starPounds.type == "monster" then
     self.damaged = true
     if self.board then self.board:setEntity("damageSource", predId) end
+  end
+end
+
+function prey:uninit()
+  if self.oldTech then
+    storage.starPounds.preyTech = self.oldTech
   end
 end
 
