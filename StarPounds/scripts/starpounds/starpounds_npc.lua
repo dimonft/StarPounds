@@ -20,8 +20,6 @@ function init()
     starPounds.forceUnlockSkill(skill[1], skill[2])
   end
   -- Reload whenever the entity loads in/beams/etc.
-  starPounds.statCache = {}
-  starPounds.statCacheTimer = starPounds.settings.statCacheTimer
   starPounds.parseSkills()
   starPounds.moduleInit({"entity", "humanoid", "npc", "vore"})
 end

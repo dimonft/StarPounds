@@ -27,6 +27,8 @@ function _npc:init()
     end
     storage.starPounds.skills = sb.jsonMerge(storage.starPounds.skills, skills)
     storage.starPounds.parsedInitialSkills = true
+    -- Triggers the minimumSize weight floor.
+    starPounds.moduleFunc("size", "setWeight", 0)
   end
   self:setup()
   starPounds.parseSkills()

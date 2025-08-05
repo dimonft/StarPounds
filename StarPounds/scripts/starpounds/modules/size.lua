@@ -39,6 +39,9 @@ function size:init()
   self.slots[#self.slots + 1] = {"chestCosmetic", {itemType = "chest", default = true}}
   self.slots[#self.slots + 1] = {"legsCosmetic", {itemType = "legs", default = true}}
 
+  -- Need this ready for other modules.
+  starPounds.currentSize, starPounds.currentSizeIndex = self:get(0)
+  starPounds.weightMultiplier = 1
   -- Just in case the data is out of range.
   self:setWeight(storage.starPounds.weight)
 
@@ -220,11 +223,11 @@ function size:updateStats(forceUpdate)
     -- Jump/Swim math applies after the movement stat calcuation.
     if starPounds.movementMultiplier <= 0 then
       starPounds.movementMultiplier = 0
-      starPounds.jumpModifier = starPounds.settings.minimumJumpMultiplier
-      starPounds.swimModifier = starPounds.settings.minimumSwimMultiplier
+      starPounds.jumpModifier = self.data.minimumJumpMultiplier
+      starPounds.swimModifier = self.data.minimumSwimMultiplier
     else
-      starPounds.jumpModifier = math.max(starPounds.settings.minimumJumpMultiplier, 1 - ((1 - starPounds.movementMultiplier) * starPounds.getStat("jumpPenalty")))
-      starPounds.swimModifier = math.max(starPounds.settings.minimumSwimMultiplier, 1 - ((1 - starPounds.movementMultiplier) * starPounds.getStat("swimPenalty")))
+      starPounds.jumpModifier = math.max(self.data.minimumJumpMultiplier, 1 - ((1 - starPounds.movementMultiplier) * starPounds.getStat("jumpPenalty")))
+      starPounds.swimModifier = math.max(self.data.minimumSwimMultiplier, 1 - ((1 - starPounds.movementMultiplier) * starPounds.getStat("swimPenalty")))
     end
 
 
@@ -248,8 +251,8 @@ function size:updateStats(forceUpdate)
         liquidJumpModifier = starPounds.swimModifier
       }
       -- Silly, but better than updating modifiers every tick.
-      self.controlModifiersAlt = (movementMultiplier < starPounds.settings.minimumAltSpeedMultiplier) and sb.jsonMerge(self.controlModifiers, {
-        speedModifier = starPounds.settings.minimumAltSpeedMultiplier
+      self.controlModifiersAlt = (movementMultiplier < self.data.minimumAltSpeedMultiplier) and sb.jsonMerge(self.controlModifiers, {
+        speedModifier = self.data.minimumAltSpeedMultiplier
       }) or nil
     end
 
