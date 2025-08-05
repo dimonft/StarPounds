@@ -1,6 +1,13 @@
 local size = starPounds.module:new("size")
 
 function size:init()
+  message.setHandler("starPounds.gainWeight", function(_, _, ...) return self:gainWeight(...) end)
+  message.setHandler("starPounds.loseWeight", function(_, _, ...) return self:loseWeight(...) end)
+  message.setHandler("starPounds.setWeight", function(_, _, ...) return self:setWeight(...) end)
+  message.setHandler("starPounds.getSize", function(_, _, ...) return self:get(...) end)
+  message.setHandler("starPounds.getChestVariant", function(_, _, ...) return self:getVariant(...) end)
+  message.setHandler("starPounds.resetWeight", localHandler(self.reset))
+
   local function nullFunction() end
   -- Kinda gross, but deal with it.
   local speciesData = {}
@@ -44,13 +51,6 @@ function size:init()
   starPounds.weightMultiplier = 1
   -- Just in case the data is out of range.
   self:setWeight(storage.starPounds.weight)
-
-  message.setHandler("starPounds.gainWeight", function(_, _, ...) return self:gainWeight(...) end)
-  message.setHandler("starPounds.loseWeight", function(_, _, ...) return self:loseWeight(...) end)
-  message.setHandler("starPounds.setWeight", function(_, _, ...) return self:setWeight(...) end)
-  message.setHandler("starPounds.getSize", function(_, _, ...) return self:get(...) end)
-  message.setHandler("starPounds.getChestVariant", function(_, _, ...) return self:getVariant(...) end)
-  message.setHandler("starPounds.resetWeight", localHandler(self.reset))
 end
 
 function size:update(dt)

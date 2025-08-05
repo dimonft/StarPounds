@@ -1,6 +1,14 @@
 local stomach = starPounds.module:new("stomach")
 
 function stomach:init()
+  message.setHandler("starPounds.getStomach", function(_, _, ...) return self:get(...) end)
+  message.setHandler("starPounds.feed", function(_, _, ...) return self:feed(...) end)
+  message.setHandler("starPounds.eat", function(_, _, ...) return self:eat(...) end)
+  message.setHandler("starPounds.digest", function(_, _, ...) return self:digest(...) end)
+  message.setHandler("starPounds.gurgle", function(_, _, ...) return self:gurgle(...) end)
+  message.setHandler("starPounds.rumble", function(_, _, ...) return self:rumble(...) end)
+  message.setHandler("starPounds.resetStomach", localHandler(self.reset))
+
   self.stomachLerp = 0
   -- Timers.
   self.digestTimer = 0
@@ -33,14 +41,6 @@ function stomach:init()
   starPounds.stomach = self:get()
   -- Delete json metadata so we don't store nils.
   setmetatable(storage.starPounds.stomach, nil)
-
-  message.setHandler("starPounds.getStomach", function(_, _, ...) return self:get(...) end)
-  message.setHandler("starPounds.feed", function(_, _, ...) return self:feed(...) end)
-  message.setHandler("starPounds.eat", function(_, _, ...) return self:eat(...) end)
-  message.setHandler("starPounds.digest", function(_, _, ...) return self:digest(...) end)
-  message.setHandler("starPounds.gurgle", function(_, _, ...) return self:gurgle(...) end)
-  message.setHandler("starPounds.rumble", function(_, _, ...) return self:rumble(...) end)
-  message.setHandler("starPounds.resetStomach", localHandler(self.reset))
 
   self:squelchEvents()
 end

@@ -1,12 +1,12 @@
 local drinking = starPounds.module:new("drinking")
 
 function drinking:init()
+  message.setHandler("starPounds.spawnDrinkingParticles", function(_, _, ...) return self:spawnParticles(...) end)
+
   self.drinkTimer = 0
   self.drinkCounter = 0
   self.splashConfig = root.assetJson("/player.config:splashConfig")
   self.liquidCache = {}
-
-  message.setHandler("starPounds.spawnDrinkingParticles", function(_, _, ...) return self:spawnParticles(...) end)
 end
 
 function drinking:update(dt)

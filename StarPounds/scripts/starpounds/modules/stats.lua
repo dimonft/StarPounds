@@ -1,6 +1,8 @@
 local stats = starPounds.module:new("stats")
 
 function stats:init()
+  message.setHandler("starPounds.getStat", function(_, _, ...) return self:get(...) end)
+
   self.cache = {}
 
   self.skillStats = {}
@@ -17,8 +19,6 @@ function stats:init()
     self:calculate()
     starPounds.moduleFunc("size", "updateStats", true)
   end)
-
-  message.setHandler("starPounds.getStat", function(_, _, ...) return self:get(...) end)
 end
 
 function stats:update(dt)
