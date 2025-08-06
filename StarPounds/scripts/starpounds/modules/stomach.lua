@@ -38,8 +38,8 @@ function stomach:init()
   }
 
   starPounds.stomach = self:get()
-  -- Assume the lerp is the same as the contents on load.
-  self.stomachLerp = self.stomach.contents
+  -- Assume the lerp is the same as the contents on load (if the mod is enabled).
+  self.stomachLerp = storage.starPounds.enabled and self.stomach.contents or 0
   -- Delete json metadata so we don't store nils.
   setmetatable(storage.starPounds.stomach, nil)
 

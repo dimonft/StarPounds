@@ -4,7 +4,7 @@ function stats:init()
   message.setHandler("starPounds.getStat", function(_, _, ...) return self:get(...) end)
 
   self.cache = {}
-
+    
   self.skills = starPounds.moduleFunc("skills", "getSkillList")
   self.skillStats = {}
   self.traitStats = {}
@@ -64,15 +64,17 @@ end
 function stats:calculate()
   -- Skill stats.
   self.skillStats = {}
-  for skillName in pairs(storage.starPounds.skills) do
-    local skill = self.skills[skillName]
-    if skill.type == "addStat" then
-      self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) + (skill.amount * starPounds.moduleFunc("skills", "level", skillName))
-    elseif skill.type == "subtractStat" then
-      self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) - (skill.amount * starPounds.moduleFunc("skills", "level", skillName))
-    end
-    if self.skillStats[skill.stat] == 0 then
-      self.skillStats[skill.stat] = nil
+  if starPounds.modules.effects then
+    for skillName in pairs(storage.starPounds.skills) do
+      local skill = self.skills[skillName]
+      if skill.type == "addStat" then
+        self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) + (skill.amount * starPounds.moduleFunc("skills", "level", skillName))
+      elseif skill.type == "subtractStat" then
+        self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) - (skill.amount * starPounds.moduleFunc("skills", "level", skillName))
+      end
+      if self.skillStats[skill.stat] == 0 then
+        self.skillStats[skill.stat] = nil
+      end
     end
   end
   -- Trait Stats.
@@ -93,17 +95,19 @@ function stats:calculate()
   end
   -- Effect stats.
   self.effectStats = {}
-  for effectName, effectData in pairs(storage.starPounds.effects.active) do
-    local effectConfig = starPounds.moduleFunc("effects", "getConfig", effectName)
-    if effectConfig then
-      for _, stat in ipairs(effectConfig.stats or {}) do
-        self.effectStats[stat[1]] = self.effectStats[stat[1]] or {0, 1}
-        if stat[2] == "add" then
-          self.effectStats[stat[1]][1] = self.effectStats[stat[1]][1] + stat[3] + (effectData.level - 1) * (stat[4] or 0)
-        elseif stat[2] == "sub" then
-          self.effectStats[stat[1]][1] = self.effectStats[stat[1]][1] - (stat[3] + (effectData.level - 1) * (stat[4] or 0))
-        elseif stat[2] == "mult" then
-          self.effectStats[stat[1]][2] = self.effectStats[stat[1]][2] * stat[3] + (effectData.level - 1) * (stat[4] or 0)
+  if starPounds.modules.effects then
+    for effectName, effectData in pairs(storage.starPounds.effects.active) do
+      local effectConfig = starPounds.moduleFunc("effects", "getConfig", effectName)
+      if effectConfig then
+        for _, stat in ipairs(effectConfig.stats or {}) do
+          self.effectStats[stat[1]] = self.effectStats[stat[1]] or {0, 1}
+          if stat[2] == "add" then
+            self.effectStats[stat[1]][1] = self.effectStats[stat[1]][1] + stat[3] + (effectData.level - 1) * (stat[4] or 0)
+          elseif stat[2] == "sub" then
+            self.effectStats[stat[1]][1] = self.effectStats[stat[1]][1] - (stat[3] + (effectData.level - 1) * (stat[4] or 0))
+          elseif stat[2] == "mult" then
+            self.effectStats[stat[1]][2] = self.effectStats[stat[1]][2] * stat[3] + (effectData.level - 1) * (stat[4] or 0)
+          end
         end
       end
     end

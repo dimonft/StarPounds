@@ -33,14 +33,17 @@ starPounds.moduleInit = function(moduleGroups)
   local modulePath = "/scripts/starpounds/modules/%s.lua"
   if moduleGroups then
     if type(moduleGroups) == "string" then moduleGroups = {moduleGroups} end
+    -- Load all the module scripts.
     for _, moduleGroup in ipairs(moduleGroups) do
       for i = 1, #starPounds.settings.modules[moduleGroup] do
         local moduleName = starPounds.settings.modules[moduleGroup][i]
         starPounds.moduleKeys[#starPounds.moduleKeys + 1] = moduleName
         require(string.format(modulePath, moduleName))
-        local module = starPounds.modules[moduleName]
-        module:moduleInit()
       end
+    end
+    -- Initialise all the modules in order.
+    for _, moduleName in ipairs(starPounds.moduleKeys) do
+      starPounds.modules[moduleName]:moduleInit()
     end
   end
 end
