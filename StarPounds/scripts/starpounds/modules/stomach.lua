@@ -339,7 +339,7 @@ function stomach:gurgle(noDigest)
       local belchMultiplier = math.min(self.stomach.belchable/1000, 0.25)
       local belchVolume = 0.5 + belchMultiplier
       local belchPitch = 1 - belchMultiplier
-      starPounds.moduleFunc("belch", "belch", belchVolume, starPounds.moduleFunc("belch", "pitch", belchPitch))
+      starPounds.moduleFunc("belch", "belch", belchVolume, belchPitch)
     end
     self:digest(seconds, true, isBelch)
   end

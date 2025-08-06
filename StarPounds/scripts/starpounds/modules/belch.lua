@@ -2,7 +2,6 @@ local belch = starPounds.module:new("belch")
 
 function belch:init()
   message.setHandler("starPounds.belch", function(_, _, ...) return self:belch(...) end)
-  message.setHandler("starPounds.belchPitch", function(_, _, ...) return self:pitch(...) end)
 end
 
 function belch:belch(volume, pitch, addMomentum)
@@ -17,10 +16,10 @@ function belch:belch(volume, pitch, addMomentum)
   local distortionSphere = status.stat("activeMovementAbilities") > 1
   if status.stat("activeMovementAbilities") > 1 then
     volume = volume * 0.5
-    starPounds.moduleFunc("sound", "play", "belch", volume, pitch)
+    starPounds.moduleFunc("sound", "play", "belch", volume, self:pitch(pitch))
     return
   end
-  starPounds.moduleFunc("sound", "play", "belch", volume, pitch)
+  starPounds.moduleFunc("sound", "play", "belch", volume, self:pitch(pitch))
   -- 7.5 (Rounded to 8) to 10 particles, decreased or increased by up to 2x, -5
   -- Ends up yielding around 10 - 15 particles if the belch is very loud and deep, 3 - 5 at normal volume and pitch, and none if it's half volume or twice as high pitch.
   local volumeMultiplier = math.max(math.min(volume, 1.5), 0)

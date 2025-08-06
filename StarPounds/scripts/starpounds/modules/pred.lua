@@ -308,7 +308,7 @@ function pred:preyDigested(preyId, items, preyStomach)
   if doBelch then
     local belchVolume = 0.75
     local belchPitch = 1 - math.round(((digestedEntity.base + digestedEntity.weight) - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
-    starPounds.moduleFunc("belch", "belch", belchVolume, starPounds.moduleFunc("belch", "pitch", belchPitch))
+    starPounds.moduleFunc("belch", "belch", belchVolume, belchPitch)
   end
 
   if doBelchParticles then
@@ -423,7 +423,7 @@ function pred:release(preyId, releaseAll)
     if releasedEntity and world.entityExists(releasedEntity.id, true) then
       local belchVolume = 0.75
       local belchPitch = 1 - math.round((releasedEntity.weight + storage.starPounds.weight - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
-      starPounds.moduleFunc("belch", "belch", belchVolume, starPounds.moduleFunc("belch", "pitch", belchPitch))
+      starPounds.moduleFunc("belch", "belch", belchVolume, belchPitch)
     end
     storage.starPounds.stomachEntities = jarray()
   else
@@ -442,7 +442,7 @@ function pred:release(preyId, releaseAll)
     if releasedEntity and world.entityExists(releasedEntity.id, true) then
       local belchVolume = 0.75
       local belchPitch = 1 - math.round((releasedEntity.weight + storage.starPounds.weight - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
-      starPounds.moduleFunc("belch", "belch", belchVolume, starPounds.moduleFunc("belch", "pitch", belchPitch))
+      starPounds.moduleFunc("belch", "belch", belchVolume, belchPitch)
 
       world.sendEntityMessage(releasedEntity.id, "starPounds.getReleased", entity.id(), statusEffect)
       starPounds.events:fire("pred:releaseEntity", releasedEntity)
