@@ -17,7 +17,7 @@
       "homePosition": [0, 0]
     },
     "starPounds_skills": {
-      "minimumSize": [3, 5]
+      "minimumSize": [3, 4]
     },
     "starPounds_overrideSpecies": "leggs",
     "starPounds_trait": "npc_predator",
