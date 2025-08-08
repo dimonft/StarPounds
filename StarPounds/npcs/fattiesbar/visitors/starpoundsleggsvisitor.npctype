@@ -1,14 +1,26 @@
 {
   "type" : "starpoundsleggsvisitor",
   "baseType" : "fattiesbarvisitor",
+  "displayTitle" : "Galactic Bunny Explorer",
+
+  "scripts" : [
+    "/npcs/bmain.lua",
+    "/scripts/starpounds/starpounds_npc.lua",
+    "/npcs/starpounds/scripts/applepredator.lua",
+    "/npcs/starpounds/scripts/clothingrip.lua"
+  ],
 
   "scriptConfig" : {
+    "behavior" : "starpoundsapplepredator",
+
     "initialStorage": {
       "homePosition": [0, 0]
     },
     "starPounds_skills": {
       "minimumSize": [3, 5]
     },
+    "starPounds_overrideSpecies": "leggs",
+    "starPounds_trait": "npc_predator",
     // ======================== PLEASE READ ========================
     // This character belongs to someone, and these settings reflect
     // their preferences. Please respect them and don't remove,
@@ -19,9 +31,15 @@
       "disableMilkGain" : true,
       "disableLeaking" : true
     },
-    "starPounds_overrideSpecies": "leggs",
     "dialogMode": "tutorial",
     "dialog": {
+      "attack" : "/dialog/vore.config:attack",
+      "reattack" : "/dialog/vore.config:reattack",
+      "killedTarget" : "/dialog/vore.config:killedTarget",
+      "lostTarget" : "/dialog/vore.config:lostTarget",
+      "outOfSight" : "/dialog/vore.config:outOfSight",
+      "cheerOn" : "/dialog/vore.config:cheerOn",
+      "cantReach" : "/dialog/vore.config:cantReach",
       "converse": {
         "default": {
           "default": [
