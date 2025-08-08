@@ -5,6 +5,7 @@ function update(dt)
     storage.removedChest = true
 
     npc.setItemSlot("chestCosmetic")
+    starPounds.moduleFunc("size", "update", dt)
     starPounds.moduleFunc("sound", "play", "clothingrip", 0.75)
   end
 end
