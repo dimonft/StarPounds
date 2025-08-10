@@ -9,6 +9,8 @@ function init()
   idle()
 
   self.activated = false
+
+  starPounds = getmetatable ''.starPounds
 end
 
 function uninit()
@@ -16,7 +18,6 @@ function uninit()
 end
 
 function update(args)
-  starPounds = getmetatable ''.starPounds
   local jumpActivated = args.moves["jump"] and not self.lastJump
   self.lastJump = args.moves["jump"]
 

@@ -27,10 +27,11 @@ function init()
       status.setPersistentEffects("starpoundsthrogsphere", {{stat = "grit", amount = 1}, {stat = "physicalResistance", amount = protection}})
     end
   end
+
+  starPounds = getmetatable ''.starPounds
 end
 
 function update(args)
-  starPounds = getmetatable ''.starPounds
   local weightMultiplier = self.shrunk and 1 or 1 + math.floor(0.5 + (starPounds.currentSize or {weight = 0}).weight/1.2)/100
   self.scale = self.shrunk and 1 or math.min(math.floor(0.5 + 10 * weightMultiplier ^ (1/3)) * 0.1, self.sizeCap)
 

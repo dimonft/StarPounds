@@ -13,10 +13,12 @@ function init()
   self.saturation = 0
 
   animator.setSoundVolume("geiger", 0)
+
+  starPounds = getmetatable ''.starPounds
 end
 
 function update(dt)
-  if world.entityType(entity.id()) == "npc" or (getmetatable ''.starPounds and getmetatable ''.starPounds.isEnabled()) then
+  if world.entityType(entity.id()) == "npc" or (starPounds and starPounds.isEnabled()) then
     -- Gain bloatAmount per tickTime, increased by bloatIncrease per tick. (Max: 100 per second)
     self.tickTimer = self.tickTimer - dt
     if self.tickTimer <= 0 then

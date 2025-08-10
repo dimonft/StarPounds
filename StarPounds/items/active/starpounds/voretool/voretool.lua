@@ -26,7 +26,6 @@ function activate(fireMode, shiftHeld)
 end
 
 function update(dt, _, shiftHeld)
-  starPounds = getmetatable ''.starPounds
   local mouthPosition = starPounds.mcontroller.mouthPosition
   if starPounds.currentSize.yOffset then
     mouthPosition = vec2.add(mouthPosition, {0, starPounds.currentSize.yOffset})

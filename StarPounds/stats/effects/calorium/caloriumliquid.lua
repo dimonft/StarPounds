@@ -13,13 +13,15 @@ function init()
 
   animator.setSoundVolume("digest", 0.75)
   animator.setSoundPitch("digest", 2/(1 + self.tickTime))
+
+  starPounds = getmetatable ''.starPounds
 end
 
 function update(dt)
   -- Check promises.
   promises:update()
   if mcontroller.liquidPercentage() < self.minimumLiquid then return end
-  if world.entityType(entity.id()) == "npc" or (getmetatable ''.starPounds and getmetatable ''.starPounds.isEnabled()) then
+  if world.entityType(entity.id()) == "npc" or (starPounds and starPounds.isEnabled()) then
     wasActive = true
     self.tickTimer = self.tickTimer - dt
     if self.tickTimer <= 0 then

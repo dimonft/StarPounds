@@ -7,7 +7,9 @@ function init()
   self.settings = root.assetJson("/scripts/starpounds/starpounds.config:settings")
   animator.setSoundVolume("digest", 0.75)
   animator.setSoundPitch("digest", 1)
-  if world.entityType(entity.id()) == "npc" or (getmetatable ''.starPounds and getmetatable ''.starPounds.isEnabled()) then
+
+  starPounds = getmetatable ''.starPounds
+  if world.entityType(entity.id()) == "npc" or (starPounds and starPounds.isEnabled()) then
     promises:add(world.sendEntityMessage(entity.id(), "starPounds.getData"), function(starPounds)
       increaseWeightProgress(starPounds.weight, self.progressStep)
       effect.expire()

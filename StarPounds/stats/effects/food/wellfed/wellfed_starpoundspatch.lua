@@ -12,7 +12,6 @@ end
 
 
 function update(dt)
-  local starPounds = getmetatable ''.starPounds
   local isEnabled = starPounds and starPounds.isEnabled()
   if isEnabled ~= starPoundsEnabled then
     starPoundsEnabled = isEnabled

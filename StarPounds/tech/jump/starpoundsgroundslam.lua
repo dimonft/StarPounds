@@ -21,10 +21,11 @@ function init()
 
   self.doubleTap = DoubleTap:new({"down"}, config.getParameter("maximumDoubleTapTime"), doubleTapCheck)
   self.doubleTapJump = DoubleTap:new({"jump"}, config.getParameter("maximumDoubleTapTime"), doubleTapCheck)
+
+  starPounds = getmetatable ''.starPounds
 end
 
 function update(args)
-  starPounds = getmetatable ''.starPounds
 
   self.slamWaitTimer = math.max(0, self.slamWaitTimer - args.dt)
   if self.slamWaitTimer == 0 then

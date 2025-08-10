@@ -65,12 +65,18 @@ end
 function belch:pitch(multiplier)
   multiplier = tonumber(multiplier) or 1
   local pitch = util.randomInRange(self.data.belchPitch)
+  -- Gender pitch modifiers.
   if not starPounds.hasOption("genderlessBelches") then
     local gender = world.entityGender(entity.id())
     if gender then
       pitch = pitch + (self.data.belchGenderModifiers[gender] or 0)
     end
   end
+  -- Option pitch modifiers.
+  if starPounds.hasOption("disableBelches") then return end
+  if starPounds.hasOption("higherBelches") then pitch = pitch * 1.25 end
+  if starPounds.hasOption("deeperBelches") then pitch = pitch * 0.75 end
+
   pitch = math.round(pitch * multiplier, 2)
   return pitch
 end

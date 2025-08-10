@@ -4,11 +4,11 @@ local uninit_old = uninit or function() end
 
 function init()
   init_old()
+  starPounds = getmetatable ''.starPounds
   -- HEAD TECHS
   ----------------------------------------------------------------------------------
   -- Using ballRadius to detect since it's a common parameter between all distortionsphere techs.
   if config.getParameter("ballRadius") then
-    starPounds = getmetatable ''.starPounds
     local activate_old = activate or function() end
     local deactivate_old = deactivate or function() end
 
@@ -25,7 +25,6 @@ function init()
     -- Already in the throg sphere.
     if config.getParameter("name") ~= "starpoundsthrogsphere" then
       function update(args)
-        starPounds = getmetatable ''.starPounds
         self.currentSize = starPounds.currentSize and starPounds.currentSize.size or ""
         if self.currentSize ~= self.oldSize then
           self.basePoly = starPounds.currentSize and (starPounds.currentSize.controlParameters[starPounds.getVisualSpecies()] or starPounds.currentSize.controlParameters.default).standingPoly or mcontroller.baseParameters().standingPoly
@@ -45,7 +44,6 @@ function init()
     self.baseDashSpeed = self.dashSpeed
     local startDash_old = startDash or function() end
     function startDash(direction)
-      starPounds = getmetatable ''.starPounds
       self.dashControlForce = self.baseDashControlForce * starPounds.weightMultiplier
       self.dashSpeed = self.baseDashSpeed * (starPounds.movementMultiplier or 1)
       startDash_old(direction)
@@ -90,7 +88,7 @@ function init()
     function update(args)
       -- Increase the boost force based on weight multiplier.
       if self.state == "charge" or self.state == "boost" then
-        local multiplier = (getmetatable ''.starPounds and getmetatable ''.starPounds.weightMultiplier or 1) - 1
+        local multiplier = (starPounds.weightMultiplier or 1) - 1
         if self.state == "boost" then
           multiplier = multiplier * 0.2
           mcontroller.controlParameters({gravityMultiplier = 0.1})

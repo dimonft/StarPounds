@@ -3,6 +3,8 @@ require "/scripts/vec2.lua"
 function init()
   self.accessoryType = config.getParameter("accessoryType")
   updateAim()
+
+  starPounds = getmetatable ''.starPounds
 end
 
 function update(dt, fireMode, shiftHeld)
@@ -10,7 +12,6 @@ function update(dt, fireMode, shiftHeld)
 end
 
 function activate(fireMode, shiftHeld)
-  local starPounds = getmetatable ''.starPounds
   if starPounds then
     local currentAccessory = starPounds.moduleFunc("accessories", "get")
     if currentAccessory then

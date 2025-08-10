@@ -8,10 +8,11 @@ function init()
   activeItem.setCursor("/cursors/starpoundsvore.cursor:prey")
   script.setUpdateDelta(world.getProperty("nonCombat") and 0 or 5)
   monsterBehaviors = root.assetJson("/scripts/starpounds/modules/pred.config:monsterBehaviors")
+
+  starPounds = getmetatable ''.starPounds
 end
 
 function update(dt)
-  local starPounds = getmetatable ''.starPounds
   local validTarget = false
   if starPounds.isEnabled() and not starPounds.hasOption("disablePrey") then
     local mouthPosition = starPounds.mcontroller.mouthPosition
@@ -33,7 +34,6 @@ function update(dt)
 end
 
 function activate(fireMode, shiftHeld)
-  local starPounds = getmetatable ''.starPounds
   local mouthPosition = starPounds.mcontroller.mouthPosition
   if starPounds.currentSize.yOffset then
     mouthPosition = vec2.add(mouthPosition, {0, starPounds.currentSize.yOffset})

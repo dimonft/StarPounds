@@ -3,8 +3,5 @@ function init()
 end
 
 function activate(fireMode, shiftHeld)
-  local starPounds = getmetatable ''.starPounds
-  if starPounds then
-    starPounds.moduleFunc("belch", "belch", 0.75, nil, false)
-  end
+  world.sendEntityMessage(activeItem.ownerEntityId(), "starPounds.belch", 0.75, 1, false)
 end
