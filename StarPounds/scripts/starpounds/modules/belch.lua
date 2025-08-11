@@ -22,7 +22,7 @@ function belch:belch(volume, pitch, addMomentum)
   starPounds.moduleFunc("sound", "play", "belch", volume, self:pitch(pitch))
   -- 7.5 (Rounded to 8) to 10 particles, decreased or increased by up to 2x, -5
   -- Ends up yielding around 10 - 15 particles if the belch is very loud and deep, 3 - 5 at normal volume and pitch, and none if it's half volume or twice as high pitch.
-  local volumeMultiplier = math.max(math.min(volume, 1.5), 0)
+  local volumeMultiplier = util.clamp(volume, 0, 1.5)
   local pitchMultiplier = 1/math.max(pitch, 2/3)
   local particleCount = starPounds.hasOption("disableBelchParticles") and 0 or math.round(math.max(math.random(75, 100) * 0.1 * pitchMultiplier * volumeMultiplier - 5, 0))
   -- Belches give momentum in zero g based on the particle count, because why not.

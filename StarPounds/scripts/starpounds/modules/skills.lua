@@ -86,7 +86,7 @@ function skills:set(skill, level)
   -- Skip if there's no such skill.
   if not storage.starPounds.skills[skill] then return end
   if self:unlockedLevel(skill) > 0 then
-    storage.starPounds.skills[skill][1] = math.max(math.min(level, self:unlockedLevel(skill)), 0)
+    storage.starPounds.skills[skill][1] = util.clamp(level, 0, self:unlockedLevel(skill))
   end
   self:parse()
   starPounds.events:fire("stats:calculate", "setSkill")

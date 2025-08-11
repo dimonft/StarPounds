@@ -25,7 +25,7 @@ end
 
 function bloatCola:update(dt)
   -- Decrease fizz amount and sound volume as it runs out.
-  self.fizzMultiplier = math.max(math.min(self.data.duration/self.baseDuration, 1), 0.25)
+  self.fizzMultiplier = util.clamp(self.data.duration/self.baseDuration, 0.25, 1)
   self.volumeMultiplier = (self.fizzMultiplier + 1) * 0.5
   -- Update the sound volume after the first update.
   if self.firstUpdate then

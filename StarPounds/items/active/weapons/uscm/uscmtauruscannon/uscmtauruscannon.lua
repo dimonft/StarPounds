@@ -61,7 +61,7 @@ function Weapon:updateAim()
 
   self.heat = self.heat or 0
   local heatRate = ((self.heatLerp or 0) < self.heat) and 0.2 or 1
-  self.heatLerp = math.max(math.min(util.lerp(heatRate * script.updateDt(), self.heatLerp or 0, self.heat * 1.2 - 0.1), 1), 0) -- Extra 10% so it doesn't get 'caught' near the ends with float math.
+  self.heatLerp = util.clamp(util.lerp(heatRate * script.updateDt(), self.heatLerp or 0, self.heat * 1.2 - 0.1), 0, 1) -- Extra 10% so it doesn't get 'caught' near the ends with float math.
 
   animator.setGlobalTag("heat", string.format("%02X", math.floor(self.heatLerp * 255 + 0.5)))
 

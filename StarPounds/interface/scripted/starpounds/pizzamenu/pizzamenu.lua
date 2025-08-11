@@ -1,3 +1,4 @@
+require "/scripts/util.lua"
 require "/scripts/messageutil.lua"
 require "/scripts/staticrandom.lua"
 require "/scripts/vec2.lua"
@@ -131,7 +132,7 @@ end
 
 function changeItemAmount(menuItem, amount)
   local currentAmount = order[menuItem] or 0
-  order[menuItem] = math.min(math.max(0, (order[menuItem] or 0) + amount), 99)
+  order[menuItem] = util.clamp((order[menuItem] or 0) + amount, 0, 99)
   _ENV[menuItem.."Amount"]:setText(string.format("x%s", order[menuItem]))
   if order[menuItem] == 0 then
     if _ENV[menuItem.."Ordered"] then

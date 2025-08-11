@@ -118,7 +118,7 @@ function size:setWeight(amount)
   amount = math.max(tonumber(amount) or 0, 0)
   -- Set weight, rounded to 4 decimals.
   amount = math.round(amount, 4)
-  storage.starPounds.weight = math.max(math.min(amount, starPounds.settings.maxWeight), starPounds.sizes[(starPounds.moduleFunc("skills", "level", "minimumSize") + 1)].weight)
+  storage.starPounds.weight = util.clamp(amount, starPounds.sizes[(starPounds.moduleFunc("skills", "level", "minimumSize") + 1)].weight, starPounds.settings.maxWeight)
 end
 
 function size:get(weight)
@@ -363,13 +363,13 @@ function size:equipmentConfig(sizeIndex)
     -- Calculate the 'target' size based on options and vehicle caps.
     for option, amount in pairs(self.data.sizeOptions.chest) do
       if starPounds.hasOption(option) then
-        chestIndex = math.min(math.max(sizeIndex + amount), self.supersizeIndex - 1, vehicleCap.chest)
+        chestIndex = math.min(sizeIndex + amount, self.supersizeIndex - 1, vehicleCap.chest)
       end
     end
     -- Same for legs.
     for option, amount in pairs(self.data.sizeOptions.legs) do
       if starPounds.hasOption(option) then
-        legsIndex = math.min(math.max(sizeIndex + amount), self.supersizeIndex - 1, vehicleCap.legs)
+        legsIndex = math.min(sizeIndex + amount, self.supersizeIndex - 1, vehicleCap.legs)
       end
     end
   end

@@ -28,7 +28,7 @@ function strain:update(dt)
       local energy = status.resource("energy")
       local energyMax = status.resourceMax("energy")
       local energyCost = energyMax * self.data.energyCost * self.effort
-      local fullnessMultiplier = math.min(math.max(1, starPounds.stomach.fullness - 1), self.thresholds.starpoundsstomach3 - 1)
+      local fullnessMultiplier = util.clamp(starPounds.stomach.fullness - 1, 1, self.thresholds.starpoundsstomach3 - 1)
       -- Stomach makes more rumble sounds while straining.
       starPounds.moduleFunc("stomach", "stepTimer", "rumble", self.data.rumbleBonus * fullnessMultiplier * dt)
       -- Don't run this if we're at zero energy.

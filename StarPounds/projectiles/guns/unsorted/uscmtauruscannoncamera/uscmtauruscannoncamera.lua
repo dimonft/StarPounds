@@ -1,3 +1,4 @@
+require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 
 function init()
@@ -10,7 +11,7 @@ function init()
   end)
 
   message.setHandler("setAmplitude", function(_, _, amount)
-    amplitude = math.min(math.max(tonumber(amount) or 0, -1), 1)
+    amplitude = util.clamp(tonumber(amount) or 0, -1, 1)
   end)
 end
 

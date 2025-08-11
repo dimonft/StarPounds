@@ -104,7 +104,7 @@ function breasts:milkProduction(food)
       milkProduced = math.round((milkCost/milkValue) * math.min(1, starPounds.getStat("breastEfficiency")), 4)
       if (self.breasts.capacity - self.breasts.contents) < milkProduced then
         -- Free after you've maxed out capacity, but you only gain a third as much.
-        milkProduced = math.min(math.max((self.breasts.capacity - self.breasts.contents), milkProduced/3), maxCapacity - self.breasts.contents)
+        milkProduced = util.clamp(self.breasts.capacity - self.breasts.contents, milkProduced/3, maxCapacity - self.breasts.contents)
         milkCost = math.max(0, self.breasts.capacity - self.breasts.contents) * milkValue
       end
     end

@@ -1,4 +1,5 @@
 require "/tech/distortionsphere/distortionsphere.lua"
+require "/scripts/util.lua"
 
 function init()
   initCommonParameters()
@@ -13,8 +14,8 @@ function init()
   local radius = 0.85 * self.scale
   for height = -math.floor(radius), math.floor(radius), 2 do
     for width = -math.floor(radius), math.floor(radius), 2 do
-      local height = math.min(math.max(-radius + 0.5, height), radius - 0.5)
-      local width = math.min(math.max(-radius + 0.5, width), radius - 0.5)
+      local height = util.clamp(-radius + 0.5, height, radius - 0.5)
+      local width = util.clamp(-radius + 0.5, width, radius - 0.5)
       self.projectilePositions[#self.projectilePositions + 1] = {width, height}
     end
   end
@@ -71,8 +72,8 @@ function update(args)
       local radius = 0.85 * self.scale
       for height = -math.floor(radius), math.floor(radius), 2 do
         for width = -math.floor(radius), math.floor(radius), 2 do
-          local height = math.min(math.max(-radius + 0.5, height), radius - 0.5)
-          local width = math.min(math.max(-radius + 0.5, width), radius - 0.5)
+          local height = util.clamp(-radius + 0.5, height, radius - 0.5)
+          local width = util.clamp(-radius + 0.5, width, radius - 0.5)
           self.projectilePositions[#self.projectilePositions + 1] = {width, height}
         end
       end

@@ -550,7 +550,7 @@ function pred:digestClothing(item)
   -- Reduce price to 10% (15% - 5% per digestion) of the original value.
   item.parameters.price = math.round(configParameter(item, "price", 0) * (0.15 - 0.05 * item.parameters.digestCount))
   -- Reduce armor level by 1 per digestion. (Or planet threat level, whatever is lower)
-  item.parameters.level = math.max(math.min(configParameter(item, "level", 0) - item.parameters.digestCount, world.threatLevel()), configParameter(item, "level", 0) > 0 and 1 or 0)
+  item.parameters.level = util.clamp(configParameter(item, "level", 0) - item.parameters.digestCount, configParameter(item, "level", 0) > 0 and 1 or 0, world.threatLevel())
   -- Disable status effects.
   item.parameters.statusEffects = root.itemConfig(item).statusEffects and jarray() or nil
   -- Disable effects.

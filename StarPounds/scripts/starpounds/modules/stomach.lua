@@ -356,7 +356,7 @@ function stomach:rumble(volume)
   -- Don't do anything if rumbles are disabled.
   if starPounds.hasOption("disableRumbles") then return end
   -- Rumble sound.
-  starPounds.moduleFunc("sound", "play", "rumble", math.max(math.min(volume, 2), 0) * 0.75, (math.random(90,110)/100))
+  starPounds.moduleFunc("sound", "play", "rumble", util.clamp(volume, 0, 2) * 0.75, (math.random(90,110)/100))
 end
 
 function stomach:sloshing(dt)
