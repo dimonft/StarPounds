@@ -103,9 +103,9 @@
       "/sfx/starpounds/belch/belch7.ogg",
       "/sfx/starpounds/belch/belch8.ogg"
     ],
-    "squelchloop": ["/sfx/starpounds/squelch/squelchloop.ogg"],
-    "footstep": ["/sfx/starpounds/other/footstep.ogg"],
-    "land": ["/sfx/starpounds/other/footstep.ogg"],
+    "squelchloop": [ "/sfx/starpounds/squelch/squelchloop.ogg" ],
+    "footstep": [ "/sfx/starpounds/other/footstep.ogg" ],
+    "land": [ "/sfx/starpounds/other/footstep.ogg" ],
     "clothingrip": [ "/sfx/starpounds/other/clothingrip.ogg" ],
     "fizz": [ "/sfx/starpounds/other/fizz.ogg" ]
   }

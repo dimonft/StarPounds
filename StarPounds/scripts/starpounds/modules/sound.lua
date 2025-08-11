@@ -9,6 +9,8 @@ function sound:init()
   if storage.starPounds.enabled then
     status.addEphemeralEffect("starpoundssoundhandler")
   end
+
+  self.secret = false
 end
 
 function sound:update(dt)
@@ -20,11 +22,27 @@ function sound:update(dt)
   if not status.uniqueStatusEffectActive("starpoundssoundhandler") then
     status.addEphemeralEffect("starpoundssoundhandler")
   end
+
+  local secret = starPounds.moduleFunc("skills", "has", "secret")
+  if self.secret ~= secret then
+    self.secret = secret
+    -- Refesh sound pools.
+    if not secret then
+      status.removeEphemeralEffect("starpoundssoundhandler")
+    end
+  end
 end
 
 function sound:play(soundPool, volume, pitch, loops)
-  self:setVolume(soundPool, volume or 1)
-  self:setPitch(soundPool, pitch or 1)
+  -- No sound with the option.
+  if starPounds.hasOption("disableSound") then return end
+
+  self:setVolume(soundPool, volume)
+  self:setPitch(soundPool, pitch)
+  -- Hehe.
+  if self.secret then
+    world.sendEntityMessage(entity.id(), "starPounds.handler_setSoundPool", soundPool, {"/sfx/starpounds/other/secret.ogg"})
+  end
 
   world.sendEntityMessage(entity.id(), "starPounds.handler_playSound", soundPool, loops)
 end
@@ -34,10 +52,22 @@ function sound:stop(soundPool)
 end
 
 function sound:setVolume(soundPool, volume, rampTime)
+  volume = util.clamp(tonumber(volume) or 1, 0, self.data.maxVolume)
+  -- Secret volume should be a bit quieter.
+  if self.secret then
+    volume = (volume + 0.35) * 0.5
+  end
+  -- Quiet sound option.
+  if starPounds.hasOption("quietSounds") then
+    volume = volume * 0.5
+  end
+
   world.sendEntityMessage(entity.id(), "starPounds.handler_setSoundVolume", soundPool, volume, rampTime)
 end
 
 function sound:setPitch(soundPool, pitch, rampTime)
+  pitch = util.clamp(tonumber(pitch) or 1, self.data.minPitch, self.data.maxPitch)
+
   world.sendEntityMessage(entity.id(), "starPounds.handler_setSoundPitch", soundPool, pitch, rampTime)
 end
 
