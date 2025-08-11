@@ -30,7 +30,7 @@
         "duration" : 600
     }
   ] ],
-  "foodValue": 30,  
+  "foodValue": 30,
   "emitters" : [ "drinking" ],
   "blockingEffects" : [
     "starpoundshangover"

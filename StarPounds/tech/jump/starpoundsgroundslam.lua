@@ -127,7 +127,9 @@ function update(args)
   local jumpActivated = args.moves["jump"] and not self.lastJump
   self.lastJump = args.moves["jump"]
 
-  updateJumpModifier()
+  if starPounds then
+    updateJumpModifier()
+  end
 
   if jumpActivated and canMultiJump() then
     doMultiJump()

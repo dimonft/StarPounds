@@ -1,13 +1,13 @@
 {
-  "name" : "starpounds_irradiatedglow",
+  "name" : "starpoundsirradiatedglow",
   "effectConfig" : {},
   "defaultDuration" : 5,
 
   "scripts" : [
-    "starpounds_irradiatedglow.lua"
+    "starpoundsirradiatedglow.lua"
   ],
 
-  "animationConfig" : "starpounds_irradiatedglow.animation",
+  "animationConfig" : "starpoundsirradiatedglow.animation",
 
   "label" : "Nuclear Glow",
   "icon" : "/interface/statuses/glow.png"
