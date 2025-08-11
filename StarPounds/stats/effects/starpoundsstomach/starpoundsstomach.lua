@@ -7,11 +7,11 @@ function init()
   self.fillRange = effect.getParameter("fillRange", {1, 16})
   self.scale = ( self.fillRange[2] - (self.fillRange[1] - 1) ) / 16
   self.buffer = 100 * (self.fillRange[1] - 1) / 16
+  -- Cross script voodoo witch magic.
+  starPounds = getmetatable ''.starPounds
 end
 
 function update(dt)
-  -- Cross script voodoo witch magic.
-  local starPounds = getmetatable ''.starPounds
   local progress = math.min(math.max(starPounds.stomach.interpolatedFullness - self.range[1], 0) / (self.range[2] - self.range[1]), 1) * 100
   if effect.duration() > 0 then
     -- "Center" the animation.

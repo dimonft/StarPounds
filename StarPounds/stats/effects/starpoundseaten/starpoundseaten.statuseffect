@@ -3,5 +3,8 @@
   "defaultDuration": 1,
   "scripts": [
     "starpoundseaten.lua"
-  ]
+  ],
+
+  "label" : "Devoured!",
+  "icon" : "/interface/statuses/vore.png"
 }

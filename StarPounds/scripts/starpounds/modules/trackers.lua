@@ -2,6 +2,8 @@ local trackers = starPounds.module:new("trackers")
 
 function trackers:init()
   self.thresholds = starPounds.settings.thresholds.strain
+  -- Just incase this gets used on an init.
+  starPounds.progress = 0
 end
 
 function trackers:update(dt)
@@ -16,6 +18,8 @@ function trackers:update(dt)
   starPounds.progress = math.round((storage.starPounds.weight - currentSizeWeight)/(nextSizeWeight - currentSizeWeight) * 100)
   -- Don't create if we can't add statuses anyway.
   if status.statPositive("statusImmunity") then return end
+  -- Don't create if we're eaten.
+  if storage.starPounds.pred then return end
   -- Check if statuses don't exist.
   if not (starPounds.hasOption("disableStomachMeter") or starPounds.hasOption("legacyMode")) then
     local stomachTracker = self:getStomachTracker()

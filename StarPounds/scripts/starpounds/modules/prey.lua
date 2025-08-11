@@ -115,6 +115,8 @@ function prey:swallowed(pred, options)
   if not status.resourcePositive("health") then return false end
   -- Save the entityId of the pred.
   storage.starPounds.pred = pred
+  -- Clear tracking status effects.
+  starPounds.moduleFunc("trackers", "clearStatuses")
   -- Store options locally.
   self.options = options
   -- Eaten entities can't be interacted with. This looks very silly atm since I need to figure out a way to dynamically detect it.
@@ -282,6 +284,8 @@ function prey:released(source, overrideStatus)
   local options = self.options
   -- Remove the pred id from storage.
   storage.starPounds.pred = nil
+  -- Recreate tracking status effects.
+  starPounds.moduleFunc("trackers", "createStatuses")
   self.options = {}
   storage.starPounds.spectatingPred = nil
   -- Reset struggle cycle.
