@@ -8,7 +8,7 @@ function bloatCola:init()
   self.firstUpdate = false
   self.expiring = false
   self.baseDuration = starPounds.moduleFunc("effects", "getConfig", "bloatCola").duration
-  starPounds.moduleFunc("sound", "stop", "fizz")
+  starPounds.moduleFunc("sound", "stop", "fizzloop")
 
   self.onSlosh = function(sloshAmount)
     self:shake(sloshAmount)
@@ -29,17 +29,17 @@ function bloatCola:update(dt)
   self.volumeMultiplier = (self.fizzMultiplier + 1) * 0.5
   -- Update the sound volume after the first update.
   if self.firstUpdate then
-    starPounds.moduleFunc("sound", "setVolume", "fizz", self.fizzVolume * self.volumeMultiplier, dt)
+    starPounds.moduleFunc("sound", "setVolume", "fizzloop", self.fizzVolume * self.volumeMultiplier, dt)
   end
   -- Gurgle sound that plays when enabling the mod overrides if we trigger it on init.
   if not self.firstUpdate then
-    starPounds.moduleFunc("sound", "play", "fizz", self.fizzVolume * self.volumeMultiplier, 0.75, -1)
+    starPounds.moduleFunc("sound", "play", "fizzloop", self.fizzVolume * self.volumeMultiplier, 0.75, -1)
     self.firstUpdate = true
   end
   -- Ramp down sound as it expires.
   if not self.expiring and (self.data.duration + dt) <= 1 then
     self.expiring = true
-    starPounds.moduleFunc("sound", "setVolume", "fizz", 0, 1)
+    starPounds.moduleFunc("sound", "setVolume", "fizzloop", 0, 1)
   end
   starPounds.moduleFunc("stomach", "feed", self.airAmount * self.fizzMultiplier * dt, "air")
 end
@@ -49,7 +49,7 @@ function bloatCola:expire()
 end
 
 function bloatCola:uninit()
-  starPounds.moduleFunc("sound", "stop", "fizz")
+  starPounds.moduleFunc("sound", "stop", "fizzloop")
   starPounds.events:off("stomach:slosh", self.onSlosh)
 end
 

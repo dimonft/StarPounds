@@ -107,6 +107,6 @@
     "footstep": [ "/sfx/starpounds/other/footstep.ogg" ],
     "land": [ "/sfx/starpounds/other/footstep.ogg" ],
     "clothingrip": [ "/sfx/starpounds/other/clothingrip.ogg" ],
-    "fizz": [ "/sfx/starpounds/other/fizz.ogg" ]
+    "fizzloop": [ "/sfx/starpounds/other/fizz.ogg" ]
   }
 }

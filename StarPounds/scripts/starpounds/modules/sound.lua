@@ -11,6 +11,7 @@ function sound:init()
   end
 
   self.secret = false
+  self.secretIndex = {}
 end
 
 function sound:update(dt)
@@ -41,7 +42,15 @@ function sound:play(soundPool, volume, pitch, loops)
   self:setPitch(soundPool, pitch)
   -- Hehe.
   if self.secret then
-    world.sendEntityMessage(entity.id(), "starPounds.handler_setSoundPool", soundPool, {"/sfx/starpounds/other/secret.ogg"})
+    local secretPool
+    if soundPool:find("loop") then
+      secretPool = {"/sfx/starpounds/other/secret.ogg"}
+    else
+      if not self.secretIndex[soundPool] then self.secretIndex[soundPool] = 1 end
+      secretPool = {"/sfx/starpounds/other/secret" .. self.secretIndex[soundPool] .. ".ogg"}
+      self.secretIndex[soundPool] = (self.secretIndex[soundPool] % 8) + 1
+    end
+    world.sendEntityMessage(entity.id(), "starPounds.handler_setSoundPool", soundPool, secretPool)
   end
 
   world.sendEntityMessage(entity.id(), "starPounds.handler_playSound", soundPool, loops)
@@ -53,9 +62,9 @@ end
 
 function sound:setVolume(soundPool, volume, rampTime)
   volume = util.clamp(tonumber(volume) or 1, 0, self.data.maxVolume)
-  -- Secret volume should be a bit quieter.
-  if self.secret then
-    volume = (volume + 0.35) * 0.5
+  -- Secret volume averaged closer to 0.75.
+  if self.secret and volume > 0 then
+    volume = (volume + 0.75) * 0.5
   end
   -- Quiet sound option.
   if starPounds.hasOption("quietSounds") then
@@ -67,6 +76,10 @@ end
 
 function sound:setPitch(soundPool, pitch, rampTime)
   pitch = util.clamp(tonumber(pitch) or 1, self.data.minPitch, self.data.maxPitch)
+
+  if self.secret then
+    pitch = 1
+  end
 
   world.sendEntityMessage(entity.id(), "starPounds.handler_setSoundPitch", soundPool, pitch, rampTime)
 end
