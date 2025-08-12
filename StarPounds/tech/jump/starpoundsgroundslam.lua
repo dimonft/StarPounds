@@ -26,7 +26,8 @@ function init()
 end
 
 function update(args)
-
+  -- For some reason this tech script doesn't like it only being in init.
+  starPounds = getmetatable ''.starPounds
   self.slamWaitTimer = math.max(0, self.slamWaitTimer - args.dt)
   if self.slamWaitTimer == 0 then
     self.slamTimer = math.max(0, self.slamTimer - args.dt)
