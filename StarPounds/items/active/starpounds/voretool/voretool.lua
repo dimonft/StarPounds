@@ -8,6 +8,8 @@ function init()
   cooldownFrames = 8
   cursorType = "pred"
   updateCursor()
+
+  readyEmote = config.getParameter("readyEmote", "Happy")
 end
 
 function activate(fireMode, shiftHeld)
@@ -36,7 +38,18 @@ function update(dt, _, shiftHeld)
   -- Vore icon updater.
   local valid = starPounds.moduleFunc("pred", "eatNearby", targetPosition, range - (starPounds.currentSize.yOffset or 0), querySize, nil, true)
   cursorType = (valid and valid[1]) and (valid[2] and "pred_valid" or "pred_nearby") or "pred"
-  -- Stomach icon updater.
+  if readyEmote ~= "none" then
+    if cursorType == "pred_valid" and starPounds.moduleFunc("pred", "cooldown") == 0 then
+      activeItem.emote(readyEmote)
+      wasValid = true
+    end
+  end
+
+  if wasValid and cursorType ~= "pred_valid" then
+    activeItem.emote("Idle")
+    wasValid = false
+  end
+  -- Mouth icon updater.
   updateCursor(shiftHeld)
 end
 
