@@ -8,9 +8,7 @@ function effects:init()
   message.setHandler("starPounds.resetEffects", localHandler(self.reset))
 
   self.effects = {}
-  for effect in pairs(storage.starPounds.effects.active) do
-    self:load(effect)
-  end
+  self.loaded = false
 end
 
 effects.effect = setmetatable({}, { __index = starPounds.module })
@@ -29,6 +27,13 @@ function effects:new()
 end
 
 function effects:update(dt)
+  -- Delay the effects loading by one tick so all the other modules can be ready.
+  if not self.loaded then
+    for effect in pairs(storage.starPounds.effects.active) do
+      self:load(effect)
+      self.loaded = true
+    end
+  end
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
   -- Update effect durations.

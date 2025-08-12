@@ -75,7 +75,7 @@ function _monster:setup()
   -- Vore stuff.
   local boundBox = mcontroller.boundBox()
   local monsterArea = math.abs(boundBox[1]) + math.abs(boundBox[3]) * math.abs(boundBox[2]) + math.abs(boundBox[4])
-  entity.weight = math.min(math.round(monsterArea * starPounds.settings.voreMonsterFood), starPounds.settings.voreMonsterFoodCap)
+  entity.weight = math.min(math.round(monsterArea * self.data.monsterFood), self.data.monsterFoodCap)
   local deathActions = config.getParameter("behaviorConfig.deathActions", {})
   -- Remove base weight if the monster is 'replaced'.
   for _, action in ipairs(deathActions) do
@@ -88,7 +88,7 @@ function _monster:setup()
       local monsterPoly = root.monsterParameters(action.parameters.monsterType).movementSettings.collisionPoly
       local boundBox = util.boundBox(monsterPoly)
       local monsterArea = math.abs(boundBox[1]) + math.abs(boundBox[3]) * math.abs(boundBox[2]) + math.abs(boundBox[4])
-      entity.weight = entity.weight + math.min(math.round(monsterArea * starPounds.settings.voreMonsterFood), starPounds.settings.voreMonsterFoodCap)
+      entity.weight = entity.weight + math.min(math.round(monsterArea * self.data.monsterFood), self.data.monsterFoodCap)
     end
   end
   -- Robotic monsters don't give food.
