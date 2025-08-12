@@ -19,8 +19,6 @@ function breasts:update(dt)
   if not storage.starPounds.enabled then return end
   -- Don't do anything if eaten.
   if storage.starPounds.pred then return end
-  --
-  self.lactationTimer = math.max(self.lactationTimer - dt, 0)
   -- Check if breast capacity is exceeded.
   if self.breasts.contents > self.breasts.capacity then
     if starPounds.hasOption("disableLeaking") then
@@ -116,31 +114,27 @@ function breasts:setMilk(amount)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
   -- Argument sanitisation.
-  amount = math.max(tonumber(amount) or 0, 0)
-  -- Set milk, rounded to 4 decimals.
-  amount = math.round(amount, 4)
+  amount = math.round(math.max(tonumber(amount) or 0, 0), 4)
   storage.starPounds.breasts.amount = amount
 end
 
 function breasts:gainMilk(amount)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return 0 end
+  -- Don't do anyhting if milk gain is disabled.
+  if starPounds.hasOption("disableMilkGain") then return 0 end
   -- Argument sanitisation.
-  amount = math.max(tonumber(amount) or 0, 0)
-  -- Set milk, rounded to 4 decimals.
-  if starPounds.hasOption("disableMilkGain") then return end
-  amount = math.max(math.round(math.min(amount, (self.breasts.capacity * (starPounds.hasOption("disableLeaking") and 1 or 1.1)) - self.breasts.contents), 4), 0)
-  storage.starPounds.breasts.amount = math.round(storage.starPounds.breasts.amount + amount, 4)
+  amount = util.clamp(tonumber(amount) or 0, 0, self.breasts.capacity * (starPounds.hasOption("disableLeaking") and 1 or 1.1) - self.breasts.contents)
+  self:setMilk(storage.starPounds.breasts.amount + amount)
+  return amount
 end
 
 function breasts:loseMilk(amount)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return 0 end
   -- Argument sanitisation.
-  amount = math.max(tonumber(amount) or 0, 0)
-  -- Decrease milk by amount (min: 0)
-  amount = math.min(amount, storage.starPounds.breasts.amount)
-  storage.starPounds.breasts.amount = math.max(0, math.round(storage.starPounds.breasts.amount - amount, 4))
+  amount = util.clamp(tonumber(amount) or 0, 0, storage.starPounds.breasts.amount)
+  self:setMilk(storage.starPounds.breasts.amount - amount)
   return amount
 end
 

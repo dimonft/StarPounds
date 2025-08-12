@@ -88,12 +88,10 @@ end
 function size:gainWeight(amount, fullAmount)
   -- Don't do anything if the mod is disabled.
   if not (storage.starPounds.enabled and self.canGain) then return 0 end
-  -- Argument sanitisation.
-  amount = math.max(tonumber(amount) or 0, 0)
   -- Don't do anything if weight gain is disabled.
-  if starPounds.hasOption("disableGain") then return end
-  -- Increase weight by amount.
-  amount = math.min(amount * (fullAmount and 1 or starPounds.getStat("weightGain")), starPounds.settings.maxWeight - storage.starPounds.weight)
+  if starPounds.hasOption("disableGain") then return 0 end
+  -- Argument sanitisation.
+  amount = util.clamp((tonumber(amount) or 0) * (fullAmount and 1 or starPounds.getStat("weightGain")), 0, starPounds.settings.maxWeight - storage.starPounds.weight)
   self:setWeight(storage.starPounds.weight + amount)
   return amount
 end
@@ -101,12 +99,10 @@ end
 function size:loseWeight(amount, fullAmount)
   -- Don't do anything if the mod is disabled.
   if not (storage.starPounds.enabled and self.canGain) then return 0 end
-  -- Argument sanitisation.
-  amount = math.max(tonumber(amount) or 0, 0)
   -- Don't do anything if weight loss is disabled.
-  if starPounds.hasOption("disableLoss") then return end
-  -- Decrease weight by amount (min: 0)
-  amount = math.min(amount * (fullAmount and 1 or starPounds.getStat("weightLoss")), storage.starPounds.weight)
+  if starPounds.hasOption("disableLoss") then return 0 end
+  -- Argument sanitisation.
+  amount = util.clamp((tonumber(amount) or 0) * (fullAmount and 1 or starPounds.getStat("weightLoss")), 0, storage.starPounds.weight)
   self:setWeight(storage.starPounds.weight - amount)
   return amount
 end
@@ -115,9 +111,7 @@ function size:setWeight(amount)
   -- Don't do anything if the mod is disabled.
   if not (storage.starPounds.enabled and self.canGain) then return end
   -- Argument sanitisation.
-  amount = math.max(tonumber(amount) or 0, 0)
-  -- Set weight, rounded to 4 decimals.
-  amount = math.round(amount, 4)
+  amount = math.round(tonumber(amount) or 0, 4)
   storage.starPounds.weight = util.clamp(amount, starPounds.sizes[(starPounds.moduleFunc("skills", "level", "minimumSize") + 1)].weight, starPounds.settings.maxWeight)
 end
 
