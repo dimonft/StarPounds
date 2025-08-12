@@ -104,14 +104,4 @@ function _monster:setup()
   end
 end
 
-local die_old = die or function() end
-local setDying = setDying or function() end
-function die()
-  die_old()
-  if storage.starPounds.pred then
-    storage.starPounds.pred = nil
-    world.sendEntityMessage(entity.id(), "despawn")
-  end
-end
-
 starPounds.modules.monster = _monster

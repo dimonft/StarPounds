@@ -371,57 +371,61 @@ function prey:digesting(pred, digestionRate, protectionPierce)
   -- Remove the health.
   status.overConsumeResource("health", amount)
   if not status.resourcePositive("health") then
-    world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyDigested", entity.id(), self:createDrops(self.options.items), storage.starPounds.stomachEntities)
-    -- Transfer over stomach contents.
-    for foodType, amount in pairs(storage.starPounds.stomach) do
-      world.sendEntityMessage(storage.starPounds.pred, "starPounds.feed", amount, foodType)
+    self:die()
+  end
+end
+
+function prey:digested()
+  -- Don't run if there's no pred.
+  if not storage.starPounds.pred then return end
+  world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyDigested", entity.id(), self:createDrops(self.options.items), storage.starPounds.stomachEntities)
+  -- Transfer over stomach contents.
+  for foodType, amount in pairs(storage.starPounds.stomach) do
+    world.sendEntityMessage(storage.starPounds.pred, "starPounds.feed", amount, foodType)
+  end
+  -- Transfer over breast contents.
+  local breastContents = starPounds.moduleFunc("breasts", "get")
+  if breastContents then
+    for foodType, amount in pairs(starPounds.moduleFunc("liquid", "get", breastContents.type).food) do
+      world.sendEntityMessage(storage.starPounds.pred, "starPounds.feed", breastContents.contents * amount, foodType)
     end
-    -- Transfer over breast contents.
-    local breastContents = starPounds.moduleFunc("breasts", "get")
-    if breastContents then
-      for foodType, amount in pairs(starPounds.moduleFunc("liquid", "get", breastContents.type).food) do
-        world.sendEntityMessage(storage.starPounds.pred, "starPounds.feed", breastContents.contents * amount, foodType)
+  end
+  -- Player stuff.
+  if starPounds.type == "player" then
+    if starPounds.hasOption("spectatePred") then
+      player.playCinematic("/cinematics/starpounds/starpoundsvore.cinematic")
+      storage.starPounds.spectatingPred = true
+    else
+      for _,v in pairs({"head", "body", "legs"}) do
+        player.unequipTech("starpoundseaten_"..v)
+        player.makeTechUnavailable("starpoundseaten_"..v)
+      end
+      for _,v in pairs(self.oldTech or {}) do
+        player.equipTech(v)
       end
     end
-    -- Player stuff.
-    if starPounds.type == "player" then
-      if starPounds.hasOption("spectatePred") then
-        player.playCinematic("/cinematics/starpounds/starpoundsvore.cinematic")
-        storage.starPounds.spectatingPred = true
-      else
-        for _,v in pairs({"head", "body", "legs"}) do
-          player.unequipTech("starpoundseaten_"..v)
-          player.makeTechUnavailable("starpoundseaten_"..v)
-        end
-        for _,v in pairs(self.oldTech or {}) do
-          player.equipTech(v)
-        end
-      end
+  end
+  -- NPC stuff.
+  if starPounds.type == "npc" then
+    if world.entityUniqueId(storage.starPounds.pred) and world.entityUniqueId(storage.starPounds.pred) == self.deliveryTarget then
+      world.sendEntityMessage(storage.starPounds.pred, "starPounds.digestedPizzaEmployee")
     end
-    -- NPC stuff.
-    if starPounds.type == "npc" then
-      if world.entityUniqueId(storage.starPounds.pred) and world.entityUniqueId(storage.starPounds.pred) == self.deliveryTarget then
-        world.sendEntityMessage(storage.starPounds.pred, "starPounds.digestedPizzaEmployee")
+    -- Are they a crewmate?
+    if recruitable then
+      -- Did their owner eat them?
+      local predId = storage.starPounds.pred
+      storage.starPounds.pred = nil
+      if recruitable.ownerUuid() and world.entityUniqueId(predId) == recruitable.ownerUuid() then
+        recruitable.messageOwner("recruits.digestedRecruit", recruitable.recruitUuid())
       end
-      -- Are they a crewmate?
-      if recruitable then
-        -- Did their owner eat them?
-        local predId = storage.starPounds.pred
-        storage.starPounds.pred = nil
-        if recruitable.ownerUuid() and world.entityUniqueId(predId) == recruitable.ownerUuid() then
-          recruitable.messageOwner("recruits.digestedRecruit", recruitable.recruitUuid())
-        end
-        recruitable.despawn()
-        return
-      end
+      recruitable.despawn()
+      return
     end
-    -- Getting digested by a player removes all your fat.
-    local predType = world.entityType(storage.starPounds.pred)
-    if (predType == "player") or (predType == "npc") then
-      starPounds.moduleFunc("size", "setWeight", 0)
-    end
-    -- Run standard monster/NPC death stuff.
-    if die then die() end
+  end
+  -- Getting digested by a player removes all your fat.
+  local predType = world.entityType(storage.starPounds.pred)
+  if (predType == "player") or (predType == "npc") then
+    starPounds.moduleFunc("size", "setWeight", 0)
   end
 end
 
@@ -459,6 +463,36 @@ function prey:createDrops(items)
     end
   end
   return items
+end
+
+function prey:die()
+  if storage.starPounds.pred then
+    self:digested()
+    -- NPC stuff.
+    if starPounds.type == "npc" then
+      local setDying = setDying or (function() end)
+      setDying({shouldDie = true})
+      npc.setDropPools({})
+      npc.setDeathParticleBurst()
+      status.setResource("health", 0)
+    end
+    -- Monster stuff.
+    if starPounds.type == "monster" then
+      monster.setDropPool(nil)
+      monster.setDeathParticleBurst(nil)
+      monster.setDeathSound(nil)
+      self.deathBehavior = nil
+      self.shouldDie = true
+      status.addEphemeralEffect("monsterdespawn")
+    end
+    storage.starPounds.pred = nil
+  end
+end
+
+local die_old = die or (function() end)
+function die()
+  prey:die()
+  die_old()
 end
 
 function prey.notifyDamage(predId)

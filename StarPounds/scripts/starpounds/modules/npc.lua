@@ -92,17 +92,4 @@ function _npc:setup()
   end
 end
 
-local die_old = die or nullFunction
-local setDying = setDying or nullFunction
-function die()
-  if storage.starPounds.pred then
-    storage.starPounds.pred = nil
-    setDying({shouldDie = true})
-    npc.setDropPools()
-    npc.setDeathParticleBurst()
-    status.setResource("health", 0)
-  end
-  die_old()
-end
-
 starPounds.modules.npc = _npc
