@@ -4,7 +4,6 @@ local uninit_old = uninit or function() end
 
 function init()
   init_old()
-  starPounds = getmetatable ''.starPounds
   -- HEAD TECHS
   ----------------------------------------------------------------------------------
   -- Using ballRadius to detect since it's a common parameter between all distortionsphere techs.
@@ -15,16 +14,19 @@ function init()
     function activate()
       activate_old()
       status.setPersistentEffects("movementAbility", {{stat = "activeMovementAbilities", amount = 2}})
+      starPounds = getmetatable ''.starPounds or {}
       if starPounds then starPounds.events:fire("stats:calculate", "tech:sphereActivate") end
     end
 
     function deactivate()
       deactivate_old()
+      starPounds = getmetatable ''.starPounds or {}
       if starPounds then starPounds.events:fire("tech:sphereDeactivate") end
     end
     -- Already in the throg sphere.
     if config.getParameter("name") ~= "starpoundsthrogsphere" then
       function update(args)
+        starPounds = getmetatable ''.starPounds or {}
         self.currentSize = starPounds.currentSize and starPounds.currentSize.size or ""
         if self.currentSize ~= self.oldSize then
           self.basePoly = starPounds.currentSize and (starPounds.currentSize.controlParameters[starPounds.getVisualSpecies()] or starPounds.currentSize.controlParameters.default).standingPoly or mcontroller.baseParameters().standingPoly
@@ -44,7 +46,8 @@ function init()
     self.baseDashSpeed = self.dashSpeed
     local startDash_old = startDash or function() end
     function startDash(direction)
-      self.dashControlForce = self.baseDashControlForce * starPounds.weightMultiplier
+      starPounds = getmetatable ''.starPounds or {}
+      self.dashControlForce = self.baseDashControlForce * (starPounds.movementMultiplier or 1)
       self.dashSpeed = self.baseDashSpeed * (starPounds.movementMultiplier or 1)
       startDash_old(direction)
     end
@@ -88,6 +91,7 @@ function init()
     function update(args)
       -- Increase the boost force based on weight multiplier.
       if self.state == "charge" or self.state == "boost" then
+        starPounds = getmetatable ''.starPounds or {}
         local multiplier = (starPounds.weightMultiplier or 1) - 1
         if self.state == "boost" then
           multiplier = multiplier * 0.2
