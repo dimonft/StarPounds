@@ -1,0 +1,33 @@
+{
+  "itemName" : "starpoundsponderousshortsword",
+  "price" : 1250,
+  "maxStack" : 1,
+  "rarity" : "Uncommon",
+  "description" : "A short sword wielded by Ponderous Wisp Knights.",
+  "shortdescription" : "Ponderous Short Blade",
+  "tooltipKind" : "sword",
+  "category" : "shortsword",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","melee","shortsword","starpounds","ponderous"],
+
+  "inventoryIcon" : "ponderousshortsword.png",
+
+  "animation" : "/items/active/weapons/melee/shortsword/comboshortsword.animation",
+  "animationParts" : {
+    "handle": "",
+    "blade" : "ponderousshortsword.png"
+  },
+  "animationCustom" : { },
+
+  "scripts" : ["/items/active/weapons/melee/meleeweapon.lua"],
+
+  "elementalType" : "physical",
+
+  "primaryAbilityType" : "shortswordcombo",
+  "primaryAbility" : {
+    "fireTime" : 0.65,
+    "baseDps" : 5.5
+  },
+
+  "builder" : "/items/buildscripts/buildweapon.lua"
+}
