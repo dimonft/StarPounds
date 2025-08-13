@@ -1,0 +1,132 @@
+{
+  "voreRegurgitated" : [
+    [0, {
+      // Clothing
+      "poolRounds" : [ [0.55, 1], [0.3, 2], [0.15, 3] ],
+      "pool" : [
+        {"weight" : 0.5, "item" : "string"},
+        {"weight" : 0.35, "item" : "fabric"},
+        {"weight" : 0.15, "item" : "cottonwool"}
+      ]
+    }],
+    [0.9, {
+      // Tier 1
+      "poolRounds" : [ [0.55, 1], [0.3, 2], [0.15, 3] ],
+      "pool" : [
+        {"weight" : 1, "item" : "starpoundsscrapmetal"},
+        {"weight" : 0.5, "item" : "ironore"},
+        {"weight" : 0.5, "item" : ["ironore", 2]},
+        {"weight" : 0.75, "item" : "string"},
+        {"weight" : 0.25, "item" : "fabric"}
+      ]
+    }],
+    [1.9, {
+      // Tier 2
+      "poolRounds" : [ [0.55, 1], [0.3, 2], [0.15, 3] ],
+      "pool" : [
+        {"weight" : 1, "item" : "starpoundsscrapmetal"},
+        {"weight" : 0.5, "item" : "tungstenore"},
+        {"weight" : 0.5, "item" : ["tungstenore", 2]},
+        {"weight" : 0.75, "item" : "cottonwool"},
+        {"weight" : 0.25, "item" : "leather"}
+      ]
+    }],
+    [2.9, {
+      // Tier 3
+      "poolRounds" : [ [0.55, 1], [0.3, 2], [0.15, 3] ],
+      "pool" : [
+        {"weight" : 1, "item" : "starpoundsscrapmetal"},
+        {"weight" : 0.5, "item" : "titaniumore"},
+        {"weight" : 0.5, "item" : ["titaniumore", 2]},
+        {"weight" : 0.25, "item" : "leather"},
+        {"weight" : 0.25, "item" : "silk"},
+        {"weight" : 0.5, "item" : "canvas"}
+      ]
+    }],
+    [3.9, {
+      // Tier 4
+      "poolRounds" : [ [0.55, 1], [0.3, 2], [0.15, 3] ],
+      "pool" : [
+        {"weight" : 1, "item" : "starpoundsscrapmetal"},
+        {"weight" : 0.5, "item" : "durasteelore"},
+        {"weight" : 0.5, "item" : ["durasteelore", 2]},
+        {"weight" : 0.75, "item" : "leather"},
+        {"weight" : 0.25, "item" : "silk"}
+      ]
+    }],
+    [4.9, {}]
+  ],
+
+  "voreRegurgitatedAccelerator": [
+    [0, { "fill" : [ {"pool" : "voreRegurgitated"} ] } ],
+    [4.9, {
+      "poolRounds" : [ [0.55, 1], [0.3, 2], [0.15, 3] ],
+      "pool" : [
+        {"weight" : 1, "item" : "starpoundsscrapmetal"},
+        {"weight" : 0.5, "item" : "aegisaltore"},
+        {"weight" : 0.5, "item" : ["aegisaltore", 2]},
+        {"weight" : 0.5, "item" : "leather"},
+        {"weight" : 0.5, "item" : "syntheticmaterial"}
+      ]
+    }],
+    [5.9, {
+      "poolRounds" : [ [0.55, 1], [0.3, 2], [0.15, 3] ],
+      "pool" : [
+        {"weight" : 1, "item" : "starpoundsscrapmetal"},
+        {"weight" : 1, "item" : "solariumore"},
+        {"weight" : 0.5, "item" : "aegisaltore"},
+        {"weight" : 0.5, "item" : ["aegisaltore", 2]},
+        {"weight" : 0.5, "item" : "leather"},
+        {"weight" : 0.5, "item" : "syntheticmaterial"}
+      ]
+    }]
+  ],
+  "voreRegurgitatedManipulator": [
+    [0, { "fill" : [ {"pool" : "voreRegurgitated"} ] } ],
+    [4.9, {
+      "poolRounds" : [ [0.55, 1], [0.3, 2], [0.15, 3] ],
+      "pool" : [
+        {"weight" : 1, "item" : "starpoundsscrapmetal"},
+        {"weight" : 0.5, "item" : "feroziumore"},
+        {"weight" : 0.5, "item" : ["feroziumore", 2]},
+        {"weight" : 0.6, "item" : "silk"},
+        {"weight" : 0.4, "item" : "syntheticmaterial"}
+      ]
+    }],
+    [5.9, {
+      "poolRounds" : [ [0.55, 1], [0.3, 2], [0.15, 3] ],
+      "pool" : [
+        {"weight" : 1, "item" : "starpoundsscrapmetal"},
+        {"weight" : 1, "item" : "solariumore"},
+        {"weight" : 0.5, "item" : "feroziumore"},
+        {"weight" : 0.5, "item" : ["feroziumore", 2]},
+        {"weight" : 0.6, "item" : "silk"},
+        {"weight" : 0.4, "item" : "syntheticmaterial"}
+      ]
+    }]
+  ],
+  "voreRegurgitatedSeparator": [
+    [0, { "fill" : [ {"pool" : "voreRegurgitated"} ] } ],
+    [4.9, {
+      "poolRounds" : [ [0.55, 1], [0.3, 2], [0.15, 3] ],
+      "pool" : [
+        {"weight" : 1, "item" : "starpoundsscrapmetal"},
+        {"weight" : 0.5, "item" : "violiumore"},
+        {"weight" : 0.5, "item" : ["violiumore", 2]},
+        {"weight" : 0.6, "item" : "canvas"},
+        {"weight" : 0.4, "item" : "syntheticmaterial"}
+      ]
+    }],
+    [5.9, {
+      "poolRounds" : [ [0.55, 1], [0.3, 2], [0.15, 3] ],
+      "pool" : [
+        {"weight" : 1, "item" : "starpoundsscrapmetal"},
+        {"weight" : 1, "item" : "solariumore"},
+        {"weight" : 0.5, "item" : "violiumore"},
+        {"weight" : 0.5, "item" : ["violiumore", 2]},
+        {"weight" : 0.6, "item" : "canvas"},
+        {"weight" : 0.4, "item" : "syntheticmaterial"}
+      ]
+    }]
+  ]
+}

@@ -383,8 +383,8 @@ function pred:struggle(preyId, struggleStrength, escape)
       if not (released or starPounds.hasOption("disablePredDigestion")) then
         -- 1 second worth of digestion per struggle.
         local damageMultiplier = math.max(1, status.stat("powerMultiplier")) * starPounds.getStat("voreDamage")
-        local protectionMultiplier = math.max(0, 1 - starPounds.getStat("voreArmorPiercing"))
-        world.sendEntityMessage(preyId, "starPounds.getDigested", entity.id(), damageMultiplier, protectionMultiplier)
+        local protectionPierce = math.max(0, 1 - starPounds.getStat("voreArmorPiercing"))
+        world.sendEntityMessage(preyId, "starPounds.getDigested", entity.id(), damageMultiplier, protectionPierce)
       end
 
       -- Outside the block so we can pass it to the event.
@@ -500,9 +500,9 @@ function pred:digestItem(item)
     -- Second chance to regurgitate 'scrap' items instead.
     elseif math.random() < starPounds.getStat("regurgitateChance") then
       -- Default to clothing drops.
-      local armorType = "Clothing"
+      local armorType = ""
       -- Check if it's a tier 5/6 armor, since the classes have different components.
-      if configParameter(item, "level", 0) >= 5 then
+      if configParameter(item, "level", 0) > 4 then
         for _, recipe in ipairs(root.recipesForItem(item.name)) do
           if contains(recipe.groups, "craftingaccelerator") then armorType = "Accelerator" break
           elseif contains(recipe.groups, "craftingmanipulator") then armorType = "Manipulator" break
@@ -511,7 +511,9 @@ function pred:digestItem(item)
         end
       end
       -- Add drops to the pool.
-      for _, item in ipairs(root.createTreasure("regurgitated"..armorType, configParameter(item, "level", 0))) do
+      -- Regular drops.
+      local itemLevel = math.min(configParameter(item, "level", 0), math.max(world.threatLevel(), 1))
+      for _, item in ipairs(root.createTreasure("voreRegurgitated"..armorType, itemLevel)) do
         convertedItems[#convertedItems + 1] = item
       end
     end
