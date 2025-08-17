@@ -53,6 +53,14 @@ end
 function experience:addLevel(amount)
   amount = math.round(math.max(tonumber(amount) or 0, 0))
   storage.starPounds.experience.level = math.min(storage.starPounds.experience.level + amount, self.data.maxLevel)
+  if not starPounds.hasOption("disableChatMessages") and amount > 0 then
+    local text = "Gained ^#b8eb00;%s^reset; experience level! ^#b8eb00;(%s)"
+    if amount > 1 then
+      text = "Gained ^#b8eb00;%s^reset; experience levels! ^#b8eb00;(%s)"
+    end
+
+    starPounds.moduleFunc("oSB", "addChatMessage", string.format(text, amount, storage.starPounds.experience.level), {fromNick = "^#ccbbff;StarPounds"})
+  end
 end
 
 function experience:hungerPenalty()

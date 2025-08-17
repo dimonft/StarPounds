@@ -77,7 +77,6 @@ function oSB:voreBinds(dt)
     starPounds.moduleFunc("pred", "release")
   end
 end
-
 -- Lactate.
 function oSB:lactateBind(dt)
   if input.bind("starpounds", "lactate") then
@@ -94,13 +93,18 @@ function oSB:lactateBind(dt)
     self.lactateBindTimer = self.data.lactateBindTime
   end
 end
-
 -- Drink.
 function oSB:drinkBind()
   -- Only run this if we have auto drinking disabled.
   if not starPounds.hasOption("disableDrinking") then return end
   if input.bind("starpounds", "drink") then
     starPounds.moduleFunc("drinking", "drink")
+  end
+end
+-- Chat message hook.
+function oSB:addChatMessage(text, conf)
+  if not starPounds.hasOption("disableChatMessages") then
+    chat.addMessage(text, conf)
   end
 end
 
