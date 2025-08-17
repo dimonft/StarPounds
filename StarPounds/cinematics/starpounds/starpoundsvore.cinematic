@@ -102,7 +102,7 @@
       ],
       "fontSize" : 16,
       "fontColor" : [128, 128, 128, 255],
-      "text" : "Move ^cyan;[UP]^reset; to Respawn",
+      "text" : "  ^cyan;[MOVE]^reset; to Respawn",
       "textPosition" : {
         "position" : [40, 40],
         "vAnchor" : "top",
@@ -130,6 +130,12 @@
     }
   ],
   "audio" : [
+    {
+      "timecode" : 0,
+      "loops" : -1,
+      "endTimecode" : 10000,
+      "resource" : "/sfx/starpounds/squelch/squelchloop.ogg"
+    },
     {
       "timecode" : 0,
       "loops" : -1,

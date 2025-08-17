@@ -196,13 +196,26 @@ function prey:playerStruggle(dt)
   local verticalDirection = (starPounds.mcontroller.yVelocity > 0) and 1 or ((starPounds.mcontroller.yVelocity < 0) and -1 or 0)
   self.cycle = vec2.lerp(5 * dt, (self.cycle or {0, 0}), vec2.mul({horizontalDirection, verticalDirection}, self.struggled and 0.25 or 1))
   local struggleMagnitude = vec2.mag(self.cycle)
-  if not (horizontalDirection == 0 and verticalDirection == 0) then
-    -- Kills the player if they're spectating, but move.
-    if storage.starPounds.spectatingPred and verticalDirection > 0 then
+  -- Spectating.
+  local predPosition = world.entityPosition(storage.starPounds.pred)
+  if storage.starPounds.spectatingPred then
+    predPosition = vec2.add(predPosition, {0, math.sin(os.clock() * 0.5) * 0.25 - 0.25})
+    local distance = world.distance(predPosition, starPounds.mcontroller.position)
+    mcontroller.translate(vec2.lerp(10 * dt, {0, 0}, distance))
+    local timer = self.spectateStopTimer or self.data.spectateStopTime
+    if not (horizontalDirection == 0 and verticalDirection == 0) then
+      self.spectateStopTimer = math.max(timer - dt, 0)
+    else
+      self.spectateStopTimer = self.data.spectateStopTime
+    end
+    -- Release after holding up.
+    if timer == 0 then
       status.setResource("health", 0)
       self:released()
-      return
     end
+    return
+  end
+  if not (horizontalDirection == 0 and verticalDirection == 0) then
     if struggleMagnitude > 0.6 and not self.struggled then
       self.struggled = true
       world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyStruggle", entity.id(), struggleStrength, not starPounds.hasOption("disableEscape"))
@@ -213,18 +226,11 @@ function prey:playerStruggle(dt)
     self.struggled = false
     self.startedStruggling = os.clock()
   end
-  local predPosition = world.entityPosition(storage.starPounds.pred)
-  if storage.starPounds.spectatingPred then
-    mcontroller.setPosition(vec2.add(world.entityPosition(storage.starPounds.pred), {0, -1}))
-    local distance = world.distance(predPosition, starPounds.mcontroller.position)
-    mcontroller.translate(vec2.lerp(10 * dt, {0, 0}, distance))
-  else
-    local predPosition = vec2.add(predPosition, vec2.mul(self.cycle, 2 + (math.sin((os.clock() - self.startedStruggling) * 2) + 1)/4))
-    -- Slowly drift up/down.
-    predPosition = vec2.add(predPosition, {0, math.sin(os.clock() * 0.5) * 0.25 - 0.25})
-    local distance = world.distance(predPosition, starPounds.mcontroller.position)
-    mcontroller.translate(vec2.lerp(10 * dt, {0, 0}, distance))
-  end
+  local predPosition = vec2.add(predPosition, vec2.mul(self.cycle, 2 + (math.sin((os.clock() - self.startedStruggling) * 2) + 1)/4))
+  -- Slowly drift up/down.
+  predPosition = vec2.add(predPosition, {0, math.sin(os.clock() * 0.5) * 0.25 - 0.25})
+  local distance = world.distance(predPosition, starPounds.mcontroller.position)
+  mcontroller.translate(vec2.lerp(10 * dt, {0, 0}, distance))
   -- No air.
   if not (storage.starPounds.spectatingPred or starPounds.hasOption("disablePreyDigestion") or starPounds.hasOption("disablePreyBreathLoss")) and (not status.statPositive("breathProtection")) and world.breathable(world.entityMouthPosition(entity.id())) then
     status.modifyResource("breath", -(status.stat("breathDepletionRate") * self.data.playerBreathMultiplier + status.stat("breathRegenerationRate")) * dt)
@@ -422,7 +428,7 @@ function prey:digested()
       return
     end
   end
-  -- Getting digested by a player removes all your fat.
+  -- Getting digested by a player or NPC removes all your fat.
   local predType = world.entityType(storage.starPounds.pred)
   if (predType == "player") or (predType == "npc") then
     starPounds.moduleFunc("size", "setWeight", 0)
@@ -485,7 +491,9 @@ function prey:die()
       self.shouldDie = true
       status.addEphemeralEffect("monsterdespawn")
     end
-    storage.starPounds.pred = nil
+    if not storage.starPounds.spectatingPred then
+      storage.starPounds.pred = nil
+    end
   end
 end
 
