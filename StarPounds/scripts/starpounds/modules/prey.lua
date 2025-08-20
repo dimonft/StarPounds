@@ -152,10 +152,23 @@ function prey:swallowed(pred, options)
         recruitable.messageOwner("recruits.digestingRecruit")
       end
     end
-
     local nearbyNpcs = world.npcQuery(starPounds.mcontroller.position, self.data.witnessRange, {withoutEntityId = entity.id(), callScript = "entity.entityInSight", callScriptArgs = {entity.id()}, callScriptResult = true})
     for _, nearbyNpc in ipairs(nearbyNpcs) do
-      world.callScriptedEntity(nearbyNpc, "notify", {type = "attack", sourceId = entity.id(), targetId = storage.starPounds.pred})
+      local distance = world.distance(starPounds.mcontroller.position, world.entityPosition(nearbyNpc))
+      local facingDirection = world.callScriptedEntity(nearbyNpc, "mcontroller.facingDirection")
+      local isFacing = (distance[1] * facingDirection) > 0
+      local inMinimumRange = vec2.mag(distance) < self.data.alwaysWitnessRange
+      -- Facing and distance don't count if they're sleeping.
+      local anchorEntity = world.callScriptedEntity(nearbyNpc, "mcontroller.anchorState")
+      if anchorEntity and world.entityType(anchorEntity) == "object" then
+        if world.getObjectParameter(anchorEntity, "sitEmote") == "sleep" then
+          isFacing = false
+          inMinimumRange = false
+        end
+      end
+      if inMinimumRange or isFacing or options.loud or not options.silent then
+        world.callScriptedEntity(nearbyNpc, "notify", {type = "attack", sourceId = entity.id(), targetId = storage.starPounds.pred})
+      end
     end
   end
   -- Non-player.
@@ -369,7 +382,7 @@ function prey:digesting(pred, digestionRate, protectionPierce)
   if starPounds.hasOption("disablePreyDigestion") then return end
   -- Don't do anything if we're not eaten.
   if not storage.starPounds.pred then return end
-  -- 0.5% of current health + 0.5 or 0.5% max health, whichever is smaller. (Stops low hp entities dying instantly)
+  -- 0.5% of current health + 1 or 0.5% max health, whichever is smaller. (Stops low hp entities dying instantly)
   local amount = (status.resource("health") * 0.005 + math.min(0.005 * status.resourceMax("health"), 1)) * digestionRate
   amount = root.evalFunction2("protection", amount, status.stat("protection") - protectionPierce)
   -- Trigger combat stuff if we start taking damage again.

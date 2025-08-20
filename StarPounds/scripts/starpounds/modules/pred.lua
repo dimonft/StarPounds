@@ -145,13 +145,16 @@ function pred:eat(preyId, options, check)
   if world.entityDamageTeam(preyId).type == "ghostly" then return false end
   -- Skip eating if we're only checking for a valid target.
   if check then return true end
-  -- Prey-side options.
+  -- Options to pass prey-side.
   local preyOptions = {
     triggerCooldown = options.triggerPreyCooldown,
     noStruggle = options.noStruggle,
     noDamage = options.noDamage,
-    maxWeight = options.maxWeight
+    maxWeight = options.maxWeight,
+    silent = not options.loud and (options.silent or starPounds.moduleFunc("skills", "has", "voreSilent")) or nil,
+    loud = options.loud
   }
+  local preyPosition = world.entityPosition(preyId)
   -- Ask the entity to be eaten, add to stomach if the promise is successful.
   promises:add(world.sendEntityMessage(preyId, "starPounds.getEaten", entity.id(), preyOptions), function(prey)
     if not (prey and (prey.base or prey.weight)) then return end
@@ -196,6 +199,11 @@ function pred:eat(preyId, options, check)
     -- Squelch sound.
     if not (options.noSound or starPounds.hasOption("disableSquelchSounds")) and options.playSquelchSound then
       starPounds.moduleFunc("sound", "play", "voreSquelch", 1.25 + math.random(0, 10)/100, 1.25)
+    end
+
+    if options.particles and not starPounds.hasOption("disableVoreParticles") then
+      local direction = world.distance(preyPosition, starPounds.mcontroller.position)[1] > 0 and "right" or "left"
+      world.spawnProjectile("starpoundsvorebite" .. direction, preyPosition, entity.id())
     end
 
     starPounds.events:fire("pred:eatEntity", preyConfig)
