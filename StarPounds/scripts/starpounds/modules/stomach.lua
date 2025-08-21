@@ -9,6 +9,8 @@ function stomach:init()
   message.setHandler("starPounds.rumble", function(_, _, ...) return self:rumble(...) end)
   message.setHandler("starPounds.resetStomach", localHandler(self.reset))
 
+  -- Cache.
+  self.foodCache = {}
   -- Timers.
   self.digestTimer = 0
   self.gurgleTimer = nil
@@ -118,7 +120,7 @@ function stomach:get()
 
   for foodType, amount in pairs(storage.starPounds.stomach) do
     if starPounds.foods[foodType] and (amount > 0) then
-      local foodType = sb.jsonMerge(starPounds.foods.default, starPounds.foods[foodType])
+      local foodType = self:foodType(foodType)
       totalAmount = totalAmount + amount
       contents = contents + amount * foodType.multipliers.capacity
       food = food + amount * foodType.multipliers.food
@@ -132,7 +134,7 @@ function stomach:get()
 
   -- Add how heavy every entity in the stomach is to the counter.
   for _, v in pairs(storage.starPounds.stomachEntities) do
-    local foodType = sb.jsonMerge(starPounds.foods.default, starPounds.foods[v.foodType] or {})
+    local foodType = self:foodType(v.foodType)
     contents = contents + (v.base * foodType.multipliers.capacity) + v.weight
     totalAmount = totalAmount + v.base + v.weight
   end
@@ -489,6 +491,17 @@ function stomach:spawnBelchParticles(particles, count)
     actions[#actions + 1] = {action = "particle", specification = starPounds.moduleFunc("belch", "particle", particle)}
   end
   starPounds.spawnMouthProjectile(actions, count)
+end
+
+function stomach:foodType(foodType)
+  if self.foodCache[foodType] then
+    return self.foodCache[foodType]
+  end
+
+  self.foodCache[foodType] = sb.jsonMerge(starPounds.foods.default, starPounds.foods[foodType] or {})
+  setmetatable(self.foodCache[foodType], nil)
+
+  return self.foodCache[foodType]
 end
 
 function stomach.reset()
