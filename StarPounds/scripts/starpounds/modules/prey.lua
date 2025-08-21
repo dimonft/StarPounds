@@ -145,29 +145,32 @@ function prey:swallowed(pred, options)
   end
   -- NPC specific.
   if starPounds.type == "npc" then
-    -- Are they a crewmate?
-    if recruitable then
+    -- Are they a crewmate, and are we digesting them?
+    if recruitable and not options.noDamage then
       -- Did their owner eat them?
       if recruitable.ownerUuid() and world.entityUniqueId(pred) == recruitable.ownerUuid() then
         recruitable.messageOwner("recruits.digestingRecruit")
       end
     end
-    local nearbyNpcs = world.npcQuery(starPounds.mcontroller.position, self.data.witnessRange, {withoutEntityId = entity.id(), callScript = "entity.entityInSight", callScriptArgs = {entity.id()}, callScriptResult = true})
-    for _, nearbyNpc in ipairs(nearbyNpcs) do
-      local distance = world.distance(starPounds.mcontroller.position, world.entityPosition(nearbyNpc))
-      local facingDirection = world.callScriptedEntity(nearbyNpc, "mcontroller.facingDirection")
-      local isFacing = (distance[1] * facingDirection) > 0
-      local inMinimumRange = vec2.mag(distance) < self.data.alwaysWitnessRange
-      -- Facing and distance don't count if they're sleeping.
-      local anchorEntity = world.callScriptedEntity(nearbyNpc, "mcontroller.anchorState")
-      if anchorEntity and world.entityType(anchorEntity) == "object" then
-        if world.getObjectParameter(anchorEntity, "sitEmote") == "sleep" then
-          isFacing = false
-          inMinimumRange = false
+    -- Alert other NPCs if they are not willing.
+    if not options.willing then
+      local nearbyNpcs = world.npcQuery(starPounds.mcontroller.position, self.data.witnessRange, {withoutEntityId = entity.id(), callScript = "entity.entityInSight", callScriptArgs = {entity.id()}, callScriptResult = true})
+      for _, nearbyNpc in ipairs(nearbyNpcs) do
+        local distance = world.distance(starPounds.mcontroller.position, world.entityPosition(nearbyNpc))
+        local facingDirection = world.callScriptedEntity(nearbyNpc, "mcontroller.facingDirection")
+        local isFacing = (distance[1] * facingDirection) > 0
+        local inMinimumRange = vec2.mag(distance) < self.data.alwaysWitnessRange
+        -- Facing and distance don't count if they're sleeping.
+        local anchorEntity = world.callScriptedEntity(nearbyNpc, "mcontroller.anchorState")
+        if anchorEntity and world.entityType(anchorEntity) == "object" then
+          if world.getObjectParameter(anchorEntity, "sitEmote") == "sleep" then
+            isFacing = false
+            inMinimumRange = false
+          end
         end
-      end
-      if inMinimumRange or isFacing or options.loud or not options.silent then
-        world.callScriptedEntity(nearbyNpc, "notify", {type = "attack", sourceId = entity.id(), targetId = storage.starPounds.pred})
+        if inMinimumRange or isFacing or options.loud or not options.silent then
+          world.callScriptedEntity(nearbyNpc, "notify", {type = "attack", sourceId = entity.id(), targetId = storage.starPounds.pred})
+        end
       end
     end
   end
@@ -255,11 +258,13 @@ function prey:npcStruggle(dt)
   if not storage.starPounds.enabled then return end
   -- Don't do anything if we're not eaten.
   if not storage.starPounds.pred then return end
+  -- Monsters/NPCs just cause energy loss occassionally, and are locked to the pred's position.
+  mcontroller.setPosition(vec2.add(world.entityPosition(storage.starPounds.pred), {0, -1}))
+  -- Don't struggle if willing.
+  if self.options.willing then return end
   -- Loose calculation for how "powerful" the prey is.
   local healthMultiplier = 0.5 + status.resourcePercentage("health") * 0.5
   local struggleStrength = math.max(1, status.stat("powerMultiplier")) * healthMultiplier
-  -- Monsters/NPCs just cause energy loss occassionally, and are locked to the pred's position.
-  mcontroller.setPosition(vec2.add(world.entityPosition(storage.starPounds.pred), {0, -1}))
   self.cycle = self.cycle and self.cycle - (dt * healthMultiplier) or (math.random(10, 15) / 10)
   if self.cycle <= 0 then
     world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyStruggle", entity.id(), struggleStrength, not starPounds.hasOption("disableEscape"))
@@ -272,6 +277,10 @@ function prey:monsterStruggle(dt)
   if not storage.starPounds.enabled then return end
   -- Don't do anything if we're not eaten.
   if not storage.starPounds.pred then return end
+  -- Monsters/NPCs just cause energy loss occassionally, and are locked to the pred's position.
+  mcontroller.setPosition(vec2.add(world.entityPosition(storage.starPounds.pred), {0, -1}))
+  -- Don't struggle if willing.
+  if self.options.willing then return end
   -- Loose calculation for how "powerful" the prey is.
   local healthMultiplier = 0.5 + status.resourcePercentage("health") * 0.5
   -- Using the NPC power function because the monster one gets stupid high.
@@ -281,8 +290,6 @@ function prey:monsterStruggle(dt)
     monsterMultiplier = root.evalFunction("npcLevelPowerMultiplierModifier", monster.level()) * self.data.critterStruggleMultiplier
   end
   local struggleStrength = math.max(1, status.stat("powerMultiplier")) * healthMultiplier * weightRatio * monsterMultiplier
-  -- Monsters/NPCs just cause energy loss occassionally, and are locked to the pred's position.
-  mcontroller.setPosition(vec2.add(world.entityPosition(storage.starPounds.pred), {0, -1}))
   self.cycle = self.cycle and self.cycle - (dt * healthMultiplier) or (math.random(10, 15) / 10)
   if self.cycle <= 0 then
     world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyStruggle", entity.id(), struggleStrength, not starPounds.hasOption("disableEscape"))
@@ -374,6 +381,8 @@ function prey:digesting(pred, digestionRate, protectionPierce)
   if storage.starPounds.pred ~= pred then
     world.sendEntityMessage(pred, "starPounds.releaseEntity", entity.id())
   end
+  -- Skip if we're not taking damage.
+  if self.options.noDamage then return end
   -- Argument sanitisation.
   digestionRate = math.max(tonumber(digestionRate) or 0, 0)
   protectionPierce = math.max(tonumber(protectionPierce) or 0, 0)
@@ -385,8 +394,6 @@ function prey:digesting(pred, digestionRate, protectionPierce)
   -- 0.5% of current health + 1 or 0.5% max health, whichever is smaller. (Stops low hp entities dying instantly)
   local amount = (status.resource("health") * 0.005 + math.min(0.005 * status.resourceMax("health"), 1)) * digestionRate
   amount = root.evalFunction2("protection", amount, status.stat("protection") - protectionPierce)
-  -- Trigger combat stuff if we start taking damage again.
-  if amount > 0 then self.options.noDamage = nil end
   -- Remove the health.
   status.overConsumeResource("health", amount)
   if not status.resourcePositive("health") then

@@ -146,11 +146,13 @@ function pred:eat(preyId, options, check)
   -- Skip eating if we're only checking for a valid target.
   if check then return true end
   -- Options to pass prey-side.
+  local noDamage = options.noDamage or (starPounds.moduleFunc("skills", "has", "voreSafe") and not world.entityCanDamage(entity.id(), preyId))
   local preyOptions = {
     triggerCooldown = options.triggerPreyCooldown,
     noStruggle = options.noStruggle,
-    noDamage = options.noDamage,
     maxWeight = options.maxWeight,
+    noDamage = noDamage and true or nil,
+    willing = noDamage and (options.willing or starPounds.moduleFunc("skills", "has", "voreWilling")) or nil,
     silent = not options.loud and (options.silent or starPounds.moduleFunc("skills", "has", "voreSilent")) or nil,
     loud = options.loud
   }
