@@ -35,16 +35,29 @@ function _monster:init()
     _ENV.self.board:setEntity("damageSource", args.sourceId)
   end))
   self:setup()
-  starPounds.moduleFunc("skills", "parse")
+  starPounds.parseSkills()
+  starPounds.parseStats()
 end
 
 function _monster:setup()
+  -- Dummy empty function so we save memory.
+  local function nullFunction() end
   -- Shortcuts to make functions work for monsters.
+  player = {}
+  local mt = {__index = function () return nullFunction end}
+  setmetatable(player, mt)
+  entity.setDropPool = monster.setDropPool
+  entity.setDeathParticleBurst = monster.setDeathParticleBurst
+  entity.setDeathSound = monster.setDeathSound
   entity.setDamageOnTouch = monster.setDamageOnTouch
+  entity.setDamageSources = monster.setDamageSources
   entity.setDamageTeam = monster.setDamageTeam
   -- Disable stuff monsters don't use
   starPounds.getDirectives = function() return "" end
   starPounds.getSpecies = function() return "" end
+  starPounds.gainWeight = nullFunction
+  starPounds.loseWeight = nullFunction
+  starPounds.setWeight = nullFunction
   -- Save default functions.
   openDoors_old = openDoors_old or openDoors
   closeDoors_old = closeDoors_old or closeDoors
@@ -75,7 +88,7 @@ function _monster:setup()
   -- Vore stuff.
   local boundBox = mcontroller.boundBox()
   local monsterArea = math.abs(boundBox[1]) + math.abs(boundBox[3]) * math.abs(boundBox[2]) + math.abs(boundBox[4])
-  entity.weight = math.min(math.round(monsterArea * self.data.monsterFood), self.data.monsterFoodCap)
+  entity.weight = math.min(math.round(monsterArea * starPounds.settings.voreMonsterFood), starPounds.settings.voreMonsterFoodCap)
   local deathActions = config.getParameter("behaviorConfig.deathActions", {})
   -- Remove base weight if the monster is 'replaced'.
   for _, action in ipairs(deathActions) do
@@ -88,7 +101,7 @@ function _monster:setup()
       local monsterPoly = root.monsterParameters(action.parameters.monsterType).movementSettings.collisionPoly
       local boundBox = util.boundBox(monsterPoly)
       local monsterArea = math.abs(boundBox[1]) + math.abs(boundBox[3]) * math.abs(boundBox[2]) + math.abs(boundBox[4])
-      entity.weight = entity.weight + math.min(math.round(monsterArea * self.data.monsterFood), self.data.monsterFoodCap)
+      entity.weight = entity.weight + math.min(math.round(monsterArea * starPounds.settings.voreMonsterFood), starPounds.settings.voreMonsterFoodCap)
     end
   end
   -- Robotic monsters don't give food.
@@ -96,12 +109,34 @@ function _monster:setup()
   if status.statusProperty("targetMaterialKind") == "robotic" then
     entity.foodType = "preyMonsterInedible"
   end
+  --2038
+  entity.foodMaterial = nil
+  if status.statusProperty("targetMaterialKind") ~= nil then
+      entity.foodMaterial = status.statusProperty("targetMaterialKind")
+  end
+
+--2038
   -- Use the preset type if it exists.
   entity.foodType = config.getParameter("starPounds_foodType", entity.foodType)
   -- No XP if the monster is a pet (prevents infinite XP). Using configParameter instead of hasOption because default options aren't merged yet when this runs.
   if config.getParameter("starPounds_options.disableExperience") or (capturable and (capturable.tetherUniqueId() or capturable.ownerUuid())) then
     entity.foodType = entity.foodType.."_noExperience"
   end
+end
+
+local die_old = die or function() end
+local setDying = setDying or function() end
+function die()
+  if storage.starPounds.pred then
+    storage.starPounds.pred = nil
+    setDying({shouldDie = true})
+    entity.setDropPool()
+    entity.setDeathSound()
+    entity.setDeathParticleBurst()
+    status.setResource("health", 0)
+    self.deathBehavior = nil
+  end
+  die_old()
 end
 
 starPounds.modules.monster = _monster

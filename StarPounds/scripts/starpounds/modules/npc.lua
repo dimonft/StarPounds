@@ -27,11 +27,10 @@ function _npc:init()
     end
     storage.starPounds.skills = sb.jsonMerge(storage.starPounds.skills, skills)
     storage.starPounds.parsedInitialSkills = true
-    -- Triggers the minimumSize weight floor.
-    starPounds.moduleFunc("size", "setWeight", 0)
   end
   self:setup()
-  starPounds.moduleFunc("skills", "parse")
+  starPounds.parseSkills()
+  starPounds.parseStats()
   -- Triggers aggro.
   message.setHandler("starPounds.notifyDamage", simpleHandler(damage))
   message.setHandler("starPounds.notifyDamage", simpleHandler(function(args)
@@ -61,8 +60,30 @@ end
 
 function _npc:setup()
   -- Dummy empty function so we save memory.
+  local function nullFunction() end
   local speciesData = starPounds.getSpeciesData(npc.species())
+  -- Shortcuts to make functions work for NPCs.
+  player = {
+    equippedItem = npc.getItemSlot,
+    setEquippedItem = npc.setItemSlot,
+    isLounging = npc.isLounging,
+    loungingIn = npc.loungingIn,
+    consumeItemWithParameter = function(parameter, value)
+      for _, v in pairs({"chest", "legs", "chestCosmetic", "legsCosmetic"}) do
+        local item = npc.getItemSlot(v)
+        if item and item.parameters and item.parameters[parameter] == value then
+          npc.setItemSlot(v, nil)
+        end
+      end
+    end
+  }
+  local mt = {__index = function () return nullFunction end}
+  setmetatable(player, mt)
+  entity.setDropPool = function(...) return npc.setDropPools({...}) end
+  entity.setDeathParticleBurst = npc.setDeathParticleBurst
+  entity.setDeathSound = nullFunction
   entity.setDamageOnTouch = npc.setDamageOnTouch
+  entity.setDamageSources = nullFunction
   entity.setDamageTeam = npc.setDamageTeam
   entity.weight = speciesData.weight
   entity.foodType = speciesData.foodType
@@ -86,10 +107,36 @@ function _npc:setup()
     preserved.starPounds = storage.starPounds
     return preserved
   end
+  -- Disable anything that uses visuals if the species doesn't have a patch.
+  if not speciesData.weightGain then
+    starPounds.gainWeight = nullFunction
+    starPounds.loseWeight = nullFunction
+    starPounds.setWeight = nullFunction
+  end
+  --2038
+  entity.foodMaterial = nil
+  if status.statusProperty("targetMaterialKind") ~= nil then
+      entity.foodMaterial = status.statusProperty("targetMaterialKind")
+  end
+--2038
   -- No XP if disabled.
   if config.getParameter("starPounds_options.disableExperience") then
     entity.foodType = entity.foodType.."_noExperience"
   end
+end
+
+local die_old = die or nullFunction
+local setDying = setDying or nullFunction
+function die()
+  if storage.starPounds.pred then
+    storage.starPounds.pred = nil
+    setDying({shouldDie = true})
+    entity.setDropPool()
+    entity.setDeathSound()
+    entity.setDeathParticleBurst()
+    status.setResource("health", 0)
+  end
+  die_old()
 end
 
 starPounds.modules.npc = _npc
