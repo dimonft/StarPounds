@@ -248,7 +248,14 @@ function prey:playerStruggle(dt)
   local distance = world.distance(predPosition, starPounds.mcontroller.position)
   mcontroller.translate(vec2.lerp(10 * dt, {0, 0}, distance))
   -- No air.
-  if not (storage.starPounds.spectatingPred or starPounds.hasOption("disablePreyDigestion") or starPounds.hasOption("disablePreyBreathLoss")) and (not status.statPositive("breathProtection")) and world.breathable(world.entityMouthPosition(entity.id())) then
+  if not
+    -- Skip if no damage, spectating, or options are off.
+    (self.options.noDamage or
+    storage.starPounds.spectatingPred or
+    starPounds.hasOption("disablePreyDigestion") or
+    starPounds.hasOption("disablePreyBreathLoss"))
+    -- Only subtract air if we don't have an EPP, and the world isn't depleting it already.
+  and (not status.statPositive("breathProtection")) and world.breathable(world.entityMouthPosition(entity.id())) then
     status.modifyResource("breath", -(status.stat("breathDepletionRate") * self.data.playerBreathMultiplier + status.stat("breathRegenerationRate")) * dt)
   end
 end
@@ -279,8 +286,6 @@ function prey:monsterStruggle(dt)
   if not storage.starPounds.pred then return end
   -- Monsters/NPCs just cause energy loss occassionally, and are locked to the pred's position.
   mcontroller.setPosition(vec2.add(world.entityPosition(storage.starPounds.pred), {0, -1}))
-  -- Don't struggle if willing.
-  if self.options.willing then return end
   -- Loose calculation for how "powerful" the prey is.
   local healthMultiplier = 0.5 + status.resourcePercentage("health") * 0.5
   -- Using the NPC power function because the monster one gets stupid high.

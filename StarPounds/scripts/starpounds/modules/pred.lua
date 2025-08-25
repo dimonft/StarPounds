@@ -147,12 +147,13 @@ function pred:eat(preyId, options, check)
   if check then return true end
   -- Options to pass prey-side.
   local noDamage = options.noDamage or (starPounds.moduleFunc("skills", "has", "voreSafe") and not world.entityCanDamage(entity.id(), preyId))
+  local willing = noDamage and (options.willing or starPounds.moduleFunc("skills", "has", "voreWilling")) or nil
   local preyOptions = {
     triggerCooldown = options.triggerPreyCooldown,
-    noStruggle = options.noStruggle,
     maxWeight = options.maxWeight,
     noDamage = noDamage and true or nil,
-    willing = noDamage and (options.willing or starPounds.moduleFunc("skills", "has", "voreWilling")) or nil,
+    willing = willing and true or nil,
+    noStruggle = options.noStruggle or (willing and world.entityType(preyId) ~= "player"),
     silent = not options.loud and (options.silent or starPounds.moduleFunc("skills", "has", "voreSilent")) or nil,
     loud = options.loud
   }
