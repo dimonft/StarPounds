@@ -58,8 +58,6 @@ end
 function effects:load(effect)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
-  -- Argument sanitisation.
-  effect = tostring(effect)
   local effectConfig = self.data.effects[effect]
   if effectConfig then
     if effectConfig.script and not self.effects[effect] then
@@ -148,8 +146,6 @@ function effects:get(effect)
 end
 
 function effects:getConfig(effect)
-  -- Argument sanitisation.
-  effect = tostring(effect)
   return self.data.effects[effect]
 end
 

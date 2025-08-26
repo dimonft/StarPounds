@@ -57,16 +57,14 @@ function statuses:updateStats()
 end
 
 -- Overwrite stub functions.
-starPounds.getStatusEffectMultiplier = function(stat)
-  -- Argument sanitisation.
-  stat = tostring(stat)
-  return starPounds.modules.statuses.multipliers[stat] or 1
+function statuses:getStatusEffectMultiplier(stat)
+  if not self.multipliers then self.multipliers = {} end
+  return self.multipliers[stat] or 1
 end
 
-starPounds.getStatusEffectBonus = function(stat)
-  -- Argument sanitisation.
-  stat = tostring(stat)
-  return starPounds.modules.statuses.bonuses[stat] or 0
+function statuses:getStatusEffectBonus(stat)
+  if not self.bonuses then self.bonuses = {} end
+  return self.bonuses[stat] or 0
 end
 
 starPounds.modules.statuses = statuses

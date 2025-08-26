@@ -64,17 +64,15 @@ end
 function stats:calculate()
   -- Skill stats.
   self.skillStats = {}
-  if starPounds.modules.effects then
-    for skillName in pairs(storage.starPounds.skills) do
-      local skill = self.skills[skillName]
-      if skill.type == "addStat" then
-        self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) + (skill.amount * starPounds.moduleFunc("skills", "level", skillName))
-      elseif skill.type == "subtractStat" then
-        self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) - (skill.amount * starPounds.moduleFunc("skills", "level", skillName))
-      end
-      if self.skillStats[skill.stat] == 0 then
-        self.skillStats[skill.stat] = nil
-      end
+  for skillName in pairs(storage.starPounds.skills) do
+    local skill = self.skills[skillName]
+    if skill.type == "addStat" then
+      self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) + (skill.amount * starPounds.moduleFunc("skills", "level", skillName))
+    elseif skill.type == "subtractStat" then
+      self.skillStats[skill.stat] = (self.skillStats[skill.stat] or 0) - (skill.amount * starPounds.moduleFunc("skills", "level", skillName))
+    end
+    if self.skillStats[skill.stat] == 0 then
+      self.skillStats[skill.stat] = nil
     end
   end
   -- Trait Stats.
@@ -168,11 +166,11 @@ function stats:effectBonus(stat)
 end
 -- Status Effects -----------------------------------------------
 function stats:statusEffectMult(stat)
-  return 1
+  return starPounds.moduleFunc("statuses", "getStatusEffectMultiplier", stat) or 1
 end
 
 function stats:statusEffectBonus(stat)
-  return 0
+  return starPounds.moduleFunc("statuses", "getStatusEffectBonus", stat) or 0
 end
 -- Options ------------------------------------------------------
 function stats:optionsMult(stat)
