@@ -18,6 +18,12 @@ function prey:init()
   self.voreCooldown = 0
   self.options = {}
   self.heartbeat = self.data.heartbeat
+
+  -- Just in case of reloads.
+  if storage.starPounds.preyTech then
+    self.oldTech = storage.starPounds.preyTech
+    storage.starPounds.preyTech = nil
+  end
 end
 
 function prey:update(dt)
@@ -109,6 +115,8 @@ function prey:swallowed(pred, options)
   if not status.resourcePositive("health") then return false end
   -- Save the entityId of the pred.
   storage.starPounds.pred = pred
+  -- Clear tracking status effects.
+  starPounds.moduleFunc("trackers", "clearStatuses")
   -- Store options locally.
   self.options = options
   -- Eaten entities can't be interacted with. This looks very silly atm since I need to figure out a way to dynamically detect it.
@@ -137,17 +145,33 @@ function prey:swallowed(pred, options)
   end
   -- NPC specific.
   if starPounds.type == "npc" then
-    -- Are they a crewmate?
-    if recruitable then
+    -- Are they a crewmate, and are we digesting them?
+    if recruitable and not options.noDamage then
       -- Did their owner eat them?
       if recruitable.ownerUuid() and world.entityUniqueId(pred) == recruitable.ownerUuid() then
         recruitable.messageOwner("recruits.digestingRecruit")
       end
     end
-
-    local nearbyNpcs = world.npcQuery(starPounds.mcontroller.position, self.data.witnessRange, {withoutEntityId = entity.id(), callScript = "entity.entityInSight", callScriptArgs = {entity.id()}, callScriptResult = true})
-    for _, nearbyNpc in ipairs(nearbyNpcs) do
-      world.callScriptedEntity(nearbyNpc, "notify", {type = "attack", sourceId = entity.id(), targetId = storage.starPounds.pred})
+    -- Alert other NPCs if they are not willing.
+    if not options.willing then
+      local nearbyNpcs = world.npcQuery(starPounds.mcontroller.position, self.data.witnessRange, {withoutEntityId = entity.id(), callScript = "entity.entityInSight", callScriptArgs = {entity.id()}, callScriptResult = true})
+      for _, nearbyNpc in ipairs(nearbyNpcs) do
+        local distance = world.distance(starPounds.mcontroller.position, world.entityPosition(nearbyNpc))
+        local facingDirection = world.callScriptedEntity(nearbyNpc, "mcontroller.facingDirection")
+        local isFacing = (distance[1] * facingDirection) > 0
+        local inMinimumRange = vec2.mag(distance) < self.data.alwaysWitnessRange
+        -- Facing and distance don't count if they're sleeping.
+        local anchorEntity = world.callScriptedEntity(nearbyNpc, "mcontroller.anchorState")
+        if anchorEntity and world.entityType(anchorEntity) == "object" then
+          if world.getObjectParameter(anchorEntity, "sitEmote") == "sleep" then
+            isFacing = false
+            inMinimumRange = false
+          end
+        end
+        if inMinimumRange or isFacing or options.loud or not options.silent then
+          world.callScriptedEntity(nearbyNpc, "notify", {type = "attack", sourceId = entity.id(), targetId = storage.starPounds.pred})
+        end
+      end
     end
   end
   -- Non-player.
@@ -156,36 +180,20 @@ function prey:swallowed(pred, options)
     -- Make other entities ignore it.
     entity.setDamageTeam({type = "ghostly", team = storage.starPounds.damageTeam.team})
     entity.setDamageOnTouch(false)
-    entity.setDamageSources()
+    if starPounds.type == "monster" then
+      monster.setDamageSources()
+    end
   end
   -- Make the entity immune to outside damage/invisible, and disable regeneration.
   status.setPersistentEffects("starpoundseaten", {
     {stat = "statusImmunity", effectiveMultiplier = 0}
   })
---2038
-  local crelevel
   status.addEphemeralEffect("starpoundseaten")
-  if starPounds.type == "monster" then
-    crelevel = monster.level()
-  elseif starPounds.type == "npc" then
-    crelevel = npc.level()
-  end
-
-  sb.logInfo(starPounds.type)
-  if starPounds.type == "npc" then
-  sb.logInfo("ПОКАЗЫВАЕМ ЛЕВЕЛЬ")
-  sb.logInfo(sb.print(npc.level()))
-  sb.logInfo(sb.print(crelevel))
-  end
-
   return {
     base = entity.weight,
     foodType = entity.foodType,
     weight = storage.starPounds.weight,
-    noBelch = starPounds.hasOption("disablePreyBelches"),
-    foodMaterial = entity.foodMaterial,
-    foodDrops = foodDropsvalueexport,
-    creaturelevel = crelevel
+    noBelch = starPounds.hasOption("disablePreyBelches")
   }
 end
 
@@ -204,13 +212,26 @@ function prey:playerStruggle(dt)
   local verticalDirection = (starPounds.mcontroller.yVelocity > 0) and 1 or ((starPounds.mcontroller.yVelocity < 0) and -1 or 0)
   self.cycle = vec2.lerp(5 * dt, (self.cycle or {0, 0}), vec2.mul({horizontalDirection, verticalDirection}, self.struggled and 0.25 or 1))
   local struggleMagnitude = vec2.mag(self.cycle)
-  if not (horizontalDirection == 0 and verticalDirection == 0) then
-    -- Kills the player if they're spectating, but move.
-    if storage.starPounds.spectatingPred and verticalDirection > 0 then
+  -- Spectating.
+  local predPosition = world.entityPosition(storage.starPounds.pred)
+  if storage.starPounds.spectatingPred then
+    predPosition = vec2.add(predPosition, {0, math.sin(os.clock() * 0.5) * 0.25 - 0.25})
+    local distance = world.distance(predPosition, starPounds.mcontroller.position)
+    mcontroller.translate(vec2.lerp(10 * dt, {0, 0}, distance))
+    local timer = self.spectateStopTimer or self.data.spectateStopTime
+    if not (horizontalDirection == 0 and verticalDirection == 0) then
+      self.spectateStopTimer = math.max(timer - dt, 0)
+    else
+      self.spectateStopTimer = self.data.spectateStopTime
+    end
+    -- Release after holding up.
+    if timer == 0 then
       status.setResource("health", 0)
       self:released()
-      return
     end
+    return
+  end
+  if not (horizontalDirection == 0 and verticalDirection == 0) then
     if struggleMagnitude > 0.6 and not self.struggled then
       self.struggled = true
       world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyStruggle", entity.id(), struggleStrength, not starPounds.hasOption("disableEscape"))
@@ -221,20 +242,20 @@ function prey:playerStruggle(dt)
     self.struggled = false
     self.startedStruggling = os.clock()
   end
-  local predPosition = world.entityPosition(storage.starPounds.pred)
-  if storage.starPounds.spectatingPred then
-    mcontroller.setPosition(vec2.add(world.entityPosition(storage.starPounds.pred), {0, -1}))
-    local distance = world.distance(predPosition, starPounds.mcontroller.position)
-    mcontroller.translate(vec2.lerp(10 * dt, {0, 0}, distance))
-  else
-    local predPosition = vec2.add(predPosition, vec2.mul(self.cycle, 2 + (math.sin((os.clock() - self.startedStruggling) * 2) + 1)/4))
-    -- Slowly drift up/down.
-    predPosition = vec2.add(predPosition, {0, math.sin(os.clock() * 0.5) * 0.25 - 0.25})
-    local distance = world.distance(predPosition, starPounds.mcontroller.position)
-    mcontroller.translate(vec2.lerp(10 * dt, {0, 0}, distance))
-  end
+  local predPosition = vec2.add(predPosition, vec2.mul(self.cycle, 2 + (math.sin((os.clock() - self.startedStruggling) * 2) + 1)/4))
+  -- Slowly drift up/down.
+  predPosition = vec2.add(predPosition, {0, math.sin(os.clock() * 0.5) * 0.25 - 0.25})
+  local distance = world.distance(predPosition, starPounds.mcontroller.position)
+  mcontroller.translate(vec2.lerp(10 * dt, {0, 0}, distance))
   -- No air.
-  if not (starPounds.hasOption("disablePreyDigestion") or starPounds.hasOption("disablePreyBreathLoss")) and (not status.statPositive("breathProtection")) and world.breathable(world.entityMouthPosition(entity.id())) then
+  if not
+    -- Skip if no damage, spectating, or options are off.
+    (self.options.noDamage or
+    storage.starPounds.spectatingPred or
+    starPounds.hasOption("disablePreyDigestion") or
+    starPounds.hasOption("disablePreyBreathLoss"))
+    -- Only subtract air if we don't have an EPP, and the world isn't depleting it already.
+  and (not status.statPositive("breathProtection")) and world.breathable(world.entityMouthPosition(entity.id())) then
     status.modifyResource("breath", -(status.stat("breathDepletionRate") * self.data.playerBreathMultiplier + status.stat("breathRegenerationRate")) * dt)
   end
 end
@@ -244,11 +265,13 @@ function prey:npcStruggle(dt)
   if not storage.starPounds.enabled then return end
   -- Don't do anything if we're not eaten.
   if not storage.starPounds.pred then return end
+  -- Monsters/NPCs just cause energy loss occassionally, and are locked to the pred's position.
+  mcontroller.setPosition(vec2.add(world.entityPosition(storage.starPounds.pred), {0, -1}))
+  -- Don't struggle if willing.
+  if self.options.willing then return end
   -- Loose calculation for how "powerful" the prey is.
   local healthMultiplier = 0.5 + status.resourcePercentage("health") * 0.5
   local struggleStrength = math.max(1, status.stat("powerMultiplier")) * healthMultiplier
-  -- Monsters/NPCs just cause energy loss occassionally, and are locked to the pred's position.
-  mcontroller.setPosition(vec2.add(world.entityPosition(storage.starPounds.pred), {0, -1}))
   self.cycle = self.cycle and self.cycle - (dt * healthMultiplier) or (math.random(10, 15) / 10)
   if self.cycle <= 0 then
     world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyStruggle", entity.id(), struggleStrength, not starPounds.hasOption("disableEscape"))
@@ -261,6 +284,8 @@ function prey:monsterStruggle(dt)
   if not storage.starPounds.enabled then return end
   -- Don't do anything if we're not eaten.
   if not storage.starPounds.pred then return end
+  -- Monsters/NPCs just cause energy loss occassionally, and are locked to the pred's position.
+  mcontroller.setPosition(vec2.add(world.entityPosition(storage.starPounds.pred), {0, -1}))
   -- Loose calculation for how "powerful" the prey is.
   local healthMultiplier = 0.5 + status.resourcePercentage("health") * 0.5
   -- Using the NPC power function because the monster one gets stupid high.
@@ -270,8 +295,6 @@ function prey:monsterStruggle(dt)
     monsterMultiplier = root.evalFunction("npcLevelPowerMultiplierModifier", monster.level()) * self.data.critterStruggleMultiplier
   end
   local struggleStrength = math.max(1, status.stat("powerMultiplier")) * healthMultiplier * weightRatio * monsterMultiplier
-  -- Monsters/NPCs just cause energy loss occassionally, and are locked to the pred's position.
-  mcontroller.setPosition(vec2.add(world.entityPosition(storage.starPounds.pred), {0, -1}))
   self.cycle = self.cycle and self.cycle - (dt * healthMultiplier) or (math.random(10, 15) / 10)
   if self.cycle <= 0 then
     world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyStruggle", entity.id(), struggleStrength, not starPounds.hasOption("disableEscape"))
@@ -292,6 +315,8 @@ function prey:released(source, overrideStatus)
   local options = self.options
   -- Remove the pred id from storage.
   storage.starPounds.pred = nil
+  -- Recreate tracking status effects.
+  starPounds.moduleFunc("trackers", "createStatuses")
   self.options = {}
   storage.starPounds.spectatingPred = nil
   -- Reset struggle cycle.
@@ -361,6 +386,8 @@ function prey:digesting(pred, digestionRate, protectionPierce)
   if storage.starPounds.pred ~= pred then
     world.sendEntityMessage(pred, "starPounds.releaseEntity", entity.id())
   end
+  -- Skip if we're not taking damage.
+  if self.options.noDamage then return end
   -- Argument sanitisation.
   digestionRate = math.max(tonumber(digestionRate) or 0, 0)
   protectionPierce = math.max(tonumber(protectionPierce) or 0, 0)
@@ -369,61 +396,81 @@ function prey:digesting(pred, digestionRate, protectionPierce)
   if starPounds.hasOption("disablePreyDigestion") then return end
   -- Don't do anything if we're not eaten.
   if not storage.starPounds.pred then return end
-  -- 0.5% of current health + 0.5 or 0.5% max health, whichever is smaller. (Stops low hp entities dying instantly)
+  -- 0.5% of current health + 1 or 0.5% max health, whichever is smaller. (Stops low hp entities dying instantly)
   local amount = (status.resource("health") * 0.005 + math.min(0.005 * status.resourceMax("health"), 1)) * digestionRate
   amount = root.evalFunction2("protection", amount, status.stat("protection") - protectionPierce)
-  -- Trigger combat stuff if we start taking damage again.
-  if amount > 0 then self.options.noDamage = nil end
   -- Remove the health.
   status.overConsumeResource("health", amount)
   if not status.resourcePositive("health") then
-    world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyDigested", entity.id(), self:createDrops(self.options.items), storage.starPounds.stomachEntities)
-    -- Player stuff.
-    if starPounds.type == "player" then
-      if starPounds.hasOption("spectatePred") then
-        player.playCinematic("/cinematics/starpounds/starpoundsvore.cinematic")
-        storage.starPounds.spectatingPred = true
-      else
-        for _,v in pairs({"head", "body", "legs"}) do
-          player.unequipTech("starpoundseaten_"..v)
-          player.makeTechUnavailable("starpoundseaten_"..v)
-        end
-        for _,v in pairs(starPounds.oldTech or {}) do
-          player.equipTech(v)
-        end
+    self:die()
+  end
+end
+
+function prey:digested()
+  -- Don't run if there's no pred.
+  if not storage.starPounds.pred then return end
+  world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyDigested", entity.id(), self:createDrops(self.options.items), storage.starPounds.stomachEntities)
+  -- Transfer over stomach contents.
+  for foodType, amount in pairs(storage.starPounds.stomach) do
+    world.sendEntityMessage(storage.starPounds.pred, "starPounds.feed", amount, foodType)
+  end
+  -- Transfer over breast contents.
+  local breastContents = starPounds.moduleFunc("breasts", "get")
+  if breastContents then
+    for foodType, amount in pairs(starPounds.moduleFunc("liquid", "get", breastContents.type).food) do
+      world.sendEntityMessage(storage.starPounds.pred, "starPounds.feed", breastContents.contents * amount, foodType)
+    end
+  end
+  -- Player stuff.
+  if starPounds.type == "player" then
+    if starPounds.hasOption("spectatePred") then
+      player.playCinematic("/cinematics/starpounds/starpoundsvore.cinematic")
+      storage.starPounds.spectatingPred = true
+    else
+      for _,v in pairs({"head", "body", "legs"}) do
+        player.unequipTech("starpoundseaten_"..v)
+        player.makeTechUnavailable("starpoundseaten_"..v)
+      end
+      for _,v in pairs(self.oldTech or {}) do
+        player.equipTech(v)
       end
     end
-    -- NPC stuff.
-    if starPounds.type == "npc" then
-      if world.entityUniqueId(storage.starPounds.pred) and world.entityUniqueId(storage.starPounds.pred) == self.deliveryTarget then
-        world.sendEntityMessage(storage.starPounds.pred, "starPounds.digestedPizzaEmployee")
-      end
-      -- Are they a crewmate?
-      if recruitable then
-        -- Did their owner eat them?
-        local predId = storage.starPounds.pred
-        storage.starPounds.pred = nil
-        if recruitable.ownerUuid() and world.entityUniqueId(predId) == recruitable.ownerUuid() then
-          recruitable.messageOwner("recruits.digestedRecruit", recruitable.recruitUuid())
-        end
-        recruitable.despawn()
-        return
-      end
+  end
+  -- NPC stuff.
+  if starPounds.type == "npc" then
+    if world.entityUniqueId(storage.starPounds.pred) and world.entityUniqueId(storage.starPounds.pred) == self.deliveryTarget then
+      world.sendEntityMessage(storage.starPounds.pred, "starPounds.digestedPizzaEmployee")
     end
-    -- Getting digested by a player removes all your fat.
-    local predType = world.entityType(storage.starPounds.pred)
-    if (predType == "player") or (predType == "npc") then
-      starPounds.setWeight(0)
+    -- Are they a crewmate?
+    if recruitable then
+      -- Did their owner eat them?
+      local predId = storage.starPounds.pred
+      storage.starPounds.pred = nil
+      if recruitable.ownerUuid() and world.entityUniqueId(predId) == recruitable.ownerUuid() then
+        recruitable.messageOwner("recruits.digestedRecruit", recruitable.recruitUuid())
+      end
+      recruitable.despawn()
+      return
     end
-    -- Run standard monster/NPC death stuff.
-    if die then die() end
+  end
+  -- Getting digested by a player or NPC removes all your fat.
+  local predType = world.entityType(storage.starPounds.pred)
+  if (predType == "player") or (predType == "npc") then
+    starPounds.moduleFunc("size", "setWeight", 0)
   end
 end
 
 function prey:createDrops(items)
+  local equippedItemFunc = function() return end
+  if starPounds.type == "player" then
+    equippedItemFunc = player.equippedItem
+  elseif starPounds.type == "npc" then
+    equippedItemFunc = npc.getItemSlot
+  end
+
   local items = items or {}
   for _, slot in ipairs({"head", "chest", "legs", "back"}) do
-    local item = player.equippedItem(slot.."Cosmetic") or player.equippedItem(slot)
+    local item = equippedItemFunc(slot.."Cosmetic") or equippedItemFunc(slot)
     if item then
       if (item.parameters and item.parameters.tempSize) then
         item.name = item.parameters.baseName
@@ -449,6 +496,38 @@ function prey:createDrops(items)
   return items
 end
 
+function prey:die()
+  if storage.starPounds.pred then
+    self:digested()
+    -- NPC stuff.
+    if starPounds.type == "npc" then
+      local setDying = setDying or (function() end)
+      setDying({shouldDie = true})
+      npc.setDropPools({})
+      npc.setDeathParticleBurst()
+      status.setResource("health", 0)
+    end
+    -- Monster stuff.
+    if starPounds.type == "monster" then
+      monster.setDropPool(nil)
+      monster.setDeathParticleBurst(nil)
+      monster.setDeathSound(nil)
+      self.deathBehavior = nil
+      self.shouldDie = true
+      status.addEphemeralEffect("monsterdespawn")
+    end
+    if not storage.starPounds.spectatingPred then
+      storage.starPounds.pred = nil
+    end
+  end
+end
+
+local die_old = die or (function() end)
+function die()
+  prey:die()
+  die_old()
+end
+
 function prey.notifyDamage(predId)
   -- NPCs/monsters become hostile when released (as if damaged normally).
   if starPounds.type == "npc" then
@@ -456,6 +535,12 @@ function prey.notifyDamage(predId)
   elseif starPounds.type == "monster" then
     self.damaged = true
     if self.board then self.board:setEntity("damageSource", predId) end
+  end
+end
+
+function prey:uninit()
+  if self.oldTech then
+    storage.starPounds.preyTech = self.oldTech
   end
 end
 

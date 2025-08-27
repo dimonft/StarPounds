@@ -11,6 +11,8 @@ function pred:init()
 
   self.voreCooldown = 0
 
+  self.hasEntity = false
+
   self.struggleCooldown = 0
   self.storedStruggleStrength = 0
   self.storedStruggleVolume = 0
@@ -28,6 +30,8 @@ function pred:update(dt)
   if (self.struggleVolumeLerp + self.storedStruggleVolume > 0) then
     self.struggleVolumeLerp = math.max(0, math.round(util.lerp(dt, self.struggleVolumeLerp, self.storedStruggleVolume - 0.05), 4))
   end
+
+  self.hasEntity = storage.starPounds.enabled and (#storage.starPounds.stomachEntities > 0)
 end
 
 function pred:digest(dt)
@@ -66,10 +70,10 @@ function pred:eat(preyId, options, check)
   -- Don't do anything if pred is disabled.
   if starPounds.hasOption("disablePred") then return false end
   -- Need the upgrades for parts of the skill to work.
-  local canVoreCritter = starPounds.hasSkill("voreCritter")
-  local canVoreMonster = starPounds.hasSkill("voreMonster")
-  local canVoreHumanoid = starPounds.hasSkill("voreHumanoid")
-  local canVoreFriendly = options.ignoreSkills or starPounds.hasSkill("voreFriendly")
+  local canVoreCritter = starPounds.moduleFunc("skills", "has", "voreCritter")
+  local canVoreMonster = starPounds.moduleFunc("skills", "has", "voreMonster")
+  local canVoreHumanoid = starPounds.moduleFunc("skills", "has", "voreHumanoid")
+  local canVoreFriendly = options.ignoreSkills or starPounds.moduleFunc("skills", "has", "voreFriendly")
   -- Skip if we can't eat anything at all.
   if not (
     canVoreCritter or
@@ -84,7 +88,7 @@ function pred:eat(preyId, options, check)
   -- Don't do anything if eaten.
   if storage.starPounds.pred then return false end
   -- Can only eat if you're below capacity.
-  if starPounds.stomach.fullness >= starPounds.settings.thresholds.strain.starpoundsstomach and not starPounds.hasSkill("wellfedProtection") and not options.ignoreCapacity then
+  if starPounds.stomach.fullness >= starPounds.settings.thresholds.strain.starpoundsstomach and not starPounds.moduleFunc("skills", "has", "wellfedProtection") and not options.ignoreCapacity then
     return false
   elseif starPounds.stomach.fullness >= starPounds.settings.thresholds.strain.starpoundsstomach3 and not options.ignoreCapacity then
     return false
@@ -141,13 +145,19 @@ function pred:eat(preyId, options, check)
   if world.entityDamageTeam(preyId).type == "ghostly" then return false end
   -- Skip eating if we're only checking for a valid target.
   if check then return true end
-  -- Prey-side options.
+  -- Options to pass prey-side.
+  local noDamage = options.noDamage or (starPounds.moduleFunc("skills", "has", "voreSafe") and not world.entityCanDamage(entity.id(), preyId))
+  local willing = noDamage and (options.willing or starPounds.moduleFunc("skills", "has", "voreWilling")) or nil
   local preyOptions = {
     triggerCooldown = options.triggerPreyCooldown,
-    noStruggle = options.noStruggle,
-    noDamage = options.noDamage,
-    maxWeight = options.maxWeight
+    maxWeight = options.maxWeight,
+    noDamage = noDamage and true or nil,
+    willing = willing and true or nil,
+    noStruggle = options.noStruggle or (willing and world.entityType(preyId) ~= "player"),
+    silent = not options.loud and (options.silent or starPounds.moduleFunc("skills", "has", "voreSilent")) or nil,
+    loud = options.loud
   }
+  local preyPosition = world.entityPosition(preyId)
   -- Ask the entity to be eaten, add to stomach if the promise is successful.
   promises:add(world.sendEntityMessage(preyId, "starPounds.getEaten", entity.id(), preyOptions), function(prey)
     if not (prey and (prey.base or prey.weight)) then return end
@@ -156,11 +166,6 @@ function pred:eat(preyId, options, check)
       base = prey.base or 0,
       weight = prey.weight or 0,
       foodType = prey.foodType or "prey",
-      --2038
-      foodDropsTable = prey.foodDrops or "nothing",
-      foodMaterial = prey.foodMaterial or "nothing",
-      creaturelevel = prey.creaturelevel or 0,
-      --2038
       experience = prey.experience or 0,
       world = (starPounds.type == "player") and player.worldId() or nil,
       noRelease = prey.noRelease or options.noRelease,
@@ -188,119 +193,26 @@ function pred:eat(preyId, options, check)
     end
     -- Swallow sound.
     if not (options.noSound or options.noSwallowSound) then
-      starPounds.moduleFunc("sound", "play", "swallow", 1 + math.random(0, 10)/100, 1)
+      starPounds.moduleFunc("sound", "play", "swallow", 1 + math.random(0, 10)/100)
     end
     -- Stomach sound.
     if not (options.noSound or options.noDigestSound) then
       starPounds.moduleFunc("sound", "play", "digest", 1, 0.75)
+    end
+    -- Squelch sound.
+    if not (options.noSound or starPounds.hasOption("disableSquelchSounds")) and options.playSquelchSound then
+      starPounds.moduleFunc("sound", "play", "voreSquelch", 1.25 + math.random(0, 10)/100, 1.25)
+    end
+
+    if options.particles and not starPounds.hasOption("disableVoreParticles") then
+      local direction = world.distance(preyPosition, starPounds.mcontroller.position)[1] > 0 and "right" or "left"
+      world.spawnProjectile("starpoundsvorebite" .. direction, preyPosition, entity.id())
     end
 
     starPounds.events:fire("pred:eatEntity", preyConfig)
   end)
   return true
 end
-
--- ============================================= 2038
-function pred:AddingBonesinhepool(creaturetype, creaturetypename, creaturematerial, creatureparam)
-  sb.logInfo("Adding Bones in the pool: Monster info")
-  sb.logInfo("Monster info:" .. creaturetypename)
-  sb.logInfo("Monster info:" .. creaturetypename)
-  sb.logInfo("Monster info:" .. creaturematerial)
-  sb.logInfo(creatureparam.creaturelevel)
-  local undigested = jarray()
-  -- Humanoids
-  local lifeformlvl = creatureparam.creaturelevel
-  if creaturetype == "humanoid" then
-    for _, item in ipairs(root.createTreasure("regurgitatedBones", 0, 0)) do
-      undigested[#undigested + 1] = item
-    end
-  end
-  -- Monsters
-  if creaturematerial == "organic" then
-    if creaturetype == "creature" then
-      if creaturetypename == "largebiped" or creaturetypename == "largequadruped" then
-        for _, item in ipairs(root.createTreasure("regurgitatedBonesMonster", 2, 0)) do
-          undigested[#undigested + 1] = item
-        end
-      else
-        for _, item in ipairs(root.createTreasure("regurgitatedBonesMonster", 0, 0)) do
-          undigested[#undigested + 1] = item
-        end 
-      end
-    end
-    if creaturetype == "humanoid" then
-      if creaturetypename == "tombguard" then
-        for _, item in ipairs(root.createTreasure("regurgitatedTreasures", 0, 0)) do
-          undigested[#undigested + 1] = item
-        end
-      else
-        for _, item in ipairs(root.createTreasure("regurgitatedBones", 0, 0)) do
-          undigested[#undigested + 1] = item
-        end
-        for _, item in ipairs(root.createTreasure("basicTreasure", lifeformlvl)) do
-          undigested[#undigested + 1] = item
-        end
-      end
-      if math.random() < 0.8 then
-        for _, item in ipairs(root.createTreasure("techTreasure", lifeformlvl)) do
-          undigested[#undigested + 1] = item
-      end
-    end
-    end
-  end
-  if creaturematerial == "robotic" then
-    for _, item in ipairs(root.createTreasure("robotTreasure", lifeformlvl)) do
-          undigested[#undigested + 1] = item
-    end
-    if math.random() < 0.8 then
-      for _, item in ipairs(root.createTreasure("techTreasure", lifeformlvl)) do
-          undigested[#undigested + 1] = item
-      end
-    end
-  end
-  return undigested
-end
-
-function pred:printTable(someTable, word, baseName)
-  local breaknow = nil
-  if type(word) ~= "string" or word == nil then
-    sb.logInfo("[WARN] PrinTable: Ключевое слово не указано или является переменной.")
-    word = "Не указано"
-  elseif type(someTable) ~= "table" or someTable == nil then
-    sb.logInfo("[ERROR] PrintTable: Первый аргумент не является таблицей или пустой. Ключ: "..word) 
-    breaknow = 1
-  elseif type(baseName) ~= "string" or baseName == nil then
-    sb.logInfo("[WARN] PrintTable: Некорректно указано имя базы данных. Ключ: "..word)
-    baseName = "DefaultBaseName"
-  end
-  if breaknow == nil then
-    sb.logInfo("Отрисовка таблицы с ключевым словом: "..word)
-    local str = "\n"
-    str = str or ""
-    if type(someTable) == "table" then
-      for k, v in pairs(someTable) do
-        if type(v) == "table" then
-          if ( function(v) for _, __ in pairs(v) do return false end return true end ) then
-            str = str .. baseName .. "." .. tostring(k) .. " : { }\n"
-          elseif (#v == 2) and (type(v[1]) == "number") and (type(v[2]) == "number") then  --coordinate table
-            str = str .. baseName .. "." .. tostring(k) .. " : {" .. v[1] .. ", " .. v[2]  .. "}\n"
-          else
-            str = str .. makeString(v , baseName .. "." .. tostring(k), "") --.. "\n"
-            --recursive calls don't necessarily need the original string because the main function will still have it
-          end
-      
-        elseif (type(v) == "string") then
-          str = str .. baseName .. "." .. tostring(k) .. " : \"" .. v .. "\"\n"
-        elseif not (type(v) == "function") then
-          str = str .. baseName .. "." .. tostring(k) .. " : " .. tostring(v) .. "\n"
-        end
-      end
-    end
-    sb.logInfo(str)
-    sb.logInfo("Отрисовка таблицы с ключевым словом: "..word.." завершена!")
-  end
-end
---2038
 
 function pred:eatNearby(position, range, querySize, options, check)
   -- Argument sanitisation.
@@ -400,43 +312,14 @@ function pred:preyDigested(preyId, items, preyStomach)
     end
   end
 
-  -- 2038
-  if digestedEntity.type ~= nil then
-    sb.logInfo("WARNING ENTITY TYPE LOGGING")
-    sb.logInfo(digestedEntity.type)
-    self:printTable(digestedEntity, "pred.lua => digestedEntity", "digestedEntity")
-    sb.logInfo("DigestedEntity Export Complete")
-    sb.logInfo("WARNING ENTITY TYPE LOGGING END")
-  end
-  if starPounds.type == "player" then
-    sb.logInfo("Trying mathing loot")
-    local mathresult = math.random()
-    sb.logInfo(sb.print(mathresult).." и "..starPounds.getStat("regurgitateChance"))
-    if mathresult < starPounds.getStat("regurgitateChance") then
-      sb.logInfo("Try mathing loot success")
-      if digestedEntity.type == "creature" or digestedEntity.type == "humanoid" and digestedEntity.type ~= nil then
-        sb.logInfo("Creature, humanoid...")
-        for _, scrapItem in ipairs(self:AddingBonesinhepool(digestedEntity.type, digestedEntity.typeName, digestedEntity.foodMaterial, digestedEntity)) do
-          if scrapItem.name == "essence" then
-            if starPounds.type == "player" then player.giveItem(scrapItem) end
-            hasEssence = true
-          else
-            regurgitatedItems[#regurgitatedItems + 1] = scrapItem
-          end
-        end
-        sb.logInfo("Script Complete")
-      end
-    end
-  end
-  --2038
-
   local doBelch = not (starPounds.hasOption("disableBelches") or starPounds.hasOption("disablePredBelches") or digestedEntity.noBelch)
   -- No belching up items if belching (or their particles) is disabled on the pred or prey side.
   local doBelchParticles = doBelch and not starPounds.hasOption("disableBelchParticles")
   -- Burp/Stomach rumble.
   if doBelch then
-    local belchMultiplier = 1 - math.round(((digestedEntity.base + digestedEntity.weight) - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
-    starPounds.belch(0.75, starPounds.belchPitch(belchMultiplier))
+    local belchVolume = 0.75
+    local belchPitch = 1 - math.round(((digestedEntity.base + digestedEntity.weight) - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
+    starPounds.moduleFunc("belch", "belch", belchVolume, belchPitch)
   end
 
   if doBelchParticles then
@@ -459,8 +342,8 @@ function pred:preyDigested(preyId, items, preyStomach)
     end
   end
 
-  starPounds.feed(digestedEntity.base, digestedEntity.foodType)
-  starPounds.feed(digestedEntity.weight, "preyWeight")
+  starPounds.moduleFunc("stomach", "feed", digestedEntity.base, digestedEntity.foodType)
+  starPounds.moduleFunc("stomach", "feed", digestedEntity.weight, "preyWeight")
   starPounds.events:fire("pred:digestEntity", digestedEntity)
   return true
 end
@@ -511,15 +394,19 @@ function pred:struggle(preyId, struggleStrength, escape)
       if not (released or starPounds.hasOption("disablePredDigestion")) then
         -- 1 second worth of digestion per struggle.
         local damageMultiplier = math.max(1, status.stat("powerMultiplier")) * starPounds.getStat("voreDamage")
-        local protectionMultiplier = math.max(0, 1 - starPounds.getStat("voreArmorPiercing"))
-        world.sendEntityMessage(preyId, "starPounds.getDigested", entity.id(), damageMultiplier, protectionMultiplier)
+        local protectionPierce = math.max(0, 1 - starPounds.getStat("voreArmorPiercing"))
+        world.sendEntityMessage(preyId, "starPounds.getDigested", entity.id(), damageMultiplier, protectionPierce)
       end
 
+      -- Outside the block so we can pass it to the event.
+      local struggleVolume = math.min(0.75, 0.25 + preyHealthPercent * (preyWeight/(starPounds.species.default.weight * 2)) + self.struggleVolumeLerp)
+      local strugglePitch = 1 + 0.1 * (math.random() - 0.5)
+
       if not starPounds.hasOption("disableStruggleSounds") then
-        local soundVolume = math.min(1, 0.25 + preyHealthPercent * (preyWeight/(starPounds.species.default.weight * 2)) + self.struggleVolumeLerp)
-        local soundPitch = 1 + 0.1 * (math.random() - 0.5)
-        starPounds.moduleFunc("sound", "play", "struggle", soundVolume, soundPitch)
+        starPounds.moduleFunc("sound", "play", "struggle", struggleVolume, strugglePitch)
       end
+
+      starPounds.events:fire("pred:struggle", struggleVolume, strugglePitch)
 
       self.storedStruggleVolume = 0
       self.storedStruggleStrength = 0
@@ -536,7 +423,7 @@ function pred:release(preyId, releaseAll)
   preyId = tonumber(preyId)
   -- Delete the entity's entry in the stomach.
   local releasedEntity = nil
-  local statusEffect = starPounds.hasSkill("regurgitateSlimeStatus") and "starpoundsslimyupgrade" or nil
+  local statusEffect = starPounds.moduleFunc("skills", "has", "regurgitateSlimeStatus") and "starpoundsslimyupgrade" or nil
   if releaseAll then
     releasedEntity = storage.starPounds.stomachEntities[1]
     for preyIndex, prey in ipairs(storage.starPounds.stomachEntities) do
@@ -545,8 +432,9 @@ function pred:release(preyId, releaseAll)
       end
     end
     if releasedEntity and world.entityExists(releasedEntity.id, true) then
-      local belchMultiplier = 1 - math.round((releasedEntity.weight + storage.starPounds.weight - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
-      starPounds.belch(0.75, starPounds.belchPitch(belchMultiplier))
+      local belchVolume = 0.75
+      local belchPitch = 1 - math.round((releasedEntity.weight + storage.starPounds.weight - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
+      starPounds.moduleFunc("belch", "belch", belchVolume, belchPitch)
     end
     storage.starPounds.stomachEntities = jarray()
   else
@@ -563,8 +451,10 @@ function pred:release(preyId, releaseAll)
     end
     -- Call back to release the entity incase the pred is releasing them.
     if releasedEntity and world.entityExists(releasedEntity.id, true) then
-      local belchMultiplier = 1 - math.round((releasedEntity.weight - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
-      starPounds.belch(0.75, starPounds.belchPitch(belchMultiplier))
+      local belchVolume = 0.75
+      local belchPitch = 1 - math.round((releasedEntity.weight + storage.starPounds.weight - starPounds.species.default.weight)/(starPounds.settings.maxWeight * 4), 2)
+      starPounds.moduleFunc("belch", "belch", belchVolume, belchPitch)
+
       world.sendEntityMessage(releasedEntity.id, "starPounds.getReleased", entity.id(), statusEffect)
       starPounds.events:fire("pred:releaseEntity", releasedEntity)
     end
@@ -577,7 +467,7 @@ function pred:preyCheck(dt)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
   -- Don't do anything if there's no eaten entities.
-  if #storage.starPounds.stomachEntities == 0 then return end
+  if not self.hasEntity then return end
   -- Run on a timer unless manually called.
   if dt then
     self.preyCheckTimer = math.max(self.preyCheckTimer - dt, 0)
@@ -588,8 +478,6 @@ function pred:preyCheck(dt)
   for preyIndex, prey in ipairs(storage.starPounds.stomachEntities) do
     if world.entityExists(prey.id, true) then
       newStomach[#newStomach + 1] = prey
-    elseif (starPounds.type == "player") and (prey.world == player.worldId()) then
-      self:preyDigested(prey.id)
     end
   end
   storage.starPounds.stomachEntities = newStomach
@@ -623,9 +511,9 @@ function pred:digestItem(item)
     -- Second chance to regurgitate 'scrap' items instead.
     elseif math.random() < starPounds.getStat("regurgitateChance") then
       -- Default to clothing drops.
-      local armorType = "Clothing"
+      local armorType = ""
       -- Check if it's a tier 5/6 armor, since the classes have different components.
-      if configParameter(item, "level", 0) >= 5 then
+      if configParameter(item, "level", 0) > 4 then
         for _, recipe in ipairs(root.recipesForItem(item.name)) do
           if contains(recipe.groups, "craftingaccelerator") then armorType = "Accelerator" break
           elseif contains(recipe.groups, "craftingmanipulator") then armorType = "Manipulator" break
@@ -634,7 +522,9 @@ function pred:digestItem(item)
         end
       end
       -- Add drops to the pool.
-      for _, item in ipairs(root.createTreasure("regurgitated"..armorType, configParameter(item, "level", 0))) do
+      -- Regular drops.
+      local itemLevel = math.min(configParameter(item, "level", 0), math.max(world.threatLevel(), 1))
+      for _, item in ipairs(root.createTreasure("voreRegurgitated"..armorType, itemLevel)) do
         convertedItems[#convertedItems + 1] = item
       end
     end
@@ -673,7 +563,7 @@ function pred:digestClothing(item)
   -- Reduce price to 10% (15% - 5% per digestion) of the original value.
   item.parameters.price = math.round(configParameter(item, "price", 0) * (0.15 - 0.05 * item.parameters.digestCount))
   -- Reduce armor level by 1 per digestion. (Or planet threat level, whatever is lower)
-  item.parameters.level = math.max(math.min(configParameter(item, "level", 0) - item.parameters.digestCount, world.threatLevel()), configParameter(item, "level", 0) > 0 and 1 or 0)
+  item.parameters.level = util.clamp(configParameter(item, "level", 0) - item.parameters.digestCount, configParameter(item, "level", 0) > 0 and 1 or 0, world.threatLevel())
   -- Disable status effects.
   item.parameters.statusEffects = root.itemConfig(item).statusEffects and jarray() or nil
   -- Disable effects.
@@ -722,7 +612,7 @@ function pred:belchParticles(prey, essence)
     particles[#particles + 1] = sb.jsonMerge(particles[1], {specification = {color = {0, 140, 217}, fullbright = true, collidesLiquid = false, timeToLive = 0.5}})
   end
   -- Add monster to collection if we have the skill.
-  if starPounds.hasSkill("voreCollection") and (prey.type == "creature") and prey.typeName then
+  if starPounds.moduleFunc("skills", "has", "voreCollection") and (prey.type == "creature") and prey.typeName then
     local collectables = root.monsterParameters(prey.typeName).captureCollectables or {}
     for collection, collectable in pairs(collectables) do
       world.sendEntityMessage(entity.id(), "addCollectable", collection, collectable)
