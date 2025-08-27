@@ -3,6 +3,7 @@ local update_old = update or function() end
 
 function init()
   starPounds = getmetatable ''.starPounds
+  init_old()
 end
 
 function update(dt)
