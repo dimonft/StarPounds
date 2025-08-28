@@ -5,7 +5,7 @@ function init()
   local maxWeight = effect.getParameter("maxWeight")
   if maxWeight then options.maxWeight = effect.duration() end
   if source ~= entity.id() then
-    world.sendEntityMessage(source, "starPounds.eatEntity", entity.id(), options)
+    world.sendEntityMessage(source, "starPounds.pred.eat", entity.id(), options)
   end
   effect.expire()
 end

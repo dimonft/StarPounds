@@ -19,6 +19,21 @@
   "throgDescription" : "They've certainly packed on some pounds... Good.",
   "avaliDescription" : "She looks like she eats very well! ...Why are they looking at me like that?",
 
+  "dialog": {
+    "swallow": [
+      "swallow"
+    ],
+    "struggle": [
+      "struggle"
+    ],
+    "stop": [
+      "stop"
+    ],
+    "digested": [
+      "digested"
+    ]
+  },
+
   "inventoryIcon" : "templatevore.png:default.default",
 
   "orientations" : [
@@ -46,7 +61,7 @@
     "blossom" : "templatevore.png"
   },
 
-  
+
   "npcToy": {
     "ownerOnly" : false,
     "influence" : [],

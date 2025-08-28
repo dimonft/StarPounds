@@ -18,10 +18,12 @@ function init()
   starPounds.modules.pred.eat_old = starPounds.modules.pred.eat
   function starPounds.modules.pred:eat(preyId, options, check)
     options = type(options) == "table" and options or {}
-    -- The eaty is inevitable.
-    options.ignoreProtection = true
-    options.ignoreCapacity = true
-    options.noEscape = true
+    -- The appl eaty is inevitable.
+    if isApple(preyId) then
+      options.ignoreProtection = true
+      options.ignoreCapacity = true
+      options.noEscape = true
+    end
     return self:eat_old(preyId, options, check)
   end
 end

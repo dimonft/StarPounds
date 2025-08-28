@@ -310,6 +310,40 @@ function size:getVariant(size)
     starPounds.hasOption("gorged") and stomachThresholds[6].amount * thresholdMultiplier or 0))
   )
 
+  -- Testing, remove later. ----------------------------------
+  if starPounds.hasOption("combinedStageTest") then
+    variant = ""
+
+    if starPounds.hasOption("hyper") then
+      if contains(variants, "hyper") then
+        variant = variant .. "hyper"
+      end
+    end
+
+    local breastVariant = ""
+    for _, v in ipairs(breastThresholds) do
+      if contains(variants, v.name) then
+        if breastSize >= (v.amount * thresholdMultiplier) then
+          breastVariant = v.name
+        end
+      end
+    end
+    variant = variant .. breastVariant
+
+    local stomachVariant = ""
+    for _, v in ipairs(stomachThresholds) do
+      if contains(variants, v.name) then
+        if stomachSize >= (v.amount * thresholdMultiplier) then
+          stomachVariant = v.name
+        end
+      end
+    end
+    variant = variant .. stomachVariant
+
+    return variant
+  end
+  -- Testing, remove later. ----------------------------------
+
   for _, v in ipairs(breastThresholds) do
     if contains(variants, v.name) then
       if breastSize >= (v.amount * thresholdMultiplier) then
@@ -325,7 +359,6 @@ function size:getVariant(size)
       end
     end
   end
-
 
   if starPounds.hasOption("hyper") then
     if contains(variants, "hyper") then

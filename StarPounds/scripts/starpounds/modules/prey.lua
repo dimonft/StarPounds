@@ -1,12 +1,12 @@
 local prey = starPounds.module:new("prey")
 
 function prey:init()
-  message.setHandler("starPounds.getEaten", function(_, _, ...) return self:swallowed(...) end)
-  message.setHandler("starPounds.getReleased", function(_, _, ...) return self:released(...) end)
-  message.setHandler("starPounds.getDigested", function(_, _, ...) return self:digesting(...) end)
-  message.setHandler("starPounds.newPred", function(_, _, ...) return self:newPred(...) end)
+  message.setHandler("starPounds.prey.swallowed", function(_, _, ...) return self:swallowed(...) end)
+  message.setHandler("starPounds.prey.released", function(_, _, ...) return self:released(...) end)
+  message.setHandler("starPounds.prey.digesting", function(_, _, ...) return self:digesting(...) end)
+  message.setHandler("starPounds.prey.newPred", function(_, _, ...) return self:newPred(...) end)
 
-  message.setHandler("starPounds.drinkVoreNudge", function(_, _, sourceId, maxWeight, args)
+  message.setHandler("starPounds.prey.drinkVoreNudge", function(_, _, sourceId, maxWeight, args)
     if storage.starPounds.pred then return end
     if maxWeight < (entity.weight + storage.starPounds.weight) then return end
     if mcontroller.liquidPercentage() < 0.25 then return end
@@ -16,8 +16,10 @@ function prey:init()
   end)
 
   self.voreCooldown = 0
-  self.options = {}
   self.heartbeat = self.data.heartbeat
+  -- Reload options in case.
+  self.options = storage.starPounds.preyOptions or {}
+  storage.starPounds.preyOptions = nil
 
   -- Just in case of reloads.
   if storage.starPounds.preyTech then
@@ -58,7 +60,7 @@ function prey:eaten(dt)
   self.heartbeat = math.max(self.heartbeat - dt, 0)
   if not storage.starPounds.spectatingPred and self.heartbeat == 0 then
     self.heartbeat = self.data.heartbeat
-    promises:add(world.sendEntityMessage(storage.starPounds.pred, "starPounds.hasPrey", entity.id()), function(eaten)
+    promises:add(world.sendEntityMessage(storage.starPounds.pred, "starPounds.pred.hasPrey", entity.id()), function(eaten)
       if not eaten then self:released() end
     end)
   end
@@ -83,9 +85,7 @@ function prey:eaten(dt)
     pcall(animator.setGlobalTag, "hurt", "hurt")
   end
   -- Struggle mechanics.
-  if not self.options.noStruggle then
-    self[starPounds.type.."Struggle"](self, dt)
-  end
+  self[starPounds.type.."Struggle"](self, dt)
   -- Set velocity to zero.
   mcontroller.setVelocity({0, 0})
   -- Stop the prey from colliding/moving normally.
@@ -249,16 +249,18 @@ function prey:playerStruggle(dt)
     end
     return
   end
-  if not (horizontalDirection == 0 and verticalDirection == 0) then
-    if struggleMagnitude > 0.6 and not self.struggled then
-      self.struggled = true
-      world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyStruggle", entity.id(), struggleStrength, not starPounds.hasOption("disableEscape"))
+  if not self.options.noStruggle then
+    if not (horizontalDirection == 0 and verticalDirection == 0) then
+      if struggleMagnitude > 0.6 and not self.struggled then
+        self.struggled = true
+        world.sendEntityMessage(storage.starPounds.pred, "starPounds.pred.struggle", entity.id(), struggleStrength, not starPounds.hasOption("disableEscape"))
+      elseif math.round(struggleMagnitude, 1) < 0.2 then
+        self.struggled = false
+      end
     elseif math.round(struggleMagnitude, 1) < 0.2 then
       self.struggled = false
+      self.startedStruggling = os.clock()
     end
-  elseif math.round(struggleMagnitude, 1) < 0.2 then
-    self.struggled = false
-    self.startedStruggling = os.clock()
   end
   local predPosition = vec2.add(predPosition, vec2.mul(self.cycle, 2 + (math.sin((os.clock() - self.startedStruggling) * 2) + 1)/4))
   -- Slowly drift up/down.
@@ -286,13 +288,13 @@ function prey:npcStruggle(dt)
   -- Monsters/NPCs just cause energy loss occassionally, and are locked to the pred's position.
   mcontroller.setPosition(vec2.add(world.entityPosition(storage.starPounds.pred), {0, -1}))
   -- Don't struggle if willing.
-  if self.options.willing then return end
+  if self.options.willing or self.options.noStruggle then return end
   -- Loose calculation for how "powerful" the prey is.
   local healthMultiplier = 0.5 + status.resourcePercentage("health") * 0.5
   local struggleStrength = math.max(1, status.stat("powerMultiplier")) * healthMultiplier
   self.cycle = self.cycle and self.cycle - (dt * healthMultiplier) or (math.random(10, 15) / 10)
   if self.cycle <= 0 then
-    world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyStruggle", entity.id(), struggleStrength, not starPounds.hasOption("disableEscape"))
+    world.sendEntityMessage(storage.starPounds.pred, "starPounds.pred.struggle", entity.id(), struggleStrength, not starPounds.hasOption("disableEscape"))
     self.cycle = math.random(10, 15) / 10
   end
 end
@@ -304,6 +306,8 @@ function prey:monsterStruggle(dt)
   if not storage.starPounds.pred then return end
   -- Monsters/NPCs just cause energy loss occassionally, and are locked to the pred's position.
   mcontroller.setPosition(vec2.add(world.entityPosition(storage.starPounds.pred), {0, -1}))
+  -- Don't struggle if willing.
+  if self.options.willing or self.options.noStruggle then return end
   -- Loose calculation for how "powerful" the prey is.
   local healthMultiplier = 0.5 + status.resourcePercentage("health") * 0.5
   -- Using the NPC power function because the monster one gets stupid high.
@@ -315,7 +319,7 @@ function prey:monsterStruggle(dt)
   local struggleStrength = math.max(1, status.stat("powerMultiplier")) * healthMultiplier * weightRatio * monsterMultiplier
   self.cycle = self.cycle and self.cycle - (dt * healthMultiplier) or (math.random(10, 15) / 10)
   if self.cycle <= 0 then
-    world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyStruggle", entity.id(), struggleStrength, not starPounds.hasOption("disableEscape"))
+    world.sendEntityMessage(storage.starPounds.pred, "starPounds.pred.struggle", entity.id(), struggleStrength, not starPounds.hasOption("disableEscape"))
     self.cycle = math.random(10, 15) / 10
   end
 end
@@ -367,7 +371,7 @@ function prey:released(source, overrideStatus)
   if world.entityExists(pred, true) then
     -- Callback incase the entity calls this.
     if source ~= pred then
-      world.sendEntityMessage(pred, "starPounds.releaseEntity", entity.id())
+      world.sendEntityMessage(pred, "starPounds.pred.release", entity.id())
     end
     -- Don't get stuck in the ground.
     mcontroller.setPosition(world.entityPosition(pred))
@@ -402,7 +406,7 @@ function prey:digesting(pred, digestionRate, protectionPierce)
   if not pred or not world.entityExists(tonumber(pred) or 0, true) then return end
   -- Tell the pred we're not eaten there's an ID mismatch.
   if storage.starPounds.pred ~= pred then
-    world.sendEntityMessage(pred, "starPounds.releaseEntity", entity.id())
+    world.sendEntityMessage(pred, "starPounds.pred.release", entity.id())
   end
   -- Skip if we're not taking damage.
   if self.options.noDamage then return end
@@ -415,7 +419,9 @@ function prey:digesting(pred, digestionRate, protectionPierce)
   -- Don't do anything if we're not eaten.
   if not storage.starPounds.pred then return end
   -- 0.5% of current health + 1 or 0.5% max health, whichever is smaller. (Stops low hp entities dying instantly)
-  local amount = (status.resource("health") * 0.005 + math.min(0.005 * status.resourceMax("health"), 1)) * digestionRate
+  local percentDigestion = status.resource("health") * self.data.percentDigestionRate
+  local flatDigestion = math.min(self.data.digestionRate, self.data.percentDigestionRate * status.resourceMax("health"))
+  local amount = (percentDigestion + flatDigestion) * digestionRate
   amount = root.evalFunction2("protection", amount, status.stat("protection") - protectionPierce)
   -- Remove the health.
   status.overConsumeResource("health", amount)
@@ -427,7 +433,7 @@ end
 function prey:digested()
   -- Don't run if there's no pred.
   if not storage.starPounds.pred then return end
-  world.sendEntityMessage(storage.starPounds.pred, "starPounds.preyDigested", entity.id(), self:createDrops(self.options.items), storage.starPounds.stomachEntities)
+  world.sendEntityMessage(storage.starPounds.pred, "starPounds.pred.digestPrey", entity.id(), self:createDrops(self.options.items), storage.starPounds.stomachEntities)
   -- Transfer over stomach contents.
   for foodType, amount in pairs(storage.starPounds.stomach) do
     world.sendEntityMessage(storage.starPounds.pred, "starPounds.feed", amount, foodType)
@@ -559,6 +565,10 @@ end
 function prey:uninit()
   if self.oldTech then
     storage.starPounds.preyTech = self.oldTech
+  end
+  -- Save options so we can restore if we're eaten during a reload.
+  if self.options and storage.starPounds.pred then
+    storage.starPounds.preyOptions = self.options
   end
 end
 

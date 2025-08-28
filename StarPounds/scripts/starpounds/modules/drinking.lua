@@ -106,7 +106,7 @@ function drinking:consumeLiquidsAtPosition(position)
         local incidence = math.min(1 - (distance - 1) / (drinkConfig[1] - 1), distance / 1)
         local angle = vec2.angle(direction)
 
-        world.sendEntityMessage(entityId, "starPounds.drinkVoreNudge", entity.id(), drinkConfig[2], {angle, 10, 750 * incidence, true})
+        world.sendEntityMessage(entityId, "starPounds.prey.drinkVoreNudge", entity.id(), drinkConfig[2], {angle, 10, 750 * incidence, true})
       end
     end
     -- Spawn vore projectile at the player's mouth.
