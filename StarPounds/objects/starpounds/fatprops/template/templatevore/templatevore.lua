@@ -8,47 +8,7 @@ function init()
   storage.starPounds = storage.starPounds or starPounds.baseData
   object.setInteractive(true)
 
-  dialog = {
-    swallow = {
-      "Mmhph! ...UURP! Thanks for the meal you cutie~",
-      "Ulp! Fwah~ RIGHT where you belong, burbling away for me~",
-      "Gulp! Mhmmm... mph, pwah!~ Oogh... So nice and filling...~ Now stay put in there~",
-      "Ulp! Bwah~ I was feeling a little peckish too~ Just what I need for my growing ass!",
-      "Gllp!~ Fwaah~ Y'know, all you had to do was ask, not that I mind at all~",
-      "Gulp! Phew!~ Just kick REALLY hard if ya need me to swallow down some food for you~"
-    },
-    struggle = {
-      "Unnf... Keep struggling~ It feels so... so...~",
-      "Y'know you're just a thick, juicy hunk of meat one way or another, just give in already~",
-      "Caaareful~ You're making my stomach work really hard! You might drown in all those juices~",
-      "M-mmmph... mmwuuAAAGH~ ...Y-you didn't hear that...",
-      "Gosh... y-you're wobbling all of me with all those pointless struggles~ My boobs... and belly...~"
-    },
-    stop = {
-      "H-hey! Who said you could wriggle out like that!",
-      "Ooogh but I wasn't done demolishing every fiber of your being into thick, soupy calories...",
-      "Dooh... I'm still soo hungry, are you really gonna neglect my empty tummy like that?",
-      "Come baack...~ you know you belong right here on this bulging dough belly~",
-      "I hope you're only leaving so you can come back with more food~",
-      "Leaving so you can plump yourself up for me? Dooh how sweet~",
-      "Unf... get back in here! I'm wasting away! Just listen to this poor starving belly...",
-      "Come back soon morsel~ I can't wait to finally churn you up into a fine slurry~"
-    },
-    digested = {
-      "BuuuUUUUOOOOOORRRRP!!!~ Oogh~ Thanks for the meal you cutie~",
-      "Nothing but a mushy, sloshy soup pumping through my guts now~",
-      "Be a good little snack and fill out the rest of my churning guts~",
-      "Ooh? My belly's all sloshy and soft again? Guess they didn't last very long...~",
-      "So what do you prefer? Being my boobs, butt, or belly fat?~",
-      "Uugh I thought you'd last a little longer in there...~",
-      "Look at you destroying what's left of my shrinking wardrobe!~",
-      "Mhmmm I'm already getting so bloated~ Guess you were nothing but hot air~",
-      "UUURP!~ Oh! Already gave up? Shoulda kept your head above that sea of stomach soup~",
-      "What's this now? Another cup size? I'll need to order some cute new lingerie soon...~"
-    }
-  }
-
-
+  dialog = config.getParameter("dialog")
   regurgitateTimer = 0
 end
 
@@ -75,7 +35,7 @@ function update(dt)
     playSound("talk", 1, 1.25)
     animator.burstParticleEmitter("emotesad")
     object.say(tostring(dialog.stop[math.random(1, #dialog.stop)]:gsub("<player>", world.entityName(lastEntity.id).."^reset;")))
-    world.sendEntityMessage(lastEntity.id, "starPounds.getReleased", entity.id())
+    world.sendEntityMessage(lastEntity.id, "starPounds.prey.released", entity.id())
   end
 
   regurgitateTimer = math.max(0, regurgitateTimer - dt)
@@ -87,7 +47,7 @@ function playSound(soundPool, volume, pitch, loops)
     animator.setSoundPitch(soundPool, pitch or 1, 0)
     animator.playSound(soundPool, loops)
     if soundPool == "struggle" then
-      if math.random(1, 600) == 1 then
+      if math.random(1, 25) == 1 then
         playSound("talk", 1, 1.25)
         animator.burstParticleEmitter("emotehappy")
         object.say(tostring(dialog.struggle[math.random(1, #dialog.struggle)]:gsub("<player>", world.entityName(storage.starPounds.stomachEntities[1].id).."^reset;")))
@@ -162,7 +122,7 @@ starPounds = {
     if not (#storage.starPounds.stomachEntities > 0) then return end
     -- Reduce health of all entities.
     for _, prey in pairs(storage.starPounds.stomachEntities) do
-      world.sendEntityMessage(prey.id, "starPounds.getDigested", entity.id(), digestionRate)
+      world.sendEntityMessage(prey.id, "starPounds.prey.digesting", entity.id(), digestionRate)
     end
   end,
 
@@ -178,21 +138,23 @@ starPounds = {
     end
     if eatenEntity then return false end
     -- Ask the entity to be eaten, add to stomach if the promise is successful.
-    promises:add(world.sendEntityMessage(preyId, "starPounds.getEaten", entity.id()), function(prey)
-      table.insert(storage.starPounds.stomachEntities, {
-        id = preyId,
-        weight = prey.weight or 0,
-        bloat = prey.bloat or 0,
-        experience = prey.experience or 0,
-        type = world.entityType(preyId):gsub(".+", {player = "humanoid", npc = "humanoid", monster = "creature"})
-      })
-      -- Swallow/stomach rumble
-      playSound("swallow", 1 + math.random(0, 10)/100, 1)
-      playSound("digest", 1, 0.75)
-      playSound("talk", 1, 1.25)
-      animator.burstParticleEmitter("emotehappy")
-      object.say(tostring(dialog.swallow[math.random(1, #dialog.swallow)]:gsub("<player>", world.entityName(preyId).."^reset;")))
-      animator.setAnimationState("interactState", "swallow", true)
+    promises:add(world.sendEntityMessage(preyId, "starPounds.prey.swallowed", entity.id()), function(prey)
+      if prey then
+        table.insert(storage.starPounds.stomachEntities, {
+          id = preyId,
+          weight = prey.weight or 0,
+          bloat = prey.bloat or 0,
+          experience = prey.experience or 0,
+          type = world.entityType(preyId):gsub(".+", {player = "humanoid", npc = "humanoid", monster = "creature"})
+        })
+        -- Swallow/stomach rumble
+        playSound("swallow", 1 + math.random(0, 10)/100, 1)
+        playSound("digest", 1, 0.75)
+        playSound("talk", 1, 1.25)
+        animator.burstParticleEmitter("emotehappy")
+        object.say(tostring(dialog.swallow[math.random(1, #dialog.swallow)]:gsub("<player>", world.entityName(preyId).."^reset;")))
+        animator.setAnimationState("interactState", "swallow", true)
+      end
     end)
     return true
   end,
@@ -236,7 +198,7 @@ starPounds = {
           starPounds.releaseEntity(preyId)
         end
         -- 1 second worth of digestion per struggle.
-        world.sendEntityMessage(preyId, "starPounds.getDigested", entity.id(), 1)
+        world.sendEntityMessage(preyId, "starPounds.prey.digesting", entity.id(), 1)
         break
       end
     end
@@ -267,11 +229,11 @@ starPounds = {
   messageHandlers = function()
     message.setHandler("starPounds.digest", simpleHandler(starPounds.digest))
     -- Ditto but vore.
-    message.setHandler("starPounds.eatEntity", simpleHandler(starPounds.eatEntity))
-    message.setHandler("starPounds.hasPrey", simpleHandler(starPounds.hasPrey))
-    message.setHandler("starPounds.preyDigested", simpleHandler(starPounds.digestEntity))
-    message.setHandler("starPounds.preyStruggle", simpleHandler(starPounds.preyStruggle))
-    message.setHandler("starPounds.releaseEntity", simpleHandler(starPounds.releaseEntity))
+    message.setHandler("starPounds.pred.eat", simpleHandler(starPounds.eatEntity))
+    message.setHandler("starPounds.pred.hasPrey", simpleHandler(starPounds.hasPrey))
+    message.setHandler("starPounds.pred.digestPrey", simpleHandler(starPounds.digestEntity))
+    message.setHandler("starPounds.pred.struggle", simpleHandler(starPounds.preyStruggle))
+    message.setHandler("starPounds.pred.release", simpleHandler(starPounds.releaseEntity))
     -- sounds
     message.setHandler("starPounds.playSound", simpleHandler(playSound))
   end

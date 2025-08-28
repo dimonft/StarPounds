@@ -35,7 +35,7 @@ function update(dt)
     playSound("talk", 1, 1.25)
     animator.burstParticleEmitter("emotesad")
     object.say(tostring(dialog.stop[math.random(1, #dialog.stop)]:gsub("<player>", world.entityName(lastEntity.id).."^reset;")))
-    world.sendEntityMessage(lastEntity.id, "starPounds.getReleased", entity.id())
+    world.sendEntityMessage(lastEntity.id, "starPounds.prey.released", entity.id())
   end
 
   regurgitateTimer = math.max(0, regurgitateTimer - dt)
@@ -122,7 +122,7 @@ starPounds = {
     if not (#storage.starPounds.stomachEntities > 0) then return end
     -- Reduce health of all entities.
     for _, prey in pairs(storage.starPounds.stomachEntities) do
-      world.sendEntityMessage(prey.id, "starPounds.getDigested", entity.id(), digestionRate)
+      world.sendEntityMessage(prey.id, "starPounds.prey.digesting", entity.id(), digestionRate)
     end
   end,
 
@@ -138,7 +138,7 @@ starPounds = {
     end
     if eatenEntity then return false end
     -- Ask the entity to be eaten, add to stomach if the promise is successful.
-    promises:add(world.sendEntityMessage(preyId, "starPounds.getEaten", entity.id()), function(prey)
+    promises:add(world.sendEntityMessage(preyId, "starPounds.prey.swallowed", entity.id()), function(prey)
       if prey then
         table.insert(storage.starPounds.stomachEntities, {
           id = preyId,
@@ -198,7 +198,7 @@ starPounds = {
           starPounds.releaseEntity(preyId)
         end
         -- 1 second worth of digestion per struggle.
-        world.sendEntityMessage(preyId, "starPounds.getDigested", entity.id(), 1)
+        world.sendEntityMessage(preyId, "starPounds.prey.digesting", entity.id(), 1)
         break
       end
     end
@@ -229,11 +229,11 @@ starPounds = {
   messageHandlers = function()
     message.setHandler("starPounds.digest", simpleHandler(starPounds.digest))
     -- Ditto but vore.
-    message.setHandler("starPounds.eatEntity", simpleHandler(starPounds.eatEntity))
-    message.setHandler("starPounds.hasPrey", simpleHandler(starPounds.hasPrey))
-    message.setHandler("starPounds.preyDigested", simpleHandler(starPounds.digestEntity))
-    message.setHandler("starPounds.preyStruggle", simpleHandler(starPounds.preyStruggle))
-    message.setHandler("starPounds.releaseEntity", simpleHandler(starPounds.releaseEntity))
+    message.setHandler("starPounds.pred.eat", simpleHandler(starPounds.eatEntity))
+    message.setHandler("starPounds.pred.hasPrey", simpleHandler(starPounds.hasPrey))
+    message.setHandler("starPounds.pred.digestPrey", simpleHandler(starPounds.digestEntity))
+    message.setHandler("starPounds.pred.struggle", simpleHandler(starPounds.preyStruggle))
+    message.setHandler("starPounds.pred.release", simpleHandler(starPounds.releaseEntity))
     -- sounds
     message.setHandler("starPounds.playSound", simpleHandler(playSound))
   end
