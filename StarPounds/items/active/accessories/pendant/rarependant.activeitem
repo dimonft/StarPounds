@@ -12,12 +12,14 @@
   "accessoryType" : "pendant",
 
   "statConfig" : {
-    "amplitude" : [0.15, 0.3],
+    "amplitude" : [0.15, 4],
     "count" : 3,
     "list" : [
-      "absorption",
+      "metabolism",
+      "hunger",
       "capacity",
       "digestion",
+      "absorption",
       "health",
       "movement"
     ]

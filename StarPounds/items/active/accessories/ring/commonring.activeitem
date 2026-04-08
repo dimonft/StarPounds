@@ -12,13 +12,15 @@
   "accessoryType" : "ring",
 
   "statConfig" : {
-    "amplitude" : [0.05, 0.15],
-    "count" : 2,
+    "amplitude" : [0.05, 0.3],
+    "count" : 3,
     "negativeCount" : 1,
     "list" : [
-      "absorption",
+      "metabolism",
+      "hunger",
       "capacity",
       "digestion",
+      "absorption",
       "health",
       "movement"
     ]
