@@ -25,7 +25,7 @@
       "minimumSize": [6, 6]
     },
     "starPounds_options": {
-      "disablePrey": true,
+      "disablePrey": false,
       "disableGain": true
     },
     "starPounds_traits": ["vore", "npc_gluttonistChampion"],
