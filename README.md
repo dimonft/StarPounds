@@ -1,4 +1,7 @@
-
+# What's different from the main branch?
+- Increased accessory ranges.
+- Disabled disablePrey for some common enemies.
+ 
 # StarPounds
 
 ## ![8d4ce983fd59ccfb6090973af88ba2ccd6b644b6_2_690x226](https://github.com/user-attachments/assets/28e7dfa2-9d75-468c-a392-8f861a2ed54f)
