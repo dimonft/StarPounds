@@ -1,15 +1,17 @@
 local size = starPounds.module:new("size")
 
 function size:init()
-  message.setHandler("starPounds.gainWeight", function(_, _, ...) return self:gainWeight(...) end)
-  message.setHandler("starPounds.loseWeight", function(_, _, ...) return self:loseWeight(...) end)
-  message.setHandler("starPounds.setWeight", function(_, _, ...) return self:setWeight(...) end)
-  message.setHandler("starPounds.getSize", function(_, _, ...) return self:get(...) end)
-  message.setHandler("starPounds.sizes", function(_, _, ...) return self:sizes(...) end)
-  message.setHandler("starPounds.sizeConfig", function(_, _, ...) return self:config(...) end)
-  message.setHandler("starPounds.maximumWeight", function(_, _, ...) return self:maximumWeight(...) end)
-  message.setHandler("starPounds.getChestVariant", function(_, _, ...) return self:getVariant(...) end)
-  message.setHandler("starPounds.resetWeight", localHandler(self.reset))
+  message.setHandler("starPounds.size.gainWeight", function(_, _, ...) return self:gainWeight(...) end)
+  message.setHandler("starPounds.size.loseWeight", function(_, _, ...) return self:loseWeight(...) end)
+  message.setHandler("starPounds.size.setWeight", function(_, _, ...) return self:setWeight(...) end)
+  message.setHandler("starPounds.size.setSize", function(_, _, ...) return self:setSize(...) end)
+  message.setHandler("starPounds.size.offsetSize", function(_, _, ...) return self:offsetSize(...) end)
+  message.setHandler("starPounds.size.get", function(_, _, ...) return self:get(...) end)
+  message.setHandler("starPounds.size.sizes", function(_, _, ...) return self:sizes(...) end)
+  message.setHandler("starPounds.size.config", function(_, _, ...) return self:config(...) end)
+  message.setHandler("starPounds.size.maximumWeight", function(_, _, ...) return self:maximumWeight(...) end)
+  message.setHandler("starPounds.size.getVariant", function(_, _, ...) return self:getVariant(...) end)
+  message.setHandler("starPounds.size.reset", localHandler(self.reset))
 
   local function nullFunction() end
   -- Kinda gross, but deal with it.
@@ -91,7 +93,6 @@ function size:update(dt)
   end
 
   self:cursorCheck()
-  self:progress()
   self:trackVehicleCap()
   self:equip(self:equipmentConfig(starPounds.currentSizeIndex))
   self:updateStats()
@@ -140,6 +141,41 @@ function size:setWeight(amount)
   -- Argument sanitisation.
   amount = math.round(tonumber(amount) or 0, 4)
   storage.starPounds.weight = util.clamp(amount, self:minimumWeight(), self.sizeConfig.maxWeight)
+end
+
+function size:offsetSize(offset)
+  -- Don't do anything if the mod is disabled.
+  if not (storage.starPounds.enabled and self.canGain) then return end
+  -- Argument sanitisation.
+  amount = math.round(tonumber(amount) or 0)
+  self:setSize(self:sizeIndex() + offset, self:progress())
+end
+
+function size:setSize(index, progress)
+  -- Don't do anything if the mod is disabled.
+  if not (storage.starPounds.enabled and self.canGain) then return 0 end
+  -- Argument sanitisation.
+  index = math.floor(tonumber(index) or 1)
+  progress = util.clamp(tonumber(progress) or 0, 0, 1)
+  -- Just fill/reset the progress if we go past index values.
+  if index > #self.sizeConfig.sizes then
+    index = #self.sizeConfig.sizes
+    progress = 1
+  elseif index < 1 then
+    index = 1
+    progress = 0
+  end
+
+  local currentWeight = storage.starPounds.weight
+  -- Weight bounds for this size tier
+  local minWeight = self.sizeConfig.sizes[index].weight
+  local nextSize = self.sizeConfig.sizes[index + 1]
+  local maxWeight = nextSize and nextSize.weight or self:maximumWeight()
+  -- Interpolate weight based on progress.
+  local targetWeight = minWeight + (maxWeight - minWeight) * progress
+  self:setWeight(targetWeight)
+  -- Return difference.
+  return math.round(storage.starPounds.weight - currentWeight, 4)
 end
 
 function size:get(weight)
@@ -232,11 +268,12 @@ function size:updateStats(forceUpdate)
       {stat = "grit", amount = gritReduction},
       {stat = "shieldHealth", effectiveMultiplier = 1 + starPounds.getStat("shieldHealth") * bonusEffectiveness},
       {stat = "knockbackThreshold", effectiveMultiplier = 1 - gritReduction},
-      {stat = "fallDamageMultiplier", effectiveMultiplier = size.healthMultiplier * (1 - starPounds.getStat("fallDamageResistance"))},
+      {stat = "fallDamageMultiplier", effectiveMultiplier = 1 + (size.healthMultiplier - 1) * math.min(1 - starPounds.getStat("fallDamageResistance"), 1)},
       {stat = "physicalResistance", amount = starPounds.getStat("physicalResistance") * bonusEffectiveness},
       {stat = "iceResistance", amount = starPounds.getStat("iceResistance") * bonusEffectiveness},
       {stat = "poisonResistance", amount = starPounds.getStat("poisonResistance") * bonusEffectiveness},
-      {stat = "electricResistance", amount = starPounds.getStat("electricResistance") * bonusEffectiveness}
+      {stat = "electricResistance", amount = starPounds.getStat("electricResistance") * bonusEffectiveness},
+      {stat = "fireResistance", amount = starPounds.getStat("fireResistance") * bonusEffectiveness}
     }
     -- Probably not optimal, but don't apply effects if they do nothing.
     local filteredPersistentEffects = jarray()
@@ -407,7 +444,7 @@ function size:getVariant(size)
     variant = variant .. stomachVariant
 
     if not starPounds.currentSize.disableHyper and starPounds.hasOption("hyper") then
-      variant = "hyper" .. variant
+      variant = "hyper" .. stomachVariant
     end
 
     return variant
@@ -628,7 +665,7 @@ function size:progress()
   if nextSizeWeight ~= self.sizeConfig.maxWeight and self.sizeConfig.sizes[starPounds.currentSizeIndex + 1].yOffset and starPounds.hasOption("disableSupersize") then
     nextSizeWeight = self.sizeConfig.maxWeight
   end
-  return math.round((storage.starPounds.weight - currentSizeWeight)/(nextSizeWeight - currentSizeWeight) * 100)
+  return math.round((storage.starPounds.weight - currentSizeWeight)/(nextSizeWeight - currentSizeWeight), 4)
 end
 
 function size:stomachMultiplier()

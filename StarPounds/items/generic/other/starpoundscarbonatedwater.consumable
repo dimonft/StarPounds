@@ -1,0 +1,21 @@
+{
+  "itemName" : "starpoundscarbonatedwater",
+  "price" : 20,
+  "rarity" : "Common",
+  "category" : "drink",
+  "inventoryIcon" : "starpoundscarbonatedwater.png",
+  "description" : "Water infused with nice, fizzy CO2. Perfect for making sodas!",
+  "shortdescription" : "Carbonated Water",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+      "effect" : "bottledwaterheal",
+      "duration" : 13
+    }
+  ] ],
+  "blockingEffects" : [
+    "bottledwaterheal"
+  ],
+  "emote" : "",
+  "emitters" : [ "drinking" ]
+}
