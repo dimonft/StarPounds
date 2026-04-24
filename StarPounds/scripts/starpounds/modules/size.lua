@@ -254,7 +254,12 @@ end
 
 function size:updateStats(forceUpdate)
   -- Don't do anything if the mod is disabled.
-  if not storage.starPounds.enabled then return end
+  if not storage.starPounds.enabled then
+    starPounds.movementMultiplier = 1
+    starPounds.jumpMultiplier = 1
+    starPounds.swimMultiplier = 1
+    return
+  end
   -- Give the entity hitbox, bonus stats, and effects based on fatness.
   local size = starPounds.currentSize
   local sizeIndex = starPounds.currentSizeIndex
@@ -427,6 +432,20 @@ function size:getVariant(size)
   if starPounds.hasOption("combinedStageTest") then
     variant = ""
 
+    -- Hyper.
+    if not starPounds.currentSize.disableHyper and starPounds.hasOption("hyper") then
+      local stomachThresholds = self.sizeConfig.sizes[1].thresholds.stomach
+      local stomachVariant = ""
+      for _, v in ipairs(stomachThresholds) do
+        if stomachSize >= v.amount then
+          stomachVariant = v.name
+        end
+      end
+
+      variant = "hyper" .. stomachVariant
+      return variant
+    end
+
     local breastVariant = ""
     for _, v in ipairs(thresholds.breasts) do
       if breastSize >= v.amount then
@@ -442,10 +461,6 @@ function size:getVariant(size)
       end
     end
     variant = variant .. stomachVariant
-
-    if not starPounds.currentSize.disableHyper and starPounds.hasOption("hyper") then
-      variant = "hyper" .. stomachVariant
-    end
 
     return variant
   end
