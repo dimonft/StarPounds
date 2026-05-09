@@ -31,22 +31,26 @@
   "orientations" : [
     {
       "dualImage" : "hugeburger.png:<stage>",
-      "imagePosition" : [-49.5, -16],
-      "animationPosition" : [-49.5, -16],
+      "imagePosition" : [-28, -16],
+      "animationPosition" : [-28, -16],
       "spaceScan" : 0.1,
       "anchors" : ["bottom"]
     }
   ],
-
   "npcToy": {
     "ownerOnly" : false,
-    "influence" : [],
-    "defaultReactions" : {}
+    "influence" : [
+      "hugefood"
+    ],
+    "defaultReactions" : {
+      "hugefood" : [
+        [1.0, "starpoundshugefood"]
+      ]
+    }
   },
-
   "scripts" : [
-    "/objects/starpounds/hugefoods/hugefood.lua",
-    "/scripts/npcToyObject.lua"
+    "/scripts/npcToyObject.lua",
+    "/objects/starpounds/hugefoods/hugefood.lua"
   ],
   "scriptDelta" : 1,
 

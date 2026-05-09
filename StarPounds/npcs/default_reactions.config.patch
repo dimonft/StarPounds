@@ -5,5 +5,19 @@
     "value": {
       "behavior": "starpoundsreaction-treadmill"
     }
+  },
+  {
+    "op": "add",
+    "path": "/behaviorReactions/starpoundsfeedingtube",
+    "value": {
+      "behavior": "starpoundsreaction-feedingtube"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/behaviorReactions/starpoundshugefood",
+    "value": {
+      "behavior": "starpoundsreaction-hugefood"
+    }
   }
 ]

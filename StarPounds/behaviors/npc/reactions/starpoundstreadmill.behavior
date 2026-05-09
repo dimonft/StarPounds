@@ -3,9 +3,12 @@
   "description": "",
   "scripts": [
     "/scripts/actions/starpounds.lua",
-    "/scripts/actions/movement.lua",
+    "/scripts/actions/math.lua",
+    "/scripts/actions/world.lua",
     "/scripts/actions/time.lua",
-    "/scripts/actions/world.lua"
+    "/scripts/actions/movement.lua",
+    "/scripts/actions/npc.lua",
+    "/scripts/behavior.lua"
   ],
   "parameters": {},
   "root": {
@@ -14,6 +17,40 @@
     "name": "sequence",
     "parameters": {},
     "children": [
+      {
+        "title": "starpoundsWeight",
+        "type": "action",
+        "name": "starpoundsWeight",
+        "parameters": {},
+        "output": {
+          "number": "weight"
+        }
+      },
+      {
+        "title": "greaterThan",
+        "type": "action",
+        "name": "greaterThan",
+        "parameters": {
+          "first": {"key": "weight"},
+          "second": {"value": 0}
+        }
+      },
+      {
+        "title": "entityExists",
+        "type": "action",
+        "name": "entityExists",
+        "parameters": {
+          "entity": {"key": "reactTarget"}
+        }
+      },
+      {
+        "title": "interactObject",
+        "type": "action",
+        "name": "interactObject",
+        "parameters": {
+          "entity": {"key": "reactTarget"}
+        }
+      },
       {
         "title": "starpoundsObjectDirection",
         "type": "action",
@@ -26,6 +63,14 @@
         }
       },
       {
+        "title": "timer",
+        "type": "action",
+        "name": "timer",
+        "parameters": {
+          "time": {"value": 0.25}
+        }
+      },
+      {
         "title": "faceDirection",
         "type": "action",
         "name": "faceDirection",
@@ -34,11 +79,31 @@
         }
       },
       {
+        "title": "dance",
+        "type": "action",
+        "name": "dance",
+        "parameters": {
+          "dance": {"value": "pressbutton"}
+        }
+      },
+      {
         "title": "timer",
         "type": "action",
         "name": "timer",
         "parameters": {
-          "time": {"value": 0.25}
+          "time": {"value": 0.75}
+        }
+      },
+      {
+        "title": "random",
+        "type": "action",
+        "name": "random",
+        "parameters": {
+          "max": {"value": 5},
+          "min": {"value": 10}
+        },
+        "output": {
+          "number": "treadmillDuration"
         }
       },
       {
@@ -46,24 +111,30 @@
         "type": "composite",
         "name": "parallel",
         "parameters": {
-          "fail": {"value": 2},
-          "success": {"value": 2}
+          "fail": {"value": -1},
+          "success": {"value": 1}
         },
         "children": [
-          {
-            "title": "entityExists",
-            "type": "action",
-            "name": "entityExists",
-            "parameters": {
-              "entity": {"key": "reactTarget"}
-            }
-          },
           {
             "title": "timer",
             "type": "action",
             "name": "timer",
             "parameters": {
-              "time": {"value": 5}
+              "time": {"key": "treadmillDuration"}
+            }
+          },
+          {
+            "title": "inverter",
+            "type": "decorator",
+            "name": "inverter",
+            "parameters": {},
+            "child": {
+              "title": "entityExists",
+              "type": "action",
+              "name": "entityExists",
+              "parameters": {
+                "entity": {"key": "reactTarget"}
+              }
             }
           },
           {
@@ -72,48 +143,121 @@
             "name": "failer",
             "parameters": {},
             "child": {
-              "title": "controlMove",
-              "type": "action",
-              "name": "controlMove",
-              "parameters": {
-                "direction": {"key": "treadmillDirection"},
-                "run": {"value": true}
-              }
+              "title": "sequence",
+              "type": "composite",
+              "name": "sequence",
+              "parameters": {},
+              "children": [
+                {
+                  "title": "faceDirection",
+                  "type": "action",
+                  "name": "faceDirection",
+                  "parameters": {
+                    "direction": {"key": "treadmillDirection"}
+                  }
+                },
+                {
+                  "title": "controlMove",
+                  "type": "action",
+                  "name": "controlMove",
+                  "parameters": {
+                    "direction": {"key": "treadmillDirection"},
+                    "run": {"value": true}
+                  }
+                },
+                {
+                  "title": "emote",
+                  "type": "action",
+                  "name": "emote",
+                  "parameters": {
+                    "emote": {"value": "oooh"}
+                  }
+                },
+                {
+                  "title": "controlFlag",
+                  "type": "action",
+                  "name": "controlFlag",
+                  "parameters": {
+                    "bool": {"value": true}
+                  },
+                  "output": {
+                    "bool": "nochat"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "title": "inverter",
+            "type": "decorator",
+            "name": "inverter",
+            "parameters": {},
+            "child": {
+              "title": "sequence",
+              "type": "composite",
+              "name": "sequence",
+              "parameters": {},
+              "children": [
+                {
+                  "title": "starpoundsWeight",
+                  "type": "action",
+                  "name": "starpoundsWeight",
+                  "parameters": {},
+                  "output": {
+                    "number": "weight"
+                  }
+                },
+                {
+                  "title": "greaterThan",
+                  "type": "action",
+                  "name": "greaterThan",
+                  "parameters": {
+                    "first": {"key": "weight"},
+                    "second": {"value": 0}
+                  }
+                }
+              ]
             }
           }
         ]
+      },
+      {
+        "title": "emote",
+        "type": "action",
+        "name": "emote",
+        "parameters": {
+          "emote": {"value": "idle"}
+        }
+      },
+      {
+        "title": "entityExists",
+        "type": "action",
+        "name": "entityExists",
+        "parameters": {
+          "entity": {"key": "reactTarget"}
+        }
+      },
+      {
+        "title": "dance",
+        "type": "action",
+        "name": "dance",
+        "parameters": {
+          "dance": {"value": "pressbutton"}
+        }
       },
       {
         "title": "timer",
         "type": "action",
         "name": "timer",
         "parameters": {
-          "time": {"value": 0.25}
+          "time": {"value": 0.75}
         }
       },
       {
-        "title": "sequence",
-        "type": "composite",
-        "name": "sequence",
-        "parameters": {},
-        "children": [
-          {
-            "title": "entityExists",
-            "type": "action",
-            "name": "entityExists",
-            "parameters": {
-              "entity": {"key": "reactTarget"}
-            }
-          },
-          {
-            "title": "interactObject",
-            "type": "action",
-            "name": "interactObject",
-            "parameters": {
-              "entity": {"key": "reactTarget"}
-            }
-          }
-        ]
+        "title": "reaction-jumpforjoy",
+        "type": "module",
+        "name": "reaction-jumpforjoy",
+        "parameters": {}
       }
     ]
   }

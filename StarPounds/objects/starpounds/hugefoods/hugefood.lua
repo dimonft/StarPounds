@@ -71,10 +71,6 @@ function onInteraction(args)
   end)
 end
 
-function onNpcPlay(npcId)
-  onInteraction({sourceId = npcId})
-end
-
 function setEatDelay(id)
   self.eatDelayTracker[id] = self.eatDelay
 end
@@ -82,6 +78,25 @@ end
 function isHugeFood()
   return true
 end
+
+function isFattening()
+  return true
+end
+
+function npcToy.isPriority()
+  return true
+end
+
+function npcToy.isOccupied()
+  local totalBites = self.stages * self.bitesPerStage
+  local remainingBites = totalBites - (storage.stage * self.bitesPerStage + storage.bites)
+  if npcToy.npcCount >= remainingBites then
+    return true
+  end
+
+  return false
+end
+
 
 function die()
   if storage.stage < self.stages then
