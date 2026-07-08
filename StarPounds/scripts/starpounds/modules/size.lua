@@ -12,7 +12,6 @@ function size:init()
   message.setHandler("starPounds.size.maximumWeight", function(_, _, ...) return self:maximumWeight(...) end)
   message.setHandler("starPounds.size.reset", localHandler(self.reset))
 
-  local function nullFunction() end
   -- Kinda gross, but deal with it.
   local speciesData = {}
   if starPounds.type == "player" then
@@ -23,21 +22,37 @@ function size:init()
   elseif starPounds.type == "npc" then
     self.setEquippedItem = npc.setItemSlot
     self.equippedItem = npc.getItemSlot
-    self.giveItem = nullFunction
+    self.giveItem = function() end
     speciesData = starPounds.getSpeciesData(npc.species())
   end
 
   self.canGain = speciesData.weightGain
-
   self.sizeConfig = root.assetJson(speciesData.sizes)
-  -- Fetch the first supersize index for future use.
-  self.supersizeIndex = math.huge
 
+  -- Pre-fetch and cache the supersize index.
+  self.supersizeIndex = math.huge
   for i, size in ipairs(self.sizeConfig.sizes) do
     if size.yOffset then
       self.supersizeIndex = math.min(self.supersizeIndex, i)
     end
   end
+
+  -- Shared hitbox cache for NPCs.
+  local shared = getmetatable ""
+  shared.starPounds = shared.starPounds or {}
+  shared.starPounds.sizeCache = shared.starPounds.sizeCache or {}
+  shared.starPounds.sizeCache.hitboxes = shared.starPounds.sizeCache.hitboxes or {}
+
+  local visualSpecies = starPounds.getVisualSpecies()
+  -- Create/grab hitboxes for this species.
+  if not shared.starPounds.sizeCache.hitboxes[visualSpecies] then
+    shared.starPounds.sizeCache.hitboxes[visualSpecies] = {}
+    for i, size in ipairs(self.sizeConfig.sizes) do
+      shared.starPounds.sizeCache.hitboxes[visualSpecies][i] = size.controlParameters[visualSpecies] or size.controlParameters.default or {}
+    end
+  end
+
+  self.cachedHitboxes = shared.starPounds.sizeCache.hitboxes[visualSpecies]
 
   -- Scaled slots.
   -- Sucks this has to be an array but the oSB slots need to load first to cap the vanilla slot variant.
@@ -51,7 +66,10 @@ function size:init()
   -- Default slots.
   self.slots[#self.slots + 1] = {"chestCosmetic", {itemType = "chest", default = true}}
   self.slots[#self.slots + 1] = {"legsCosmetic", {itemType = "legs", default = true}}
-
+  self.equipConfigCache = {
+    chest = "", chestVariant = "", chestIndex = 1,
+    legs = "", legsIndex = 1
+  }
   -- Need this ready for other modules.
   starPounds.currentSize, starPounds.currentSizeIndex = self:get(0)
   starPounds.weightMultiplier = 1
@@ -65,7 +83,11 @@ function size:update(dt)
   starPounds.currentVariant = self:getVariant()
   starPounds.weight = storage.starPounds.weight
   starPounds.weightMultiplier = self:weightMultiplier()
-  starPounds.progress = self:progress()
+  -- Only run progress math if the weight actually changed.
+  if starPounds.weight ~= self.oldWeight then
+    starPounds.progress = self:progress()
+    self.oldWeight = starPounds.weight
+  end
 
   local sizeChange = false
   local weightChange = false
@@ -91,7 +113,6 @@ function size:update(dt)
     weightChange = true
   end
 
-  self:cursorCheck()
   self:trackVehicleCap()
   self:equip(self:equipmentConfig(starPounds.currentSizeIndex))
   self:updateStats()
@@ -110,9 +131,13 @@ function size:update(dt)
   self.oldWeightMultiplier = starPounds.weightMultiplier
 end
 
+function size:isActive()
+  return storage.starPounds.enabled and self.canGain
+end
+
 function size:gainWeight(amount, fullAmount)
   -- Don't do anything if the mod is disabled.
-  if not (storage.starPounds.enabled and self.canGain) then return 0 end
+  if not self:isActive() then return 0 end
   -- Don't do anything if weight gain is disabled.
   if starPounds.hasOption("disableGain") then return 0 end
   -- Argument sanitisation.
@@ -124,7 +149,7 @@ end
 
 function size:loseWeight(amount, fullAmount)
   -- Don't do anything if the mod is disabled.
-  if not (storage.starPounds.enabled and self.canGain) then return 0 end
+  if not self:isActive() then return 0 end
   -- Don't do anything if weight loss is disabled.
   if starPounds.hasOption("disableLoss") then return 0 end
   -- Argument sanitisation.
@@ -136,7 +161,7 @@ end
 
 function size:setWeight(amount)
   -- Don't do anything if the mod is disabled.
-  if not (storage.starPounds.enabled and self.canGain) then return end
+  if not self:isActive() then return end
   -- Argument sanitisation.
   amount = math.round(tonumber(amount) or 0, 4)
   storage.starPounds.weight = util.clamp(amount, self:minimumWeight(), self.sizeConfig.maxWeight)
@@ -144,15 +169,15 @@ end
 
 function size:offsetSize(offset)
   -- Don't do anything if the mod is disabled.
-  if not (storage.starPounds.enabled and self.canGain) then return end
+  if not self:isActive() then return end
   -- Argument sanitisation.
-  amount = math.round(tonumber(amount) or 0)
+  offset = math.round(tonumber(offset) or 0)
   self:setSize(self:sizeIndex() + offset, self:progress())
 end
 
 function size:setSize(index, progress)
   -- Don't do anything if the mod is disabled.
-  if not (storage.starPounds.enabled and self.canGain) then return 0 end
+  if not self:isActive() then return 0 end
   -- Argument sanitisation.
   index = math.floor(tonumber(index) or 1)
   progress = util.clamp(tonumber(progress) or 0, 0, 1)
@@ -179,15 +204,29 @@ end
 
 function size:get(weight)
   -- Default to base size if the mod is off.
-  if not (storage.starPounds.enabled and self.canGain) then
+  if not self:isActive() then
     return self.sizeConfig.sizes[1], 1
   end
   -- Argument sanitisation.
   weight = math.max(tonumber(weight) or 0, 0)
-
-  local sizeIndex = 0
   -- Disable supersized stages with options, or on the tech missions so you can actually complete them.
   local supersizeDisabled = starPounds.hasOption("disableSupersize") or status.uniqueStatusEffectActive("starpoundstechmissionmobility")
+
+  -- Just return the current size if the weight is still in the bounds of the current size.
+  if self.oldSizeIndex then
+    local currentSize = self.sizeConfig.sizes[self.oldSizeIndex]
+    local nextSize = self.sizeConfig.sizes[self.oldSizeIndex + 1]
+
+    local skipCurrent = currentSize.yOffset and supersizeDisabled
+    local overMin = weight >= currentSize.weight
+    local underMax = (not nextSize) or (weight < nextSize.weight)
+
+    if overMin and underMax and not skipCurrent then
+      return currentSize, self.oldSizeIndex
+    end
+  end
+
+  local sizeIndex = 0
   -- Go through all starPounds.sizes (smallest to largest) to find which size.
   for i in ipairs(self.sizeConfig.sizes) do
     local skipSize = self.sizeConfig.sizes[i].yOffset and supersizeDisabled
@@ -263,40 +302,46 @@ function size:updateStats(forceUpdate)
   local size = starPounds.currentSize
   local sizeIndex = starPounds.currentSizeIndex
   if forceUpdate then
-    -- Shouldn't activate at base size, so indexes are reduced by one.
+    local sizeStats = jarray()
     local bonusEffectiveness = self:effectScaling()
-    local applyImmunity = self:effectActivated()
-    local gritReduction = status.stat("activeMovementAbilities") <= 1 and -((starPounds.weightMultiplier - 1) * math.max(0, 1 - starPounds.getStat("knockbackResistance"))) or 0
-    local persistentEffects = {
-      {stat = "maxHealth", baseMultiplier = 1 + math.round((size.healthMultiplier - 1) * starPounds.getStat("health"), 2)},
-      {stat = "grit", amount = gritReduction},
-      {stat = "shieldHealth", effectiveMultiplier = 1 + starPounds.getStat("shieldHealth") * bonusEffectiveness},
-      {stat = "knockbackThreshold", effectiveMultiplier = 1 - gritReduction},
-      {stat = "fallDamageMultiplier", effectiveMultiplier = 1 + (size.healthMultiplier - 1) * math.min(1 - starPounds.getStat("fallDamageResistance"), 1)},
-      {stat = "physicalResistance", amount = starPounds.getStat("physicalResistance") * bonusEffectiveness},
-      {stat = "iceResistance", amount = starPounds.getStat("iceResistance") * bonusEffectiveness},
-      {stat = "poisonResistance", amount = starPounds.getStat("poisonResistance") * bonusEffectiveness},
-      {stat = "electricResistance", amount = starPounds.getStat("electricResistance") * bonusEffectiveness},
-      {stat = "fireResistance", amount = starPounds.getStat("fireResistance") * bonusEffectiveness}
-    }
-    -- Probably not optimal, but don't apply effects if they do nothing.
-    local filteredPersistentEffects = jarray()
-    for i, effect in ipairs(persistentEffects) do
-      local skip = (
-        effect.baseMultiplier and effect.baseMultiplier == 1) or (
-        effect.effectiveMultiplier and effect.effectiveMultiplier == 1) or (
-        effect.amount and effect.amount == 0
-      )
-      if not skip then filteredPersistentEffects[#filteredPersistentEffects + 1] = effect end
+    -- Max health.
+    local healthMult = 1 + math.round((size.healthMultiplier - 1) * starPounds.getStat("health"), 2)
+    if healthMult ~= 1 then
+      sizeStats[#sizeStats + 1] = {stat = "maxHealth", baseMultiplier = healthMult}
     end
-    status.setPersistentEffects("starpounds", filteredPersistentEffects)
+    -- Knockback.
+    local gritReduction = status.stat("activeMovementAbilities") <= 1 and -((starPounds.weightMultiplier - 1) * math.max(0, 1 - starPounds.getStat("knockbackResistance"))) or 0
+    if gritReduction ~= 0 then
+      sizeStats[#sizeStats + 1] = {stat = "grit", amount = gritReduction}
+      sizeStats[#sizeStats + 1] = {stat = "knockbackThreshold", effectiveMultiplier = 1 - gritReduction}
+    end
+    -- Shield health.
+    local shieldMult = 1 + starPounds.getStat("shieldHealth") * bonusEffectiveness
+    if shieldMult ~= 1 then
+      sizeStats[#sizeStats + 1] = {stat = "shieldHealth", effectiveMultiplier = shieldMult}
+    end
+    -- Fall damage.
+    local fallDamageMult = 1 + (size.healthMultiplier - 1) * math.min(1 - starPounds.getStat("fallDamageResistance"), 1)
+    if fallDamageMult ~= 1 then
+      sizeStats[#sizeStats + 1] = {stat = "fallDamageMultiplier", effectiveMultiplier = fallDamageMult}
+    end
+    -- Resistances.
+    local resistances = {"physicalResistance", "iceResistance", "poisonResistance", "electricResistance", "fireResistance"}
+    for _, resistance in ipairs(resistances) do
+      local amount = starPounds.getStat(resistance) * bonusEffectiveness
+      if amount ~= 0 then
+        sizeStats[#sizeStats + 1] = {stat = resistance, amount = amount}
+      end
+    end
+
+    status.setPersistentEffects("starpounds", sizeStats)
   end
 
   -- Check if the entity is using a morphball (Tech patch bumps this number for the morphball).
   if status.stat("activeMovementAbilities") > 1 then return end
 
-  if not baseParameters then baseParameters = mcontroller.baseParameters() end
-  local parameters = baseParameters
+  if not self.baseParameters then self.baseParameters = mcontroller.baseParameters() end
+  local parameters = self.baseParameters
 
   if forceUpdate or not (self.controlModifiers and self.controlParameters) then
     local movement = starPounds.getStat("movement")
@@ -374,7 +419,9 @@ function size:updateStats(forceUpdate)
     }
     -- Apply hitbox if we don't have the disable option checked, or we're a size that modifies our height.
     if size.yOffset or not starPounds.hasOption("disableHitbox") then
-      self.controlParameters = sb.jsonMerge(self.controlParameters, (size.controlParameters[starPounds.getVisualSpecies()] or size.controlParameters.default))
+      for k, v in pairs(self.cachedHitboxes[sizeIndex]) do
+        self.controlParameters[k] = v
+      end
     end
   end
   mcontroller.controlModifiers((not self.controlModifiersAlt or starPounds.mcontroller.groundMovement) and self.controlModifiers or self.controlModifiersAlt)
@@ -403,7 +450,7 @@ function size:getVariant(size)
     return self:getVariantOld(size)
   end
   -- Don't do anything if the mod is disabled.
-  if not (storage.starPounds.enabled and self.canGain) then return "" end
+  if not self:isActive() then return "" end
   local size = size or starPounds.currentSize
 
   local breastVariant = self:getBreastVariant(size)
@@ -493,13 +540,12 @@ function size:getHyperOffset(size)
 end
 
 function size:equipmentConfig(sizeIndex)
-  if not (storage.starPounds.enabled and self.canGain) then
-    return {
-      chest = "",
-      legs = "",
-      chestVariant = "",
-      sizeIndex = 1
-    }
+  if not self:isActive() then
+    self.equipConfigCache.chest = ""
+    self.equipConfigCache.legs = ""
+    self.equipConfigCache.chestVariant = ""
+    self.equipConfigCache.sizeIndex = 1
+    return self.equipConfigCache
   end
   -- Size cap based on occupied vehicle. Uses math.huge by default because
   -- math.min doesn't ignore nils and I'd rather not do 10 more if statements.
@@ -531,18 +577,18 @@ function size:equipmentConfig(sizeIndex)
   -- Variant based on the 'adjusted' chest size.
   local chestVariant = self:getVariant(self.sizeConfig.sizes[chestIndex])
 
-  return {
-    chest = self.sizeConfig.sizes[chestIndex].size,
-    chestVariant = chestVariant,
-    chestIndex = chestIndex,
+  self.equipConfigCache.chest = self.sizeConfig.sizes[chestIndex].size
+  self.equipConfigCache.chestVariant = chestVariant
+  self.equipConfigCache.chestIndex = chestIndex
+  self.equipConfigCache.legs = self.sizeConfig.sizes[legsIndex].size
+  self.equipConfigCache.legsIndex = legsIndex
 
-    legs = self.sizeConfig.sizes[legsIndex].size,
-    legsIndex = legsIndex
-  }
+  return self.equipConfigCache
 end
 
 function size:equip(equipConfig)
   if not self.canGain then return end
+
   -- Immobile sizes looks like blob with the mobility skill.
   if starPounds.moduleFunc("skills", "has", "preventImmobile") then
     if equipConfig.chest == "immobile" then
@@ -550,57 +596,79 @@ function size:equip(equipConfig)
       equipConfig.legs = "blob"
     end
   end
-  -- Only play the rip sound once per unequip.
-  local playedSound
+
+  -- Hash the current state of equips.
+  local targetConfigHash = equipConfig.chest .. "|" .. (equipConfig.chestVariant or "") .. "|" .. equipConfig.legs .. "|" .. (equipConfig.legsVariant or "")
+
+  self.slotCache = self.slotCache or {}
+  local playedSound = false
+
   for _, itemSlot in ipairs(self.slots) do
     local slot = itemSlot[1]
     local conf = itemSlot[2]
     local itemType = conf.itemType
     local item = self.equippedItem(slot)
-    local fitsSlot = item and (root.itemType(item.name):find(itemType) ~= nil)
-    -- If we have a generated item, check if it's invalid.
-    if item and item.parameters.size then
-      local variant = equipConfig[itemType.."Variant"] or ""
-      if item.parameters.size ~= (equipConfig[itemType]..variant) then
-        self.setEquippedItem(slot, size:makeSizeItem(itemType, equipConfig))
+
+    -- Check if the items have changed.
+    local itemChanged = not compare(self.slotCache[slot], item)
+    local sizeChanged = self.lastConfigHash ~= targetConfigHash
+
+    -- Only run lookups if the size or item data has changed.
+    if itemChanged or sizeChanged then
+      -- Only check if it fits when there's a new item.
+      if itemChanged then
+        self.slotCache[slot.."_fits"] = item and (root.itemType(item.name):find(itemType) ~= nil)
       end
-    -- If the item is not generated, try to update it. Otherwise, give it back and remove it.
-    elseif item and not item.parameters.size then
-      -- Item only needs to be updated if we're at base size and it has a size tag, or the size tag does not match our current size.
-      local needsUpdate = (equipConfig[itemType] == "" and item.parameters.scaledSize) or ((equipConfig[itemType] ~= "") and (equipConfig[itemType] ~= item.parameters.scaledSize))
-      if needsUpdate then
-        local updatedItem, canUpdate = self:updateClothing(item, itemType, equipConfig)
-        -- Manual check for oSB cosmetic slots.
-        if not fitsSlot then
-          updatedItem = self:restoreClothing(item)
-          canUpdate = false
+      local fitsSlot = self.slotCache[slot.."_fits"]
+      local variant = equipConfig[itemType.."Variant"] or ""
+      local targetSizeString = equipConfig[itemType] .. variant
+      -- If we have a generated item, check if it's invalid.
+      if item and item.parameters.size then
+        if item.parameters.size ~= targetSizeString then
+          self.setEquippedItem(slot, self:makeSizeItem(itemType, equipConfig))
         end
-        -- Apply the item if it fits, otherwise return it.
-        if canUpdate then
-          self.setEquippedItem(slot, updatedItem)
-        else
-          self.setEquippedItem(slot)
-          self.giveItem(updatedItem)
-          item = nil
-          -- Play clothing rip sound.
-          if not playedSound then
-            starPounds.moduleFunc("sound", "play", "clothingrip", 0.75)
-            playedSound = true
+      -- If the item is not generated, try to update it. Otherwise, give it back and remove it.
+      elseif item and not item.parameters.size then
+        local needsUpdate = (equipConfig[itemType] == "" and item.parameters.scaledSize) or ((equipConfig[itemType] ~= "") and (equipConfig[itemType] ~= item.parameters.scaledSize))
+
+        if needsUpdate then
+          local updatedItem, canUpdate = self:updateClothing(item, itemType, equipConfig)
+          -- Manual check for oSB cosmetic slots.
+          if not fitsSlot then
+            updatedItem = self:restoreClothing(item)
+            canUpdate = false
+          end
+          -- Apply the item if it fits, otherwise return it.
+          if canUpdate then
+            self.setEquippedItem(slot, updatedItem)
+          else
+            self.setEquippedItem(slot)
+            self.giveItem(updatedItem)
+            item = nil -- Item is now nil!
+            -- Play clothing rip sound.
+            if not playedSound then
+              starPounds.moduleFunc("sound", "play", "clothingrip", 0.75)
+              playedSound = true
+            end
           end
         end
+        -- Disable all variants if a cosmetic is in the oSB chest slot.
+        if item and (itemType == "chest") and not conf.default then
+          equipConfig.chestVariant = ""
+        end
       end
-      -- Disable all variants if a cosmetic is in the oSB chest slot.
-      if item and (itemType == "chest") and not conf.default then
-        equipConfig.chestVariant = ""
+      -- Apply the base item if the slot is empty,
+      if conf.default and not item then
+        if targetSizeString ~= "" then
+          self.setEquippedItem(slot, self:makeSizeItem(itemType, equipConfig))
+        end
       end
-    -- Otherwise, apply the base item.
-    elseif conf.default and not item then
-      local variant = equipConfig[itemType.."Variant"] or ""
-      if (equipConfig[itemType]..variant) ~= "" then
-        self.setEquippedItem(slot, size:makeSizeItem(itemType, equipConfig))
-      end
+      -- Cache the slot.
+      self.slotCache[slot] = self.equippedItem(slot)
     end
   end
+
+  self.lastConfigHash = targetConfigHash
 end
 
 function size:makeSizeItem(itemType, equipConfig)
@@ -630,21 +698,42 @@ function size:updateClothing(item, itemType, equipConfig)
   end
 
   local itemName = item.parameters.baseName or item.name
-  local newItemName = equipConfig[itemType]..itemName
-  if pcall(root.itemType, newItemName) then
+  local newItemName = equipConfig[itemType] .. itemName
+  -- This makes NPCs share their size caches too.
+  local shared = getmetatable ""
+  shared.starPounds = shared.starPounds or {}
+  shared.starPounds.sizeCache = shared.starPounds.sizeCache or {}
+  -- Initialize caches if they don't exist.
+  shared.starPounds.sizeCache.validClothing = shared.starPounds.sizeCache.validClothing or {}
+  shared.starPounds.sizeCache.hideBody = shared.starPounds.sizeCache.hideBody or {}
+  -- Locals so code is neater below.
+  local validClothingCache = shared.starPounds.sizeCache.validClothing
+  local hideBodyCache = shared.starPounds.sizeCache.hideBody
+  -- Cache item pcall lookups.
+  if validClothingCache[newItemName] == nil then
+    validClothingCache[newItemName] = pcall(root.itemType, newItemName)
+  end
+  if validClothingCache[newItemName] then
     -- If found, give the new item some parameters for easier checking.
     item.parameters.baseName = itemName
     item.parameters.scaledSize = equipConfig[itemType]
     item.name = newItemName
     return item, true
   end
-
+  -- Cache root.itemConfig lookups globally.
+  if hideBodyCache[itemName] == nil then
+    local itemData = root.itemConfig(itemName)
+    hideBodyCache[itemName] = (itemData and itemData.config and (itemData.config.hideBody or itemData.config.ignoreSize)) or false
+  end
+  -- Item config fallback.
+  local ignoresSize = (item.parameters and item.parameters.ignoreSize) or hideBodyCache[itemName]
   -- Just give items that hide the body the tags so we ignore them.
-  if equipConfig[itemType.."Index"] < self.supersizeIndex and (root.itemConfig(item).config.hideBody or configParameter(item, "ignoreSize")) then
+  if equipConfig[itemType.."Index"] < self.supersizeIndex and ignoresSize then
     item.parameters.baseName = itemName
     item.parameters.scaledSize = equipConfig[itemType]
     return item, true
   end
+
   -- Return the old, restored item if a new one could not be found.
   return self:restoreClothing(item), false
 end
@@ -668,7 +757,7 @@ end
 
 function size:trackVehicleCap()
   -- Reset if the mod is disabled.
-  if not (storage.starPounds.enabled and self.canGain) then self.anchored = nil return end
+  if not self:isActive() then self.anchored = nil return end
   local anchored, index = mcontroller.anchorState()
   if self.anchored ~= anchored then
     self.vehicleCap = nil
@@ -683,7 +772,7 @@ end
 
 function size:progress()
   -- Default to 0 if the mod is off.
-  if not (storage.starPounds.enabled and self.canGain) then
+  if not self:isActive() then
     return 0
   end
   -- Progress to next stage.
@@ -700,35 +789,15 @@ function size:stomachMultiplier()
   return self:stomachCapacity() / self.sizeConfig.stomachCapacity
 end
 
-function size:cursorCheck()
-  -- Return if not a player.
-  if not starPounds.type == "player" then return end
-  -- Check the item the player is holding.
-  if starPounds.swapSlotItem then
-    local item = starPounds.swapSlotItem
-    item.parameters = item.parameters or {}
-    -- Delete base size items.
-    if starPounds.swapSlotItem.parameters.size then
-      player.setSwapSlotItem(nil)
-      return
-    end
-    -- Restore scaled up clothing items.
-    if item.parameters.scaledSize and item.parameters.baseName then
-      item = self:restoreClothing(item)
-      player.setSwapSlotItem(item)
-    end
-  end
-end
-
 function size.reset()
-  storage.starPounds.weight = self.sizeConfig.sizes[(starPounds.moduleFunc("skills", "level", "minimumSize") + 1)].weight
+  storage.starPounds.weight = size.sizeConfig.sizes[(starPounds.moduleFunc("skills", "level", "minimumSize") + 1)].weight
   return true
 end
 
 -- Delete eventually.
 function size:getVariantOld(size)
   -- Don't do anything if the mod is disabled.
-  if not (storage.starPounds.enabled and self.canGain) then return "" end
+  if not self:isActive() then return "" end
   -- Argument sanitisation.
   local size = type(size) == "table" and size or starPounds.currentSize
   local variant = nil
