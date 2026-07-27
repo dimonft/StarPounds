@@ -11,14 +11,16 @@ shared.starPounds.configData = shared.starPounds.configData or {}
 
 shared.starPounds.configData.version = shared.starPounds.configData.version or root.assetJson("/scripts/starpounds/starpounds.config:version")
 shared.starPounds.configData.settings = shared.starPounds.configData.settings or root.assetJson("/scripts/starpounds/starpounds.config:settings")
-shared.starPounds.configData.options = shared.starPounds.configData.options or root.assetJson("/scripts/starpounds/starpounds_options.config:options")
-shared.starPounds.configData.species = shared.starPounds.configData.species or root.assetJson("/scripts/starpounds/starpounds_species.config")
+shared.starPounds.configData.options = shared.starPounds.configData.options or root.assetJson("/scripts/starpounds/options.config:options")
+shared.starPounds.configData.species = shared.starPounds.configData.species or root.assetJson("/scripts/starpounds/species.config")
+shared.starPounds.configData.openStarbound = shared.starPounds.configData.openStarbound or (root.assetJson("/player.config:genericScriptContexts").OpenStarbound and true or false)
 
 starPounds = {
   version = shared.starPounds.configData.version,
   settings = shared.starPounds.configData.settings,
   options = shared.starPounds.configData.options,
-  species = shared.starPounds.configData.species
+  species = shared.starPounds.configData.species,
+  openStarbound = shared.starPounds.configData.openStarbound
 }
 -- Mod functions
 ----------------------------------------------------------------------------------

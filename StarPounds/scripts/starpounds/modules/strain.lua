@@ -7,6 +7,15 @@ function strain:init()
   self.strain = 0
   self.strainCooldown = 0
   self.penalty = 0
+  self.modifiers = {
+    airJumpModifier = 1,
+    speedModifier = 1,
+    groundMovementModifier = 1,
+    liquidMovementModifier = 1,
+    speedModifier = 1,
+    airJumpModifier = 1,
+    liquidJumpModifier = 1
+  }
 
   status.clearPersistentEffects("starpoundsstrained")
 end
@@ -39,7 +48,7 @@ function strain:update(dt)
   -- Skip the rest if we're not a player.
   if starPounds.type ~= "player" then return end
   -- Apply tracking effect.
-  if strained and not starPounds.moduleFunc("oSB", "hasOpenStarbound") and not starPounds.hasOption("disableStrainedMeter") and not status.uniqueStatusEffectActive("starpoundsstrained") then
+  if strained and not starPounds.openStarbound and not starPounds.hasOption("disableStrainedMeter") and not status.uniqueStatusEffectActive("starpoundsstrained") then
     status.addEphemeralEffect("starpoundsstrained")
   end
   -- Move speed stuffs.
@@ -54,15 +63,10 @@ function strain:update(dt)
     end
     -- Movement.
     local modifier = math.max(1 - (penalty * self.data.penalty), 0)
-    mcontroller.controlModifiers({
-      airJumpModifier = modifier,
-      speedModifier = modifier,
-      groundMovementModifier = modifier,
-      liquidMovementModifier = modifier,
-      speedModifier = modifier,
-      airJumpModifier = modifier,
-      liquidJumpModifier = modifier
-    })
+    for k in pairs(self.modifiers) do
+      self.modifiers[k] = modifier
+    end
+    mcontroller.controlModifiers(self.modifiers)
   elseif penalty ~= self.penalty then
     status.clearPersistentEffects("starpoundsstrained")
     self.penalty = penalty

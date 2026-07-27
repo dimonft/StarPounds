@@ -152,7 +152,7 @@ function pred:eat(preyId, options, check)
   -- Skip eating if we're only checking for a valid target.
   if check then return true end
   -- Options to pass prey-side.
-  local safe = starPounds.moduleFunc("skills", "has", "voreSafe") and not world.entityCanDamage(preyId, starPounds.entityId)
+  local safe = starPounds.moduleFunc("skills", "has", "voreSafe") and not world.entityCanDamage(preyId, starPounds.entityId) and not options.unsafe
   local noDamage = options.noDamage or safe
   local willing = options.willing or safe
   local preyOptions = {
@@ -261,27 +261,33 @@ function pred:eatNearby(position, range, querySize, options, check)
 
   local preferredEntities = position and world.entityQuery(position, querySize, {order = "nearest", includedTypes = {"player", "npc", "monster"}, withoutEntityId = starPounds.entityId}) or jarray()
   local nearbyEntities = world.entityQuery(mouthPosition, range, {order = "nearest", includedTypes = {"player", "npc", "monster"}, withoutEntityId = starPounds.entityId})
-  local eatenTargets = jarray()
 
+  -- Need this so that hovering over a different entity outside the range doesn't trigger the green cursor.
+  local inRange = {}
+  for _, target in ipairs(nearbyEntities) do
+    inRange[target] = true
+  end
+
+  local eatenTargets = jarray()
   for _, prey in ipairs(storage.starPounds.stomachEntities) do
     eatenTargets[prey.id] = true
   end
 
   local function isTargetValid(target)
-    return not eatenTargets[target] and not world.lineTileCollision(mouthPosition, world.entityPosition(target), {"Null", "Block", "Dynamic", "Slippery"}) and not contains(self.data.ignoreEntities, world.entityTypeName(target))
+    return inRange[target] and not eatenTargets[target] and not world.lineTileCollision(mouthPosition, world.entityPosition(target), {"Null", "Block", "Dynamic", "Slippery"}) and not contains(self.data.ignoreEntities, world.entityTypeName(target))
   end
 
   local safeSkill = starPounds.moduleFunc("skills", "has", "voreSafe")
   for _, target in ipairs(preferredEntities) do
     if isTargetValid(target) then
-      local safe = safeSkill and not world.entityCanDamage(target, starPounds.entityId)
+      local safe = safeSkill and not world.entityCanDamage(target, starPounds.entityId) and not options.unsafe
       return {self:eat(target, options, check), true, safe} -- { can they be eaten, are they under the cursor, is it safe/endo}
     end
   end
 
   for _, target in ipairs(nearbyEntities) do
     if isTargetValid(target) then
-      local safe = safeSkill and not world.entityCanDamage(target, starPounds.entityId)
+      local safe = safeSkill and not world.entityCanDamage(target, starPounds.entityId) and not options.unsafe
       return {self:eat(target, options, check), false, safe} -- { can they be eaten, are they under the cursor, is it safe/endo}
     end
   end
@@ -292,34 +298,36 @@ function pred:bite(position, applyDamage)
 
   local params = {}
   if applyDamage then
-    local biteDamage = self.data.biteDamage
-    -- Bonus damage based on skills.
-    for _, biteSkill in ipairs(self.data.biteDamageSkills) do
-      if starPounds.moduleFunc("skills", "hasUnlocked", biteSkill[1]) then
-        biteDamage = biteDamage + biteSkill[2]
-      end
-    end
-    -- Bonus multiplier based on armour level. (Treated like weapon level for damage)
-    local playerLevel = 0
-    for _, slot in ipairs({"head", "chest", "legs"}) do
-      local item = player.equippedItem(slot)
-      if item then
-        item = root.itemConfig(player.equippedItem(slot))
-        local level = item.parameters.level and item.parameters.level or (item.config.level or 0)
-        playerLevel = playerLevel + level/3 -- Average of all 3 items.
-      end
-    end
-    biteDamage = biteDamage * root.evalFunction("weaponDamageLevelMultiplier", playerLevel)
-    -- Projectile params.
-    params = { power = biteDamage * status.stat("powerMultiplier") }
+    params = { power = self:biteDamage() }
     -- Fire event for cooldown tracking.
     starPounds.events:fire("pred:bite")
   end
 
-
   local dir = world.distance(position, starPounds.mcontroller.position)[1]
   local direction = dir > 0 and "right" or "left"
   world.spawnProjectile("starpoundsvorebite" .. direction .. (applyDamage and "damage" or ""), position, starPounds.entityId, {dir, 0}, false, params)
+end
+
+function pred:biteDamage()
+  local biteDamage = self.data.biteDamage
+  -- Bonus damage based on skills.
+  for _, biteSkill in ipairs(self.data.biteDamageSkills) do
+    if starPounds.moduleFunc("skills", "hasUnlocked", biteSkill[1]) then
+      biteDamage = biteDamage + biteSkill[2]
+    end
+  end
+  -- Bonus multiplier based on armour level. (Treated like weapon level for damage)
+  local playerLevel = 0
+  for _, slot in ipairs({"head", "chest", "legs"}) do
+    local item = player.equippedItem(slot)
+    if item then
+      item = root.itemConfig(player.equippedItem(slot))
+      local level = item.parameters.level and item.parameters.level or (item.config.level or 0)
+      playerLevel = playerLevel + level/3 -- Average of all 3 items.
+    end
+  end
+
+  return biteDamage * root.evalFunction("weaponDamageLevelMultiplier", playerLevel) * status.stat("powerMultiplier")
 end
 
 function pred:cooldown()
@@ -399,11 +407,7 @@ function pred:digestPrey(preyId, items, preyStomach)
   local doBelchParticles = doBelch and not starPounds.hasOption("disableBelchParticles")
   -- Burp/Stomach gurgle.
   if doBelch then
-    local maxWeight = starPounds.moduleFunc("size", "maximumWeight") or entity.weight
-    local belchVolume = 0.75
-    local belchPitch = 1 - math.round(((digestedEntity.base + digestedEntity.weight) - starPounds.species.default.weight)/(maxWeight * 4), 2)
-    starPounds.moduleFunc("belch", "belch", belchVolume, belchPitch)
-    starPounds.moduleFunc("stomach", "stopBelch") -- Cancel queued belch.
+    self:preyBelch(digestedEntity)
   end
 
   if doBelchParticles then
@@ -498,11 +502,7 @@ function pred:release(preyId, releaseAll)
       end
     end
     if releasedEntity and world.entityExists(releasedEntity.id, true) then
-      local maxWeight = starPounds.moduleFunc("size", "maximumWeight") or entity.weight
-      local belchVolume = 0.75
-      local belchPitch = 1 - math.round((releasedEntity.weight + storage.starPounds.weight - starPounds.species.default.weight)/(maxWeight * 4), 2)
-      starPounds.moduleFunc("belch", "belch", belchVolume, belchPitch)
-      starPounds.moduleFunc("stomach", "stopBelch") -- Cancel queued belch.
+      self:preyBelch(releasedEntity)
     end
     storage.starPounds.stomachEntities = jarray()
   else
@@ -520,11 +520,7 @@ function pred:release(preyId, releaseAll)
     -- Call back to release the entity incase the pred is releasing them.
     if releasedEntity and world.entityExists(releasedEntity.id, true) then
       local maxWeight = starPounds.moduleFunc("size", "maximumWeight") or entity.weight
-      local belchVolume = 0.75
-      local belchPitch = 1 - math.round((releasedEntity.weight + storage.starPounds.weight - starPounds.species.default.weight)/(maxWeight * 4), 2)
-      starPounds.moduleFunc("belch", "belch", belchVolume, belchPitch)
-      starPounds.moduleFunc("stomach", "stopBelch") -- Cancel queued belch.
-
+      self:preyBelch(releasedEntity)
       world.sendEntityMessage(releasedEntity.id, "starPounds.prey.released", starPounds.entityId, statusEffect)
       starPounds.events:fire("pred:releaseEntity", releasedEntity)
     end
@@ -673,6 +669,23 @@ function pred:digestClothing(item)
   -- Delete json metadata so we don't store nils.
   setmetatable(item.parameters, nil)
   return item
+end
+
+function pred:belchPitch(weight)
+  local minimumPitch = self.data.minimumBelchPitch
+  local baseWeight = entity.weight or starPounds.species.default.weight
+  local maxWeight = starPounds.moduleFunc("size", "maximumWeight") or (baseWeight * 100)
+  if weight <= baseWeight then
+    return 1
+  end
+
+  local ratio = weight / baseWeight
+  return minimumPitch + ((1 - minimumPitch) * (0.5 ^ (ratio - 1)))
+end
+
+function pred:preyBelch(prey)
+  starPounds.moduleFunc("belch", "belch", self.data.belchVolume, self:belchPitch(prey.base + prey.weight))
+  starPounds.moduleFunc("stomach", "stopBelch") -- Cancel queued belch.
 end
 
 function pred:belchParticles(prey, essence)

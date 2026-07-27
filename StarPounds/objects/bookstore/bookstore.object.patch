@@ -1,0 +1,93 @@
+[
+    [
+        {
+            "op": "add",
+            "path": "/interactData/modTab/-",
+            "value": {
+                "file": "/interface/bookstore/tabicon_starpounds.png",
+                "label": "Pounds",
+                "filter": [
+                    "starpounds"
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "op": "add",
+            "path": "/storeInventory/starpounds",
+            "value": [
+                "howapexgetfat-codex",
+                "howhylotlgetfat-codex",
+                "howglitchgetfat-codex",
+                "howaviansgetfat-codex",
+                "starpoundsvoreguide-codex",
+                "fatghost-codex",
+                "ponderous_backstory1-codex",
+                "ponderous_backstory2-codex",
+                "ponderous_lipomancylore-codex",
+                "iwrmp_protectoratelore1-codex",
+                "howapexgetfat-codex",
+                "thesunbornchildren-codex",
+                "thesunbornlineage-codex",
+                "sunbornvelhanu-codex",
+                "florantribegluttonists-codex",
+                "gluttonistlore1-codex",
+                "gluttonistlore2-codex",
+                "throgreportancients-codex",
+                "throgreportpoptops-codex",
+                "throgreportapex-codex",
+                "throgreportavians-codex",
+                "throgreportflorans-codex",
+                "throgreportglitch-codex",
+                "throgreporthumans-codex",
+                "throgreporthylotl-codex",
+                "throgreportnovakid-codex",
+                "throgreportpenguins-codex",
+                "mootant-codex",
+                "starpoundsuscmremnants-codex",
+                "mootantinstructions-codex",
+                "erchiusproblem-codex",
+                "starpoundsasranox-codex",
+                "starpoundsstowawayguide-codex"
+            ]
+        }
+    ],
+    [
+        {
+            "op": "add",
+            "path": "/storeInventory/manuals/-",
+            "value": "starpoundsracedrinks-codex"
+        }
+    ],
+    [
+        {
+            "op": "add",
+            "path": "/storeInventory/manuals/-",
+            "value": "starpoundsbrewingguide-codex"
+        }
+    ],
+
+    [
+        {
+            "op": "test",
+            "path": "/storeInventory/hiraki_corale",
+            "inverse": false
+        },
+        {
+            "op": "add",
+            "path": "/storeInventory/hiraki_corale/-",
+            "value": "fattemple-codex"
+        },
+        {
+            "op": "add",
+            "path": "/storeInventory/hiraki_corale/-",
+            "value": "townhungry-codex"
+        },
+        {
+            "op": "add",
+            "path": "/storeInventory/hiraki_corale/-",
+            "value": "florfeast-codex"
+        }
+    ]
+]

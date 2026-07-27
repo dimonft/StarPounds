@@ -11,16 +11,11 @@ function oSB:init()
   self.notConsumableCache = {}
 
   self.openStarbound = root.assetJson("/player.config:genericScriptContexts").OpenStarbound and true or false
-  starPounds.moduleFunc("options", "oSB")
   -- Load up the toolbar if we have oSB isntalled.
   if self.openStarbound and not self.loadedToolbar then
     player.interact("ScriptPane", "/interface/scripted/starpounds/toolbar/toolbar.config")
     self.loadedToolbar = true
   end
-end
-
-function oSB:hasOpenStarbound()
-  return self.openStarbound
 end
 
 function oSB:update(dt)
@@ -108,10 +103,7 @@ end
 -- Burpy.
 function oSB:belchBind()
   if input.bindDown("starpounds", "belch") then
-    local belchVolume = 0.75
-    local belchPitch = 1
-    local addMomentum = false
-    starPounds.moduleFunc("belch", "belch", belchVolume, belchPitch, addMomentum)
+    starPounds.moduleFunc("belch", "belch", self.data.belchVolume, nil, false)
   end
 end
 -- Eat/Regurgitate/Bite entities.
