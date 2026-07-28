@@ -70,7 +70,11 @@ function traits:applySpeciesTrait()
   for _, traitName in ipairs(self:speciesTraits()) do
     local trait = self.data.speciesTraits[traitName]
     for _, skill in ipairs(trait.skills or {}) do
-      starPounds.moduleFunc("skills", "forceUnlock", skill[1], skill[2])
+      local currentLevel = starPounds.moduleFunc("skills", "level", skill[1]) or 0
+      local unlockedLevel = starPounds.moduleFunc("skills", "unlockedLevel", skill[1]) or 0
+      if unlockedLevel == 0 or currentLevel >= unlockedLevel then
+        starPounds.moduleFunc("skills", "forceUnlock", skill[1], skill[2])
+      end
     end
     -- Give items to players.
     if starPounds.type == "player" and not storage.starPounds.traits.hasSpeciesTraitItems then
