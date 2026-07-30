@@ -1,5 +1,5 @@
 local canvasWidget, centerCoordinates, menuOptions, optionCount, sliceAngle, lastHoveredTarget
-local radiusInner, radiusOuter, hoveredOptionIndex, hasSelectedOption = 25, 75, nil, false
+local radiusInner, radiusOuter, radiusHover, hoveredOptionIndex, hasSelectedOption = 36, 58, 10, nil, false
 local isMouseDown = false
 local isMouseReleased = false
 local menuStack = {}
@@ -11,7 +11,7 @@ local needsRedraw = true
 local prevMouseDown = false
 
 -- Colours.
-local colours = {
+local defaultColours = {
   center = {60, 50, 80, 180},
   base = {190, 180, 200, 160},
   hover = {157, 114, 237, 180},
@@ -21,7 +21,6 @@ local colours = {
   text = {190, 180, 200},
   textHover = {255, 255, 255},
   textGrey = {170, 170, 170},
-  textDark = {40, 50, 60},
   -- Border.
   iconBorder = "beb4c888"
 }
@@ -32,13 +31,19 @@ local shared = getmetatable ""
 shared.starPoundsRadialMenu = shared.starPoundsRadialMenu or {}
 local radialMenu = shared.starPoundsRadialMenu
 
+local colours = {}
+if shared.starPoundsRadialMenu.colours then
+  for k, v in pairs(defaultColours) do
+    colours[k] = shared.starPoundsRadialMenu.colours[k] or v
+  end
+else
+  colours = defaultColours
+end
+
 local function loadMenu(newOptionsList)
   menuOptions = newOptionsList
   optionCount = #menuOptions
   if optionCount == 0 then return pane.dismiss() end
-
-  radiusInner = 36
-  radiusOuter = radiusInner + 22
 
   hoveredOptionIndex = nil
   isMouseDown = false
@@ -165,7 +170,7 @@ function update(dt)
     end
 
     if targetIndex then
-      local maxRadius = (targetIndex == previousHoveredIndex) and (radiusOuter + 10) or radiusOuter
+      local maxRadius = (targetIndex == previousHoveredIndex) and (radiusOuter + radiusHover) or radiusOuter
 
       if distanceFromCenter <= maxRadius then
         hoveredOptionIndex = targetIndex
@@ -211,7 +216,8 @@ function update(dt)
       hasSelectedOption = true
 
       radialMenu.result = {
-        selection = selectedOption.name,
+        selection = selectedOption.action or selectedOption.name,
+        data = selectedOption.data,
         type = config.getParameter("type"),
         instant = selectedOption.instant,
         keepOpen = selectedOption.keepOpen,
@@ -257,7 +263,7 @@ function update(dt)
     local endAngle = currentOption.endAngle
     local midpointAngle = currentOption.midpointAngle
 
-    local currentOuterRadius = isHovered and (radiusOuter + 5) or radiusOuter
+    local currentOuterRadius = isHovered and (radiusOuter + radiusHover) or radiusOuter
 
     local sliceColour = isPressed and (currentOption.pressColour or colours.press) or (isHovered and (currentOption.hoverColour or colours.hover) or (currentOption.baseColour or colours.base))
 
@@ -271,8 +277,8 @@ function update(dt)
     local displayText = currentOption.pretty or currentOption.name or ""
 
     if currentOption.icon then
-      local iconPos = isHovered and {elementPosition[1], elementPosition[2] + 4} or elementPosition
-      canvasWidget:drawImage(currentOption.icon..string.format(iconBorderDirective, currentOption.iconBorderColour or colours.iconBorder), iconPos, nil, nil, true)
+      local iconPosition = (isHovered and displayText ~= "") and {elementPosition[1], elementPosition[2] + 4} or elementPosition
+      canvasWidget:drawImage(currentOption.icon..string.format(iconBorderDirective, currentOption.iconBorderColour or colours.iconBorder), iconPosition, nil, nil, true)
 
       if isHovered then
         local textPosition = {elementPosition[1], elementPosition[2] - 8}
@@ -280,7 +286,7 @@ function update(dt)
       end
     else
       -- Fallback to the title/name if there's no icon.
-      canvasWidget:drawText("^shadow,set;"..displayText, {position = elementPosition, horizontalAnchor = "mid", verticalAnchor = "mid"}, 8, isHovered and colours.textHover or colours.textDark)
+      canvasWidget:drawText("^shadow,set;"..displayText, {position = elementPosition, horizontalAnchor = "mid", verticalAnchor = "mid"}, 8, isHovered and colours.textHover or colours.textGrey)
     end
   end
   -- Inner circle.

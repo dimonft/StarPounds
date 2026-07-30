@@ -9,10 +9,11 @@ function pred:init()
   message.setHandler("starPounds.pred.digestPrey", function(_, _, ...) return self:digestPrey(...) end)
   message.setHandler("starPounds.pred.struggle", function(_, _, ...) return self:struggle(...) end)
   message.setHandler("starPounds.pred.release", function(_, _, ...) return self:release(...) end)
+  message.setHandler("starPounds.pred.queueRelease", function(_, _, ...) return self:queueRelease(...) end)
 
   self.voreCooldown = 0
-
   self.hasEntity = false
+  self.releaseTimer = 0
 
   self.struggleCooldown = 0
   self.storedStruggleStrength = 0
@@ -35,6 +36,8 @@ function pred:update(dt)
   end
 
   self.hasEntity = storage.starPounds.enabled and (#storage.starPounds.stomachEntities > 0)
+  -- Check queued releases.
+  self:releasing(dt)
 end
 
 function pred:digest(dt)
@@ -53,10 +56,13 @@ function pred:digest(dt)
   local protectionPierce = math.max(0, starPounds.getStat("voreArmorPiercing"))
   -- Reduce health of all entities.
   for _, prey in pairs(storage.starPounds.stomachEntities) do
-    if prey.safe then
-      world.sendEntityMessage(prey.id, "starPounds.prey.healing", starPounds.entityId, starPounds.getStat("voreHealing") * dt)
-    else
-      world.sendEntityMessage(prey.id, "starPounds.prey.digesting", starPounds.entityId, (damageMultiplier/vorePenalty) * dt, protectionPierce)
+    -- Ignore prey about to be released. (Throat, not belly)
+    if not prey.releasing then
+      if prey.safe then
+        world.sendEntityMessage(prey.id, "starPounds.prey.healing", starPounds.entityId, starPounds.getStat("voreHealing") * dt)
+      else
+        world.sendEntityMessage(prey.id, "starPounds.prey.digesting", starPounds.entityId, (damageMultiplier/vorePenalty) * dt, protectionPierce)
+      end
     end
   end
 end
@@ -439,7 +445,7 @@ function pred:struggle(preyId, struggleStrength, escape)
       local preyWeight = (prey.base or 0) + (prey.weight or 0)
       local struggleStrength = root.evalFunction2("protection", struggleStrength, status.stat("protection"))
       local escapeChance = starPounds.getStat("voreEscapeChance") * struggleStrength
-      local released = false
+      local releasing = false
       -- If struggles are on cooldown, store the 'strength' and weight and apply it to the next valid one.
       if self.struggleCooldown > 0 then
         self.storedStruggleStrength = self.storedStruggleStrength + struggleStrength
@@ -454,14 +460,13 @@ function pred:struggle(preyId, struggleStrength, escape)
       if escape and (math.random() < escapeChance) then
         local canEscape = (world.entityType(preyId) == "player") or (preyHealthPercent > self.data.inescapableHealth)
         if canEscape and starPounds.moduleFunc("strain", "get") == 1 then
+          releasing = self:queueRelease(preyId)
           -- Trigger cooldown for vore.
-          self:cooldownStart()
-          released = self:release(preyId)
-          starPounds.events:fire("pred:entityEscape", released)
+          prey.escaping = true
         end
       end
 
-      if not (released or starPounds.hasOption("disablePredDigestion")) then
+      if not (releasing or starPounds.hasOption("disablePredDigestion")) then
         -- 1 second worth of digestion per struggle.
         local damageMultiplier = math.max(1, status.stat("powerMultiplier")) * starPounds.getStat("voreDamage")
         local protectionPierce = math.max(0, 1 - starPounds.getStat("voreArmorPiercing"))
@@ -486,7 +491,7 @@ function pred:struggle(preyId, struggleStrength, escape)
   end
 end
 
-function pred:release(preyId, releaseAll)
+function pred:release(preyId, releaseAll, noBelch)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
   -- Argument sanitisation.
@@ -501,7 +506,7 @@ function pred:release(preyId, releaseAll)
         world.sendEntityMessage(prey.id, "starPounds.prey.released", starPounds.entityId, statusEffect)
       end
     end
-    if releasedEntity and world.entityExists(releasedEntity.id, true) then
+    if releasedEntity and world.entityExists(releasedEntity.id, true) and not noBelch then
       self:preyBelch(releasedEntity)
     end
     storage.starPounds.stomachEntities = jarray()
@@ -520,13 +525,99 @@ function pred:release(preyId, releaseAll)
     -- Call back to release the entity incase the pred is releasing them.
     if releasedEntity and world.entityExists(releasedEntity.id, true) then
       local maxWeight = starPounds.moduleFunc("size", "maximumWeight") or entity.weight
-      self:preyBelch(releasedEntity)
+      if not noBelch then
+        self:preyBelch(releasedEntity)
+      end
+
+      if releasedEntity.escaping then
+        self:cooldownStart()
+        starPounds.events:fire("pred:entityEscape", releasedEntity.id)
+      end
+
       world.sendEntityMessage(releasedEntity.id, "starPounds.prey.released", starPounds.entityId, statusEffect)
       starPounds.events:fire("pred:releaseEntity", releasedEntity)
     end
   end
   -- Callback.
   if releasedEntity then return true end
+end
+
+function pred:queueRelease(preyId, releaseAll)
+  -- Don't do anything if the mod is disabled.
+  if not storage.starPounds.enabled then return false end
+  -- Don't do anything if there's no eaten entities.
+  if not self.hasEntity then return false end
+
+  preyId = tonumber(preyId)
+  local releasing = false
+
+  if releaseAll then
+    for _, prey in ipairs(storage.starPounds.stomachEntities) do
+      if not prey.releasing then
+        world.sendEntityMessage(prey.id, "starPounds.prey.releasing", self.data.releaseTime)
+        prey.releasing = true
+        releasing = true
+      end
+    end
+  elseif self.releaseTimer == 0 then
+    for i = #storage.starPounds.stomachEntities, 1, -1 do
+      local prey = storage.starPounds.stomachEntities[i]
+      if not prey.noRelease or (starPounds.type == "player" and player.isAdmin()) then
+        if (not preyId) or (prey.id == preyId) then
+          if not prey.releasing then
+            world.sendEntityMessage(prey.id, "starPounds.prey.releasing", self.data.releaseTime)
+            prey.releasing = true
+            releasing = true
+            break
+          end
+        end
+      end
+    end
+  end
+  -- Start timer and play sound if this is the first prey.
+  if releasing then
+    if self.releaseTimer == 0 then
+      self.releaseTimer = self.data.releaseTime
+      starPounds.moduleFunc("sound", "play", "swallow", 1, util.randomInRange(self.data.releasePitchRange), 1)
+    end
+    return true
+  end
+
+  return false
+end
+
+function pred:releasing(dt)
+  -- Don't do anything if the mod is disabled.
+  if not storage.starPounds.enabled then return end
+  -- Skip if the timer isn't active.
+  if not self.releaseTimer or self.releaseTimer == 0 then return end
+  -- Reset timer and cancel if the stomach is empty
+  if not self.hasEntity then
+    self.releaseTimer = 0
+    return
+  end
+
+  self.releaseTimer = math.max(self.releaseTimer - dt, 0)
+  if self.releaseTimer == 0 then
+    local released = false
+    -- Backwards so removing stuff does not explode the loop.
+    for i = #storage.starPounds.stomachEntities, 1, -1 do
+      local prey = storage.starPounds.stomachEntities[i]
+      if prey.releasing then
+        prey.releasing = nil
+        -- Sanity check.
+        if world.entityExists(prey.id, true) then
+          if self:release(prey.id, false, released) then
+            released = true
+          end
+        end
+      end
+    end
+  end
+end
+
+function pred:releaseProgress()
+  return 1 - (self.releaseTimer / self.data.releaseTime)
 end
 
 function pred:preyCheck(dt)

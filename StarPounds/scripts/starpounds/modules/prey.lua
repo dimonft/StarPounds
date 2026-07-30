@@ -3,6 +3,7 @@ local prey = starPounds.module:new("prey")
 function prey:init()
   message.setHandler("starPounds.prey.swallowed", function(_, _, ...) return self:swallowed(...) end)
   message.setHandler("starPounds.prey.released", function(_, _, ...) return self:released(...) end)
+  message.setHandler("starPounds.prey.releasing", function(_, _, ...) return self:releasing(...) end)
   message.setHandler("starPounds.prey.digesting", function(_, _, ...) return self:digesting(...) end)
   message.setHandler("starPounds.prey.healing", function(_, _, ...) return self:healing(...) end)
   message.setHandler("starPounds.prey.newPred", function(_, _, ...) return self:newPred(...) end)
@@ -35,6 +36,15 @@ function prey:update(dt)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
   self:eaten(dt)
+
+  if self.releaseTimer then
+    if not storage.starPounds.pred then
+      self.releaseTimer = nil
+      self.releaseTime = nil
+    else
+      self.releaseTimer = math.max(self.releaseTimer - dt, 0)
+    end
+  end
 end
 
 function prey:eaten(dt)
@@ -224,8 +234,8 @@ function prey:playerStruggle(dt)
   local canStruggle = not self.struggled and not status.resourceLocked("energy")
   self.cycle = vec2.lerp(5 * dt, (self.cycle or {0, 0}), vec2.mul({horizontalDirection, verticalDirection}, canStruggle and 1 or 0.25))
   local struggleMagnitude = vec2.mag(self.cycle)
-  -- Spectating.
   local predPosition = world.entityPosition(storage.starPounds.pred)
+  -- Spectating.
   if storage.starPounds.spectatingPred then
     predPosition = vec2.add(predPosition, {0, math.sin(os.clock() * 0.5) * 0.25 - 0.25})
     local distance = world.distance(predPosition, starPounds.mcontroller.position)
@@ -263,7 +273,12 @@ function prey:playerStruggle(dt)
   end
   local predPosition = vec2.add(predPosition, vec2.mul(self.cycle, 2 + (math.sin((os.clock() - self.startedStruggling) * 2) + 1)/4))
   -- Slowly drift up/down.
-  predPosition = vec2.add(predPosition, {0, math.sin(os.clock() * 0.5) * 0.25 - 0.25})
+  local driftOffset = math.sin(os.clock() * 0.5) * 0.25 - 0.25
+  -- Slowly move back upwards during release.
+  if self.releaseTimer then
+    driftOffset = driftOffset * (self.releaseTimer / self.releaseTime)
+  end
+  predPosition = vec2.add(predPosition, driftOffset)
   local distance = world.distance(predPosition, starPounds.mcontroller.position)
   mcontroller.translate(vec2.lerp(10 * dt, {0, 0}, distance))
   -- No air.
@@ -329,6 +344,20 @@ function prey:monsterStruggle(dt)
   end
 end
 
+function prey:releasing(time)
+  -- Don't do anything if we're not eaten.
+  if not storage.starPounds.pred then return end
+  -- Argument sanitisation.
+  time = tonumber(time)
+  -- Don't bother for NPCs/Monsters
+  if not (starPounds.type == "player") then
+    return
+  end
+
+  self.releaseTimer = time
+  self.releaseTime = time
+end
+
 function prey:released(source, overrideStatus)
   -- Don't do anything if we're not eaten.
   if not storage.starPounds.pred then return end
@@ -351,6 +380,10 @@ function prey:released(source, overrideStatus)
   storage.starPounds.spectatingPred = nil
   -- Reset struggle cycle.
   self.cycle = nil
+  -- Remove release timer.
+  self.releaseTimer = nil
+  self.releaseTime = nil
+  -- Remove statuses.
   status.clearPersistentEffects("starpoundseaten")
   status.removeEphemeralEffect("starpoundseaten")
   entity.setDamageOnTouch(true)

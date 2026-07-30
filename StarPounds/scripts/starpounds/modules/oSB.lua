@@ -120,7 +120,7 @@ function oSB:voreBinds(dt)
   end
 
   if input.bindDown("starpounds", "voreRegurgitate") then
-    starPounds.moduleFunc("pred", "release")
+    starPounds.moduleFunc("pred", "queueRelease")
   end
 
   if input.bindDown("starpounds", "voreBite") then

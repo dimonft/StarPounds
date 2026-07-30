@@ -1,6 +1,6 @@
 function init()
   entityId = entity.id()
-  incrementType = string.format("starPounds.%s", effect.getParameter("type", "feed"))
+  incrementType = string.format("starPounds.%s", effect.getParameter("type", "stomach.feed"))
   rate = effect.getParameter("rate", 5)
   data = effect.getParameter("data")
 end

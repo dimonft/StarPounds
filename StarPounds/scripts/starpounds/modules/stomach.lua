@@ -239,14 +239,20 @@ function stomach:get()
 
   -- Add how heavy every entity in the stomach is to the counter.
   for _, v in pairs(storage.starPounds.stomachEntities) do
+    local multiplier = 1
+    -- Reduce contribution to stomach based on release progress.
+    if v.releasing then
+      multiplier = 1 - (starPounds.moduleFunc("pred", "releaseProgress") or 0) * self.data.releasingPreyCapacityReduction
+    end
+    
     local foodConfig = starPounds.moduleFunc("food", "foodType", v.foodType)
-    contents = contents + (v.base * foodConfig.multipliers.capacity) + v.stomach
-    totalAmount = totalAmount + v.base + v.stomach
+    contents = contents + ((v.base * foodConfig.multipliers.capacity) + v.stomach) * multiplier
+    totalAmount = totalAmount + (v.base + v.stomach) * multiplier
     -- Weight has it's own food type.
     if v.weight > 0 then
       local foodConfig = starPounds.moduleFunc("food", "foodType", v.fatType)
-      contents = contents + (v.weight * foodConfig.multipliers.capacity)
-      totalAmount = totalAmount + v.weight
+      contents = contents + (v.weight * foodConfig.multipliers.capacity) * multiplier
+      totalAmount = totalAmount + v.weight * multiplier
     end
   end
 
