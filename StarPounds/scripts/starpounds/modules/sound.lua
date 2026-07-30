@@ -43,11 +43,11 @@ function sound:play(soundPool, volume, pitch, loops)
   -- Hehe.
   if self.secret then self:applySecret(soundPool) end
 
-  world.sendEntityMessage(starPounds.entityId, "starPounds.handler_playSound", soundPool, loops)
+  world.sendEntityMessage(starPounds.entityId, "starPounds.sound.handler.playSound", soundPool, loops)
 end
 
 function sound:stop(soundPool)
-  world.sendEntityMessage(starPounds.entityId, "starPounds.handler_stopSound", soundPool)
+  world.sendEntityMessage(starPounds.entityId, "starPounds.sound.handler.stopSound", soundPool)
 end
 
 function sound:setVolume(soundPool, volume, rampTime)
@@ -59,7 +59,7 @@ function sound:setVolume(soundPool, volume, rampTime)
   -- Volume option.
   volume = volume * (starPounds.getOption("volume") / 100) ^ 0.5
 
-  world.sendEntityMessage(starPounds.entityId, "starPounds.handler_setSoundVolume", soundPool, volume, rampTime)
+  world.sendEntityMessage(starPounds.entityId, "starPounds.sound.handler.setSoundVolume", soundPool, volume, rampTime)
 end
 
 function sound:setPitch(soundPool, pitch, rampTime)
@@ -69,7 +69,7 @@ function sound:setPitch(soundPool, pitch, rampTime)
     pitch = 1
   end
 
-  world.sendEntityMessage(starPounds.entityId, "starPounds.handler_setSoundPitch", soundPool, pitch, rampTime)
+  world.sendEntityMessage(starPounds.entityId, "starPounds.sound.handler.setSoundPitch", soundPool, pitch, rampTime)
 end
 
 function sound:applySecret(soundPool)
@@ -81,7 +81,7 @@ function sound:applySecret(soundPool)
     secretPool = {"/sfx/starpounds/other/secret" .. self.secretIndex[soundPool] .. ".ogg"}
     self.secretIndex[soundPool] = (self.secretIndex[soundPool] % 8) + 1
   end
-  world.sendEntityMessage(starPounds.entityId, "starPounds.handler_setSoundPool", soundPool, secretPool)
+  world.sendEntityMessage(starPounds.entityId, "starPounds.sound.handler.setSoundPool", soundPool, secretPool)
 end
 
 starPounds.modules.sound = sound
