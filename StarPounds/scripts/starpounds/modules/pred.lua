@@ -616,6 +616,10 @@ function pred:releasing(dt)
   end
 end
 
+function pred:releaseProgress()
+  return 1 - (self.releaseTimer / self.data.releaseTime)
+end
+
 function pred:preyCheck(dt)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
