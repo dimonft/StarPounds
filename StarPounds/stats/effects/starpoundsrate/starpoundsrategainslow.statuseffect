@@ -1,7 +1,7 @@
 {
   "name": "starpoundsrategainslow",
   "effectConfig": {
-    "type": "gainWeight",
+    "type": "size.gainWeight",
     "rate": 1
   },
   "defaultDuration": 5,
