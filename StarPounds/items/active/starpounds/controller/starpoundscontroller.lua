@@ -142,7 +142,7 @@ function buildActions()
       onClick = function(self, shiftHeld)
         -- Release.
         if shiftHeld then
-          starPounds.moduleFunc("pred", "release")
+          starPounds.moduleFunc("pred", "queueRelease")
           return
         end
 
