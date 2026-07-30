@@ -1,11 +1,11 @@
 {
-  "projectileName" : "starpoundsvorebiteleft",
-  "image" : "starpoundsvorebite.png",
-  "power" : 0,
-  "speed" : 0,
+  "projectileName": "starpoundsvorebiteleft",
+  "image": "starpoundsvorebite.png",
+  "power": 0,
+  "speed": 0,
   "periodicActions": [
-    { "time" : 0, "repeat" : false, "action" : "loop", "count" : 5, "body": [
-      { "action": "particle", "specification" : {
+    { "time": 0, "repeat": false, "action": "loop", "count": 5, "body": [
+      { "action": "particle", "specification": {
         "type": "ember",
         "size": 1.25,
         "color": [60, 150, 224, 200],
@@ -20,19 +20,23 @@
         "variance": {"initialVelocity": [5, 3], "size": 0.25, "position": [1, 1], "timeToLive": 0.25}
       }}
     ]},
-    { "time" : 0, "repeat" : false, "action" : "particle", "specification" : {
-      "type" : "animated",
-      "animation" : "/animations/vorebite/starpoundsvorebite.animation",
-      "size" : 0.75,
+    { "time": 0, "repeat": false, "action": "particle", "specification": {
+      "type": "animated",
+      "animation": "/animations/vorebite/starpoundsvorebite.animation",
+      "collidesForeground": false,
+      "size": 0.75,
       "destructionAction": "fade",
-      "destructionTime" : 0.1,
-      "timeToLive" : 0.15,
-      "flip" : true
+      "destructionTime": 0.1,
+      "timeToLive": 0.15,
+      "flip": true
     }}
   ],
-  "piercing" : true,
-  "flippable" : true,
-  "damageKind" : "hidden",
-  "onlyHitTerrain" : true,
-  "timeToLive" : 0.25
+  "movementSettings": {
+    "collisionEnabled": false
+  },
+  "piercing": true,
+  "flippable": true,
+  "damageKind": "hidden",
+  "onlyHitTerrain": true,
+  "timeToLive": 0.25
 }

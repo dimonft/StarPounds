@@ -298,8 +298,9 @@ function buildActions()
       onClick = function(self, shiftHeld)
         if self.cooldown == 0 and not starPounds.hasOption("disablePredBite") then
           local target = getVoreTargetPosition(self)
+          local collision = world.lineCollision(starPounds.mcontroller.mouthPosition, target)
           starPounds.moduleFunc("pred", "cooldownStart")
-          starPounds.moduleFunc("pred", "bite", target, true)
+          starPounds.moduleFunc("pred", "bite", collision or target, true)
           self.cooldown = starPounds.moduleFunc("pred", "cooldownTime")
         end
       end,
@@ -508,13 +509,13 @@ end
 function getVoreTargetPosition(self)
   local mouthPosition = {starPounds.mcontroller.mouthPosition[1], starPounds.mcontroller.mouthPosition[2] + (starPounds.currentSize.yOffset or 0)}
   local aimPosition = activeItem.ownerAimPosition()
-  local posMag = math.min(world.magnitude(mouthPosition, aimPosition), self.range - self.querySize - (starPounds.currentSize.yOffset or 0))
-  local distVec = world.distance(aimPosition, mouthPosition)
-  local distMag = world.magnitude(aimPosition, mouthPosition) + 0.001
+  local maxMagnitude = math.min(world.magnitude(mouthPosition, aimPosition), self.range - self.querySize - (starPounds.currentSize.yOffset or 0))
+  local distance = world.distance(aimPosition, mouthPosition)
+  local magnitude = world.magnitude(aimPosition, mouthPosition) + 0.001
 
   return {
-    mouthPosition[1] + (distVec[1] / distMag * math.max(posMag, 0)),
-    mouthPosition[2] + (distVec[2] / distMag * math.max(posMag, 0))
+    mouthPosition[1] + (distance[1] / magnitude * math.max(maxMagnitude, 0)),
+    mouthPosition[2] + (distance[2] / magnitude * math.max(maxMagnitude, 0))
   }
 end
 
