@@ -43,7 +43,6 @@ function update(dt)
   end
   -- Don't bother rotating monsters.
   if self.entityType == "monster" then return end
-
   -- Spin if moving, level out if we're on the ground (or the parameter is disabled), stop rotation if we're on the ground and not moving.
   if speed > 0.5 then
     local targetAngularVelocity = (-velocity[1] / self.radius) * self.spinMultiplier
