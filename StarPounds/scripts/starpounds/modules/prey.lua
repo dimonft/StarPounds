@@ -78,8 +78,6 @@ function prey:eaten(dt)
   end
   -- Disable knockback while eaten.
   entity.setDamageOnTouch(false)
-  -- Stop entities trying to move.
-  mcontroller.clearControls()
   -- Stun the entity.
   if status.isResource("stunned") then
     status.setResource("stunned", math.max(status.resource("stunned"), dt))
@@ -105,7 +103,7 @@ function prey:eaten(dt)
   -- Set velocity to zero.
   mcontroller.setVelocity({0, 0})
   -- Stop the prey from colliding/moving normally.
-  mcontroller.controlParameters({ airFriction = 0, groundFriction = 0, liquidFriction = 0, collisionEnabled = false, gravityEnabled = false })
+  mcontroller.controlParameters(self.data.controlParameters)
 end
 
 function prey:swallowed(pred, options)
@@ -202,10 +200,9 @@ function prey:swallowed(pred, options)
       monster.setDamageSources()
     end
   end
+  -- Disable status immunity so we can actually apply the eaten effect if needed.
+  status.setPersistentEffects("starpoundseaten", {{stat = "statusImmunity", effectiveMultiplier = 0}})
   -- Make the entity immune to outside damage/invisible, and disable regeneration.
-  status.setPersistentEffects("starpoundseaten", {
-    {stat = "statusImmunity", effectiveMultiplier = 0}
-  })
   status.addEphemeralEffect("starpoundseaten")
   local stomach = starPounds.moduleFunc("stomach", "get")
   return {
@@ -358,7 +355,7 @@ function prey:releasing(time)
   self.releaseTime = time
 end
 
-function prey:released(source, overrideStatus)
+function prey:released(source, overrideStatus, direction)
   -- Don't do anything if we're not eaten.
   if not storage.starPounds.pred then return end
   -- Argument sanitisation.
@@ -418,6 +415,30 @@ function prey:released(source, overrideStatus)
     mcontroller.setPosition(world.entityPosition(pred))
     -- Make them wet.
     status.addEphemeralEffect(overrideStatus or "starpoundsslimy")
+    -- Funny eject.
+    if direction then
+      -- Make humanoids always 'face' towards the ground (unless they're wide).
+      local duration
+      local gravityMult = world.gravity(starPounds.mcontroller.position) / 80
+      if starPounds.type ~= "monster" then
+        -- Extra spinny in space for humanoids.
+        if gravityMult == 0 then duration = 3 end
+        local rotation = 0
+        if (starPounds.currentSize and not starPounds.currentSize.wide) or not starPounds.currentSize then
+          rotation = (direction < 0) and (math.pi/3) or (-math.pi/3)
+        end
+        mcontroller.setRotation(rotation)
+      end
+      status.addEphemeralEffect("ragdoll", duration)
+      local predVelocity = world.entityVelocity(pred)
+      -- Ignore gravity.
+      if gravityMult > 0 then
+        predVelocity[2] = math.max(predVelocity[2], 0)
+      end
+      predVelocity = {predVelocity[1], math.max(predVelocity[2], 0)}
+      mcontroller.setVelocity(vec2.add(predVelocity, {direction * 10, gravityMult * 10}))
+      mcontroller.controlFace(direction)
+    end
     -- Behaviour damage trigger.
     if not options.willing then
       self.notifyDamage(pred)
