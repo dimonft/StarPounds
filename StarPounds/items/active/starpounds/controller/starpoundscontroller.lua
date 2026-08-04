@@ -218,7 +218,7 @@ function buildActions()
       end,
 
       findValidTarget = function(self)
-        if not starPounds.isEnabled() or starPounds.hasOption("disablePrey") or world.getProperty("nonCombat") then
+        if not starPounds.isEnabled() or starPounds.hasOption("disablePrey") then
           return nil
         end
 
@@ -257,7 +257,8 @@ function buildActions()
       onClick = function(self, shiftHeld)
         local validTarget = self:findValidTarget()
         if validTarget then
-          world.sendEntityMessage(validTarget, "starPounds.pred.eat", activeItem.ownerEntityId(), {ignoreSkills = true, ignoreCapacity = true, ignoreEnergyRequirement = true, energyMultiplier = 0})
+          local nonCombat = world.getProperty("nonCombat")
+          world.sendEntityMessage(validTarget, "starPounds.pred.eat", activeItem.ownerEntityId(), {ignoreSkills = true, ignoreCapacity = true, ignoreEnergyRequirement = true, energyMultiplier = 0, willing = nonCombat, noDamage = nonCombat, ignoreProtection = nonCombat})
         end
       end,
 
