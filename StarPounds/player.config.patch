@@ -1,42 +1,52 @@
 [
-  {
-    "op": "add",
-    "path": "/species/-",
-    "value": "throg"
-  },{
-    "op": "add",
-    "path": "/defaultCodexes/throg",
-    "value": [ "protectorate1", "protectorate2" ]
-  },{
-    "op": "add",
-    "path": "/species/-",
-    "value": "mootant"
-  },{
-    "op": "add",
-    "path": "/defaultCodexes/mootant",
-    "value":
-      [ "protectorate1", "protectorate2" ]
-  },{
-    "op": "add",
-    "path": "/genericScriptContexts/starpounds",
-    "value": "/scripts/starpounds/loaders/player.lua"
-  },{
-    "op": "add",
-    "path": "/companionsConfig/scripts/-",
-    "value": "/scripts/companions/starpounds.lua"
-  },{
-    "op": "add",
-    "path": "/defaultBlueprints/tier1/-",
-    "value": {
-      "item": "starpoundsinfusiontable"
+  // Species.
+  [
+    {
+      "op": "add",
+      "path": "/species/-",
+      "value": "throg"
+    },{
+      "op": "add",
+      "path": "/defaultCodexes/throg",
+      "value": [ "protectorate1", "protectorate2" ]
+    },{
+      "op": "add",
+      "path": "/species/-",
+      "value": "mootant"
+    },{
+      "op": "add",
+      "path": "/defaultCodexes/mootant",
+      "value":
+        [ "protectorate1", "protectorate2" ]
     }
-  },
-  //Still Stuff
-  {
-    "op": "add",
-    "path": "/defaultBlueprints/tier1/-",
-    "value": {
-      "item": "starpoundsstill"
+  ],
+  // Crafting.
+  [
+    {
+      "op": "add",
+      "path": "/defaultBlueprints/tier1/-",
+      "value": {
+        "item": "starpoundsinfusiontable"
+      }
+    },
+    {
+      "op": "add",
+      "path": "/defaultBlueprints/tier1/-",
+      "value": {
+        "item": "starpoundsstill"
+      }
     }
-  }
+  ],
+  // Scripts.
+  [
+    {
+      "op": "add",
+      "path": "/genericScriptContexts/starpounds",
+      "value": "/scripts/starpounds/loaders/player.lua"
+    },{
+      "op": "add",
+      "path": "/companionsConfig/scripts/-",
+      "value": "/scripts/companions/starpounds.lua"
+    }
+  ]
 ]
