@@ -230,7 +230,7 @@ end
 ----------------------------------------------------------------------------------
 starPounds.toggleEnable = function()
   starPounds.moduleFunc("prey", "released")
-  starPounds.moduleFunc("pred", "release", nil, true)
+  starPounds.moduleFunc("pred", "release", nil, true, true)
   -- Do a barrel roll (just flip the boolean).
   storage.starPounds.enabled = not storage.starPounds.enabled
   -- Make sure the movement penalty stuff gets reset as well.
