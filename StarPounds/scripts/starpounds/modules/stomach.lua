@@ -244,7 +244,7 @@ function stomach:get()
     if v.releasing then
       multiplier = 1 - (starPounds.moduleFunc("pred", "releaseProgress") or 0) * self.data.releasingPreyCapacityReduction
     end
-    
+
     local foodConfig = starPounds.moduleFunc("food", "foodType", v.foodType)
     contents = contents + ((v.base * foodConfig.multipliers.capacity) + v.stomach) * multiplier
     totalAmount = totalAmount + (v.base + v.stomach) * multiplier
@@ -391,10 +391,7 @@ function stomach:digest(dt, isGurgle, isBelch)
     end
   end
   -- Add experience.
-  self.digestionExperience = self.digestionExperience + experience
-  local gainedExperience = math.floor(self.digestionExperience)
-  self.digestionExperience = self.digestionExperience - gainedExperience
-  starPounds.moduleFunc("experience", "add", gainedExperience)
+  starPounds.moduleFunc("experience", "add", experience)
 end
 
 function stomach:digestFood(foodType, isGurgle, isBelch, dt, statCache)
