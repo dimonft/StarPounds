@@ -100,7 +100,8 @@
     "primaryScriptSources" : [
       "/stats/npc_primary.lua",
       "/scripts/vec2.lua",
-      "/npcs/starpounds/scripts/shiro_primary.lua"
+      "/npcs/starpounds/scripts/shiro_primary.lua",
+      "/stats/apple_npcKnockbackFix.lua"
     ]
   }
 }
