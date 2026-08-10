@@ -5809,12 +5809,20 @@
                  "height":8,
                  "id":1297,
                  "name":"",
+                 "properties":
+                    {
+                     "parameters":"{ \"detectArea\" : [ [-10, -10], [10, 10] ], \"detectDuration\" : 0.1, \"detectEntityTypes\" : [ \"player\" ] }"
+                    },
+                 "propertytypes":
+                    {
+                     "parameters":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":16,
                  "x":2288,
-                 "y":1888
+                 "y":1872
                 }, 
                 {
                  "gid":7339,
@@ -6744,18 +6752,6 @@
                  "y":2816
                 }, 
                 {
-                 "gid":7339,
-                 "height":16,
-                 "id":1553,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":2320,
-                 "y":3008
-                }, 
-                {
                  "gid":6539,
                  "height":8,
                  "id":1554,
@@ -7204,6 +7200,38 @@
                  "visible":true,
                  "width":8,
                  "x":2136,
+                 "y":3048
+                }, 
+                {
+                 "gid":7339,
+                 "height":16,
+                 "id":1650,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":2192,
+                 "y":3016
+                }, 
+                {
+                 "gid":7240,
+                 "height":8,
+                 "id":1658,
+                 "name":"",
+                 "properties":
+                    {
+                     "parameters":"{ \"detectArea\" : [ [-10, -10], [10, 10] ], \"detectDuration\" : 0.1, \"detectEntityTypes\" : [ \"player\" ] }"
+                    },
+                 "propertytypes":
+                    {
+                     "parameters":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":2168,
                  "y":3048
                 }],
          "opacity":1,
@@ -8199,26 +8227,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":1557,
-                 "name":"",
-                 "polyline":[
-                        {
-                         "x":0,
-                         "y":0
-                        }, 
-                        {
-                         "x":88,
-                         "y":40
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2328,
-                 "y":3000
-                }, 
-                {
-                 "height":0,
                  "id":1563,
                  "name":"",
                  "polyline":[
@@ -8239,7 +8247,67 @@
                 }, 
                 {
                  "height":0,
-                 "id":1616,
+                 "id":1652,
+                 "name":"",
+                 "polyline":[
+                        {
+                         "x":0,
+                         "y":0
+                        }, 
+                        {
+                         "x":-64,
+                         "y":32
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2200,
+                 "y":3008
+                }, 
+                {
+                 "height":0,
+                 "id":1653,
+                 "name":"",
+                 "polyline":[
+                        {
+                         "x":0,
+                         "y":0
+                        }, 
+                        {
+                         "x":216,
+                         "y":32
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2200,
+                 "y":3008
+                }, 
+                {
+                 "height":0,
+                 "id":1659,
+                 "name":"",
+                 "polyline":[
+                        {
+                         "x":0,
+                         "y":0
+                        }, 
+                        {
+                         "x":16,
+                         "y":-40
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2176,
+                 "y":3040
+                }, 
+                {
+                 "height":0,
+                 "id":1660,
                  "name":"",
                  "polyline":[
                         {
@@ -8248,54 +8316,14 @@
                         }, 
                         {
                          "x":-56,
-                         "y":-104
+                         "y":-88
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
                  "x":2296,
-                 "y":1880
-                }, 
-                {
-                 "height":0,
-                 "id":1643,
-                 "name":"",
-                 "polyline":[
-                        {
-                         "x":0,
-                         "y":0
-                        }, 
-                        {
-                         "x":-192,
-                         "y":40
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2328,
-                 "y":3000
-                }, 
-                {
-                 "height":0,
-                 "id":1646,
-                 "name":"",
-                 "polyline":[
-                        {
-                         "x":0,
-                         "y":0
-                        }, 
-                        {
-                         "x":136,
-                         "y":16
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2184,
-                 "y":2976
+                 "y":1864
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -9000,7 +9028,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":1647,
+ "nextobjectid":1661,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.6",
