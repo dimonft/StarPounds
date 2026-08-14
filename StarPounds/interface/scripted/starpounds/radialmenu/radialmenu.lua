@@ -1,3 +1,8 @@
+require "/scripts/vec2.lua"
+require "/scripts/poly.lua"
+require "/scripts/util.lua"
+require "/scripts/drawingutil.lua"
+
 local canvasWidget, centerCoordinates, menuOptions, optionCount, sliceAngle, lastHoveredTarget
 local radiusInner, radiusOuter, radiusHover, hoveredOptionIndex, hasSelectedOption = 36, 58, 10, nil, false
 local isMouseDown = false
@@ -31,14 +36,7 @@ local shared = getmetatable ""
 shared.starPoundsRadialMenu = shared.starPoundsRadialMenu or {}
 local radialMenu = shared.starPoundsRadialMenu
 
-local colours = {}
-if shared.starPoundsRadialMenu.colours then
-  for k, v in pairs(defaultColours) do
-    colours[k] = shared.starPoundsRadialMenu.colours[k] or v
-  end
-else
-  colours = defaultColours
-end
+local colours = util.mergeTable(copy(defaultColours), shared.starPoundsRadialMenu.colours or {})
 
 local function loadMenu(newOptionsList)
   menuOptions = newOptionsList
@@ -87,7 +85,7 @@ function init()
   local canvasSize = canvasWidget:size()
   local canvasWidth = (canvasSize[1] > 0) and canvasSize[1] or 200
   local canvasHeight = (canvasSize[2] > 0) and canvasSize[2] or 200
-  centerCoordinates = {canvasWidth * 0.5, canvasHeight * 0.5}
+  centerCoordinates = vec2.mul({canvasWidth, canvasHeight}, 0.5)
 
   local options = radialMenu.options or config.getParameter("options", {})
   loadMenu(options)
@@ -100,9 +98,9 @@ local function drawArcSegment(startAngle, endAngle, innerArcRadius, outerArcRadi
   local deltaAngleOuter = (outerArcRadius > 0) and (halfGap / outerArcRadius) or 0
 
   local startAngleInner = startAngle + deltaAngleInner
-  local endAngleInner =   endAngle - deltaAngleInner
+  local endAngleInner = endAngle - deltaAngleInner
   local startAngleOuter = startAngle + deltaAngleOuter
-  local endAngleOuter =   endAngle - deltaAngleOuter
+  local endAngleOuter = endAngle - deltaAngleOuter
 
   local arcSteps = math.max(2, math.ceil((endAngle - startAngle) * 6))
   local angleStepInner = (endAngleInner - startAngleInner) / arcSteps
@@ -110,19 +108,14 @@ local function drawArcSegment(startAngle, endAngle, innerArcRadius, outerArcRadi
 
   for stepIndex = 0, arcSteps - 1 do
     local currentAngleInner = startAngleInner + stepIndex * angleStepInner
-    local nextAngleInner    = startAngleInner + (stepIndex + 1) * angleStepInner
+    local nextAngleInner = startAngleInner + (stepIndex + 1) * angleStepInner
     local currentAngleOuter = startAngleOuter + stepIndex * angleStepOuter
-    local nextAngleOuter    = startAngleOuter + (stepIndex + 1) * angleStepOuter
+    local nextAngleOuter = startAngleOuter + (stepIndex + 1) * angleStepOuter
 
-    local currentCosInner, currentSinInner  = math.cos(currentAngleInner),  math.sin(currentAngleInner)
-    local nextCosInner, nextSinInner        = math.cos(nextAngleInner),     math.sin(nextAngleInner)
-    local currentCosOuter, currentSinOuter  = math.cos(currentAngleOuter),  math.sin(currentAngleOuter)
-    local nextCosOuter, nextSinOuter        = math.cos(nextAngleOuter),     math.sin(nextAngleOuter)
-
-    local innerStartPoint = {centerCoordinates[1] + currentCosInner * innerArcRadius, centerCoordinates[2] + currentSinInner * innerArcRadius}
-    local outerStartPoint = {centerCoordinates[1] + currentCosOuter * outerArcRadius, centerCoordinates[2] + currentSinOuter * outerArcRadius}
-    local outerEndPoint   = {centerCoordinates[1] + nextCosOuter * outerArcRadius, centerCoordinates[2] + nextSinOuter * outerArcRadius}
-    local innerEndPoint   = {centerCoordinates[1] + nextCosInner * innerArcRadius, centerCoordinates[2] + nextSinInner * innerArcRadius}
+    local innerStartPoint = vec2.add(centerCoordinates, vec2.withAngle(currentAngleInner, innerArcRadius))
+    local outerStartPoint = vec2.add(centerCoordinates, vec2.withAngle(currentAngleOuter, outerArcRadius))
+    local outerEndPoint = vec2.add(centerCoordinates, vec2.withAngle(nextAngleOuter, outerArcRadius))
+    local innerEndPoint = vec2.add(centerCoordinates, vec2.withAngle(nextAngleInner, innerArcRadius))
 
     canvasWidget:drawTriangles({{innerStartPoint, outerStartPoint, outerEndPoint}, {innerStartPoint, outerEndPoint, innerEndPoint}}, fillColour)
   end
@@ -142,9 +135,8 @@ function update(dt)
   local animationScale = 1 - (1 - animationProgress)^3
   -- Arc detection.
   local mousePosition = canvasWidget:mousePosition()
-  local deltaX = mousePosition[1] - centerCoordinates[1]
-  local deltaY = mousePosition[2] - centerCoordinates[2]
-  local distanceFromCenter = (deltaX * deltaX + deltaY * deltaY)^0.5
+  local diff = vec2.sub(mousePosition, centerCoordinates)
+  local distanceFromCenter = vec2.mag(diff)
 
   local previousHoveredIndex = hoveredOptionIndex
   hoveredOptionIndex = nil
@@ -155,13 +147,11 @@ function update(dt)
     isCenterHovered = true
     currentHoverTarget = "center"
   elseif distanceFromCenter >= radiusInner then
-    local mouseAngle = math.atan(deltaY, deltaX)
+    local mouseAngle = vec2.angle(diff)
     local targetIndex = nil
 
     for optionIndex, option in ipairs(menuOptions) do
-      local diff = (mouseAngle - option.midpointAngle) % (math.pi * 2)
-      if diff > math.pi then diff = diff - (math.pi * 2) end
-
+      local diff = util.angleDiff(option.midpointAngle, mouseAngle)
       local halfSweep = (option.endAngle - option.startAngle) * 0.5
       if math.abs(diff) <= (halfSweep + 0.0001) then
         targetIndex = optionIndex
@@ -171,7 +161,6 @@ function update(dt)
 
     if targetIndex then
       local maxRadius = (targetIndex == previousHoveredIndex) and (radiusOuter + radiusHover) or radiusOuter
-
       if distanceFromCenter <= maxRadius then
         hoveredOptionIndex = targetIndex
         currentHoverTarget = hoveredOptionIndex
@@ -273,15 +262,15 @@ function update(dt)
     drawArcSegment(startAngle, endAngle, animationInnerRadius, animationOuterRadius, sliceColour, 3.5)
 
     local iconRadius = (radiusInner + animationOuterRadius) * 0.5
-    local elementPosition = {centerCoordinates[1] + math.cos(midpointAngle) * iconRadius, centerCoordinates[2] + math.sin(midpointAngle) * iconRadius}
+    local elementPosition = vec2.add(centerCoordinates, vec2.withAngle(midpointAngle, iconRadius))
     local displayText = currentOption.pretty or currentOption.name or ""
 
     if currentOption.icon then
-      local iconPosition = (isHovered and displayText ~= "") and {elementPosition[1], elementPosition[2] + 4} or elementPosition
+      local iconPosition = (isHovered and displayText ~= "") and vec2.add(elementPosition, {0, 4}) or elementPosition
       canvasWidget:drawImage(currentOption.icon..string.format(iconBorderDirective, currentOption.iconBorderColour or colours.iconBorder), iconPosition, nil, nil, true)
 
       if isHovered then
-        local textPosition = {elementPosition[1], elementPosition[2] - 8}
+        local textPosition = vec2.sub(elementPosition, {0, 8})
         canvasWidget:drawText("^shadow,set;"..displayText, {position = textPosition, horizontalAnchor = "mid", verticalAnchor = "mid"}, 6, colours.textHover)
       end
     else
@@ -293,9 +282,8 @@ function update(dt)
   local isCenterPressed = isCenterHovered and isMouseDown
   local centerBackgroundColour = isCenterPressed and colours.press or (isCenterHovered and colours.hover or colours.center)
   local centerRingColour = not (isCenterPressed or isCenterHovered) and colours.base or colours.hidden
-
-  drawArcSegment(0, math.pi * 2, 0, radiusInner - 6, centerBackgroundColour)
-  drawArcSegment(0, math.pi * 2, radiusInner - 7, radiusInner - 5, centerRingColour)
+  canvasWidget:drawTriangles(fillCircle(radiusInner - 6, 38, centerCoordinates), centerBackgroundColour)
+  canvasWidget:drawTriangles(wideCircle(radiusInner - 6, 38, 2, centerCoordinates), centerRingColour)
   -- Default center text.
   local centerText = (#menuStack > 0) and "Back" or "Close"
   local centerTextColour = isCenterHovered and colours.textHover or colours.text
@@ -308,12 +296,12 @@ function update(dt)
   end
   -- Shift title up slightly if there is a description to make room.
   local titleYOffset = centerDescription and 5 or 0
-  local titlePosition = {centerCoordinates[1], centerCoordinates[2] + titleYOffset}
+  local titlePosition = vec2.add(centerCoordinates, {0, titleYOffset})
 
   canvasWidget:drawText("^shadow,set;"..centerText, {position = titlePosition, horizontalAnchor = "mid", verticalAnchor = "mid"}, 8, centerTextColour)
   -- Title and description text in center.
   if centerDescription then
-    local descriptionPosition = {centerCoordinates[1], centerCoordinates[2] - 2}
+    local descriptionPosition = vec2.sub(centerCoordinates, {0, 2})
     canvasWidget:drawText("^shadow,set;"..centerDescription, {position = descriptionPosition, horizontalAnchor = "mid", verticalAnchor = "top"}, 6, colours.textGrey)
   end
 end
