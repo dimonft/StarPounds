@@ -1,0 +1,31 @@
+{
+  "objectName" : "starpoundsshiroplush",
+  "colonyTags" : ["pretty","starpounds"],
+  "rarity" : "Legendary",
+  "category" : "decorative",
+  "price" : 500,
+
+  "description" : "A skrunkly ^#ac0019;Shiro^reset; plush toy.",
+  "shortdescription" : "^#ac0019;Shiro^reset; Plushie",
+  "race" : "generic",
+
+  "apexDescription" : "What horrid creature is this plush supposed to be of?",
+  "avianDescription" : "It looks like a plush of some kinda ambush predator.",
+  "floranDescription" : "Floran likess pathetic looking thing!",
+  "glitchDescription" : "Concerned. This plush seems rather unwell.",
+  "humanDescription" : "What the hell is this thing?",
+  "hylotlDescription" : "This is... I don't even wanna look at it.",
+  "novakidDescription" : "Ain't sure who would want one of these.",
+
+  "inventoryIcon" : "starpoundsshiroplushicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "starpoundsshiroplush.png:<color>",
+      "imagePosition" : [-8, 0],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}
