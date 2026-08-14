@@ -16,5 +16,14 @@
       "portraitFrames": "portraits/humanportrait.png",
       "staticFrames": "statichuman.png"
     }
+  },
+  {
+    "op": "add",
+    "path": "/species/jelly",
+    "value": {
+      "aiFrames": "jellyAI.png",
+      "portraitFrames": "portraits/jellyportrait.png",
+      "staticFrames": "staticjelly.png"
+    }
   }  
 ]
