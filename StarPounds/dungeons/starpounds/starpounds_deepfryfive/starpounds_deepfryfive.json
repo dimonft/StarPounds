@@ -7181,7 +7181,7 @@
                  "properties":
                     {
                      "monster":"starpoundsmagewisp_carl",
-                     "parameters":"{ \"aggressive\" : false }"
+                     "parameters":"{ \"damageTeamType\" : \"friendly\" }"
                     },
                  "propertytypes":
                     {
