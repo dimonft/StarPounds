@@ -1,0 +1,285 @@
+{
+  "type" : "starpoundsmagewisp_carl",
+  "shortdescription" : "Carl the Intern",
+  "description" : "An aspiring Wisp mage. He's got a killer idea for a new crystal ball startup!",
+
+  "categories" : [ "starpoundsmagewisp_carl" ],
+  "parts" : [ "body" ],
+
+  "animation" : "starpoundsmagewisp.animation",
+
+  "dropPools" : [ { "default" : "wispmageTreasure"} ],
+
+  "baseParameters" : {
+    "scripts" : [
+      "/monsters/monster.lua"
+    ],
+
+    "behavior" : "monster",
+
+
+    "behaviorConfig" : {
+      "damageOnTouch" : false,
+
+      "targetQueryRange" : 35,
+      "targetOnDamage" : true,
+      "keepTargetInSight" : false,
+      "keepTargetInRange" : 50,
+      "targetOutOfSightTime" : 5.0,
+
+      "hurtTime" : 0.25,
+      "hurtWaitForGround" : false,
+
+      "damageTakenActions" : [
+      ],
+
+      "foundTargetActions" : [
+        {
+          "name" : "action-starpoundsboss",
+          "parameters" : {
+            "barType" : "special"
+          }
+        }
+	  ],
+
+      "fleeActions" : [ ],
+
+      "hostileActions" : [
+        {
+          "name" : "action-fire",
+          "cooldown" : 2.0,
+          "parameters" : {
+            "requireLineOfSight" : true,
+            "maximumRange" : 30,
+            "minimumRange" : 5,
+            "onGround" : false,
+            "windupStopForce" : 50,
+            "windupTime" : 0.4,
+            "windupState" : "firewindupfast",
+
+            "projectileType" : "wispflameprojectile",
+            "inaccuracy" : 0.20,
+            "projectileCount" : 3,
+            "projectileInterval" : 0.0,
+
+            "fireOffset" : [1.0, 0.0],
+            "aimAtTarget" : true,
+            "holdAim" : false,
+            "fireState" : "fire",
+            "fireSound" : "",
+
+            "winddownState" : "",
+            "winddownTime" : 0.1
+          }
+        },
+        {
+          "name" : "action-fire",
+          "cooldown" : 5.0,
+          "parameters" : {
+            "requireLineOfSight" : true,
+            "maximumRange" : 40,
+            "minimumRange" : 5,
+            "onGround" : false,
+            "windupStopForce" : 50,
+            "windupTime" : 0.8,
+            "windupState" : "firewindupslow",
+
+            "projectileType" : "wispbomb",
+            "projectileParameters" : {
+              "speed" : 40
+            },
+            "fireOffset" : [1.0, 0.0],
+            "aimAtTarget" : true,
+            "holdAim" : false,
+            "inaccuracy" : 0.0,
+            "fireState" : "fire",
+            "fireSound" : "",
+
+            "winddownState" : "",
+            "winddownTime" : 0.1
+          }
+        }
+      ],
+
+      "periodicActions" : [ ],
+
+      "approachActions" : [
+        {
+          "name" : "starpounds-wisp-fly",
+          "parameters" : {
+            "excludeLiquidIds" : [1],
+            "maxRange" : 15,
+            "minRange" : 5
+          }
+        }
+      ],
+
+      "followActions" : [
+        {
+          "name" : "approach-teleport",
+          "parameters" : {
+          }
+        },
+        {
+          "name" : "approach-fly",
+          "parameters" : {
+            "usePathfinding" : true
+          }
+        }
+      ],
+
+      "wanderActions" : [
+        {
+          "name" : "emerge-fly"
+        },
+        {
+          "name" : "wander-fly",
+          "parameters" : {
+            "wanderTime" : [2,4],
+            "groundDistance" : 12,
+            "ceilingDistance" : 6,
+            "xVelocity" : 8,
+            "yVelocity" : 12
+          }
+      }
+      ],
+
+      "concurrentActions" : [ ],
+
+      "concurrentHostileActions" : [ ],
+
+      "deathActions" : [
+        {
+          "name" : "action-projectile",
+          "parameters" : {
+            "projectileCount" : 1,
+            "projectileType" : "lipomancerdeathexplosion",
+            "projectileParameters" : {
+            },
+            "aimDirection" : [0, 0],
+            "inaccuracy" : 0,
+            "fireOffset" : [0, 0]
+          }
+        }
+      ]
+	  
+	  
+    },
+
+    "touchDamage" : {
+      "poly" : [ [0.625, 1.25], [1.25, 0.875], [1.25, -0.675], [0.625, -1.05], [-0.625, -1.05], [-1.25, -0.675], [-1.25, 0.875], [-0.625, 1.25] ],
+      "damage" : 9,
+
+      "teamType" : "enemy",
+      "damageSourceKind" : "slash",
+      "knockback" : 20,
+      "statusEffects" : [ ]
+    },
+
+    "metaBoundBox" : [-4, -4, 4, 4],
+    "scale" : 0.8,
+
+    "movementSettings" : {
+      "collisionEnabled" : true,
+      "collisionPoly" : [ [0.625, 1.25], [1.25, 0.875], [1.25, -0.675], [0.625, -1.05], [-0.625, -1.05], [-1.25, -0.675], [-1.25, 0.875], [-0.625, 1.25] ],
+
+      "mass" : 1.0,
+      "walkSpeed" : 4,
+      "runSpeed" : 12,
+      "gravityEnabled" : false,
+
+      "airFriction" : 2.0,
+      "airForce" : 25,
+      "flySpeed" : 8
+    },
+
+    "bodyMaterialKind" : "organic",
+
+    "knockoutTime" : 0.3,
+    "knockoutAnimationStates" : {
+      "damage" : "stunned"
+    },
+    "deathParticles" : "deathPoof",
+    "knockoutEffect" : "",
+
+    "statusSettings" : {
+      "statusProperties" : {
+        "targetMaterialKind" : "organic"
+      },
+
+      "appliesEnvironmentStatusEffects" : false,
+      "appliesWeatherStatusEffects" : true,
+      "minimumLiquidStatusEffectPercentage" : 0.1,
+
+      "primaryScriptSources" : [
+        "/stats/monster_primary.lua"
+      ],
+      "primaryScriptDelta" : 5,
+
+      "stats" : {
+        "knockbackStunTime" : {
+          "baseValue" : 0.25
+        },
+        "knockbackThreshold" : {
+          "baseValue" : 9
+        },
+        "maxHealth" : {
+          "baseValue" : 750
+        },
+        "protection" : {
+          "baseValue" : 0.0
+        },
+        "healthRegen" : {
+          "baseValue" : 0.0
+        },
+        "powerMultiplier" : {
+          "baseValue" : 1.0
+        },
+        "physicalResistance" : {
+          "baseValue" : 0.0
+        },
+        "fireResistance" : {
+          "baseValue" : 0.0
+        },
+        "fireStatusImmunity" : {
+          "baseValue" : 0.0
+        },
+        "iceResistance" : {
+          "baseValue" : 0.0
+        },
+        "iceStatusImmunity" : {
+          "baseValue" : 0.0
+        },
+        "electricResistance" : {
+          "baseValue" : 0.0
+        },
+        "electricStatusImmunity" : {
+          "baseValue" : 0.0
+        },
+        "poisonResistance" : {
+          "baseValue" : 0.0
+        },
+        "poisonStatusImmunity" : {
+          "baseValue" : 0.0
+        }
+      },
+
+      "resources" : {
+        "stunned" : {
+          "deltaValue" : -1.0,
+          "initialValue" : 0.0
+        },
+        "health" : {
+          "maxStat" : "maxHealth",
+          "deltaStat" : "healthRegen",
+          "defaultPercentage" : 100
+        }
+      }
+    },
+
+    "mouthOffset" : [0, 0],
+    "feetOffset" : [0, -8],
+    "capturable" : false,
+    "nametagColor" : [64, 200, 255]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "type" : "starpounds_dfvjanitor",
+  "baseType" : "outpostcivilian",
+
+  "scriptConfig" : {
+
+    "starPounds_skills": {
+      "minimumSize": [2, 2]
+    },
+	
+    "dialogMode": "tutorial",    
+    "dialog" : {
+      "converse" : {
+        "default" : {
+          "default" : [
+            "Kinda wish this place's stuff wasn't the only food I could get on my lunch break. Suit's feeling a lil too snug in places...",
+			"If I had a pixel for every burger wrapper I've had to pick up...",
+			"I know y'all are a buncha fatasses but would it *kill* you to eat a little more cleanly?",
+			"Of all freaking stations I had to work at, it had to be the grease trap...",
+			"I swear if I have to mop up one more spilled 2 liter soda spill...",
+			"Just between us, but I swear sometimes I hear something scurrying around in the vents below..."
+          ]
+        }
+      }
+    }
+  },
+
+  "items" : {
+    "override" : [
+      [0, [
+          {
+            "headCosmetic" : [ { "name" : "caphead", "parameters" : { "colorIndex" : 7 } } ],
+            "chestCosmetic" : [ { "name" : "jumpsuitchest", "parameters" : { "colorIndex" : 11 } } ],
+            "legsCosmetic" : [ { "name" : "jumpsuitlegs", "parameters" : { "colorIndex" : 11 } } ],
+			            "primary" : [
+              "broom"
+            ]
+          }
+        ] ]
+    ]
+  }
+}

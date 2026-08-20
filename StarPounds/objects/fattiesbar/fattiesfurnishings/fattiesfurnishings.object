@@ -101,15 +101,15 @@
   "storeInventory" : {
     "feedingtube" : [
       "starpoundsfeedingtube", "apexfeedingtube", "avianfeedingtube", "floranfeedingtube", "hylotlfeedingtube", "glitchfeedingtube", "throgfeedingtube", "ancientfeedingtube",
-      "avalifeedingtube", "shoggothfeedingtube", "saturnianfeedingtube", "angelfeedingtube", "arcanianfeedingtube", "nostosfeedingtube", "silphfeedingtube", "auracitefeedingtube", "starpoundsinklingfeedingtube"
+      "avalifeedingtube", "shoggothfeedingtube", "saturnianfeedingtube", "angelfeedingtube", "arcanianfeedingtube", "nostosfeedingtube", "silphfeedingtube", "auracitefeedingtube"
     ],
     "scales" : [
       "fattiesweightscale", "apexweightscale", "avianweightscale", "floranweightscale", "glitchweightscale", "hylotlweightscale", "novakidweightscale", "throgweightscale", "ancientweightscale",
-      "avaliweightscale", "shoggothweightscale", "saturnianweightscale", "angelweightscale", "arcanianweightscale", "nostosweightscale", "silphweightscale", "auraciteweightscale", "starpoundsinklingweightscale"
+      "avaliweightscale", "shoggothweightscale", "saturnianweightscale", "angelweightscale", "arcanianweightscale", "nostosweightscale", "silphweightscale", "auraciteweightscale"
     ],
     "treadmill" : [
       "starpoundstreadmill", "starpoundsapextreadmill", "starpoundsaviantreadmill", "starpoundsflorantreadmill", "starpoundshylotltreadmill", "starpoundsancienttreadmill",
-      "starpoundsavalitreadmill", "starpoundsshoggothtreadmill", "starpoundsangeltreadmill", "starpoundsarcaniantreadmill", "starpoundssilphtreadmill", "starpoundsauracitetreadmill", "starpoundsinklingtreadmill"
+      "starpoundsavalitreadmill", "starpoundsshoggothtreadmill", "starpoundsangeltreadmill", "starpoundsarcaniantreadmill", "starpoundssilphtreadmill", "starpoundsauracitetreadmill"
     ],
     "junkfood" : [
       "smokespecialobject", "blubberbassobject", "starpoundspizzabox", "starpoundspizzaboxstack", "starpoundspizzaboxopen", "starpoundsmessypizzaboxstack", "starpoundsdonutbox", "starpoundsdonutboxopen", "starpoundsdonutboxopen2", "emptyfattypeanutbutter", "emptyhappygirlbox", "novakiddrink1", "novakiddrink2",
@@ -122,10 +122,11 @@
       "bellyemblem", "buttemblem", "starpoundsponderousknightarmor", "starpoundsblossomknightsarmor", "starpoundsgluttonistfeastpainting1", "starpoundsgluttonistfeastpainting2", "starpoundsgluttonistfeastpainting3", "starpoundsgluttonistfeasttable",
       "gluttonistlamp1", "gluttonistlight", "gluttonistlight1", "gluttonistlight2", "gluttonistlight3", "gluttoniststatue", "starpoundsavianpedestal",
       "starpoundsminiwrenchposter", "starpoundsminispaceposter", "blubberbuttmodel",
+	  "starpounds_arcadefloran", "starpounds_arcadeglitch", "starpounds_arcadenovakid", "starpounds_arcadehylotl", "starpounds_arcadeavian", "starpounds_arcadehuman", "starpounds_arcadeapex",
       "trolleatposter"
     ],
     "plushes" : [
-      "starpoundsshydispatchplush", "starpoundsappleplush", "starpoundsblossomplushie", "starpoundsfayaneplush", "starpoundshirakiplush", "starpoundsjellyplush", "starpoundshylotlghostplush", "starpoundsharpyplush", "starpoundsmootantplush", "starpoundsbeeplush", "starpoundscallieplush", "wispwizardplush", "wispclericplush", "wisprogueplush", "wispknightplush", "wisplipomancerplush", "wispcarlplush", "starpoundsgourmandplush", "starpoundskoiynplush"
+      "starpoundsshydispatchplush", "starpoundsappleplush", "starpoundsblossomplushie", "starpoundsshiroplush", "starpoundsfayaneplush", "starpoundshirakiplush", "starpoundsjellyplush", "starpoundshylotlghostplush", "starpoundsharpyplush", "starpoundsmootantplush", "starpoundsbeeplush", "starpoundscallieplush", "wispwizardplush", "wispclericplush", "wisprogueplush", "wispknightplush", "wisplipomancerplush", "wispcarlplush", "starpoundsgourmandplush", "starpoundskoiynplush"
     ],
     "interactables" : [
       "fayanebutt", "fayanebelly", "fayanevore", "floranfeedeeback1", "apexfeedeeback1", "blossomvore", "condescebutt"

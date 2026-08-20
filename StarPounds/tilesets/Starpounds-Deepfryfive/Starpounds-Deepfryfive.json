@@ -8,7 +8,7 @@
  "margin":0,
  "name":"Starpounds-Deepfryfive",
  "spacing":0,
- "tilecount":17,
+ "tilecount":19,
  "tileheight":80,
  "tileproperties":
     {
@@ -74,6 +74,20 @@
          "imagePositionY":"0",
          "object":"starpounds_hogtools",
          "tilesetDirection":"right"
+        },
+     "17":
+        {
+         "imagePositionX":"-12",
+         "imagePositionY":"0",
+         "object":"fattiesbarbooth",
+         "tilesetDirection":"right"
+        },
+     "18":
+        {
+         "imagePositionX":"-44",
+         "imagePositionY":"0",
+         "object":"fattiesbarbooth",
+         "tilesetDirection":"left"
         },
      "2":
         {
@@ -197,6 +211,20 @@
          "object":"string",
          "tilesetDirection":"string"
         },
+     "17":
+        {
+         "imagePositionX":"string",
+         "imagePositionY":"string",
+         "object":"string",
+         "tilesetDirection":"string"
+        },
+     "18":
+        {
+         "imagePositionX":"string",
+         "imagePositionY":"string",
+         "object":"string",
+         "tilesetDirection":"string"
+        },
      "2":
         {
          "imagePositionX":"string",
@@ -309,6 +337,18 @@
          "image":"starpounds_hogtools.png",
          "imageheight":40,
          "imagewidth":48
+        },
+     "17":
+        {
+         "image":"fattiesbarbooth.png",
+         "imageheight":24,
+         "imagewidth":28
+        },
+     "18":
+        {
+         "image":"fattiesbarbooth_1.png",
+         "imageheight":24,
+         "imagewidth":56
         },
      "2":
         {

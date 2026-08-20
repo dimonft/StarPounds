@@ -4,7 +4,7 @@
   "price" : 85,
   "category" : "preparedFood",
   "inventoryIcon" : "sugarcookie.png",
-  "description" : "Just such a good treat, made perfect with milk!",
+  "description" : "A soft, pale cookie with pink frosting and sprinkles! Yum!",
   "shortdescription" : "Sugar Cookie",
   "effects" : [ [
     {

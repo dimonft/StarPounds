@@ -54,5 +54,13 @@
         {"weight" : 0.10, "item" : "accessorybox"}
       ]
     }]
+  ],
+
+  "starpounds_deepfryv_arcade" : [
+    [1, {
+      "fill" : [
+        {"item" : [ "starpoundsarcadenote-codex", 1]}
+      ]
+    }]
   ]
 }

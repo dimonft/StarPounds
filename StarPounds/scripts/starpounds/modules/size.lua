@@ -11,7 +11,6 @@ function size:init()
   message.setHandler("starPounds.size.config", function(_, _, ...) return self:config(...) end)
   message.setHandler("starPounds.size.maximumWeight", function(_, _, ...) return self:maximumWeight(...) end)
   message.setHandler("starPounds.size.reset", localHandler(self.reset))
-
   -- Kinda gross, but deal with it.
   local speciesData = {}
   if starPounds.type == "player" then
@@ -28,7 +27,6 @@ function size:init()
 
   self.canGain = speciesData.weightGain
   self.sizeConfig = root.assetJson(speciesData.sizes)
-
   -- Pre-fetch and cache the supersize index.
   self.supersizeIndex = math.huge
   for i, size in ipairs(self.sizeConfig.sizes) do
@@ -36,15 +34,13 @@ function size:init()
       self.supersizeIndex = math.min(self.supersizeIndex, i)
     end
   end
-
   -- Shared hitbox cache for NPCs.
   local shared = getmetatable ""
   shared.starPounds = shared.starPounds or {}
   shared.starPounds.sizeCache = shared.starPounds.sizeCache or {}
   shared.starPounds.sizeCache.hitboxes = shared.starPounds.sizeCache.hitboxes or {}
-
-  local visualSpecies = starPounds.getVisualSpecies()
   -- Create/grab hitboxes for this species.
+  local visualSpecies = starPounds.getVisualSpecies()
   if not shared.starPounds.sizeCache.hitboxes[visualSpecies] then
     shared.starPounds.sizeCache.hitboxes[visualSpecies] = {}
     for i, size in ipairs(self.sizeConfig.sizes) do
@@ -211,7 +207,6 @@ function size:get(weight)
   weight = math.max(tonumber(weight) or 0, 0)
   -- Disable supersized stages with options, or on the tech missions so you can actually complete them.
   local supersizeDisabled = starPounds.hasOption("disableSupersize") or status.uniqueStatusEffectActive("starpoundstechmissionmobility")
-
   -- Just return the current size if the weight is still in the bounds of the current size.
   if self.oldSizeIndex then
     local currentSize = self.sizeConfig.sizes[self.oldSizeIndex]
@@ -238,12 +233,6 @@ function size:get(weight)
   end
 
   return self.sizeConfig.sizes[sizeIndex], sizeIndex
-end
-
-function size:weight()
-  return {
-
-  }
 end
 
 function size:sizes()

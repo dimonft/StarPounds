@@ -1,0 +1,38 @@
+{
+  "id" : "starpoundsarcadenote",
+  "title" : "^#ff597d;Dungeon Diners^reset;?",
+  "description" : "An archived email from the DFV Arcade.",
+  "icon" : "starpoundsarcadenote.png",
+  "contentPages" : [
+"Apologies for the sudden message, just found something in your latest shipment and we're, simply put, confused.
+
+Seems that, somehow, a mysterious machine appeared in with the last shipment called \"Dungeon Diners\" and we have no idea where it could've come from. No one here has even heard of the game and as far as we can tell we can't pull it apart or play it to see what it even is.
+
+From: Rodney Hale",
+
+"RE: Dungeon Diners?
+
+Huh? We haven't heard of that game either- and as far as our shipping manifest says, there's no records of an extra arcade machine. All we have listed was machines for Pattyflipper, SushiBelter, Pizza Time, and a handful of updated antitampering chips.
+
+EDIT: I've double checked our archives- we've never stocked any game called \"Dungeon Diners\"???
+
+From: Ryuki",
+
+"RE: RE: Dungeon Diners?
+
+That's confusing...
+
+As far as I could tell it doesn't seem to accept Pixels or any common tokens. I'm not quuuuite sure what's the best course of action since this cabinet just appeared out of thin air.
+
+For now I'll leave it in the corner until we figure out what its deal is.
+
+From: Rodney Hale"
+
+
+
+  ],
+    "itemConfig" : {
+    "rarity" : "Common",
+    "price" : 25
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "objectName" : "starpounds_arcadenovakid",
+  "colonyTags" : ["starpounds", "novakid", "electronic"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 800,
+  "lightColor" : [75, 108, 117],
+  "printable" : false,
+
+  "description" : "\"Test your aim as you guide Sarsaparilla and Roody to take down the nefarious Starpopper Gang!\"",
+  "shortdescription" : "\"Sixpop Heroes\"",
+  "race" : "generic",
+
+  "apexDescription" : "These controllers aren't quite heavy enough to feel like real guns, but I can still aim well enough with them.",
+  "avianDescription" : "I've been told I've got a hawk's eye, let's see if that's true.",
+  "floranDescription" : "Floran getss to live out fantassy of shooting people without actually getting shot at!",
+  "glitchDescription" : "Polite. A fairly basic on-rails shooter. Not my thing but the main characters are cool. 7/10.",
+  "humanDescription" : "Let's see if I'm the slickest, strangely chubby, cowperson here!",
+  "hylotlDescription" : "Are those... Bubble guns?",
+  "novakidDescription" : "Now this is my kinda game! Let's show these blubbery bandits they're messin with the wrong cowpoke!",
+
+  "inventoryIcon" : "starpounds_arcadenovakidicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadenovakidleft.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadenovakidleftlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "left",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.6,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadenovakidright.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadenovakidrightlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "right",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.6,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+  
+}

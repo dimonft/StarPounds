@@ -27,24 +27,20 @@ function oSB:update(dt)
   self:drinkBind()
   self:voreBinds(dt)
   self:lactateBind(dt)
-
   -- Extended interaction radius at supersize.
   self.offset = starPounds.currentSize.yOffset or 0
   if self.offset ~= self.offsetOld then
     player.setInteractRadius(self.interactRadius + math.round(math.abs(self.offset), 2))
     self.offsetOld = self.offset
   end
-
   -- Change damage team while eaten.
   if storage.starPounds.pred then
     player.setDamageTeam("ghostly")
   end
-
   -- Update food items in the player's hotbar.
   if starPounds.swapSlotItem then self.selectedSlot = nil return end -- Action slots are ignored while we have something in the cursor.
   local slot = player.selectedActionBarSlot()
   if type(slot) ~= "number" then self.selectedSlot = nil return end -- Don't run on the essential slots.
-
   -- Only update when we change slots/groups. Slot only returns an array, so less data/overhead (Probably).
   local newSelectedSlot = slot..sb.print(player.actionBarSlotLink(slot, "primary") ~= nil)..player.actionBarGroup()
   if newSelectedSlot == self.selectedSlot then
@@ -85,7 +81,6 @@ function oSB:uninit()
 
   player.setInteractRadius(self.interactRadius)
 end
-
 -- Toggle the mod.
 function oSB:toggleBind()
   if input.bindDown("starpounds", "toggle") then
@@ -158,10 +153,11 @@ function oSB:drinkBind()
     starPounds.moduleFunc("drinking", "drink")
   end
 end
--- Chat message hook.
-function oSB:addChatMessage(text, conf)
-  if not starPounds.hasOption("disableChatMessages") then
-    chat.addMessage(text, conf)
+-- Popup message hook.
+function oSB:addPopupMessage(text, cooldown, springState)
+  if not self.openStarbound then return end
+  if not starPounds.hasOption("disablePopupMessages") then
+    interface.queueMessage(text, cooldown, springState)
   end
 end
 

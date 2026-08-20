@@ -452,11 +452,11 @@ function pred:struggle(preyId, struggleStrength, escape)
         self.storedStruggleVolume = math.min(self.storedStruggleVolume + 0.25 + preyHealthPercent * (preyWeight/(starPounds.species.default.weight * 2)), 1)
         break
       end
-
+      -- Apply strain based on struggle strength.
       struggleStrength = struggleStrength + self.storedStruggleStrength
-
       local struggleMultiplier = math.max(0, 1 - starPounds.getStat("struggleResistance"))
       starPounds.moduleFunc("strain", "add", struggleMultiplier * (self.data.struggleStrainBase + self.data.struggleStrain * struggleStrength))
+      -- Check for escaping.
       if escape and (math.random() < escapeChance) then
         local canEscape = (world.entityType(preyId) == "player") or (preyHealthPercent > self.data.inescapableHealth)
         if canEscape and starPounds.moduleFunc("strain", "get") == 1 then
@@ -465,14 +465,13 @@ function pred:struggle(preyId, struggleStrength, escape)
           prey.escaping = true
         end
       end
-
+      -- Digest damage on struggle.
       if not (releasing or starPounds.hasOption("disablePredDigestion")) then
         -- 1 second worth of digestion per struggle.
         local damageMultiplier = math.max(1, status.stat("powerMultiplier")) * starPounds.getStat("voreDamage")
         local protectionPierce = math.max(0, 1 - starPounds.getStat("voreArmorPiercing"))
         world.sendEntityMessage(preyId, "starPounds.prey.digesting", starPounds.entityId, damageMultiplier, protectionPierce)
       end
-
       -- Outside the block so we can pass it to the event.
       local struggleVolume = math.min(0.75, 0.25 + preyHealthPercent * (preyWeight/(starPounds.species.default.weight * 2)) + self.struggleVolumeLerp)
       local strugglePitch = 1 + 0.1 * (math.random() - 0.5)
@@ -491,7 +490,7 @@ function pred:struggle(preyId, struggleStrength, escape)
   end
 end
 
-function pred:release(preyId, releaseAll, noBelch)
+function pred:release(preyId, releaseAll, noBelch, applyVelocity)
   -- Don't do anything if the mod is disabled.
   if not storage.starPounds.enabled then return end
   -- Argument sanitisation.
@@ -503,7 +502,7 @@ function pred:release(preyId, releaseAll, noBelch)
     releasedEntity = storage.starPounds.stomachEntities[1]
     for preyIndex, prey in ipairs(storage.starPounds.stomachEntities) do
       if world.entityExists(prey.id, true) then
-        world.sendEntityMessage(prey.id, "starPounds.prey.released", starPounds.entityId, statusEffect)
+        world.sendEntityMessage(prey.id, "starPounds.prey.released", starPounds.entityId, statusEffect, applyVelocity and starPounds.mcontroller.facingDirection or nil)
       end
     end
     if releasedEntity and world.entityExists(releasedEntity.id, true) and not noBelch then
@@ -534,7 +533,7 @@ function pred:release(preyId, releaseAll, noBelch)
         starPounds.events:fire("pred:entityEscape", releasedEntity.id)
       end
 
-      world.sendEntityMessage(releasedEntity.id, "starPounds.prey.released", starPounds.entityId, statusEffect)
+      world.sendEntityMessage(releasedEntity.id, "starPounds.prey.released", starPounds.entityId, statusEffect, applyVelocity and starPounds.mcontroller.facingDirection or nil)
       starPounds.events:fire("pred:releaseEntity", releasedEntity)
     end
   end
@@ -607,7 +606,7 @@ function pred:releasing(dt)
         prey.releasing = nil
         -- Sanity check.
         if world.entityExists(prey.id, true) then
-          if self:release(prey.id, false, released) then
+          if self:release(prey.id, false, released, true) then
             released = true
           end
         end

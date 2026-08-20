@@ -94,7 +94,7 @@ function buildActions()
         self.wasValid = false
         self.emoteActive = false
         self.cooldown = 0
-        self.eatOptions = {particles = true}
+        self.eatOptions = {particles = true, triggerPreyCooldown = true}
 
         self.syncCooldown = function() self.cooldown = starPounds.moduleFunc("pred", "cooldown") end
         starPounds.events:on("pred:eatEntity", self.syncCooldown)
@@ -218,7 +218,7 @@ function buildActions()
       end,
 
       findValidTarget = function(self)
-        if not starPounds.isEnabled() or starPounds.hasOption("disablePrey") or world.getProperty("nonCombat") then
+        if not starPounds.isEnabled() or starPounds.hasOption("disablePrey") then
           return nil
         end
 
@@ -257,7 +257,8 @@ function buildActions()
       onClick = function(self, shiftHeld)
         local validTarget = self:findValidTarget()
         if validTarget then
-          world.sendEntityMessage(validTarget, "starPounds.pred.eat", activeItem.ownerEntityId(), {ignoreSkills = true, ignoreCapacity = true, ignoreEnergyRequirement = true, energyMultiplier = 0})
+          local nonCombat = world.getProperty("nonCombat")
+          world.sendEntityMessage(validTarget, "starPounds.pred.eat", activeItem.ownerEntityId(), {ignoreSkills = true, ignoreCapacity = true, ignoreEnergyRequirement = true, energyMultiplier = 0, willing = nonCombat, noDamage = nonCombat, ignoreProtection = nonCombat})
         end
       end,
 
@@ -520,6 +521,12 @@ function getVoreTargetPosition(self)
 end
 
 function init()
+  shared = getmetatable ""
+  starPounds = shared.starPounds
+
+  shared.starPoundsRadialMenu = shared.starPoundsRadialMenu or {}
+  radialMenu = shared.starPoundsRadialMenu
+
   activeItem.setHoldingItem(false)
 
   self.uuid = sb.makeUuid()
@@ -564,6 +571,12 @@ function equipAction(actionName, data)
 end
 
 function update(dt, fireMode, shiftHeld)
+  shared = getmetatable ""
+  starPounds = shared.starPounds
+
+  shared.starPoundsRadialMenu = shared.starPoundsRadialMenu or {}
+  radialMenu = shared.starPoundsRadialMenu
+
   -- Default just opens the menu. (Converts left clicks into right clicks)
   if storage.action == "default" and fireMode == "primary" then
     fireMode = "alt"

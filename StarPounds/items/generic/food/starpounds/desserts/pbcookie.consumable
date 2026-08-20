@@ -5,7 +5,7 @@
   "category" : "preparedFood",
   "inventoryIcon" : "pbcookie.png",
   "description" : "Peanut butter and chocolate have never tasted so good! You'll want more boxes of them.",
-  "shortdescription" : "PB&C Cookie",
+  "shortdescription" : "Tagalong Cookie",
   "effects" : [ [
     {
         "effect" : "maxhealthscalingboostfood",

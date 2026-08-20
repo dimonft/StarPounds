@@ -1,0 +1,54 @@
+{
+  "objectName" : "starpounds_arcadeapex",
+  "colonyTags" : ["starpounds", "apex", "electronic"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 800,
+  "lightColor" : [75, 108, 117],
+  "printable" : false,
+
+  "description" : "\"Created as weapons, the BioTroopers rebelled! Blast your way to freedom!\"",
+  "shortdescription" : "\"Bio-Lab Busters\"",
+  "race" : "generic",
+
+  "apexDescription" : "I've heard rumors that this game was based on top secret Miniknog plans...",
+  "avianDescription" : "There's something delightful about how weighty you move in this game...",
+  "floranDescription" : "Floran likesss watching lab men run! Too late, Floran crush you!",
+  "glitchDescription" : "Polite. A simple shooter with some neat touches like being able to squish enemies: it's more of a power fantasy than anything more in-depth. 6.5/10",
+  "humanDescription" : "I love watching the carnage you can make in this game, especially once you get to the point you can ground pound tanks!",
+  "hylotlDescription" : "Not too interested in this. Suppose the BioTroopers look cool at least.",
+  "novakidDescription" : "Hehehe, always fun to throw your weight around and smash stuff up!",
+
+  "inventoryIcon" : "starpounds_arcadeapexicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadeapexleft.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadeapexleftlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "left",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.6,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadeapexright.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadeapexrightlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "right",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.6,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+  
+}

@@ -8,7 +8,7 @@
  "margin":0,
  "name":"Starpounds-Fatty-Dungeons",
  "spacing":0,
- "tilecount":69,
+ "tilecount":70,
  "tileheight":88,
  "tileproperties":
     {
@@ -472,6 +472,13 @@
          "imagePositionX":"-16",
          "imagePositionY":"0",
          "object":"gluttonisticebox",
+         "tilesetDirection":"right"
+        },
+     "69":
+        {
+         "imagePositionX":"0",
+         "imagePositionY":"0",
+         "object":"starpounds_secretcombinator",
          "tilesetDirection":"right"
         },
      "7":
@@ -960,6 +967,13 @@
          "object":"string",
          "tilesetDirection":"string"
         },
+     "69":
+        {
+         "imagePositionX":"string",
+         "imagePositionY":"string",
+         "object":"string",
+         "tilesetDirection":"string"
+        },
      "7":
         {
          "imagePositionX":"string",
@@ -1379,6 +1393,12 @@
          "image":"Starpounds-Fatty-Dungeons\/gluttonisticebox.png",
          "imageheight":24,
          "imagewidth":32
+        },
+     "69":
+        {
+         "image":"Starpounds-Fatty-Dungeons\/starpounds_secretcombinator.png",
+         "imageheight":32,
+         "imagewidth":16
         },
      "7":
         {

@@ -1,0 +1,54 @@
+{
+  "objectName" : "starpounds_arcadeglitch",
+  "colonyTags" : ["starpounds", "glitch", "electronic"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 800,
+  "lightColor" : [75, 108, 117],
+  "printable" : false,
+
+  "description" : "\"Legendary treasures await at the 100th floor! Solve puzzles and fight to prove your worthiness!\"",
+  "shortdescription" : "\"Labyrinth of the Wisps\"",
+  "race" : "generic",
+
+  "apexDescription" : "A charming dungeon crawling game. Do remember hearing about it being very obtuse at points though.",
+  "avianDescription" : "Always the greatest feeling to accidentally stumble on secrets! Didn't know about the hidden 101st floor until a year ago!",
+  "floranDescription" : "Floran don't get some puzzlesss. What you mean bombing ssspecific unmarked wall unlocksss important progresss!?",
+  "glitchDescription" : "Joyous. A fun, engaging top-down dungeon crawler with lots of interesting puzzles and fun fights. 8/10.",
+  "humanDescription" : "All those wisp enemies are cute... Almost makes me bad for killing them. Almost.",
+  "hylotlDescription" : "A quaint little game about looting an abandoned dungeon. The Wisps are cute, I suppose.",
+  "novakidDescription" : "Oughta tell some devs the difference between a \"puzzle\" and a \"trigger hunt\".",
+
+  "inventoryIcon" : "starpounds_arcadeglitchicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadeglitchleft.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadeglitchleftlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "left",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.4,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadeglitchright.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadeglitchrightlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "right",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.4,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+  
+}
