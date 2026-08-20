@@ -101,15 +101,15 @@
   "storeInventory" : {
     "feedingtube" : [
       "starpoundsfeedingtube", "apexfeedingtube", "avianfeedingtube", "floranfeedingtube", "hylotlfeedingtube", "glitchfeedingtube", "throgfeedingtube", "ancientfeedingtube",
-      "avalifeedingtube", "shoggothfeedingtube", "saturnianfeedingtube", "angelfeedingtube", "arcanianfeedingtube", "nostosfeedingtube", "silphfeedingtube", "auracitefeedingtube", "starpoundsinklingfeedingtube"
+      "avalifeedingtube", "shoggothfeedingtube", "saturnianfeedingtube", "angelfeedingtube", "arcanianfeedingtube", "nostosfeedingtube", "silphfeedingtube", "auracitefeedingtube"
     ],
     "scales" : [
       "fattiesweightscale", "apexweightscale", "avianweightscale", "floranweightscale", "glitchweightscale", "hylotlweightscale", "novakidweightscale", "throgweightscale", "ancientweightscale",
-      "avaliweightscale", "shoggothweightscale", "saturnianweightscale", "angelweightscale", "arcanianweightscale", "nostosweightscale", "silphweightscale", "auraciteweightscale", "starpoundsinklingweightscale"
+      "avaliweightscale", "shoggothweightscale", "saturnianweightscale", "angelweightscale", "arcanianweightscale", "nostosweightscale", "silphweightscale", "auraciteweightscale"
     ],
     "treadmill" : [
       "starpoundstreadmill", "starpoundsapextreadmill", "starpoundsaviantreadmill", "starpoundsflorantreadmill", "starpoundshylotltreadmill", "starpoundsancienttreadmill",
-      "starpoundsavalitreadmill", "starpoundsshoggothtreadmill", "starpoundsangeltreadmill", "starpoundsarcaniantreadmill", "starpoundssilphtreadmill", "starpoundsauracitetreadmill", "starpoundsinklingtreadmill"
+      "starpoundsavalitreadmill", "starpoundsshoggothtreadmill", "starpoundsangeltreadmill", "starpoundsarcaniantreadmill", "starpoundssilphtreadmill", "starpoundsauracitetreadmill"
     ],
     "junkfood" : [
       "smokespecialobject", "blubberbassobject", "starpoundspizzabox", "starpoundspizzaboxstack", "starpoundspizzaboxopen", "starpoundsmessypizzaboxstack", "starpoundsdonutbox", "starpoundsdonutboxopen", "starpoundsdonutboxopen2", "emptyfattypeanutbutter", "emptyhappygirlbox", "novakiddrink1", "novakiddrink2",
