@@ -1,0 +1,51 @@
+{
+  "objectName" : "starpounds_arcadespecial",
+  "colonyTags" : ["starpounds","electronic"],
+  "rarity" : "Legendary",
+  "category" : "decorative",
+		// do not remove this.  
+  "printable" : false, 
+  "price" : 5000,
+  "lightColor" : [75, 108, 117],
+
+  "description" : "A mysterious game known as \"^#ff597d;Dungeon Diners^reset;\". It doesn't seem to take typical pixels.",
+  "shortdescription" : "\"^#ff597d;Dungeon Diners^reset;\"",
+  "race" : "generic",
+
+  "apexDescription" : "A strange machine for some game called \"^#ff597d;Dungeon Diners^reset;\". Looks like it takes special currency.",
+  "avianDescription" : "This is an odd machine... Can't really see what \"^#ff597d;Dungeon Diners^reset;\" is about without a special coin it seems.",
+  "floranDescription" : "\"^#ff597d;Dungeon Dinersss^reset;\"? Game mussst be good if need ssspecial token to play.",
+  "glitchDescription" : "Confused. I don't think I've ever heard of \"^#ff597d;Dungeon Diners^reset;\" before. Doesn't look like it takes regular tokens either.",
+  "humanDescription" : "\"^#ff597d;Dungeon Diners^reset;\"? Never heard of this game before. Looks like I can't play it without some kind of special token.",
+  "hylotlDescription" : "Odd, I think I would have heard of \"^#ff597d;Dungeon Diners^reset;\" before. Don't think it can take common tokens though.",
+  "novakidDescription" : "\"^#ff597d;Dungeon Diners^reset;\"? Now this is a game I've never heard of!.. Shucks, doesn't look like it takes pixels.",
+
+  "inventoryIcon" : "starpounds_arcadespecialicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadespecial.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadespeciallit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "right",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.6,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ],
+
+  "uniqueId" : "starpounds_arcadespecial",
+
+  "scripts" : ["/scripts/chattyObject.lua"],
+  "scriptDelta" : 60,
+  
+  "chatOptions" : [
+    "[INSERT ^#ff597d;COIN^reset;]"
+  ]
+  
+  
+}

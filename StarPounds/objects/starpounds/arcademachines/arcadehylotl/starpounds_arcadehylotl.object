@@ -1,0 +1,54 @@
+{
+  "objectName" : "starpounds_arcadehylotl",
+  "colonyTags" : ["starpounds", "hylotl", "electronic"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 800,
+  "lightColor" : [75, 108, 117],
+  "printable" : false,
+
+  "description" : "\"The Umiyoni Tournament calls for a champion! Prove your strength and girth, ring out your foes!\"",
+  "shortdescription" : "\"Umiyoni Slamdown X\"",
+  "race" : "generic",
+
+  "apexDescription" : "This seems to be loosely based on Hylotl Sumo. I'm a little surprised a game about fat men and women wrestling got popular.",
+  "avianDescription" : "So you can win by knocking your enemy out of the arena? Interesting...",
+  "floranDescription" : "Floran sssurprised Hylotl devss added Floran character. Love Nepenti's devour finisher!",
+  "glitchDescription" : "Smug. Organics struggle on Blackforge combos. I do not. 9/10.",
+  "humanDescription" : "This game blew up on the e-sports scene back on Earth awhile ago... Never could get the hang of it but I'm willing to give it another shot.",
+  "hylotlDescription" : "I've heard that the Umiyoni themselves are big fans of this series...",
+  "novakidDescription" : "Shucks, never been good with the fighting games. Can never remember how to do special moves...",
+
+  "inventoryIcon" : "starpounds_arcadehylotlicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadehylotlleft.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadehylotlleftlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "left",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.4,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadehylotlright.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadehylotlrightlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "right",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.4,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+  
+}

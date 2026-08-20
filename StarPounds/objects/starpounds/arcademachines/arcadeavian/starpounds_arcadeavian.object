@@ -1,0 +1,54 @@
+{
+  "objectName" : "starpounds_arcadeavian",
+  "colonyTags" : ["starpounds", "avian", "electronic"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 800,
+  "lightColor" : [75, 108, 117],
+  "printable" : false,
+
+  "description" : "\"Tumble and roll to reach the top of the lost Temple of the Bountiful Ones!\"",
+  "shortdescription" : "\"Temple Roller\"",
+  "race" : "generic",
+
+  "apexDescription" : "I've always struggled with this. Something about the rolling physics feels weird to me.",
+  "avianDescription" : "Never has being a boulder been so fun, especially when you can get enough food to max out your size!",
+  "floranDescription" : "Round bird isss wrecking ball! Fun crashing walls!",
+  "glitchDescription" : "Pleased. The game's basic, but rolling the fat birds into pillars is always satisfying. 7/10.",
+  "humanDescription" : "An avian fat enough to roll around and getting bigger to progress? Totally not made by someone with a fat fetish.",
+  "hylotlDescription" : "Building momentum is tough, but it's satisfying once you get it down.",
+  "novakidDescription" : "We sure that's an Avian and not a boulder?",
+
+  "inventoryIcon" : "starpounds_arcadeavianicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadeavianleft.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadeavianleftlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "left",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.7,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadeavianright.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadeavianrightlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "right",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.7,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+  
+}

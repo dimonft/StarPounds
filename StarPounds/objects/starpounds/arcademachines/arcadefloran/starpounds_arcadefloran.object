@@ -1,0 +1,54 @@
+{
+  "objectName" : "starpounds_arcadefloran",
+  "colonyTags" : ["starpounds", "floran", "electronic"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 800,
+  "lightColor" : [75, 108, 117],
+  "printable" : false,
+
+  "description" : "\"Hunt prey! Devour your foes! Become king of the jungle! Beware: even the greatest predator can become prey!\"",
+  "shortdescription" : "\"Floracity\"",
+  "race" : "generic",
+
+  "apexDescription" : "A curious game about Florans hunting and eating creatures in a jungle-themed maze. Not quite my thing.",
+  "avianDescription" : "Never could get the hang of this. The slow down when digesting the monsters always made me easy pickings for the other hunters.",
+  "floranDescription" : "Game made by Floran devsss! Floran lovesss getting fat enough to eat the Giga Ixodoom and King Hunter!",
+  "glitchDescription" : "Pleased. While the gameplay loop is shallow, I can't lie and say that eating your foes to get bigger isn't satisfying. 7.5/10.",
+  "humanDescription" : "A game about eating people and monsters and getting fatter... \"The Developers' Poorly Disguised Vore Fetish\" might be a more fitting title.",
+  "hylotlDescription" : "A simplistic maze game about eating monsters and people. Unsurprising that this came from a Floran studio.",
+  "novakidDescription" : "So you run around a maze and eat monsters and other hunters to get bigger? Interesting...",
+
+  "inventoryIcon" : "starpounds_arcadefloranicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadefloranleft.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadefloranleftlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "left",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.4,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadefloranright.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadefloranrightlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "right",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.4,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+  
+}

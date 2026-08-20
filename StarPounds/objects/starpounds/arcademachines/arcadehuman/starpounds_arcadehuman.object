@@ -1,0 +1,54 @@
+{
+  "objectName" : "starpounds_arcadehuman",
+  "colonyTags" : ["starpounds", "human", "electronic"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 800,
+  "lightColor" : [75, 108, 117],
+  "printable" : false,
+
+  "description" : "\"Ferocious Starbiters threaten to devour the galaxy: only the Zero Squadron can save the day!\"",
+  "shortdescription" : "\"Starbiters 5000\"",
+  "race" : "generic",
+
+  "apexDescription" : "An enjoyable enough timewaster. The Starbiters are strange enemies for a shmup though...",
+  "avianDescription" : "I could play this game for hours. And not because of the player characters, definitely.",
+  "floranDescription" : "Floran ressspectss Sstarbiterss' dessire to eat. But clearly they weak huntersss compared to the Zero Ssquad!",
+  "glitchDescription" : "Confused. A simplistic but satisfactory shmup. The plot confuses me though, why is a galaxy spanning civilization's answer to a swarm of planet eating monsters is to send two chubby women into the fray? 5/10",
+  "humanDescription" : "I wonder how many people developed a liking for chubby women from Mayday...",
+  "hylotlDescription" : "A simple, yet enjoyable sidescrolling shooter. Good in short doses, like junk food.",
+  "novakidDescription" : "Games like this are dangerous fer me- I could get distracted playing for hours... One game should be fine though...",
+
+  "inventoryIcon" : "starpounds_arcadehumanicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadehumanleft.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadehumanleftlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "left",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.6,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "starpounds_arcadehumanright.png:<color>.<frame>", "fullbright" : true }, { "image" : "starpounds_arcadehumanrightlit.png:<color>.<frame>" } ],
+	  
+      "imagePosition" : [-16, 0],
+      
+      "direction" : "right",
+	  
+      "frames" : 2,
+      "animationCycle" : 0.6,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+  
+}
