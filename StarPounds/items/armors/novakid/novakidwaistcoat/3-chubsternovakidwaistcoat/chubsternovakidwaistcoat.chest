@@ -1,24 +1,24 @@
 {
-  "itemName" : "fattynovakidsuspenders",
+  "itemName" : "chubsternovakidwaistcoat",
   "price" : 75,
   "inventoryIcon" : "icons.png:chest",
   "maxStack" : 1,
   "rarity" : "Common",
   "category" : "chestwear",
-  "description" : "A classy shirt with suspenders.",
-  "shortdescription" : "Suspender XXXL Shirt",
+  "description" : "For the smooth-dressing space farer.",
+  "shortdescription" : "Formal XL Waistcoat",
   "tooltipKind" : "armor",
 
   "maleFrames" : {
-    "body" : "fatty_chestm.png",
+    "body" : "chestm.png",
     "backSleeve" : "bsleeve.png",
     "frontSleeve" : "fsleeve.png"
   },
 
   "femaleFrames" : {
-    "body" : "fatty_chestf.png",
+    "body" : "chestf.png",
     "backSleeve" : "bsleeve.png",
-    "frontSleeve" : "fsleevef.png"
+    "frontSleeve" : "fsleeve.png"
   },
 
   "colorOptions" : [

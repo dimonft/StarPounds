@@ -1,25 +1,17 @@
 {
-  "itemName" : "fattynovakidsuspenders",
-  "price" : 75,
-  "inventoryIcon" : "icons.png:chest",
+  "itemName" : "thicknovakidblackpants",
+  "price" : 35,
+  "type" : "Legs",
+  "inventoryIcon" : "icons.png:pants",
   "maxStack" : 1,
   "rarity" : "Common",
-  "category" : "chestwear",
-  "description" : "A classy shirt with suspenders.",
-  "shortdescription" : "Suspender XXXL Shirt",
+  "category" : "legwear",
+  "description" : "Flattering and stylish formalwear.",
+  "shortdescription" : "Formal L Pants",
   "tooltipKind" : "armor",
 
-  "maleFrames" : {
-    "body" : "fatty_chestm.png",
-    "backSleeve" : "bsleeve.png",
-    "frontSleeve" : "fsleeve.png"
-  },
-
-  "femaleFrames" : {
-    "body" : "fatty_chestf.png",
-    "backSleeve" : "bsleeve.png",
-    "frontSleeve" : "fsleevef.png"
-  },
+  "maleFrames" : "pants.png",
+  "femaleFrames" : "pants.png",
 
   "colorOptions" : [
     // BLUE
