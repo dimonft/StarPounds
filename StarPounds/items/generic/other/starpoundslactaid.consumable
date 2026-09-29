@@ -1,0 +1,18 @@
+{
+  "itemName": "starpoundslactaid",
+  "price": 1800,
+  "rarity": "rare",
+  "category": "medicine",
+  "inventoryIcon": "starpoundslactaid.png",
+  "description": "A single-use medipen that promotes natural lactation. Unknown region of origin.",
+  "shortdescription": "LactAid Medipen",
+  "maxStack": 1,
+  "effects": [[
+      "starpoundslactaid",
+      "starpoundslactatingslow"
+  ]],
+  "emote": "",
+  "emitters": [
+    "stimuse"
+  ]
+}

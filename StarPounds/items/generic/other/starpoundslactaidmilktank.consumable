@@ -1,0 +1,21 @@
+{
+  "itemName": "starpoundslactaidmilktank",
+  "price": 2600,
+  "rarity": "legendary",
+  "category": "medicine",
+  "inventoryIcon": "starpoundslactaidmilktank.png",
+  "description": "A formulated medipen claiming to improve milk storage. Unknown region of origin.",
+  "shortdescription": "LactAid Milk Tank",
+  "maxStack": 1,
+  "effects": [[
+      "starpoundslactaidmilktank",
+      {
+          "effect" : "starpoundsmilk",
+          "duration" : 25
+      }
+  ]],
+  "emote": "",
+  "emitters": [
+    "stimuse"
+  ]
+}

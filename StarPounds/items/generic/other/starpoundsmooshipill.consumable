@@ -1,0 +1,20 @@
+{
+  "itemName" : "starpoundsmooshipill",
+  "price" : 1000,
+  "rarity" : "Legendary",
+  "category" : "medicine",
+  "inventoryIcon" : "starpoundsmooshipill.png",
+  "description" : "A pill designed to bring out more milk in anything.",
+  "shortdescription" : "Mooshi Pill",
+  "maxStack" : 1,
+  "effects": [[
+      "starpoundslactaidmilktank",
+      "starpoundslactatingslow",
+      {
+        "effect" : "starpoundsoption",
+        "duration" : 4
+      }
+  ]],
+  "emote" : "",
+  "emitters" : [ "drinking" ]
+}

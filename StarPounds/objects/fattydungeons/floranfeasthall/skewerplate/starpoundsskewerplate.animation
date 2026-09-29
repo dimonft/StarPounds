@@ -1,0 +1,72 @@
+{
+  "animatedParts" : {
+    "parts" : {
+      "food" : {
+        "properties" : {
+          "image" : "<partImage>:<stage>",
+          "centered" : false,
+          "imagePosition" : [0, 0]
+        }
+      }
+    }
+  },
+
+  "particleEmitters" : {
+    "bite" : {
+      "enabled" : false,
+      "emissionRate" : 1.0,
+      "offsetRegion" : [0, 0, 2.0, 1.0],
+      "particles" : [
+        { // meat
+          "count" : 4,
+          "particle" : {
+            "type" : "ember",
+            "size" : 1.0,
+            "color" : [121, 21, 0, 255],
+            "initialVelocity" : [0, 5],
+            "finalVelocity" : [0, -50],
+            "approach" : [0, 50],
+            "timeToLive" : 0.75,
+            "variance" : {
+              "initialVelocity" : [5, 3]
+            }
+          }
+        },
+        {
+          "count" : 2,
+          "particle" : {
+            "type" : "ember",
+            "size" : 1.0,
+            "color" : [194, 136, 56, 255],
+            "initialVelocity" : [0, 5],
+            "finalVelocity" : [0, -50],
+            "approach" : [0, 50],
+            "timeToLive" : 0.75,
+            "variance" : {
+              "initialVelocity" : [5, 3]
+            }
+          }
+        },
+        {
+          "count" : 2,
+          "particle" : {
+            "type" : "ember",
+            "size" : 1.0,
+            "color" : [71, 138, 50, 255],
+            "initialVelocity" : [0, 5],
+            "finalVelocity" : [0, -50],
+            "approach" : [0, 50],
+            "timeToLive" : 0.75,
+            "variance" : {
+              "initialVelocity" : [5, 3]
+            }
+          }
+        }
+      ]
+    }
+  },
+
+  "sounds" : {
+    "bite" : ["/sfx/humanoid/eat1.ogg", "/sfx/humanoid/eat2.ogg"]
+  }
+}

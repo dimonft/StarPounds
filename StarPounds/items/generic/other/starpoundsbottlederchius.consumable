@@ -1,0 +1,19 @@
+{
+  "itemName" : "starpoundsbottlederchius",
+  "price" : 25,
+  "rarity" : "Common",
+  "category" : "medicine",
+  "inventoryIcon" : "starpoundsbottlederchius.png",
+  "description" : "Definitely not a great idea to drink this, but it could help you hide from a pesky purple someone.",
+  "shortdescription" : "Bottled Erchius",
+  "maxStack" : 1,
+  "effects" : [ [
+    {
+      "effect" : "starpoundsfood_bloat",
+      "duration" : 25
+    },
+    "starpoundsbottlederchiusbloat"
+  ] ],
+  "emote" : "",
+  "emitters" : [ "drinking" ]
+}

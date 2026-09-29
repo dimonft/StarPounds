@@ -317,7 +317,26 @@
       { "item" : { "name" : "starpoundslagocola" } },
       { "item" : { "name" : "starpoundsfizzycider" } },
       { "item" : { "name" : "starpoundsdandelionsunrise" } },
-      { "item" : { "name" : "starpoundsmoonrider" } }                    
+      { "item" : { "name" : "starpoundsmoonrider" } }
+                ]
+            ]
+        ]
+    },
+    {
+        "op": "add",
+        "path": "/starpounds_meatdresser",
+        "value": [
+            [
+                0,
+                [
+      { "item" : { "name" : "rawpoultry" } },
+      { "item" : { "name" : "alienmeat" } },
+      { "item" : { "name" : "rawribmeat" } },
+      { "item" : { "name" : "rawbacon" } },
+      { "item" : { "name" : "rawham" } },
+      { "item" : { "name" : "starpoundsrawixoling" } },
+      { "item" : { "name" : "rawfish" } },
+      { "item" : { "name" : "rawtentacle" } }
                 ]
             ]
         ]

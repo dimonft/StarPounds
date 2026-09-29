@@ -10,5 +10,20 @@
         [1, "fathylotlghost"]
       ]
     }
+  },
+  {
+    "op": "add",
+    "path": "/surfacePlaceables/items/-",
+    "value":
+    {
+      "mode" : "floor",
+      "priority" : 1,
+      "variants" : 1,
+      "distribution" : "/biomes/starpoundsmicrodungeon.config:starpoundsraremicrodungeon",
+
+      "type" : "microdungeon",
+      "microdungeons" : [ "starpoundsrareencounter" ],
+	  "blockProbability" : 0.0001
+    }
   }
 ]

@@ -1,0 +1,15 @@
+{
+  "itemName": "starpoundsdigestionaid",
+  "price": 500,
+  "rarity": "uncommon",
+  "category": "medicine",
+  "inventoryIcon": "starpoundsdigestionaid.png",
+  "description": "A less-than-legal vial of metabolism boosters for rapid digestion.",
+  "shortdescription": "Digestion Aid",
+  "maxStack": 1,
+  "effects": [["starpoundsdigesting"]],
+  "emote": "",
+  "emitters": [
+    "drinking"
+  ]
+}

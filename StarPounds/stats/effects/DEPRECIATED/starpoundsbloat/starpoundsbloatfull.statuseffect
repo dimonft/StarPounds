@@ -1,0 +1,7 @@
+{
+  "name": "starpoundsbloatfull",
+  "defaultDuration": 1,
+  "scripts": [
+    "starpoundsbloat.lua"
+  ]
+}

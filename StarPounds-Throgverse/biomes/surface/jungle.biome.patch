@@ -10,7 +10,7 @@
       "distribution" : "/biomes/starpoundsmicrodungeon.config:starpoundsraremicrodungeon",
 
       "type" : "microdungeon",
-      "microdungeons" : [ "gluttonisthut" ]
+      "microdungeons" : [ "starpoundsgluttonisthut" ]
     }
   },
   {
@@ -24,7 +24,22 @@
       "distribution" : "/biomes/starpoundsmicrodungeon.config:starpoundsraremicrodungeon",
 
       "type" : "microdungeon",
-      "microdungeons" : [ "gluttonistcookout", "starpounds_bar_encounter" ]
+      "microdungeons" : [ "starpoundsgluttonistcookout", "starpoundsbarencounter" ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/surfacePlaceables/items/-",
+    "value":
+    {
+      "mode" : "floor",
+      "priority" : 1,
+      "variants" : 1,
+      "distribution" : "/biomes/starpoundsmicrodungeon.config:starpoundsraremicrodungeon",
+
+      "type" : "microdungeon",
+      "microdungeons" : [ "starpoundsrareencounter" ],
+	  "blockProbability" : 0.0001
     }
   }
 ]

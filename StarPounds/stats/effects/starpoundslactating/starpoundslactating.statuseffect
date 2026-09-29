@@ -1,0 +1,13 @@
+{
+  "name" : "starpoundslactating",
+  "effectConfig" : {
+    "tickTime": 1,
+    "amount": 1
+  },
+  "scripts": [
+    "starpoundslactating.lua"
+  ],
+  "defaultDuration" : 30,
+  "label" : "Lactating",
+  "icon" : "/interface/statuses/starpoundslactating.png"
+}

@@ -1,0 +1,30 @@
+{
+  "projectileName" : "starpoundswispflameprojectile",
+  "image" : "starpoundswispflameprojectile.png",
+  "physics" : "laser",
+  "animationCycle" : 0.2,
+  "frameNumber" : 2,
+  "damageKindImage" : "icon.png",
+  "power" : 5,
+  "speed" : 40,
+  "timeToLive" : 5.0,
+
+  "lightColor" : [145, 75, 0],
+
+  "actionOnReap" : [
+    {
+      "action" : "sound",
+      "options" : [ "/sfx/gun/impact_plasma.ogg" ]
+    }
+  ],
+  "bounces" : 0,
+  "statusEffects" : [
+    {"effect": "starpoundsfood_wispflame", "duration": 25}
+  ],
+  "piercing" : false,
+  "damagePoly" : [ [0, 2.5], [5, 2.5], [5, -2.5], [0, -2.5]],
+  "damageKind" : "caloric",
+  "emitters" : [ "wispflame", "wispflame" ],
+  "renderLayer" : "Monster+10",
+  "fullbright" : true
+}

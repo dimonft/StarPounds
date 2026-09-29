@@ -1,0 +1,21 @@
+{
+  "name" : "starpoundserchiusbloat",
+
+  "effectConfig" : {
+    "bloatAmount": 10,
+    "bloatIncrease": 1,
+    "tickTime": 1,
+    "desaturateAmount" : 0,
+    "multiplyColor" : [0, 0, 0]
+  },
+  "defaultDuration" : 1,
+
+  "animationConfig" : "starpoundserchiusbloat.animation",
+
+  "label" : "Bloating",
+  "icon" : "/interface/statuses/erchiusbloat.png",
+
+  "scripts" : [
+    "starpoundserchiusbloat.lua"
+  ]
+}

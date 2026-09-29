@@ -1,0 +1,30 @@
+{
+  "metadata" : {
+    "name" : "starpoundsgluttonisthut",
+    "species" : "floran",
+    "rules" : [
+    ],
+    "anchor" : [ "starpoundsgluttonisthut1", "starpoundsgluttonisthut2" ],
+    "gravity" : 80,
+    "maxRadius" : 1000000,
+    "maxParts" : 100,
+    "protected" : false
+  },
+
+  "parts" : [
+    {
+      "name" : "starpoundsgluttonisthut1",
+      "rules" : [
+        [ "maxSpawnCount", [1] ]
+      ],
+      "def" : [ "tmx", "starpoundsgluttonisthut1.json" ]
+    },
+  {
+      "name" : "starpoundsgluttonisthut2",
+      "rules" : [
+        [ "maxSpawnCount", [1] ]
+      ],
+      "def" : [ "tmx", "starpoundsgluttonisthut2.json" ]
+    }
+  ]
+}

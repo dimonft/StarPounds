@@ -1,0 +1,10 @@
+{
+  "name" : "starpoundslactaidmilktank",
+  "effectConfig" : {
+    "skill": "breastCapacity"
+  },
+  "scripts": [
+    "starpoundslactaid.lua"
+  ],
+  "defaultDuration" : 1
+}

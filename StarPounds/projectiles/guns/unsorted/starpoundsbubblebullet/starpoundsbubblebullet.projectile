@@ -1,0 +1,56 @@
+{
+  "projectileName" : "starpoundsbubblebullet",
+  "image" : "starpoundsbubblebullet.png",
+  "physics" : "laser",
+  "animationCycle" : 0.25,
+  "frameNumber" : 1,
+  "damageKind" : "caloric",
+  "pointLight" : false,
+  "flippable" : true,
+  "actionOnReap" : [
+    {
+      "action" : "sound",
+      "options" : [ "/sfx/gun/starpoundsbubblegunpop1.ogg", "/sfx/gun/starpoundsbubblegunpop2.ogg" ]
+    },
+    {
+      "action" : "projectile",
+      "type" : "starpoundsbubblepop",
+      "inheritSpeedFactor" : 0.0,
+      "inheritDamageFactor" : 0.25
+    },
+    {
+      "action" : "loop",
+      "count" : 2,
+      "body" : [
+        {
+          "action" : "particle",
+          "specification" : {
+            "type" : "textured",
+            "image" : "/projectiles/guns/unsorted/scatterpopbubbles/starpoundsscatterpopbubbles.png:0",
+            "size" : 0.5,
+            "fade" : 0.9,
+            "initialVelocity" : [0, 1],
+            "finalVelocity" : [0, 2],
+            "approach" : [0.25, 1],
+            "destructionAction" : "fade",
+            "destructionTime" : 0.2,
+            "layer" : "back",
+            "timeToLive" : 0.2,
+            "variance" : {
+              "size" : 0.25,
+              "initialVelocity" : [3, 2]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "statusEffects" : [
+    {"effect": "starpoundsfood_weaponLiquid", "duration": 5},
+    {"effect": "starpoundsfood_liquid", "duration": 5}
+	],
+  "emitters" : [ "starpoundssodabubble", "starpoundssodabubble" ],
+  "power" : 5.0,
+  "speed" : 150,
+  "knockback" : 0
+}
